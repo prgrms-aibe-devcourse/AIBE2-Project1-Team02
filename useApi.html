@@ -12,6 +12,11 @@
   </head>
   <body>
     <h1>🎊 축제 목록</h1>
+    <div>
+      <input type="text" id="search-input" placeholder="키워드로 검색" />
+      <button id="search-btn"><i class="bi bi-search"></i></button>
+      <button id="reset-btn">🔄</button>
+    </div>
     <ul id="festival-list">
       <li>불러오는 중...</li>
     </ul>
@@ -27,7 +32,7 @@
         <p>
           <strong>주소:</strong> <span id="modal-addr"></span
           ><a id="modal-map-link" href="#" target="_blank"
-            ><i class="bi bi-map-fill"></i
+            >&nbsp;<i class="bi bi-map-fill"></i
           ></a>
         </p>
         <p><strong>tel:</strong> <span id="modal-tel"></span></p>

@@ -1,6 +1,10 @@
 let currentPage = 1;
 let totalPages = 1; // 전체 페이지 수 초기화
 
+let isSearchMode = false; // 검색 상태 여부
+let searchQuery = ""; // 검색 키워드 저장
+
+// 화면 로드 됐을때, 메인 로직
 document.addEventListener("DOMContentLoaded", () => {
   // 페이지 데이터 로딩 및 더보기 버튼 처리
   loadFestivalData(currentPage);
@@ -16,6 +20,15 @@ document.addEventListener("DOMContentLoaded", () => {
     currentPage += 1;
     loadFestivalData(currentPage);
   });
+
+  // 검색 버튼 클릭 이벤트 등록
+  document
+    .getElementById("search-btn")
+    .addEventListener("click", searchKeyword);
+
+  document
+    .getElementById("reset-btn")
+    .addEventListener("click", resetToInitialState);
 
   // 모달 처리
   modalHandler();
@@ -42,56 +55,7 @@ function loadFestivalData(page = 1) {
         return;
       }
 
-      items.forEach((f) => {
-        const li = document.createElement("li");
-
-        const imageUrl = f.firstimage || f.firstimage2;
-        const imageHtml = imageUrl
-          ? `<img src="${imageUrl}" alt="${f.title}" />`
-          : "";
-        const title = f.title || "";
-        const tel = f.tel || "";
-        const addr = f.addr1 + " " + f.addr2 || "";
-        const contentId = f.contentid || "";
-        const contentTypeId = f.contenttypeid || "";
-        const eventStartDate = f.eventstartdate || "";
-        const eventEndDate = f.eventenddate || "";
-        const latitude = f.mapy || "";
-        const longitude = f.mapx || "";
-
-        li.dataset.title = title;
-        li.dataset.tel = tel;
-        li.dataset.addr = addr;
-        li.dataset.start = eventStartDate;
-        li.dataset.end = eventEndDate;
-        li.dataset.lat = latitude;
-        li.dataset.lng = longitude;
-        li.dataset.image = imageUrl;
-        li.dataset.contentId = contentId;
-        li.dataset.contentTypeId = contentTypeId;
-
-        li.addEventListener("click", () => {
-          handleLocationDetail({
-            title,
-            tel,
-            addr,
-            start: eventStartDate,
-            end: eventEndDate,
-            lat: latitude,
-            lng: longitude,
-            image: imageUrl,
-            contentId,
-            contentTypeId,
-          });
-        });
-
-        li.innerHTML = `
-          ${imageHtml}
-          <h2>${title} <span class="info-addr">${addr}</span></h2>
-          <p><strong>기간:</strong> ${eventStartDate} ~ ${eventEndDate}</p>
-        `;
-        list.appendChild(li);
-      });
+      afterFetch(items, list); // items를 전달해줌
 
       // 전체 페이지 수 계산 (첫 번째 페이지 로딩 시 한 번만 계산)
       if (currentPage === 1) {
@@ -123,12 +87,21 @@ function handleLocationDetail(data) {
   const periodEl = document.getElementById("modal-period");
   const mapLinkEl = document.getElementById("modal-map-link");
 
-  titleEl.textContent = data.title || "정보 없음";
-  imageEl.src = data.image || "";
-  imageEl.alt = data.title || "축제 이미지";
-  addrEl.textContent = data.addr || "정보 없음";
-  telEl.textContent = data.tel || "정보 없음";
-  periodEl.textContent = `${data.start} ~ ${data.end}` || "기간 정보 없음";
+  titleEl.textContent = data.title ? data.title : "정보 없음";
+
+  if (data.image) {
+    imageEl.src = data.image;
+    imageEl.alt = data.title || "축제 이미지";
+  } else {
+    imageEl.src = "";
+    imageEl.alt = "축제 이미지 없음";
+  }
+
+  addrEl.textContent = data.addr ? data.addr : "정보 없음";
+  telEl.textContent = data.tel ? data.tel : "정보 없음";
+
+  periodEl.textContent =
+    data.start && data.end ? `${data.start} ~ ${data.end}` : "기간 정보 없음";
 
   // 🗺 구글 지도 링크 설정
   if (data.lat && data.lng) {
@@ -237,4 +210,115 @@ function modalHandler(e) {
       modal.classList.add("hidden");
     }
   });
+}
+
+//fetch 함수에 공통적인 부분
+function afterFetch(items, list) {
+  items.forEach((f) => {
+    const li = document.createElement("li");
+
+    const imageUrl = f.firstimage || f.firstimage2;
+    const imageHtml = imageUrl
+      ? `<img src="${imageUrl}" alt="${f.title}" />`
+      : "";
+    const title = f.title || "";
+    const tel = f.tel || "";
+    const addr = f.addr1 + " " + f.addr2 || "";
+    const contentId = f.contentid || "";
+    const contentTypeId = f.contenttypeid || "";
+    const eventStartDate = f.eventstartdate || "";
+    const eventEndDate = f.eventenddate || "";
+    const latitude = f.mapy || "";
+    const longitude = f.mapx || "";
+
+    li.dataset.title = title;
+    li.dataset.tel = tel;
+    li.dataset.addr = addr;
+    li.dataset.start = eventStartDate;
+    li.dataset.end = eventEndDate;
+    li.dataset.lat = latitude;
+    li.dataset.lng = longitude;
+    li.dataset.image = imageUrl;
+    li.dataset.contentId = contentId;
+    li.dataset.contentTypeId = contentTypeId;
+
+    li.addEventListener("click", () => {
+      handleLocationDetail({
+        title,
+        tel,
+        addr,
+        start: eventStartDate,
+        end: eventEndDate,
+        lat: latitude,
+        lng: longitude,
+        image: imageUrl,
+        contentId,
+        contentTypeId,
+      });
+    });
+
+    li.innerHTML = `
+      ${imageHtml}
+      <h2>${title} <span class="info-addr">${addr}</span></h2>
+    `;
+    list.appendChild(li);
+  });
+}
+
+//키워드로 검색하는 로직
+function searchKeyword() {
+  const searchQuery = document.getElementById("search-input").value.trim(); // 입력된 검색어
+  if (!searchQuery) {
+    alert("검색어를 입력하세요.");
+    return;
+  }
+  const apiKey = window.__API_KEY__;
+  const url = `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=10&MobileOS=etc&MobileApp=team2&_type=json&arrange=O&keyword=${searchQuery}&contentTypeId=15&serviceKey=${apiKey}`;
+
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      const items = data.response.body.items.item || [];
+      const resultList = document.getElementById("festival-list");
+      const moreBtn = document.getElementById("load-more-btn");
+
+      resultList.innerHTML = "";
+
+      if (items.length === 0) {
+        resultList.innerHTML = "<li>검색된 축제가 없습니다.</li>";
+        moreBtn.style.display = "none"; // ✨ 검색 결과 없을 때 더보기 버튼 숨기기
+        return;
+      }
+
+      afterFetch(items, resultList);
+
+      const numOfRows = data.response.body.numOfRows;
+      const totalCount = data.response.body.totalCount;
+      totalPages = Math.ceil(totalCount / numOfRows);
+
+      console.log("전체 페이지 수:", totalPages);
+
+      moreBtn.style.display = currentPage >= totalPages ? "none" : "block";
+    })
+    .catch((err) => {
+      const list = document.getElementById("festival-list");
+      list.innerHTML = `<li>데이터 불러오기 실패: ${err.message}</li>`;
+      console.error("API 호출 오류:", err);
+    });
+}
+// 검색 이전 상태로 되돌리는 함수
+function resetToInitialState() {
+  const list = document.getElementById("festival-list");
+  const moreBtn = document.getElementById("load-more-btn");
+
+  currentPage = 1;
+  totalPages = 1;
+  isSearchMode = false;
+  searchQuery = "";
+
+  document.getElementById("search-input").value = "";
+  list.innerHTML = "";
+  moreBtn.style.display = "block";
+
+  loadFestivalData(currentPage);
 }
