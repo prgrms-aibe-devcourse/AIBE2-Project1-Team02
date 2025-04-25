@@ -4,8 +4,35 @@ let totalPages = 1; // 전체 페이지 수 초기화
 let isSearchMode = false; // 검색 상태 여부
 let searchQuery = ""; // 검색 키워드 저장
 
+let globalStartDate = "";
+let globalEndDate = "";
+
+const AREA_CODE_MAP = {
+  서울특별시: "1",
+  인천광역시: "2",
+  대전광역시: "3",
+  대구광역시: "4",
+  광주광역시: "5",
+  부산광역시: "6",
+  울산광역시: "7",
+  세종특별자치시: "8",
+  경기도: "31",
+  강원특별자치도: "32",
+  충청북도: "33",
+  충청남도: "34",
+  경상북도: "35",
+  경상남도: "36",
+  전북특별자치도: "37",
+  전라남도: "38",
+  제주도: "39",
+  제주특별자치도: "39",
+};
+
 // 화면 로드 됐을때, 메인 로직
 document.addEventListener("DOMContentLoaded", () => {
+  //날짜 초기화
+  initializeDates();
+
   // 페이지 데이터 로딩 및 더보기 버튼 처리
   loadFestivalData(currentPage);
 
@@ -21,26 +48,39 @@ document.addEventListener("DOMContentLoaded", () => {
     loadFestivalData(currentPage);
   });
 
-  // 검색 버튼 클릭 이벤트 등록
+  // 태그 검색 버튼 클릭 이벤트 등록
   document
     .getElementById("search-btn")
     .addEventListener("click", searchKeyword);
 
+  // 태그 검색을 초기화 시키는 버튼
   document
     .getElementById("reset-btn")
     .addEventListener("click", resetToInitialState);
 
+  // 지역 선택 박스 값 변경 시 데이터 로드
+  document.getElementById("area-select").addEventListener("change", () => {
+    currentPage = 1; // 페이지를 첫 번째 페이지로 초기화
+    loadFestivalData(currentPage); // 지역에 맞는 데이터 로드
+  });
+
   // 모달 처리
   modalHandler();
 });
-
 // 메인 행사 API 호출 및 데이터 로딩 함수
 function loadFestivalData(page = 1) {
   const apiKey = window.__API_KEY__;
-  const tourStartDate = "20250425";
-  const tourEndDate = "20250430";
-  const url = `https://apis.data.go.kr/B551011/KorService1/searchFestival1?numOfRows=10&pageNo=${page}&MobileOS=etc&MobileApp=team2&_type=json&arrange=O&eventStartDate=${tourStartDate}&eventEndDate=${tourEndDate}&serviceKey=${apiKey}`;
 
+  //지역을 골랐을 때 넘겨 받을 값
+  let areaCode = document.getElementById("area-select").value;
+  if (areaCode === "all") {
+    areaCode = ""; // 모든 지역 코드로 설정
+  } else {
+    areaCode = "&areaCode=" + areaCode;
+  }
+  const url = `https://apis.data.go.kr/B551011/KorService1/searchFestival1?numOfRows=10&pageNo=${page}&MobileOS=etc&MobileApp=team2&_type=json&arrange=O&eventStartDate=${globalStartDate}&eventEndDate=${globalEndDate}${areaCode}&serviceKey=${apiKey}`;
+
+  console.log(url);
   fetch(url)
     .then((res) => res.json())
     .then((data) => {
@@ -211,7 +251,6 @@ function modalHandler(e) {
     }
   });
 }
-
 //fetch 함수에 공통적인 부분
 function afterFetch(items, list) {
   items.forEach((f) => {
@@ -264,7 +303,6 @@ function afterFetch(items, list) {
     list.appendChild(li);
   });
 }
-
 //키워드로 검색하는 로직
 function searchKeyword() {
   const searchQuery = document.getElementById("search-input").value.trim(); // 입력된 검색어
@@ -272,8 +310,10 @@ function searchKeyword() {
     alert("검색어를 입력하세요.");
     return;
   }
+  console.log("검색어:", searchQuery);
+
   const apiKey = window.__API_KEY__;
-  const url = `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=10&MobileOS=etc&MobileApp=team2&_type=json&arrange=O&keyword=${searchQuery}&contentTypeId=15&serviceKey=${apiKey}`;
+  const url = `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=50&MobileOS=etc&MobileApp=team2&_type=json&arrange=O&keyword=${searchQuery}&contentTypeId=15&serviceKey=${apiKey}`;
 
   fetch(url)
     .then((res) => res.json())
@@ -281,6 +321,9 @@ function searchKeyword() {
       const items = data.response.body.items.item || [];
       const resultList = document.getElementById("festival-list");
       const moreBtn = document.getElementById("load-more-btn");
+
+      //지역을 골랐을 때 넘겨 받을 값
+      const areaSelect = document.getElementById("area-select").value;
 
       resultList.innerHTML = "";
 
@@ -290,7 +333,16 @@ function searchKeyword() {
         return;
       }
 
-      afterFetch(items, resultList);
+      // 지역코드 기반으로 필터링
+      const filteredItems = items.filter((item) => {
+        const addr = item.addr1 || "";
+        const area = addr.split(" ")[0]; // 첫 번째 단어는 시, 도 정보
+        const codeOfCity = AREA_CODE_MAP[area]; // 이름으로 코드 찾기
+
+        return areaSelect === "all" || codeOfCity == areaSelect; // 지역코드가 일치하는지 확인
+      });
+
+      afterFetch(filteredItems, resultList);
 
       const numOfRows = data.response.body.numOfRows;
       const totalCount = data.response.body.totalCount;
@@ -322,3 +374,55 @@ function resetToInitialState() {
 
   loadFestivalData(currentPage);
 }
+// 오늘 날짜를 YYYYMMDD 형식으로 반환하는 함수
+function getTodayDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  return `${year}${month}${day}`;
+}
+// 로드시, 날짜를 오늘 날짜로 초기화하는 함수
+function initializeDates() {
+  const dateInput = document.getElementById("daterange");
+
+  // 오늘 날짜를 YYYYMMDD 형식으로 설정
+  const todayDate = getTodayDate();
+
+  if (!dateInput.value) {
+    dateInput.value = todayDate;
+  }
+
+  globalStartDate = todayDate;
+  globalEndDate = todayDate;
+}
+// 제이쿼리와 daterangepicker 라이브러리를 사용하여 날짜 선택 기능을 추가하는 함수
+$(function () {
+  $("#daterange").daterangepicker({
+    opens: "center",
+    startDate: moment(),
+    endDate: moment(),
+    showDropdowns: true,
+    minDate: moment(),
+    locale: {
+      format: "YYYYMMDD",
+      applyLabel: "적용",
+      cancelLabel: "취소",
+    },
+    linkedCalendars: true,
+    showWeekNumbers: false,
+  });
+
+  $("#daterange").on("apply.daterangepicker", function (ev, picker) {
+    globalStartDate = picker.startDate.format("YYYYMMDD");
+    globalEndDate = picker.endDate.format("YYYYMMDD");
+
+    console.log("선택된 시작 날짜:", globalStartDate);
+    console.log("선택된 종료 날짜:", globalEndDate);
+
+    // 날짜가 변경되었으므로 데이터를 다시 로드
+    currentPage = 1; // 페이지를 첫 번째 페이지로 초기화
+    loadFestivalData(currentPage); // 날짜를 기반으로 데이터를 로드
+  });
+});
