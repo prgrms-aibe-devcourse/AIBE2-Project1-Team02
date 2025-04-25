@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <link rel="stylesheet" href="MainPage.css"></link>
+        <script src="MainPage.js" defer></script>
+    </head>
+    <body>
+        <div>
+            <div id="stepBox">
+                <button class="tab" data-tab="tab1">01. <br/>날짜 확인</button>
+                <button class="tab" data-tab="tab2">02. <br/>장소 선택</button>
+                <button class="tab" data-tab="tab3">03. <br/>숙소 설정</button>
+            </div>
+            <div id="tab1" class="tabContent"></div>
+            <div id="tab2" class="tabContent" style="display: none;">
+                <div id="placeSearchBox">
+                    search <br/>
+                    <input id="inputPlace" type="text" placeholder="장소를 입력하세요.">
+                    <ul>
+                        <li class="placeItem">
+                            <div class="placeImg">
+                                <img src="https://blog.kakaocdn.net/dn/o1KIw/btqu9mflPY6/rGk1mM3iugV1c6jj9Z3E80/img.jpg">
+                            </div>
+                            <div class="placeDesc">
+                                <p>title</p>
+                                <p>description</p>
+                            </div>
+                            <button class="addPlace">+</button>
+                        </li>
+                        <li class="placeItem">
+                            <div class="placeImg">
+                                <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/29/59/c2/e9/caption.jpg?w=1200&h=700&s=1">
+                            </div>
+                            <div class="placeDesc">
+                                <p>title</p>
+                                <p>description</p>
+                            </div>
+                            <button class="addPlace">+</button>
+                        </li>
+                        <li class="placeItem">
+                            <div class="placeImg">
+                                <img src="https://cdn.ardentnews.co.kr/news/photo/202406/3432_16036_2830.jpg">
+                            </div>
+                            <div class="placeDesc">
+                                <p>title</p>
+                                <p>description</p>
+                            </div>
+                            <button class="addPlace">+</button>
+                        </li>
+                        <li class="placeItem">
+                            <div class="placeImg">
+                                <img src="https://www.rosestar.kr/wp-content/uploads/2024/04/image-16.webp">
+                            </div>
+                            <div class="placeDesc">
+                                <p>title</p>
+                                <p>description</p>
+                            </div>
+                            <button class="addPlace">+</button>
+                        </li>
+                        <li class="placeItem">
+                            <div class="placeImg">
+                                <img src="https://cdn.wikifoodie.co.kr/news/photo/202504/2298_6061_4416.jpg">
+                            </div>
+                            <div class="placeDesc">
+                                <p>title</p>
+                                <p>description</p>
+                            </div>
+                            <button class="addPlace">+</button>
+                        </li>
+                    </ul>
+                </div>
+                <div id="placeSelectBox">
+                    select<br/>
+                    <ul id="selectedPlaces">
+
+                    </ul>
+                </div>
+            </div>
+            <div id="tab3" class="tabContent" style="display: none;"></div>
+        </div>
+    </body>
+</html>

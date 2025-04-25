@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+#stepBox {
+    border: 1px solid red;
+    width: 5%;
+    float: left;
+}
+#tab1 {
+    border: 1px solid pink;
+    width:30%;
+    float: left;
+}
+
+#tab2 {
+    border: 1px solid green;
+    width: 50%;
+    float: left;
+}
+
+#placeSearchBox {
+    width: 50%;
+    float: left;
+}
+
+#inputPlace {
+    width: 100%;
+}
+
+.placeItem {
+    display: flex;
+}
+
+.placeImg {
+    float: left;
+    width: 50px;
+    height: 50px;
+}
+
+.placeImg img {
+    width: 50px;
+    height: 50px;
+}
+
+.placeDesc {
+    float: left;
+    width: 70%;
+}
+
+.addPlace {
+    float: left;
+}
+
+#placeSelectBox {
+    width: 50%;
+    float: left;
+}
+
+#tab3 {
+    border: 1px solid blue;
+    width: 25%;
+    float: left;
+}
