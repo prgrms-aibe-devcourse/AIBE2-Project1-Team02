@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="useApi.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <title>축제 리스트</title>
+  </head>
+  <body>
+    <h1>🎊 축제 목록</h1>
+    <ul id="festival-list">
+      <li>불러오는 중...</li>
+    </ul>
+    <button id="load-more-btn">더 보기</button>
+
+    <!-- 모달 구조 -->
+    <div id="festival-modal" class="hidden">
+      <div class="modal-content">
+        <button class="close-button">&times;</button>
+        <h2 id="modal-title"></h2>
+        <img id="modal-image" src="" alt="" />
+        <p id="modal-detail-info"></p>
+        <p>
+          <strong>주소:</strong> <span id="modal-addr"></span
+          ><a id="modal-map-link" href="#" target="_blank"
+            ><i class="bi bi-map-fill"></i
+          ></a>
+        </p>
+        <p><strong>tel:</strong> <span id="modal-tel"></span></p>
+        <p><strong>행사기간:</strong> <span id="modal-period"></span></p>
+        <p><strong>운영시간:</strong> <span id="modal-play-time"></span></p>
+        <p><strong>행사장안 장소:</strong> <span id="modal-place"></span></p>
+      </div>
+    </div>
+    <script src="config.js"></script>
+    <script src="./useApi.js"></script>
+  </body>
+</html>
