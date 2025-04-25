@@ -19,6 +19,12 @@ li {
 
 #tab2 {
     border: 1px solid green;
+    width: 30%;
+    float: left;
+}
+
+#tab3 {
+    border: 1px solid blue;
     width: 50%;
     float: left;
 }
@@ -58,12 +64,6 @@ li {
 
 #placeSelectBox {
     width: 50%;
-    float: left;
-}
-
-#tab3 {
-    border: 1px solid blue;
-    width: 25%;
     float: left;
 }
 
