@@ -53,3 +53,38 @@ img {
   border-radius: 8px;
   margin-bottom: 1rem;
 }
+
+#calendar-container {
+  position: relative;
+}
+
+#calendar {
+  display: none;
+  position: absolute;
+  top: 40px;
+  border: 1px solid #ccc;
+  background-color: white;
+  padding: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-header {
+  text-align: center;
+  font-weight: bold;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.calendar-day {
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.calendar-day:hover {
+  background-color: #f0f0f0;
+}

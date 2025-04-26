@@ -4,14 +4,57 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="useApi.css" />
+    <!-- 부트스트랩 -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     />
+    <!-- 캘린더 라이브러리 / jQuery 없이는 무리... -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <title>축제 리스트</title>
   </head>
   <body>
     <h1>🎊 축제 목록</h1>
+
+    <!-- 날짜정보를 받을 공간 -->
+    <div id="calendar-container">
+      <label for="daterange">날짜 범위:</label>
+      <input type="text" id="daterange" name="daterange" />
+    </div>
+    <div>
+      <!-- 지역을 골랐을 때 넘겨 받을 값 -->
+      <select id="area-select">
+        <option value="all">전체</option>
+        <option value="1">서울</option>
+        <option value="2">인천</option>
+        <option value="3">대전</option>
+        <option value="4">대구</option>
+        <option value="5">광주</option>
+        <option value="6">부산</option>
+        <option value="7">울산</option>
+        <option value="8">세종</option>
+        <option value="31">경기</option>
+        <option value="32">강원</option>
+        <option value="33">충북</option>
+        <option value="34">충남</option>
+        <option value="35">경북</option>
+        <option value="36">경남</option>
+        <option value="37">전북</option>
+        <option value="38">전남</option>
+        <option value="39">제주</option>
+      </select>
+    </div>
+    <div>
+      <input type="text" id="search-input" placeholder="키워드로 검색" />
+      <button id="search-btn"><i class="bi bi-search"></i></button>
+      <button id="reset-btn">🔄</button>
+    </div>
     <ul id="festival-list">
       <li>불러오는 중...</li>
     </ul>
@@ -27,7 +70,7 @@
         <p>
           <strong>주소:</strong> <span id="modal-addr"></span
           ><a id="modal-map-link" href="#" target="_blank"
-            ><i class="bi bi-map-fill"></i
+            >&nbsp;<i class="bi bi-map-fill"></i
           ></a>
         </p>
         <p><strong>tel:</strong> <span id="modal-tel"></span></p>
