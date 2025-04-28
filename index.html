@@ -3,185 +3,21 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>Kakao 지도 시작하기</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=510b624b2b131b82ad7aee34c7864031&libraries=services"></script>
 </head>
 <body>
-	<div id="map" style="width:75vw;height:100vh;margin-left:25vw;"></div>
-	<div style="position:absolute; top:10px; left:10px; width:20vw;">
-		<input type="text" id="destinationSearchBox" placeholder="목적지 검색" style="width:100%; padding:10px; margin-bottom:10px;">
-		<button id="addDestination" style="margin-bottom:20px;">목적지 설정</button>
-		<button id="findRoute" style="margin-bottom:20px;">경로검색</button>
-		<ul id="destinationList" style="margin-top: 50px;"></ul>
+	<div id="map"></div>
+	<div id="controls">
+		<input type="text" id="destinationSearchBox" placeholder="목적지 검색">
+		<button id="addDestination">목적지 설정</button>
+		<button id="findRoute">경로검색</button>
+		<ul id="destinationList"></ul>
 	</div>
-	<div style="position:absolute; bottom:10px; left:10px; width:20vw;">
+	<div id="info">
 		<p>총 거리: <span id="totalDistance">0 km</span></p>
 	</div>
-	<iframe 
-		id="kakao-route" 
-		width="100%" 
-		height="600px" 
-		style="border: none; margin-top: 20px;"></iframe>
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=510b624b2b131b82ad7aee34c7864031&libraries=services"></script>
-	<script>
-		window.onload = function () {
-			kakao.maps.load(function () {
-				var container = document.getElementById('map');
-				var mapOption = { 
-					center: new kakao.maps.LatLng(37.5563, 126.9237), // 홍대입구역 좌표
-					level: 3
-				};
-
-				var map = new kakao.maps.Map(container, mapOption);
-
-				// 장소 검색 객체를 생성합니다
-				var ps = new kakao.maps.services.Places();
-
-				// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
-				var infowindow = new kakao.maps.InfoWindow({zIndex:1});
-
-				var startMarker, endMarker, line;
-				var markers = [];
-
-				document.getElementById('addDestination').addEventListener('click', function() {
-					var keyword = document.getElementById('destinationSearchBox').value;
-					ps.keywordSearch(keyword, function(data, status) {
-						if (status === kakao.maps.services.Status.OK) {
-							var position = new kakao.maps.LatLng(data[0].y, data[0].x);
-							var marker = new kakao.maps.Marker({
-								map: map,
-								position: position,
-								title: (markers.length + 1).toString()
-							});
-							markers.push(marker);
-
-							var infoWindow = new kakao.maps.InfoWindow({
-							content: `<div style=
-										"display: inline-flex;
-										align-items: center;
-										justify-content: center;
-										padding: 5px 10px;
-										background: rgb(240, 240, 240);
-										color: #333;
-										border: 20px;
-										font-size: 14px;
-										font-weight: bold;
-										box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-										min-width: 150px;
-										max-width: 250px;
-										">
-										<div style = " flex-shrink: 0;">
-											<img src="https://i.postimg.cc/vmrw1k8J/IMG-3471.jpg" style="width:40px;
-										 height:40px; border:5px;
-										 margin-right:3px;">
-										 </div>
-										 
-										 
-
-									
-										  <div style="flex-grow: 1; text-align: center;">
-										${data[0].place_name}</div>`
-										});
-
-							kakao.maps.event.addListener(marker, 'mouseover', function () {
-								infoWindow.open(map, marker);
-								});
-
-							kakao.maps.event.addListener(marker, 'mouseout', function () {
-								infoWindow.close();
-								});
-
-							// 목적지 목록에 추가
-							var listItem = document.createElement('li');
-							listItem.textContent = keyword;
-							document.getElementById('destinationList').appendChild(listItem);
-						}
-					});
-				});
-
-				document.getElementById('findRoute').addEventListener('click', function() {
-					if (markers.length < 2) return;
-
-					var linePath = markers.map(marker => marker.getPosition());
-					var polyline = new kakao.maps.Polyline({
-						path: linePath,
-						strokeWeight: 5,
-						strokeColor: '#FF0000',
-						strokeOpacity: 0.7,
-						strokeStyle: 'solid'
-					});
-					polyline.setMap(map);
-
-					// 거리 계산
-					var totalDistance = 0;
-					for (var i = 0; i < linePath.length - 1; i++) {
-						totalDistance += kakao.maps.geometry.spherical.computeDistanceBetween(linePath[i], linePath[i + 1]);
-					}
-					document.getElementById('totalDistance').innerText = (totalDistance / 1000).toFixed(2) + ' km';
-				});
-
-				function updateInfo() {
-					if (startMarker) {
-						var startPos = startMarker.getPosition();
-						document.getElementById('startCoords').innerText = startPos.getLat() + ', ' + startPos.getLng();
-					}
-					if (endMarker) {
-						var endPos = endMarker.getPosition();
-						document.getElementById('endCoords').innerText = endPos.getLat() + ', ' + endPos.getLng();
-					}
-					if (startMarker && endMarker) {
-						var distance = kakao.maps.geometry.spherical.computeDistanceBetween(startMarker.getPosition(), endMarker.getPosition());
-						document.getElementById('distance').innerText = (distance / 1000).toFixed(2) + ' km';
-					}
-				}
-
-				function drawLine() {
-					if (startMarker && endMarker) {
-						if (line) line.setMap(null);
-						var linePath = [
-							startMarker.getPosition(),
-							endMarker.getPosition()
-						];
-						line = new kakao.maps.Polyline({
-							path: linePath,
-							strokeWeight: 5,
-							strokeColor: '#FF0000',
-							strokeOpacity: 0.7,
-							strokeStyle: 'solid'
-						});
-						line.setMap(map);
-						updateInfo();
-					}
-				}
-
-				function updateRoute() {
-					const start = document.getElementById('startSearchBox').value;
-					const end = document.getElementById('destinationSearchBox').value;
-					const iframe = document.getElementById('kakao-route');
-					const url = `https://map.kakao.com/?sName=${encodeURIComponent(start)}&eName=${encodeURIComponent(end)}`;
-					iframe.src = url;
-				}
-
-				// 지도에 클릭 이벤트를 등록합니다
-				// kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
-				//     // 클릭한 위치의 좌표입니다
-				//     var latlng = mouseEvent.latLng;
-
-				//     // 커스텀 오버레이에 표시할 내용입니다
-				//     var content = '<div style="padding:5px;">' +
-				//                   '<img src="https://via.placeholder.com/150" alt="클릭 이미지" style="width:100%;"/>' +
-				//                   '</div>';
-
-				//     // 커스텀 오버레이를 생성합니다
-				//     var overlay = new kakao.maps.CustomOverlay({
-				//         content: content,
-				//         map: map,
-				//         position: latlng
-				//     });
-
-				//     // 클릭한 위치에 커스텀 오버레이를 표시합니다
-				//     overlay.setMap(map);
-				// });
-			});
-		};
-	</script>
+	<iframe id="kakao-route"></iframe>
+	<script src="scripts.js"></script>
 </body>
 </html>
