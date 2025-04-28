@@ -34,8 +34,8 @@ li {
     float: left;
 }
 
-#inputPlace {
-    width: 100%;
+#search-input {
+    width: 70%;
 }
 
 .placeItem {
