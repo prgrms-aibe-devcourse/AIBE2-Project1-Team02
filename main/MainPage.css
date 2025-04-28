@@ -1,0 +1,111 @@
+* {
+    margin: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+#stepBox {
+    border: 1px solid red;
+    width: 5%;
+    float: left;
+}
+#tab1 {
+    border: 1px solid pink;
+    width:30%;
+    float: left;
+}
+
+#tab2 {
+    border: 1px solid green;
+    width: 30%;
+    float: left;
+}
+
+#tab3 {
+    border: 1px solid blue;
+    width: 50%;
+    float: left;
+}
+
+#placeSearchBox {
+    width: 50%;
+    float: left;
+}
+
+#inputPlace {
+    width: 100%;
+}
+
+.placeItem {
+    display: flex;
+}
+
+.placeImg img {
+    float: left;
+    width: 50px;
+    height: 50px;
+}
+
+.placeDesc {
+    float: left;
+    width: 70%;
+}
+
+.info-addr {
+    font-size: 10px;
+    color: #666;
+}
+
+.addPlace {
+    float: right;
+}
+
+#placeSelectBox {
+    width: 50%;
+    float: left;
+}
+
+#festival-modal.hidden {
+    display: none;
+}
+
+#festival-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.modal-content img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
