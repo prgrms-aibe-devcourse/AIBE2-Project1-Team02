@@ -19,10 +19,12 @@
   <body>
     <div>
       <div id="stepBox">
-        <button class="tab" data-tab="tab1">01. <br />날짜 확인</button>
-        <button class="tab" data-tab="tab2">02. <br />장소 선택</button>
-        <button class="tab" data-tab="tab3">03. <br />숙소 설정</button>
+        <button class="tab" data-tab="tab1">01. <br />날짜 선택</button>
+        <button class="tab" data-tab="tab2">02. <br />지역 선택</button>
+        <button class="tab" data-tab="tab3">03. <br />장소 선택</button>
+        <button class="tab" data-tab="tab4">04. <br />일정 확인</button>
       </div>
+
       <div id="tab1" class="tabContent">날짜 선택</div>
       <div id="tab2" class="tabContent" style="display: none">
         지역 선택
@@ -47,13 +49,12 @@
           <button class="area-btn" data-value="39">제주</button>
         </div>
       </div>
-
       <div id="tab3" class="tabContent" style="display: none">
         <div id="placeSearchBox">
           <div>
             <input type="text" id="search-input" placeholder="키워드로 검색" />
             <button id="search-btn"><i class="bi bi-search"></i></button>
-            <button id="reset-btn">🔄</button>
+<!--            <button id="reset-btn">🔄</button>-->
             <div id="placeCategory">
               <button class="placeCategory" data-value="all">전체</button>
               <button class="placeCategory" data-value="1">장소</button>
@@ -67,12 +68,12 @@
             </ul>
             <button id="load-more-btn">더 보기</button>
           </div>
-          <div id="placeSelectBox">
-            select<br />
-            <ul id="selectedPlaces"></ul>
-          </div>
+        </div>
+        <div id="placeSelectBox">
+          <ul id="selectedPlaces"></ul>
         </div>
       </div>
+      <div id="tab4" class="tabContent" style="display: none">일정 확인</div>
 
       <!-- 모달 -->
       <div id="festival-modal" class="hidden">
@@ -91,8 +92,16 @@
           <p>
             <strong>운영시간:</strong> <span id="modal-operationHours"></span>
           </p>
+
+          <br/>
+
+          <div>
+            <div>Review</div>
+            <ul id="reviews"></ul>
+          </div>
         </div>
       </div>
+      <!-- //모달 -->
     </div>
     <script src="MainPage.js" defer></script>
     <script src="../config.js"></script>
