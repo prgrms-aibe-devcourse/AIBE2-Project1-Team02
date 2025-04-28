@@ -47,47 +47,53 @@
           <button class="area-btn" data-value="39">제주</button>
         </div>
       </div>
+
       <div id="tab3" class="tabContent" style="display: none">
         <div id="placeSearchBox">
           <div>
             <input type="text" id="search-input" placeholder="키워드로 검색" />
             <button id="search-btn"><i class="bi bi-search"></i></button>
             <button id="reset-btn">🔄</button>
+            <div id="placeCategory">
+              <button class="placeCategory" data-value="all">전체</button>
+              <button class="placeCategory" data-value="1">장소</button>
+              <button class="placeCategory" data-value="2">식당</button>
+              <button class="placeCategory" data-value="3">카페</button>
+              <button class="placeCategory" data-value="4">숙소</button>
+            </div>
+            <!--                    <input id="inputPlace" type="text" placeholder="장소를 입력하세요.">-->
+            <ul id="festival-list">
+              <li>불러오는 중...</li>
+            </ul>
+            <button id="load-more-btn">더 보기</button>
           </div>
-          <!--                    <input id="inputPlace" type="text" placeholder="장소를 입력하세요.">-->
-          <ul id="festival-list">
-            <li>불러오는 중...</li>
-          </ul>
-          <button id="load-more-btn">더 보기</button>
+          <div id="placeSelectBox">
+            select<br />
+            <ul id="selectedPlaces"></ul>
+          </div>
         </div>
-        <div id="placeSelectBox">
-          select<br />
-          <ul id="selectedPlaces"></ul>
+      </div>
+
+      <!-- 모달 -->
+      <div id="festival-modal" class="hidden">
+        <div class="modal-content">
+          <button class="close-button">&times;</button>
+          <h2 id="modal-placeName"></h2>
+          <img id="modal-image" src="" alt="" />
+          <p id="modal-description"></p>
+          <p>
+            <strong>주소:</strong> <span id="modal-address"></span>
+            <a id="modal-map-link" href="#" target="_blank"
+              ><i class="bi bi-map-fill"></i
+            ></a>
+          </p>
+          <p><strong>tel:</strong> <span id="modal-contact"></span></p>
+          <p>
+            <strong>운영시간:</strong> <span id="modal-operationHours"></span>
+          </p>
         </div>
       </div>
     </div>
-
-    <!-- 모달 -->
-    <div id="festival-modal" class="hidden">
-      <div class="modal-content">
-        <button class="close-button">&times;</button>
-        <h2 id="modal-title"></h2>
-        <img id="modal-image" src="" alt="" />
-        <p id="modal-detail-info"></p>
-        <p>
-          <strong>주소:</strong> <span id="modal-addr"></span
-          ><a id="modal-map-link" href="#" target="_blank"
-            ><i class="bi bi-map-fill"></i
-          ></a>
-        </p>
-        <p><strong>tel:</strong> <span id="modal-tel"></span></p>
-        <p><strong>행사기간:</strong> <span id="modal-period"></span></p>
-        <p><strong>운영시간:</strong> <span id="modal-play-time"></span></p>
-        <p><strong>행사장안 장소:</strong> <span id="modal-place"></span></p>
-      </div>
-    </div>
-    <!-- 모달 -->
-
     <script src="MainPage.js" defer></script>
     <script src="../config.js"></script>
   </body>
