@@ -29,8 +29,13 @@ li {
     float: left;
 }
 
+#scheduleContainer {
+    width: 25%;
+    float: left;
+}
+
 #placeSearchBox {
-    width: 50%;
+    width: 30%;
     float: left;
 }
 
@@ -40,17 +45,32 @@ li {
 
 .placeItem {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.placeInfo {
+    display: flex;
+    align-items: center;
 }
 
 .placeImg img {
     float: left;
     width: 50px;
     height: 50px;
+    object-fit: cover;
 }
 
 .placeDesc {
-    float: left;
+    flex-grow: 1;
     width: 70%;
+    display: flex; /* 추가 */
+    flex-direction: column; /* 추가 - 세로 배치 */
+    justify-content: center; /* 추가 - 수직 가운데 */
+}
+
+.placeDesc > * {
+    text-align: left; /* placeDesc 안의 모든 직계 자식 요소 좌측정렬 */
 }
 
 .info-addr {
@@ -58,12 +78,8 @@ li {
     color: #666;
 }
 
-.addPlace {
-    float: right;
-}
-
 #placeSelectBox {
-    width: 50%;
+    width: 30%;
     float: left;
 }
 
