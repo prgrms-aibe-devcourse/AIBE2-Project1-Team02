@@ -1,32 +1,32 @@
 * {
-    margin: 0;
+  margin: 0;
 }
 
 li {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 #stepBox {
-    border: 1px solid red;
-    width: 5%;
-    float: left;
+  border: 1px solid red;
+  width: 5%;
+  float: left;
 }
 #tab1 {
-    border: 1px solid pink;
-    width:30%;
-    float: left;
+  border: 1px solid pink;
+  width: 30%;
+  float: left;
 }
 
 #tab2 {
-    border: 1px solid green;
-    width: 30%;
-    float: left;
+  border: 1px solid green;
+  width: 30%;
+  float: left;
 }
 
 #tab3 {
-    border: 1px solid blue;
-    width: 50%;
-    float: left;
+  border: 1px solid blue;
+  width: 50%;
+  float: left;
 }
 
 #scheduleContainer {
@@ -35,93 +35,125 @@ li {
 }
 
 #placeSearchBox {
-    width: 30%;
-    float: left;
+  width: 50%;
+  float: left;
 }
 
 #search-input {
-    width: 70%;
+  width: 70%;
 }
 
 .placeItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.placeInfo {
-    display: flex;
-    align-items: center;
+  display: flex;
 }
 
 .placeImg img {
-    float: left;
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
+  float: left;
+  width: 50px;
+  height: 50px;
 }
 
 .placeDesc {
-    flex-grow: 1;
-    width: 70%;
-    display: flex; /* 추가 */
-    flex-direction: column; /* 추가 - 세로 배치 */
-    justify-content: center; /* 추가 - 수직 가운데 */
-}
-
-.placeDesc > * {
-    text-align: left; /* placeDesc 안의 모든 직계 자식 요소 좌측정렬 */
+  float: left;
+  width: 70%;
 }
 
 .info-addr {
-    font-size: 10px;
-    color: #666;
+  font-size: 10px;
+  color: #666;
+}
+
+.addPlace {
+  float: right;
 }
 
 #placeSelectBox {
-    width: 30%;
-    float: left;
+  width: 50%;
+  float: left;
+
 }
 
 #festival-modal.hidden {
-    display: none;
+  display: none;
 }
 
 #festival-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
 .modal-content {
-    background-color: #fff;
-    padding: 1.5rem;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 500px;
-    position: relative;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
 }
 
 .close-button {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 1.5rem;
-    background: none;
-    border: none;
-    cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .modal-content img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 1rem;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* 지역 버튼 스타일 */
+.area-btn-container {
+  display: flex;
+  flex-wrap: wrap; /* 여러 줄로 배치 */
+  gap: 20px; /* 버튼 간의 간격 */
+  justify-content: flex-start; /* 왼쪽 정렬 */
+  margin-left: 30px; /* 왼쪽 여백 추가 */
+  margin-bottom: 20px; /* 아래쪽 여백 추가 */
+  margin-top: 40px;
+}
+
+.area-btn {
+  width: calc(50% - 20px); /* 버튼의 너비를 50%로 설정하고 간격을 고려 */
+  padding: 12px;
+  background-color: #f0f0f0; /* 밝은 회색 배경 */
+  border: none;
+  border-radius: 30px; /* 둥근 모서리 */
+  color: #333; /* 어두운 회색 글씨 */
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+  transition: all 0.3s ease; /* 모든 변화에 부드러운 전환 효과 */
+  box-sizing: border-box; /* 패딩과 테두리가 크기에 포함되도록 설정 */
+}
+
+.area-btn:hover {
+  background-color: #e0e0e0; /* 마우스를 올렸을 때 더 어두운 회색 */
+  transform: translateY(-2px); /* 마우스를 올렸을 때 약간 떠오르는 효과 */
+}
+
+.area-btn:active {
+  transform: translateY(1px); /* 클릭 시 눌리는 효과 */
+}
+
+.area-btn.active {
+  background-color: #b0b0b0; /* 활성화된 버튼 색상 */
+  color: #fff; /* 활성화된 버튼은 흰색 글씨 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 활성화된 버튼에 더 강한 그림자 */
 }
