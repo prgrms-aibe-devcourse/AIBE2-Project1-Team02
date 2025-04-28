@@ -29,6 +29,11 @@ li {
   float: left;
 }
 
+#scheduleContainer {
+    width: 25%;
+    float: left;
+}
+
 #placeSearchBox {
   width: 50%;
   float: left;
@@ -65,6 +70,7 @@ li {
 #placeSelectBox {
   width: 50%;
   float: left;
+
 }
 
 #festival-modal.hidden {
