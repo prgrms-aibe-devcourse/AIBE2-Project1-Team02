@@ -23,7 +23,50 @@
         <button class="tab" data-tab="tab2">02. <br />장소 선택</button>
         <button class="tab" data-tab="tab3">03. <br />숙소 설정</button>
       </div>
-      <div id="tab1" class="tabContent">날짜 선택</div>
+      <div id="tab1" class="tabContent">
+        <!-- 달력모달 -->
+        <button id="openCalendarModal">달력 열기</button>
+        <div
+          id="calendarModalBackground"
+          class="calendar-modal-background"
+          style="display: none"
+        >
+          <div class="calendar-modal">
+            <!-- 달력 HTML 삽입 -->
+            <div class="calendar-div">
+              <h1>여행 계획 달력</h1>
+              <div class="calendar-container">
+                <button
+                  class="month-nav"
+                  id="calendarPrevBtn"
+                  onclick="changeBothMonths(-1)"
+                >
+                  <i class="bi bi-chevron-left"></i>
+                </button>
+                <div class="calendar" id="calendar1">
+                  <div class="calendar-content" id="calendar1-content"></div>
+                </div>
+                <div class="calendar" id="calendar2">
+                  <div class="calendar-content" id="calendar2-content"></div>
+                </div>
+                <button
+                  class="month-nav"
+                  id="calendarNextBtn"
+                  onclick="changeBothMonths(1)"
+                >
+                  <i class="bi bi-chevron-right"></i>
+                </button>
+              </div>
+              <div class="button-container">
+                <button id="confirmBtn" class="confirm-btn" disabled>
+                  선택 완료
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div id="tab2" class="tabContent" style="display: none">
         지역 선택
         <div class="area-btn-container">

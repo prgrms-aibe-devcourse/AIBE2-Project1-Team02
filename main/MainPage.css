@@ -30,8 +30,8 @@ li {
 }
 
 #scheduleContainer {
-    width: 25%;
-    float: left;
+  width: 25%;
+  float: left;
 }
 
 #placeSearchBox {
@@ -70,7 +70,6 @@ li {
 #placeSelectBox {
   width: 50%;
   float: left;
-
 }
 
 #festival-modal.hidden {
@@ -156,4 +155,226 @@ li {
   background-color: #b0b0b0; /* 활성화된 버튼 색상 */
   color: #fff; /* 활성화된 버튼은 흰색 글씨 */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 활성화된 버튼에 더 강한 그림자 */
+}
+
+/* 달력 모달부분 */
+/* 모달 배경 스타일 */
+.calendar-modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none; /* 기본적으로 모달이 보이지 않도록 설정 */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* 모달 창 스타일 */
+.calendar-modal {
+  background: white;
+  padding: 20px; /* 패딩을 늘려서 더 여유로운 공간 제공 */
+  border-radius: 8px;
+  width: 50%;
+  max-height: 80%; /* 세로 높이를 화면의 80%로 제한 */
+  overflow: auto; /* 내용이 넘칠 경우 스크롤이 생기도록 설정 */
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* 닫기 버튼 스타일 */
+.calendar-modal .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+
+/* 버튼 스타일 */
+.calendar-modal button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.calendar-modal button:hover {
+  background-color: #45a049;
+}
+
+/* 달력부분 */
+/* 여기서부터 */
+.calendar-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  justify-content: center; /* 달력을 중앙에 배치 */
+}
+.calendar-div {
+  display: flex;
+  flex-direction: column; /* 세로 방향으로 배치 */
+  justify-content: center; /* 세로 중앙 */
+  align-items: center; /* 가로 중앙 */
+  /* min-height: 100vh; */ /* 화면 전체 높이를 차지하는 부분을 제거 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  padding: 20px 0; /* 위아래 여백을 줄여서 더 균형 잡힌 공간을 제공 */
+}
+
+.calendar {
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */ /* 그림자 제거 */
+  width: 300px;
+  border: none; /* 테두리 제거 */
+}
+
+.calendar-div .month-nav {
+  background-color: transparent; /* 배경 투명 */
+  border: none;
+  cursor: pointer;
+  font-size: 24px; /* 아이콘 크기 설정 */
+}
+
+.month-nav:hover {
+  color: #4caf50; /* 호버 시 색상 변경 */
+}
+
+.month-nav i {
+  font-size: 40px; /* 아이콘 크기 */
+  font-weight: bold; /* 굵게 */
+  color: #b0b0b0;
+}
+
+.month-nav-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.month-name {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.weekdays div {
+  font-weight: bold;
+  color: #555;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 5px;
+  text-align: center;
+}
+
+.day {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.day:hover {
+  background-color: #f0f0f0;
+}
+
+/* 날짜 스타일 수정 */
+.day.past {
+  background-color: #e0e0e0;
+  color: #b0b0b0;
+}
+
+.day.future {
+  background-color: black;
+  color: white;
+}
+
+/* 시작일, 끝일 동일한 색상 */
+.selected-start,
+.selected-end {
+  background-color: #282828 !important; /* 연한 초록색으로 동일하게 설정 */
+  color: white;
+}
+
+.selected-range {
+  background-color: #797878bc;
+  color: white;
+}
+
+.selected {
+  background-color: #b0b0b0;
+  color: white;
+}
+
+.day.past {
+  background-color: transparent; /* 또는 아예 삭제 */
+  color: #b0b0b0;
+  cursor: default;
+}
+
+/* 요일 색상 */
+.weekdays .sunday {
+  color: red;
+}
+
+.weekdays .saturday {
+  color: blue;
+}
+/* 선택 완료 버튼을 가운데 배치 */
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 40px; /* 기존의 margin-top을 조금 더 크게 설정 */
+}
+
+.confirm-btn {
+  background-color: #b0b0b0; /* 기본 배경색은 연한 회색 */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.confirm-btn:hover {
+  background-color: #45a049;
+}
+
+/* 선택 완료 버튼 스타일 */
+#confirmBtn {
+  background-color: #282828; /* 검은색 배경 */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#confirmBtn:disabled {
+  background-color: #b0b0b0; /* 비활성화 상태에서 회색 배경 */
+  color: white;
 }
