@@ -6,7 +6,13 @@
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Document</title>
-        <link rel="stylesheet" href="MainPage.css"></link>
+        <link rel="stylesheet" href="MainPage.css" />
+        <!-- 부트스트랩 -->
+        <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+        />
+        <!-- //부트스트랩 -->
     </head>
     <body>
         <div>
@@ -19,7 +25,35 @@
             <div id="tab2" class="tabContent" style="display: none;">지역 선택</div>
             <div id="tab3" class="tabContent" style="display: none;">
                 <div id="placeSearchBox">
-                    <input id="inputPlace" type="text" placeholder="장소를 입력하세요.">
+                    <div>
+                        <!-- 지역을 골랐을 때 넘겨 받을 값 -->
+                        <select id="area-select">
+                            <option value="all">전체</option>
+                            <option value="1">서울</option>
+                            <option value="2">인천</option>
+                            <option value="3">대전</option>
+                            <option value="4">대구</option>
+                            <option value="5">광주</option>
+                            <option value="6">부산</option>
+                            <option value="7">울산</option>
+                            <option value="8">세종</option>
+                            <option value="31">경기</option>
+                            <option value="32">강원</option>
+                            <option value="33">충북</option>
+                            <option value="34">충남</option>
+                            <option value="35">경북</option>
+                            <option value="36">경남</option>
+                            <option value="37">전북</option>
+                            <option value="38">전남</option>
+                            <option value="39">제주</option>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="text" id="search-input" placeholder="키워드로 검색" />
+                        <button id="search-btn"><i class="bi bi-search"></i></button>
+                        <button id="reset-btn">🔄</button>
+                    </div>
+<!--                    <input id="inputPlace" type="text" placeholder="장소를 입력하세요.">-->
                     <ul id="festival-list">
                         <li>불러오는 중...</li>
                     </ul>
