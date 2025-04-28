@@ -19,7 +19,7 @@ window.onload = function () {
 
 		// 주소 데이터를 배열로 관리
 		var addressData = [
-			{ name: "홍대입구역", query: "홍대입구역", url: "https://example.com/image1.jpg" },
+			{ name: "홍대입구역", query: "홍대입구역", url: "https://i.postimg.cc/vmrw1k8J/IMG-3471.jpg" },
 			{ name: "서울역", query: "서울역", url: "https://example.com/image2.jpg" },
 			// 추가적인 테스트 데이터
 		];
