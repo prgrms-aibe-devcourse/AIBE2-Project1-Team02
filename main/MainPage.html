@@ -78,25 +78,25 @@
       <!-- 모달 -->
       <div id="festival-modal" class="hidden">
         <div class="modal-content">
-          <button class="close-button">&times;</button>
-          <h2 id="modal-placeName"></h2>
-          <img id="modal-image" src="" alt="" />
-          <p id="modal-description"></p>
-          <p>
-            <strong>주소:</strong> <span id="modal-address"></span>
-            <a id="modal-map-link" href="#" target="_blank"
-              ><i class="bi bi-map-fill"></i
-            ></a>
-          </p>
-          <p><strong>tel:</strong> <span id="modal-contact"></span></p>
-          <p>
-            <strong>운영시간:</strong> <span id="modal-operationHours"></span>
-          </p>
-
-          <br/>
-
-          <div>
+          <div class="modal-content-left">
+            <button class="close-button">&times;</button>
+            <img id="modal-image" src="" alt="" />
+            <h2 id="modal-placeName"></h2>
+            <p id="modal-description"></p>
+            <p>
+              <strong>주소:</strong> <span id="modal-address"></span>
+              <a id="modal-map-link" href="#" target="_blank"
+                ><i class="bi bi-map-fill"></i
+              ></a>
+            </p>
+            <p><strong>tel:</strong> <span id="modal-contact"></span></p>
+            <p>
+              <strong>운영시간:</strong> <span id="modal-operationHours"></span>
+            </p>
+          </div>
+          <div class="modal-content-right">
             <div>Review</div>
+            <input type="text" placeholder="댓글을 입력해주세요.">
             <ul id="reviews"></ul>
           </div>
         </div>

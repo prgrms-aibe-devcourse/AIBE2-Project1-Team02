@@ -131,6 +131,7 @@ function loadFestivalData(page = 1) {
 
         // 각 장소의 정보 처리
         const id = f.id || "";
+        const image = imageUrl;
         const placeName = f.placeName || ""; // 장소 이름
         const category = f.category || ""; // 카테고리
         const address = f.address || ""; // 주소
@@ -206,6 +207,7 @@ function loadFestivalData(page = 1) {
           if (e.target.closest("li")) {
             handleLocationDetail({
               id,
+              image,
               placeName,
               category,
               address,
