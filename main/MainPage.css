@@ -393,8 +393,9 @@ li {
 }
 
 #tab2Title,
-#tab2SubTitle {
-  color: #282828;
+#tab2SubTitle,
+#tab3Title,
+#tab3SubTitle {
   display: flex;
   flex-direction: column; /* 세로 방향으로 배치 */
   gap: 20px; /* areaName과 dateRange 사이 간격 */
@@ -798,4 +799,8 @@ li {
   font-size: 18px;
   color: #666;
   transform: translateY(24px) translateX(-8px); /* 아래로 8px, 왼쪽으로 4px 이동 */
+}
+
+#stepBox .tab[data-tab="tab4"] {
+  display: none;
 }

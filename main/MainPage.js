@@ -122,7 +122,6 @@ document.addEventListener("DOMContentLoaded", () => {
       event.target.classList.add("active"); // 클릭한 버튼에 active 클래스 추가
     });
   });
-
   // 상세정보 모달 처리
   modalHandler();
   // 달력 모달 처리
@@ -247,13 +246,15 @@ function loadFestivalData(page = 1) {
             const deleteBtn = newLi.querySelector(".deletePlace");
             deleteBtn.addEventListener("click", () => {
               newLi.remove();
-              filteredItems = filteredItems.filter(item => {
+              filteredItems = filteredItems.filter((item) => {
                 return item.id != newLi.dataset.id;
               });
             });
 
             // item filtering
-            let filteredItem = pagedItems.filter(item => { return item.id == placeItem.dataset.id; });
+            let filteredItem = pagedItems.filter((item) => {
+              return item.id == placeItem.dataset.id;
+            });
             filteredItems.push(filteredItem[0]);
             return;
           }
@@ -304,6 +305,23 @@ function loadFestivalData(page = 1) {
       list.innerHTML = `<li>데이터 불러오기 실패: ${err.message}</li>`;
       console.error("API 호출 오류:", err);
     });
+  document
+    .getElementById("makeSchedule")
+    .addEventListener("click", function () {
+      const selectedPlaces = document.getElementById("selectedPlaces");
+      const tab4Button = document.querySelector('[data-tab="tab4"]');
+
+      // selectedPlaces에 아이템이 있는지 확인
+      if (selectedPlaces.children.length === 0) {
+        // 리스트가 비어 있으면 tab4 버튼 숨기기
+        tab4Button.style.display = "none"; // tab4 버튼 숨기기
+        alert("리스트에 아이템이 없습니다. 먼저 장소를 추가해주세요.");
+      } else {
+        // 리스트에 아이템이 있으면 tab4 버튼 보이기
+        tab4Button.style.display = "inline-block"; // tab4 버튼 보이기
+        tab4Button.click();
+      }
+    });
 }
 // 추가 상세정보 (모달의 내용)
 function handleLocationDetail(data) {
@@ -319,8 +337,8 @@ function handleLocationDetail(data) {
 
   placeNameEl.textContent = data.placeName || "정보 없음";
   data.image.forEach((image) => {
-    let newLi = document.createElement('li');
-    newLi.className = 'splide__slide';
+    let newLi = document.createElement("li");
+    newLi.className = "splide__slide";
     newLi.innerHTML = `<img src = ${image} alt="${data.placeName}"/>`;
     slider.appendChild(newLi);
   });
@@ -329,8 +347,8 @@ function handleLocationDetail(data) {
   operationHoursEl.textContent = data.operationHours || "운영 시간 정보 없음";
   descriptionEl.textContent = data.description || "상세 정보 없음";
   reviews.innerHTML = "";
-  data.reviews.forEach(item => {
-    let newLi = document.createElement('li');
+  data.reviews.forEach((item) => {
+    let newLi = document.createElement("li");
     newLi.innerHTML = `<div>⭐️${item.rating}</div>
                     <div>${item.comment}</div>
                     <div>${item.author} | ${item.date}</div>`;
@@ -338,16 +356,15 @@ function handleLocationDetail(data) {
     reviews.appendChild(newLi);
   });
 
-  new Splide('#travel-slider', {
-    type: 'loop',      // 무한 반복
-    perPage: 1,        // 한 번에 1개 보여줌
-    autoplay: true,    // 자동 재생
-    interval: 3000,    // 3초 간격
+  new Splide("#travel-slider", {
+    type: "loop", // 무한 반복
+    perPage: 1, // 한 번에 1개 보여줌
+    autoplay: true, // 자동 재생
+    interval: 3000, // 3초 간격
     pauseOnHover: true, // 마우스 올리면 멈춤
-    arrows: true,      // 좌우 버튼 표시
-    pagination: true,  // 하단 점 네비게이션 표시
+    arrows: true, // 좌우 버튼 표시
+    pagination: true, // 하단 점 네비게이션 표시
   }).mount();
-
 
   // 모달 열기
   modal.classList.remove("hidden");
@@ -430,12 +447,25 @@ function updateCalendarInfo() {
   const calendarIcon = document.getElementById("calendarIcon");
   const selectedDatesList = document.getElementById("selectedDatesList");
   const timeConfirmBtn = document.getElementById("timeConfirmBtn");
+  //탭 2영역
+  const tab2TitleEl = document.getElementById("tab2Title");
+  const tab2SubTitleEl = document.getElementById("tab2SubTitle");
+
+  //탭 3영역
+  const tab3TitleEl = document.getElementById("tab3Title");
+  const tab3SubTitleEl = document.getElementById("tab3SubTitle");
 
   if (selectedAreaCode !== "") {
     const areaName = findAreaNameByCode(selectedAreaCode);
     if (areaName) {
       areaNameElement.textContent = areaName;
+      tab2TitleEl.textContent = areaName;
+      tab3TitleEl.textContent = areaName;
     }
+  } else {
+    areaNameElement.textContent = "여행 일정";
+    tab2TitleEl.textContent = "여행 일정";
+    tab3TitleEl.textContent = "여행 일정";
   }
 
   if (selectedStartDate && selectedEndDate) {
@@ -443,11 +473,27 @@ function updateCalendarInfo() {
       selectedStartDate
     )} ~ ${formatDateForRange(selectedEndDate)}`;
     calendarIcon.style.display = "inline";
+
+    tab2SubTitleEl.textContent = `${formatDateForRange(
+      selectedStartDate
+    )} ~ ${formatDateForRange(selectedEndDate)}`;
+
+    tab3SubTitleEl.textContent = `${formatDateForRange(
+      selectedStartDate
+    )} ~ ${formatDateForRange(selectedEndDate)}`;
   } else {
     dateRangeElement.textContent = `${formatDateForRange(
       today
     )} ~ ${formatDateForRange(today)}`;
     calendarIcon.style.display = "inline";
+
+    tab2SubTitleEl.textContent = `${formatDateForRange(
+      today
+    )} ~ ${formatDateForRange(today)}`;
+
+    tab3SubTitleEl.textContent = `${formatDateForRange(
+      today
+    )} ~ ${formatDateForRange(today)}`;
   }
 
   // 날짜별 리스트 초기화
@@ -842,16 +888,6 @@ function findAreaNameByCode(code) {
   }
   return null;
 }
-
-let makeScheduleButton = document.getElementById("makeSchedule");
-makeScheduleButton.addEventListener('click', function(e) {
-  document
-      .querySelectorAll(".tabContent")
-      .forEach((c) => (c.style.display = "none"));
-  const target = document.getElementById("tab4");
-  target.style.display = "block";
-});
-
 // 오늘 날짜를 YYYYMMDD 형식으로 반환하는 함수
 function getTodayDate() {
   const today = new Date();
