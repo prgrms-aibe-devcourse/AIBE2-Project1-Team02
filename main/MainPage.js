@@ -843,6 +843,15 @@ function findAreaNameByCode(code) {
   return null;
 }
 
+let makeScheduleButton = document.getElementById("makeSchedule");
+makeScheduleButton.addEventListener('click', function(e) {
+  document
+      .querySelectorAll(".tabContent")
+      .forEach((c) => (c.style.display = "none"));
+  const target = document.getElementById("tab4");
+  target.style.display = "block";
+});
+
 // 오늘 날짜를 YYYYMMDD 형식으로 반환하는 함수
 function getTodayDate() {
   const today = new Date();
