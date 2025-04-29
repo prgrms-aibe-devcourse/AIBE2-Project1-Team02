@@ -908,7 +908,9 @@ function initializeDates() {
 //   tagSearchBox.classList.add('visible');
 // });
 
+
 const searchInput = document.getElementById("search-input");
+const tagSearchBtn = document.getElementById("tag-search-btn");
 const tagBox = document.getElementById("tagSearchBox");
 const placeBox = document.getElementById("placeSearchBox");
 const selectBox = document.getElementById("placeSelectBox");
@@ -940,3 +942,7 @@ document.addEventListener("mousedown", (e) => {
     hideTagBox();
   }
 });
+
+tagSearchBtn.addEventListener('click', (e) => {
+  hideTagBox();
+})
