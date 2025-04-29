@@ -27,6 +27,7 @@ let currentYear1 = new Date().getFullYear(); // 현재 달력1의 년도
 let currentMonth2 = 4; // 달력2는 5월 (0-based index)
 let currentYear2 = 2025; // 달력2는 2025년
 
+let selectedDates = [];
 let selectedStartDate = null;
 let selectedEndDate = null;
 let lastStartDate = null;
@@ -88,6 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".area-btn").forEach((button) => {
     button.addEventListener("click", (event) => {
       selectedAreaCode = event.target.dataset.value; // 지역 값 가져오기
+      updateCalendarInfo();
       currentPage = 1; // 페이지를 첫 번째 페이지로 초기화
       loadFestivalData(currentPage); // 지역에 맞는 데이터 로드
 
@@ -314,24 +316,15 @@ function calendarModalHandler() {
   );
   const confirmBtn = document.querySelector(".confirm-btn");
 
-  // 탭버튼으로 모달 열기
-  document.querySelectorAll(".tab").forEach((button) => {
-    button.addEventListener("click", (event) => {
-      const tab = event.currentTarget.dataset.tab;
-      if (tab === "tab1") {
-        calendarModalBackground.style.display = "flex";
-      }
-    });
-  });
-
   // 선택 완료 버튼 클릭 시 모달 닫기
   confirmBtn.addEventListener("click", () => {
     calendarModalBackground.style.display = "none"; // 모달 닫기
+    updateCalendarInfo();
     // 탭2 버튼을 찾아서 강제로 클릭해버리기
-    const tab2Button = document.querySelector('.tab[data-tab="tab2"]');
-    if (tab2Button) {
-      tab2Button.click();
-    }
+    // const tab2Button = document.querySelector('.tab[data-tab="tab2"]');
+    // if (tab2Button) {
+    //   tab2Button.click();
+    // }
   });
 
   // 모달 외부 클릭 시 아무 일도 일어나지 않도록
@@ -353,10 +346,169 @@ function calendarModalHandler() {
     changeBothMonths(1);
   });
 
-  // 선택 완료 버튼 클릭 시 처리
+  // 선택 완료 버튼 클릭 시 날짜 로그
   document
     .getElementById("confirmBtn")
     .addEventListener("click", confirmSelection);
+
+  const dateRangeElement = document.getElementById("dateRange");
+  //날짜 눌렀을때, 날짜 설정 모달 동작
+  dateRangeElement.addEventListener("click", () => {
+    calendarModalBackground.style.display = "flex";
+  });
+  // 달력 아이콘 클릭 시 모달 열기
+  const calendarIcon = document.getElementById("calendarIcon");
+  calendarIcon.addEventListener("click", () => {
+    calendarModalBackground.style.display = "flex";
+  });
+  if (!dateRangeElement.textContent.trim()) {
+    calendarIcon.style.display = "none"; // 값이 없으면 아이콘 숨기기
+  } else {
+    calendarIcon.style.display = "inline"; // 값이 있으면 아이콘 보이기
+  }
+}
+// 선택 완료 후 calendarInfo를 업데이트하는 함수 + 시간 수정부분
+function updateCalendarInfo() {
+  const areaNameElement = document.getElementById("areaName");
+  const dateRangeElement = document.getElementById("dateRange");
+  const calendarIcon = document.getElementById("calendarIcon");
+  const selectedDatesList = document.getElementById("selectedDatesList");
+  const timeConfirmBtn = document.getElementById("timeConfirmBtn");
+
+  if (selectedAreaCode !== "") {
+    const areaName = findAreaNameByCode(selectedAreaCode);
+    if (areaName) {
+      areaNameElement.textContent = areaName;
+    }
+  }
+
+  if (selectedStartDate && selectedEndDate) {
+    dateRangeElement.textContent = `${formatDateForRange(
+      selectedStartDate
+    )} ~ ${formatDateForRange(selectedEndDate)}`;
+    calendarIcon.style.display = "inline";
+  } else {
+    dateRangeElement.textContent = `${formatDateForRange(
+      today
+    )} ~ ${formatDateForRange(today)}`;
+    calendarIcon.style.display = "inline";
+  }
+
+  // 날짜별 리스트 초기화
+  selectedDatesList.innerHTML = "";
+
+  const dates = getDatesInRange(selectedStartDate, selectedEndDate);
+  dates.forEach((dateStr) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <div class="schedule-item">
+        <div class="schedule-date">
+          <div class="schedule-date-label">일자</div>
+          <span class="schedule-date-text">${formatDateForTimeAdjustment(
+            dateStr
+          )}</span>
+        </div>
+        <div class="schedule-time-inputs">
+          <div class="schedule-time-input">
+            <div class="schedule-time-label">시작시간</div>
+            <input type="time" value="10:00" class="startTime" />
+          </div>
+          <div class="schedule-time-arrow"><i class="bi bi-arrow-right" id="schedule-arrow"></i></div> <!-- 화살표 추가 -->
+          <div class="schedule-time-input">
+            <div class="schedule-time-label">종료시간</div>
+            <input type="time" value="22:00" class="endTime" />
+          </div>
+        </div>
+      </div>
+    `;
+    selectedDatesList.appendChild(li);
+  });
+
+  if (dates.length > 0) {
+    timeConfirmBtn.style.display = "block";
+  } else {
+    timeConfirmBtn.style.display = "none";
+  }
+
+  // (1) 전체 여행기간 출력용
+  function formatDateForRange(dateStr) {
+    const days = ["일", "월", "화", "수", "목", "금", "토"];
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const dayOfWeek = days[date.getDay()];
+    return `${year}.${month}.${day}(${dayOfWeek})`; // 예: 2025.05.16(금)
+  }
+
+  // (2) 개별 시간 설정용
+  function formatDateForTimeAdjustment(dateStr) {
+    const days = ["일", "월", "화", "수", "목", "금", "토"];
+    const date = new Date(dateStr);
+    const month = date.getMonth() + 1; // pad 없이
+    const day = date.getDate();
+    const dayOfWeek = days[date.getDay()];
+    return `${month}/${day} ${dayOfWeek}`; // 예: 5/16 금
+  }
+
+  selectedDatesList.querySelectorAll(".schedule-item").forEach((item) => {
+    const startTimeInput = item.querySelector(".startTime");
+    const endTimeInput = item.querySelector(".endTime");
+
+    // 시작 시간 변경 시
+    startTimeInput.addEventListener("change", () => {
+      if (startTimeInput.value >= endTimeInput.value) {
+        alert("시작시간은 종료시간보다 빠르거나 같을 수 없습니다.");
+        startTimeInput.value = "10:00"; // 잘못 입력하면 초기값 10:00으로 복구
+      }
+    });
+
+    // 종료 시간 변경 시
+    endTimeInput.addEventListener("change", () => {
+      if (startTimeInput.value >= endTimeInput.value) {
+        alert("종료시간은 시작시간보다 늦어야 합니다.");
+        endTimeInput.value = "22:00"; // 잘못 입력하면 초기값 22:00으로 복구
+      }
+    });
+  });
+
+  //시간 설정완료 버튼 클릭시,
+  document.getElementById("timeConfirmBtn").addEventListener("click", () => {
+    const dateItems = document.querySelectorAll(".schedule-item");
+
+    // 각 날짜 항목에 대해 startTime, endTime을 가져와서 selectedDates 배열에 추가
+    dateItems.forEach((item) => {
+      const date = item.querySelector(".schedule-date-text").textContent;
+      const startTime = item.querySelector(".startTime").value;
+      const endTime = item.querySelector(".endTime").value;
+
+      selectedDates.push({
+        date,
+        startTime,
+        endTime,
+      });
+    });
+    console.log("전역 변수에 저장된 값:", selectedDates);
+    // 탭3으로 이동
+    const tab2Button = document.querySelector('.tab[data-tab="tab2"]');
+    if (tab2Button) {
+      tab2Button.click();
+    }
+  });
+
+  // 날짜 범위 배열 생성
+  function getDatesInRange(startStr, endStr) {
+    const dateArray = [];
+    if (!startStr || !endStr) return dateArray;
+    let currentDate = new Date(startStr);
+    const endDate = new Date(endStr);
+
+    while (currentDate <= endDate) {
+      dateArray.push(currentDate.toISOString().split("T")[0]); // yyyy-mm-dd
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return dateArray;
+  }
 }
 // 주소에서 지역 코드를 추출하는 함수
 function getAreaCodeFromAddress(address) {
@@ -530,7 +682,7 @@ function handleDayClick(dayElement) {
   // 선택된 날짜가 있을 경우 버튼 활성화
   toggleConfirmButton();
 }
-// 날짜 초기화화
+// 날짜 초기화
 function resetSelection() {
   const dayElements = document.querySelectorAll(".day");
   dayElements.forEach((day) => {
@@ -624,6 +776,15 @@ function toggleConfirmButton() {
     confirmBtn.style.backgroundColor = "#b0b0b0";
     confirmBtn.style.color = "white";
   }
+}
+// 지역코드로 지역명을 가져오는 함수
+function findAreaNameByCode(code) {
+  for (const [areaName, areaCode] of Object.entries(AREA_CODE_MAP)) {
+    if (areaCode === code) {
+      return areaName;
+    }
+  }
+  return null;
 }
 
 // 오늘 날짜를 YYYYMMDD 형식으로 반환하는 함수

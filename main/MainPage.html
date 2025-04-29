@@ -19,13 +19,24 @@
   <body>
     <div>
       <div id="stepBox">
-        <button class="tab" data-tab="tab1">01. <br />날짜 확인</button>
-        <button class="tab" data-tab="tab2">02. <br />장소 선택</button>
-        <button class="tab" data-tab="tab3">03. <br />숙소 설정</button>
+        <button class="tab" data-tab="tab1">01. <br />날짜 선택</button>
+        <button class="tab" data-tab="tab2">02. <br />지역 선택</button>
+        <button class="tab" data-tab="tab3">03. <br />장소 선택</button>
       </div>
       <div id="tab1" class="tabContent">
-        <!-- 달력모달 -->
-        <button id="openCalendarModal">달력 열기</button>
+        <div id="calendarInfo">
+          <h1 id="areaName">여행 일정</h1>
+          <div id="dateRangeDiv">
+            <h3 id="dateRange"></h3>
+            <i class="bi bi-calendar" id="calendarIcon"></i>
+          </div>
+        </div>
+        <ul id="selectedDatesList"></ul>
+        <!-- 날짜별 시간 설정용 리스트 -->
+        <button id="timeConfirmBtn" style="display: none">
+          시간 설정 완료
+        </button>
+
         <div
           id="calendarModalBackground"
           class="calendar-modal-background"
@@ -68,7 +79,8 @@
       </div>
 
       <div id="tab2" class="tabContent" style="display: none">
-        지역 선택
+        <h1 id="tab2Title">여행 일정</h1>
+        <h2 id="tab2SubTitle">어디로 떠나고 싶으신가요?</h2>
         <div class="area-btn-container">
           <button class="area-btn" data-value="all">전체</button>
           <button class="area-btn" data-value="1">서울</button>
