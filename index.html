@@ -1,23 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-	<meta charset="utf-8"/>
-	<title>Kakao 지도 시작하기</title>
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=510b624b2b131b82ad7aee34c7864031&libraries=services"></script>
+  <meta charset="UTF-8">
+  <title>🗺️ Gemini 기반 여행 일정 생성기</title>
 </head>
 <body>
-	<div id="map"></div>
-	<div id="controls">
-		<input type="text" id="destinationSearchBox" placeholder="목적지 검색">
-		<button id="addDestination">목적지 설정</button>
-		<button id="findRoute">경로검색</button>
-		<ul id="destinationList"></ul>
-	</div>
-	<div id="info">
-		<p>총 거리: <span id="totalDistance">0 km</span></p>
-	</div>
-	<iframe id="kakao-route"></iframe>
-	<script src="scripts.js"></script>
+  <h1>🗺️ 여행 일정 자동 생성기 (Google Gemini API)</h1>
+
+  <button id="generateBtn">여행 일정 생성하기</button>
+
+  <h2>📋 결과</h2>
+  <pre id="result"></pre>
+
+  <script type="module" src="scripts.js"></script>
 </body>
 </html>

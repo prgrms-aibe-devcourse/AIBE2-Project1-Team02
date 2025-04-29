@@ -1,169 +1,152 @@
-window.onload = function () {
-	kakao.maps.load(function () {
-		var container = document.getElementById('map');
-		var mapOption = { 
-			center: new kakao.maps.LatLng(37.5563, 126.9237), // 홍대입구역 좌표
-			level: 3
-		};
+import { saveToLocalStorage, loadFromLocalStorage } from './localStorageUtils.js';
 
-		var map = new kakao.maps.Map(container, mapOption);
+async function loadJsonData() {
+    try {
+        const response = await fetch('src/data.json'); // JSON 파일 경로
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const jsonData = await response.json();
+        return jsonData.items;
+    } catch (error) {
+        console.error("JSON 데이터 로드 에러:", error);
+        return [];
+    }
+}
 
-		// 장소 검색 객체를 생성합니다
-		var ps = new kakao.maps.services.Places();
+async function generatePlanFromGemini() {
+    const items = await loadJsonData();
+    if (items.length === 0) {
+        document.getElementById('result').textContent = "JSON 데이터를 불러오지 못했습니다.";
+        return;
+    }
 
-		// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
-		var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+    const places = items.map(item => item.placeName).join(', ');
+    const startDate = "2024-04-01"; // 예시 시작 날짜
+    const endDate = "2024-04-03"; // 예시 종료 날짜
+    const promptText = `날짜: ${startDate} ~ ${endDate}\n장소: ${places}\n위의 장소들을 포함하여 여행 일정을 작성해 주세요. 운영시간과 위치를 고려해서 최적의 동선으로 짜줘. 하루에 갈 수 있는 최대치의 장소를 시간을 고려해서 짜야해. 현재 테스트중이니 하루에 5개의 장소만 표기해 결과는 [
+   Item: [
+{
+    Date: 2024-04-01
+    Places: [N서울 타워, 경복궁, 광장시장, 남대문 시장, 롯데월드타워]
+    Date: 2024-04-02
+    Places: [이런저런, 저런이런 등등]
+    Date: 2024-04-03
+    Places: [어쩌구 저쩌구, 어쩌구저쩌구 등등]
+}
+    ]이러한 형식의 json 포맷으로 반환해 주세요. 나머지 부연설명은 필요없이 딱 내가 원하는것만 전시해줘`;
 
-		var startMarker, endMarker, line;
-		var markers = [];
+    const apiKey = "AIzaSyA0utBpWrVDX4rYPm1FF9PePzXOaUn1PnE"; // 여기에 발급받은 Gemini API Key를 넣어야 함
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  
+    const payload = {
+        contents: [
+            {
+                role: "user",
+                parts: [
+                    { text: promptText }
+                ]
+            }
+        ]
+    };
+  
+    try {
+        const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+  
+        if (!response.ok) {
+            throw new Error(`서버 응답 오류: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        const scheduleText = data.candidates[0].content.parts[0].text;
+        console.log("받은 응답:", scheduleText);
+        document.getElementById('result').textContent = data.candidates[0].content.parts[0].text;
+        
+        // 로컬 스토리지에 저장
+        saveToLocalStorage('travelSchedule', scheduleText);
 
-		// 주소 데이터를 배열로 관리
-		var addressData = [
-			{ name: "홍대입구역", query: "홍대입구역", url: "https://i.postimg.cc/vmrw1k8J/IMG-3471.jpg" },
-			{ name: "서울역", query: "서울역", url: "https://example.com/image2.jpg" },
-			// 추가적인 테스트 데이터
-		];
+        document.getElementById('result').textContent = scheduleText;
+    } catch (error) {
+        console.error("에러 발생:", error);
+        document.getElementById('result').textContent = `에러: ${error.message}`;
+    }
+}
 
-		// 검색창을 통해 입력된 키워드로 주소를 검색하고 지도에 핀을 표시
-		document.getElementById('addDestination').addEventListener('click', function() {
-			var keyword = document.getElementById('destinationSearchBox').value;
-			
-			// 입력된 키워드를 객체로 만들어 배열에 추가, 웹 URL 포함
-			var newAddress = { 
-				name: keyword, 
-				query: keyword,
-				url: `https://example.com/${encodeURIComponent(keyword)}`
-			};
-			
-			// 배열에 새로운 주소 데이터 추가
-			addressData.push(newAddress);
+async function generateSchedule(selectedIds) {
+    const items = await loadJsonData();
+    const selectedItems = items.filter(item => selectedIds.includes(item.id));
 
-			ps.keywordSearch(newAddress.query, function(data, status) {
-				if (status === kakao.maps.services.Status.OK) {
-					var position = new kakao.maps.LatLng(data[0].y, data[0].x);
-					var marker = new kakao.maps.Marker({
-						map: map,
-						position: position,
-						title: newAddress.name
-					});
-					markers.push(marker);
+    if (selectedItems.length === 0) {
+        document.getElementById('result').textContent = "선택된 ID에 해당하는 장소가 없습니다.";
+        return;
+    }
 
-					// 배열에서 이미지 URL 가져오기
-					var imageUrl = addressData.find(addr => addr.name === newAddress.name).url;
+    // Assume start and end dates are provided in the data.json
+    const startDate = new Date('2025-05-01'); // Example start date
+    const endDate = new Date('2025-05-07'); // Example end date
+    const totalDays = (endDate - startDate) / (1000 * 60 * 60 * 24) + 1;
 
-					var content = `<div style="padding:5px;">
-								 <img src="${imageUrl}" alt="${newAddress.name}" style="width:100px;"/>
-								 <p>${newAddress.name}</p>
-							   </div>`;
-					var infowindow = new kakao.maps.InfoWindow({
-						content: content
-					});
+    const schedule = {};
+    let dayIndex = 0;
 
-					kakao.maps.event.addListener(marker, 'mouseover', function () {
-						infowindow.open(map, marker);
-					});
+    // Sort selected items by some optimal route logic (e.g., by address proximity)
+    selectedItems.sort((a, b) => a.address.localeCompare(b.address));
 
-					kakao.maps.event.addListener(marker, 'mouseout', function () {
-						infowindow.close();
-					});
+    selectedItems.forEach(item => {
+        const currentDay = new Date(startDate);
+        currentDay.setDate(startDate.getDate() + dayIndex);
+        const dayString = currentDay.toISOString().split('T')[0];
 
-					var listItem = document.createElement('li');
-					listItem.textContent = newAddress.name;
-					document.getElementById('destinationList').appendChild(listItem);
+        if (!schedule[dayString]) {
+            schedule[dayString] = [];
+        }
+        schedule[dayString].push({
+            순서: schedule[dayString].length + 1,
+            원본idx: item.id
+        });
 
-					listItem.addEventListener('click', function() {
-						listItem.remove();
-						marker.setMap(null);
-						markers = markers.filter(m => m !== marker);
-					});
-				} else {
-					alert("주소를 찾을 수 없습니다.");
-				}
-			});
-		});
+        if (schedule[dayString].length >= Math.ceil(selectedItems.length / totalDays)) {
+            dayIndex++;
+        }
+    });
 
-		document.getElementById('findRoute').addEventListener('click', function() {
-			if (markers.length < 2) return;
+    // Create a Blob from the schedule object
+    const blob = new Blob([JSON.stringify(schedule, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
 
-			var linePath = markers.map(marker => marker.getPosition());
-			var polyline = new kakao.maps.Polyline({
-				path: linePath,
-				strokeWeight: 5,
-				strokeColor: '#FF0000',
-				strokeOpacity: 0.7,
-				strokeStyle: 'solid'
-			});
-			polyline.setMap(map);
+    // Create a link element to download the file
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'schedule.json';
+    a.textContent = '일정 다운로드';
+    document.body.appendChild(a);
 
-			// 거리 계산
-			var totalDistance = 0;
-			for (var i = 0; i < linePath.length - 1; i++) {
-				totalDistance += kakao.maps.geometry.spherical.computeDistanceBetween(linePath[i], linePath[i + 1]);
-			}
-			document.getElementById('totalDistance').innerText = (totalDistance / 1000).toFixed(2) + ' km';
-		});
+    // Display schedule in Korean
+    let scheduleText = "생성된 일정:\n";
+    for (const [day, plans] of Object.entries(schedule)) {
+        scheduleText += `${day} 일정:\n`;
+        plans.forEach(plan => {
+            const place = items.find(item => item.id === plan.원본idx);
+            scheduleText += `  ${plan.순서}. ${place.placeName}\n`;
+        });
+    }
+    document.getElementById('result').textContent = scheduleText;
+}
 
-		function updateInfo() {
-			if (startMarker) {
-				var startPos = startMarker.getPosition();
-				document.getElementById('startCoords').innerText = startPos.getLat() + ', ' + startPos.getLng();
-			}
-			if (endMarker) {
-				var endPos = endMarker.getPosition();
-				document.getElementById('endCoords').innerText = endPos.getLat() + ', ' + endPos.getLng();
-			}
-			if (startMarker && endMarker) {
-				var distance = kakao.maps.geometry.spherical.computeDistanceBetween(startMarker.getPosition(), endMarker.getPosition());
-				document.getElementById('distance').innerText = (distance / 1000).toFixed(2) + ' km';
-			}
-		}
+// 버튼 클릭 연결
+document.getElementById('generateBtn').addEventListener('click', generatePlanFromGemini);
 
-		function drawLine() {
-			if (startMarker && endMarker) {
-				if (line) line.setMap(null);
-				var linePath = [
-					startMarker.getPosition(),
-					endMarker.getPosition()
-				];
-				line = new kakao.maps.Polyline({
-					path: linePath,
-					strokeWeight: 5,
-					strokeColor: '#FF0000',
-					strokeOpacity: 0.7,
-					strokeStyle: 'solid'
-				});
-				line.setMap(map);
-				updateInfo();
-			}
-		}
 
-		function updateRoute() {
-			const start = document.getElementById('startSearchBox').value;
-			const end = document.getElementById('destinationSearchBox').value;
-			const iframe = document.getElementById('kakao-route');
-			const url = `https://map.kakao.com/?sName=${encodeURIComponent(start)}&eName=${encodeURIComponent(end)}`;
-			iframe.src = url;
-		}
+// 저장
+saveToLocalStorage('travelSchedule', scheduleData);
 
-		// 지도에 클릭 이벤트를 등록합니다
-		// kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
-		//     // 클릭한 위치의 좌표입니다
-		//     var latlng = mouseEvent.latLng;
-
-		//     // 커스텀 오버레이에 표시할 내용입니다
-		//     var content = '<div style="padding:5px;">' +
-		//                   '<img src="https://via.placeholder.com/150" alt="클릭 이미지" style="width:100%;"/>' +
-		//                   '</div>';
-
-		//     // 커스텀 오버레이를 생성합니다
-		//     var overlay = new kakao.maps.CustomOverlay({
-		//         content: content,
-		//         map: map,
-		//         position: latlng
-		//     });
-
-		//     // 클릭한 위치에 커스텀 오버레이를 표시합니다
-		//     overlay.setMap(map);
-		// });
-	});
-}; 
+// 불러오기
+const loadedSchedule = loadFromLocalStorage('travelSchedule');
+console.log(loadedSchedule);
+  
