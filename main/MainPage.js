@@ -178,14 +178,23 @@ function loadFestivalData(page = 1) {
             newLi.dataset.likes = placeItem.dataset.likes;
 
             // HTML 구조 삽입
-            newLi.innerHTML = ` <div class="placeImg">
-                                <img src="${imgSrc}">
-                            </div>
-                            <div class="placeDesc">
-                                <p>${placeName}</p>
-                                <p>${description}</p>
-                            </div>
-                            <button class="deletePlace">-</button>`;
+            newLi.innerHTML = ` <div class="placeCard">
+            <div class="placeImg">${imageHtml}</div>
+            <div class="placeContent">
+              <div class="placeText">
+                <p class="plcaeTitle">${placeName}</p>
+                <p class="placeAddress">${address}</p>
+                <div class="placeBottom"> 
+                  <div class="likeInfo">
+                    <span>💬 ${reviews.length}</span>
+                    <span>🩷 ${likes}</span>
+                    <span>⭐ ${reviews[0].rating}</span>
+                   </div>
+                  <button class="deletePlace">-</button>
+                </div>
+              </div>
+             </div>
+          </div>`;
 
             selectedPlaces.appendChild(newLi);
 
@@ -221,13 +230,23 @@ function loadFestivalData(page = 1) {
         });
 
         // 리스트에 HTML 삽입
-        li.innerHTML = `
-          <div class="placeImg">${imageHtml}</div>
-          <div class="placeDesc">
-            <p>${placeName}<br/><span class="info-addr">${address}</span></p>
-            <p><strong>🩷</strong> ${likes}</p>
+        li.innerHTML = `<div class="placeCard">
+            <div class="placeImg">${imageHtml}</div>
+            <div class="placeContent">
+              <div class="placeText">
+                <p class="plcaeTitle">${placeName}</p>
+                <p class="placeAddress">${address}</p>
+                <div class="placeBottom"> 
+                  <div class="likeInfo">
+                    <span>💬 ${reviews.length}</span>
+                    <span>🩷 ${likes}</span>
+                    <span>⭐ ${reviews[0].rating}</span>
+                   </div>
+                  <button class="addPlace">+</button>
+                </div>
+              </div>
+             </div>
           </div>
-          <button class="addPlace">+</button>
         `;
         list.appendChild(li);
       });

@@ -167,81 +167,85 @@ li {
 
 #festival-list {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 20px;
   list-style: none;
   padding: 0;
   margin-top: 20px;
 }
 
-.placeItem {
-  width: 90%;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+.placeCard {
   display: flex;
-  flex-direction: column;
-  position: relative;
-  transition: transform 0.2s ease;
-}
-
-.placeItem:hover {
-  transform: translateY(-5px);
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .placeImg img {
-  width: 100%;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   object-fit: cover;
-  background-color: #f0f0f0; /* 이미지 없는 경우 대비 */
+  border-radius: 10px;
+  flex-shrink: 0; /* 크기 줄어들지 않게 고정 */
+  overflow: hidden;
 }
 
-.placeDesc {
-  padding: 16px;
+.placeContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   flex: 1;
+  margin-left: 12px;
 }
 
-.placeDesc p {
-  margin: 0 0 8px;
-  font-size: 16px;
-  color: #333;
+.placeText {
+  display: flex;
+  flex-direction: column;
 }
 
-.placeDesc .info-addr {
+.placeTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.placeAddress {
   font-size: 14px;
   color: #777;
+  margin: 4px 0 0 0;
 }
 
-.placeDesc p strong {
-  color: #ff5a5f; /* 좋아요 하트 색 */
-  margin-right: 6px;
+.placeBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.likeInfo {
+  display: flex;
+  gap: 8px;
+  color: #777;
+  font-size: 14px;
 }
 
 .addPlace, .deletePlace {
-  position: absolute;
-  top: 12px;
-  right: 12px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
   width: 32px;
   height: 32px;
-  border: none;
-  background: #ff5a5f;
-  color: #fff;
   font-size: 20px;
-  border-radius: 50%;
+  line-height: 32px;
+  text-align: center;
   cursor: pointer;
-  transition: background 0.3s;
-}
-
-.addPlace:hover {
-  background: #e14b4f;
 }
 
 #placeSelectBox {
   width: 50%;
   float: left;
-
 }
 
 #festival-modal.hidden {
