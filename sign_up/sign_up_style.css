@@ -6,35 +6,24 @@ body {
   background-color: #ffffff;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.login-container {
+.signup-container {
   background: white;
-  padding: 1.5rem;  /* padding을 줄여서 공간을 절약 */
+  padding: 1.5rem;
   border-radius: 1.25rem;
   text-align: center;
   box-shadow: 0px 0px 10px gray;
-  width: 17%;  /* 가로 크기를 줄여서 화면을 덜 차지 */
-  height: 450px;  /* 세로 크기 조정 */
+  width: 17%;  /* 로그인 페이지와 동일한 비율로 수정 */
+  height: 450px;  /* 로그인 페이지와 동일한 세로 크기 */
 }
 
 .logo {
-  margin-bottom: 2rem;  /* 로고 크기를 조금 줄임 */
+  margin-bottom: 0rem;  /* 로고 크기 수정 */
 }
 
-input {
-  display: block;
-  margin: 0.625rem auto;
-  padding: 0.625rem;
-
-  width: 90%;  /* input 크기 줄이기 */
-  border-radius: 0.625rem;
-  border: 1px solid #ccc;
-  outline: none;
-  font-size: 0.875rem;  /* 폰트 크기 줄이기 */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .input-label {
@@ -46,6 +35,17 @@ input {
   color: #333;
 }
 
+input {
+  display: block;
+  margin-bottom: 0.4rem;
+  padding: 0.5rem;
+  width: 90%;
+  border-radius: 0.625rem;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 0.875rem;
+}
+
 button {
   padding: 0.625rem 1.25rem;
   margin-top: 1rem;
@@ -53,7 +53,7 @@ button {
   font-size: 0.875rem;  /* 버튼 글씨 크기 줄이기 */
 }
 
-.loginBtn {
+.signupBtn {
   width: 100%;
   max-width: 250px;  /* 버튼 크기 줄이기 */
   border-radius: 1.25rem;
@@ -89,20 +89,17 @@ button {
   height: auto;
 }
 
-.personal-info {
-  margin-top: 1.5rem;  /* 여백 줄이기 */
-  text-align: center;
+.login-redirect {
+  margin-top: 1.5rem;
 }
 
-.find-signup {
-  display: inline-flex;
-  align-items: center;
-  gap: 1rem;
-  font-size: 0.75rem;  /* 폰트 크기 줄이기 */
+.login-redirect p {
+  font-size: 0.875rem;
   color: #666;
 }
 
-.divider {
+.login-redirect a {
+  text-decoration: none;
+  color: #000;
   font-weight: bold;
-  color: #ccc;
 }
