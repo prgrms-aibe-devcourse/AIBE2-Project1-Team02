@@ -8,6 +8,9 @@ document.querySelectorAll(".tab").forEach((btn) => {
   });
 });
 
+let globalStartDate = "";
+let globalEndDate = "";
+
 let currentPage = 1;
 let totalPages = 1; // 전체 페이지 수 초기화
 let selectedAreaCode = ""; // 기본값은 빈 문자열 (전체 지역)
@@ -343,3 +346,54 @@ function resetToInitialState() {
 
   loadFestivalData(currentPage);
 }
+
+// 오늘 날짜를 YYYYMMDD 형식으로 반환하는 함수
+function getTodayDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  return `${year}${month}${day}`;
+}
+// 로드시, 날짜를 오늘 날짜로 초기화하는 함수
+function initializeDates() {
+  const dateInput = document.getElementById("daterange");
+
+  // 오늘 날짜를 YYYYMMDD 형식으로 설정
+  const todayDate = getTodayDate();
+
+  if (!dateInput.value) {
+    dateInput.value = todayDate;
+  }
+
+  globalStartDate = todayDate;
+  globalEndDate = todayDate;
+}
+// 제이쿼리와 daterangepicker 라이브러리를 사용하여 날짜 선택 기능을 추가하는 함수
+$(function () {
+  $("#daterange").daterangepicker({
+    opens: "center",
+    startDate: moment(),
+    endDate: moment(),
+    showDropdowns: true,
+    minDate: moment(),
+    locale: {
+      format: "YYYY-MM-DD",
+      applyLabel: "적용",
+      cancelLabel: "취소",
+    },
+    linkedCalendars: true,
+    showWeekNumbers: false,
+  });
+
+  $("#daterange").on("apply.daterangepicker", function (ev, picker) {
+    globalStartDate = picker.startDate.format("YYYY-MM-DD");
+    globalEndDate = picker.endDate.format("YYYY-MM-DD");
+
+    console.log("선택된 시작 날짜:", globalStartDate);
+    console.log("선택된 종료 날짜:", globalEndDate);
+  });
+});
+
+initializeDates();
