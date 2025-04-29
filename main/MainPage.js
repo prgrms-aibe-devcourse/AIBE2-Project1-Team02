@@ -205,6 +205,17 @@ function loadFestivalData(page = 1) {
             // 현재 클릭된 버튼이 속한 placeItem
             const placeItem = e.target.closest(".placeItem");
 
+            // 중복 추가 방지
+            let isReturn = false;
+            filteredItems.forEach(item => {
+              if(placeItem.dataset.id == item.id) {
+                isReturn = true;
+              }
+            });
+            if(isReturn) {
+              return;
+            }
+
             // 이미지 src, title, description 추출
             const imgSrc = placeItem.querySelector("img")?.src || "";
             const placeName = placeItem.querySelectorAll("p")[0].innerHTML;
