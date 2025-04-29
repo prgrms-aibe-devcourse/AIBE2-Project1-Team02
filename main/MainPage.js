@@ -131,7 +131,7 @@ function loadFestivalData(page = 1) {
 
         // 각 장소의 정보 처리
         const id = f.id || "";
-        const image = imageUrl;
+        const image = f.images;
         const placeName = f.placeName || ""; // 장소 이름
         const category = f.category || ""; // 카테고리
         const address = f.address || ""; // 주소
@@ -247,15 +247,19 @@ function handleLocationDetail(data) {
 
   const placeNameEl = document.getElementById("modal-placeName");
   const addressEl = document.getElementById("modal-address");
-  const imageEl = document.getElementById("modal-image");
+  const slider = document.getElementById("image_slider");
   const contactEl = document.getElementById("modal-contact");
   const operationHoursEl = document.getElementById("modal-operationHours");
   const descriptionEl = document.getElementById("modal-description");
   const reviews = document.getElementById("reviews");
 
   placeNameEl.textContent = data.placeName || "정보 없음";
-  imageEl.src = data.image || "";
-  imageEl.alt = data.placeName || "축제 이미지";
+  data.image.forEach((image) => {
+    let newLi = document.createElement('li');
+    newLi.className = 'splide__slide';
+    newLi.innerHTML = `<img src = ${image} alt="${data.placeName}"/>`;
+    slider.appendChild(newLi);
+  });
   addressEl.textContent = data.address || "정보 없음";
   contactEl.textContent = data.contact || "정보 없음";
   operationHoursEl.textContent = data.operationHours || "운영 시간 정보 없음";
@@ -268,7 +272,17 @@ function handleLocationDetail(data) {
                     <div>${item.author} | ${item.date}</div>`;
 
     reviews.appendChild(newLi);
-  })
+  });
+
+  new Splide('#travel-slider', {
+    type: 'loop',      // 무한 반복
+    perPage: 1,        // 한 번에 1개 보여줌
+    autoplay: true,    // 자동 재생
+    interval: 3000,    // 3초 간격
+    pauseOnHover: true, // 마우스 올리면 멈춤
+    arrows: true,      // 좌우 버튼 표시
+    pagination: true,  // 하단 점 네비게이션 표시
+  }).mount();
 
 
   // 모달 열기

@@ -15,6 +15,9 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     />
     <!-- //부트스트랩 -->
+    <!-- splide -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.3/dist/css/splide.min.css">
+    <!-- //splide -->
   </head>
   <body>
     <div>
@@ -80,7 +83,13 @@
         <div class="modal-content">
           <div class="modal-content-left">
             <button class="close-button">&times;</button>
-            <img id="modal-image" src="" alt="" />
+<!--            <img id="modal-image" src="" alt="" />-->
+            <div id="travel-slider" class="splide">
+              <div class="splide__track">
+                <ul id="image_slider" class="splide__list">
+                </ul>
+              </div>
+            </div>
             <h2 id="modal-placeName"></h2>
             <p id="modal-description"></p>
             <p>
@@ -105,5 +114,9 @@
     </div>
     <script src="MainPage.js" defer></script>
     <script src="../config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.3/dist/js/splide.min.js"></script>
+    <script>
+
+    </script>
   </body>
 </html>
