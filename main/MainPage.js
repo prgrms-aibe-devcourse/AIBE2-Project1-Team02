@@ -887,39 +887,56 @@ function initializeDates() {
   globalEndDate = todayDate;
 }
 
-const searchInput = document.getElementById('search-input');
-const placeSearchBox = document.getElementById('placeSearchBox');
-const placeSelectBox = document.getElementById('placeSelectBox');
-const tagSearchBox = document.getElementById('tagSearchBox');
+// const searchInput = document.getElementById('search-input');
+// const placeSearchBox = document.getElementById('placeSearchBox');
+// const placeSelectBox = document.getElementById('placeSelectBox');
+// const tagSearchBox = document.getElementById('tagSearchBox');
+//
+// // 초기 상태: placeSearchBox, placeSelectBox는 visible, tagSearchBox는 hidden
+// placeSearchBox.classList.add('visible');
+// placeSelectBox.classList.add('visible');
+// tagSearchBox.classList.add('hidden');
+//
+// searchInput.addEventListener('focus', () => {
+//   placeSearchBox.classList.remove('visible');
+//   placeSearchBox.classList.add('hidden');
+//
+//   placeSelectBox.classList.remove('visible');
+//   placeSelectBox.classList.add('hidden');
+//
+//   tagSearchBox.classList.remove('hidden');
+//   tagSearchBox.classList.add('visible');
+// });
 
-// 초기 상태: placeSearchBox, placeSelectBox는 visible, tagSearchBox는 hidden
-placeSearchBox.classList.add('visible');
-placeSelectBox.classList.add('visible');
-tagSearchBox.classList.add('hidden');
+const searchInput = document.getElementById("search-input");
+const tagBox = document.getElementById("tagSearchBox");
+const placeBox = document.getElementById("placeSearchBox");
+const selectBox = document.getElementById("placeSelectBox");
 
-searchInput.addEventListener('focus', () => {
-  placeSearchBox.classList.remove('visible');
-  placeSearchBox.classList.add('hidden');
+function showTagBox() {
+  tagBox.classList.add("show");
+  tagBox.classList.remove("hidden");
 
-  placeSelectBox.classList.remove('visible');
-  placeSelectBox.classList.add('hidden');
+  placeBox.style.display = "none";
+  selectBox.style.display = "none";
+}
 
-  tagSearchBox.classList.remove('hidden');
-  tagSearchBox.classList.add('visible');
-});
+function hideTagBox() {
+  tagBox.classList.remove("show");
+  tagBox.classList.add("hidden");
 
-searchInput.addEventListener('blur', () => {
-  // 포커스가 빠졌을 때 원래대로 돌아오게
-  // (만약 blur시 유지하고 싶으면 이 부분은 빼도 됩니다)
+  placeBox.style.display = "block";
+  selectBox.style.display = "block";
+}
 
-  setTimeout(() => { // blur 직후 input 안 클릭하는 것까지 고려하려면 약간 delay
-    placeSearchBox.classList.remove('hidden');
-    placeSearchBox.classList.add('visible');
+searchInput.addEventListener("focus", showTagBox);
 
-    placeSelectBox.classList.remove('hidden');
-    placeSelectBox.classList.add('visible');
-
-    tagSearchBox.classList.remove('visible');
-    tagSearchBox.classList.add('hidden');
-  }, 200);
+// 문서 클릭 시 input, tagBox 이외는 숨기기
+document.addEventListener("mousedown", (e) => {
+  if (
+      !searchInput.contains(e.target) &&
+      !tagBox.contains(e.target)
+  ) {
+    hideTagBox();
+  }
 });

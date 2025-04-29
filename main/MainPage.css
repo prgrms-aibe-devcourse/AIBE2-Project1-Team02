@@ -229,6 +229,20 @@ li {
   color: #007bff;
 }
 
+/* 초기 상태 (숨김) */
+.slide-box {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+/* 펼쳐질 때 */
+.slide-box.show {
+  max-height: 500px; /* 충분히 큰 값 설정 */
+  opacity: 1;
+}
+
 /* 반응형 살짝 */
 @media (max-width: 480px) {
   #search-input {
