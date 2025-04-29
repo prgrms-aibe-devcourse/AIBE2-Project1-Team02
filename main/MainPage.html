@@ -34,14 +34,65 @@
         <button class="tab" data-tab="tab4">04. <br />일정 확인</button>
       </div>
 
+      </div>
       <div id="tab1" class="tabContent">
-        <div id="calendar-container">
-          <label for="daterange">날짜 범위:</label>
-          <input type="text" id="daterange" name="daterange" />
+        <div id="calendarInfo">
+          <h1 id="areaName">여행 일정</h1>
+          <div id="dateRangeDiv">
+            <h3 id="dateRange"></h3>
+            <i class="bi bi-calendar" id="calendarIcon"></i>
+          </div>
+        </div>
+        <ul id="selectedDatesList"></ul>
+        <!-- 날짜별 시간 설정용 리스트 -->
+        <button id="timeConfirmBtn" style="display: none">
+          시간 설정 완료
+        </button>
+
+        <div
+          id="calendarModalBackground"
+          class="calendar-modal-background"
+          style="display: none"
+        >
+          <div class="calendar-modal">
+            <!-- 달력 HTML 삽입 -->
+            <div class="calendar-div">
+              <h1>여행 계획 달력</h1>
+              <div class="calendar-container">
+                <button
+                  class="month-nav"
+                  id="calendarPrevBtn"
+                  onclick="changeBothMonths(-1)"
+                >
+                  <i class="bi bi-chevron-left"></i>
+                </button>
+                <div class="calendar" id="calendar1">
+                  <div class="calendar-content" id="calendar1-content"></div>
+                </div>
+                <div class="calendar" id="calendar2">
+                  <div class="calendar-content" id="calendar2-content"></div>
+                </div>
+                <button
+                  class="month-nav"
+                  id="calendarNextBtn"
+                  onclick="changeBothMonths(1)"
+                >
+                  <i class="bi bi-chevron-right"></i>
+                </button>
+              </div>
+              <div class="button-container">
+                <button id="confirmBtn" class="confirm-btn" disabled>
+                  선택 완료
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
       <div id="tab2" class="tabContent" style="display: none">
-        지역 선택
+        <h1 id="tab2Title">여행 일정</h1>
+        <h2 id="tab2SubTitle">어디로 떠나고 싶으신가요?</h2>
         <div class="area-btn-container">
           <button class="area-btn" data-value="all">전체</button>
           <button class="area-btn" data-value="1">서울</button>

@@ -14,7 +14,7 @@ li {
 }
 #tab1 {
   border: 1px solid pink;
-  width: 30%;
+  width: 20%;
   float: left;
 }
 
@@ -50,7 +50,7 @@ li {
 
 #tab2 {
   border: 1px solid green;
-  width: 30%;
+  width: 20%;
   float: left;
 }
 
@@ -118,8 +118,8 @@ li {
 }
 
 #scheduleContainer {
-    width: 25%;
-    float: left;
+  width: 25%;
+  float: left;
 }
 
 #placeSearchBox {
@@ -344,7 +344,6 @@ li {
   margin-bottom: 1rem;
 }
 
-
 #modal-placeName {
   font-size: 1.8rem;
   font-weight: bold;
@@ -388,24 +387,34 @@ li {
   object-fit: cover;
 }
 
+#tab2Title,
+#tab2SubTitle {
+  color: #282828;
+  display: flex;
+  flex-direction: column; /* 세로 방향으로 배치 */
+  gap: 20px; /* areaName과 dateRange 사이 간격 */
+  margin-left: 20px; /* 왼쪽 여백 */
+  margin-top: 20px;
+}
+
 /* 지역 버튼 스타일 */
 .area-btn-container {
   display: flex;
   flex-wrap: wrap; /* 여러 줄로 배치 */
-  gap: 20px; /* 버튼 간의 간격 */
+  gap: 30px; /* 버튼 간의 간격 */
   justify-content: flex-start; /* 왼쪽 정렬 */
-  margin-left: 30px; /* 왼쪽 여백 추가 */
+  margin-left: 40px; /* 왼쪽 여백 추가 */
   margin-bottom: 20px; /* 아래쪽 여백 추가 */
   margin-top: 40px;
 }
 
 .area-btn {
-  width: calc(50% - 20px); /* 버튼의 너비를 50%로 설정하고 간격을 고려 */
+  width: calc(45% - 20px); /* 버튼의 너비를 50%로 설정하고 간격을 고려 */
   padding: 12px;
   background-color: #f0f0f0; /* 밝은 회색 배경 */
-  border: none;
+  border: 1px solid #b0b0b0; /* 얇은 테두리 추가 */
   border-radius: 30px; /* 둥근 모서리 */
-  color: #333; /* 어두운 회색 글씨 */
+  color: #282828; /* 어두운 회색 글씨 */
   font-size: 16px;
   font-weight: 500;
   text-align: center;
@@ -425,7 +434,363 @@ li {
 }
 
 .area-btn.active {
-  background-color: #b0b0b0; /* 활성화된 버튼 색상 */
+  background-color: #282828; /* 활성화된 버튼 색상 */
   color: #fff; /* 활성화된 버튼은 흰색 글씨 */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 활성화된 버튼에 더 강한 그림자 */
+}
+
+/* 달력 모달부분 */
+/* 모달 배경 스타일 */
+.calendar-modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none; /* 기본적으로 모달이 보이지 않도록 설정 */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* 모달 창 스타일 */
+.calendar-modal {
+  background: white;
+  padding: 20px; /* 패딩을 늘려서 더 여유로운 공간 제공 */
+  border-radius: 8px;
+  width: 50%;
+  max-height: 80%; /* 세로 높이를 화면의 80%로 제한 */
+  overflow: auto; /* 내용이 넘칠 경우 스크롤이 생기도록 설정 */
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* 닫기 버튼 스타일 */
+.calendar-modal .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+
+/* 버튼 스타일 */
+.calendar-modal button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.calendar-modal button:hover {
+  background-color: #45a049;
+}
+
+/* 달력부분 */
+/* 여기서부터 */
+.calendar-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  justify-content: center; /* 달력을 중앙에 배치 */
+}
+.calendar-div {
+  display: flex;
+  flex-direction: column; /* 세로 방향으로 배치 */
+  justify-content: center; /* 세로 중앙 */
+  align-items: center; /* 가로 중앙 */
+  /* min-height: 100vh; */ /* 화면 전체 높이를 차지하는 부분을 제거 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  padding: 20px 0; /* 위아래 여백을 줄여서 더 균형 잡힌 공간을 제공 */
+}
+
+.calendar {
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */ /* 그림자 제거 */
+  width: 300px;
+  border: none; /* 테두리 제거 */
+}
+
+.calendar-div .month-nav {
+  background-color: transparent; /* 배경 투명 */
+  border: none;
+  cursor: pointer;
+  font-size: 24px; /* 아이콘 크기 설정 */
+}
+
+.month-nav:hover {
+  color: #4caf50; /* 호버 시 색상 변경 */
+}
+
+.month-nav i {
+  font-size: 40px; /* 아이콘 크기 */
+  font-weight: bold; /* 굵게 */
+  color: #b0b0b0;
+}
+
+.month-nav-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.month-name {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.weekdays div {
+  font-weight: bold;
+  color: #555;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 5px;
+  text-align: center;
+}
+
+.day {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.day:hover {
+  background-color: #f0f0f0;
+}
+
+/* 날짜 스타일 수정 */
+.day.past {
+  background-color: #e0e0e0;
+  color: #b0b0b0;
+  pointer-events: none; /* 이전 날짜 클릭 비활성화 */
+}
+
+.day.future {
+  background-color: black;
+  color: white;
+}
+
+/* 시작일, 끝일 동일한 색상 */
+.selected-start,
+.selected-end {
+  background-color: #282828 !important; /* 연한 초록색으로 동일하게 설정 */
+  color: white;
+}
+
+.selected-range {
+  background-color: #797878bc;
+  color: white;
+}
+
+.selected {
+  background-color: #b0b0b0;
+  color: white;
+}
+
+.day.past {
+  background-color: transparent; /* 또는 아예 삭제 */
+  color: #b0b0b0;
+  cursor: default;
+}
+
+/* 요일 색상 */
+.weekdays .sunday {
+  color: red;
+}
+
+.weekdays .saturday {
+  color: blue;
+}
+/* 선택 완료 버튼을 가운데 배치 */
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 40px; /* 기존의 margin-top을 조금 더 크게 설정 */
+}
+
+.confirm-btn {
+  background-color: #b0b0b0; /* 기본 배경색은 연한 회색 */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.confirm-btn:hover {
+  background-color: #45a049;
+}
+
+/* 선택 완료 버튼 스타일 */
+#confirmBtn {
+  background-color: #282828; /* 검은색 배경 */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#confirmBtn:disabled {
+  background-color: #b0b0b0; /* 비활성화 상태에서 회색 배경 */
+  color: white;
+}
+
+/* #areaName과 #dateRangeDiv 사이에 간격을 추가 */
+#calendarInfo {
+  display: flex;
+  flex-direction: column; /* 세로 방향으로 배치 */
+  gap: 20px; /* areaName과 dateRange 사이 간격 */
+  margin-left: 20px; /* 왼쪽 여백 */
+  margin-top: 20px;
+}
+
+/* #dateRangeDiv 내의 요소들 간격 조정 */
+#dateRangeDiv {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 일정과 아이콘 사이의 간격 */
+}
+
+/* 달력 아이콘 스타일 */
+#calendarIcon {
+  cursor: pointer;
+  font-size: 20px;
+  color: #282828;
+  display: inline-block;
+}
+
+/* 아이콘이 비활성화된 상태에서 색상 변경 */
+#calendarIcon.disabled {
+  color: #ccc;
+  pointer-events: none;
+}
+
+#selectedDatesList {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+/* 여기서부터 탭2 시간설정 부분 */
+
+#timeConfirmBtn {
+  margin-top: 20px;
+  padding: 15px 20px; /* 패딩 값 조정 */
+  background-color: #282828;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 10px; /* 왼쪽 여백 */
+  margin-left: 10px; /* 왼쪽 여백 */
+  width: calc(100% - 20px); /* 버튼 너비 조정 */
+  margin-bottom: 20px;
+}
+
+/* 전체 감싸는 틀 */
+.schedule-item {
+  display: flex;
+  justify-content: space-between; /* 항목을 가로로 배치 */
+  align-items: flex-start; /* 항목들이 세로로 정렬되지 않도록 상단 정렬 */
+  padding: 6px 12px; /* 상하 6px, 좌우 12px */
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  width: calc(100% - 20px); /* 100%에서 20px을 뺀 너비 */
+  box-sizing: border-box;
+  margin-left: 10px; /* 왼쪽 여백 */
+  margin-right: 10px;
+}
+
+.schedule-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 15%; /* 일자는 작은 공간으로 제한 */
+  align-items: flex-start; /* 라벨을 왼쪽 정렬 */
+}
+
+.schedule-date-label {
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+.schedule-date-text {
+  font-size: 14px;
+  font-weight: bold;
+  color: #282828;
+}
+
+.schedule-time-inputs {
+  display: flex;
+  justify-content: space-between;
+  width: 80%; /* 시간 입력 필드는 넓은 영역을 차지 */
+}
+
+.schedule-time-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 45%; /* 각 시간 입력 필드는 45% 너비 차지 */
+  align-items: flex-start; /* 라벨을 왼쪽 정렬 */
+}
+
+.schedule-time-label {
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+.schedule-time-input input {
+  font-size: 14px;
+  font-weight: bold;
+  color: #282828;
+  padding: 4px 2px; /* 패딩 줄임 */
+  border-radius: 4px;
+  border: none; /* 테두리 없앰 */
+  background-color: transparent; /* 투명하게 변경 */
+}
+.schedule-time-input .startTime {
+  width: 83%; /* 시작 시간 입력 필드 너비 */
+}
+
+.schedule-time-input .endTime {
+  width: 96%; /* 종료 시간 입력 필드 너비 */
+}
+
+.schedule-time-arrow i {
+  display: flex;
+  align-items: flex-start; /* 위에서부터 정렬 */
+  justify-content: center;
+  font-size: 18px;
+  color: #666;
+  transform: translateY(24px) translateX(-8px); /* 아래로 8px, 왼쪽으로 4px 이동 */
 }

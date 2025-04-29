@@ -1,13 +1,3 @@
-document.querySelectorAll(".tab").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    document
-      .querySelectorAll(".tabContent")
-      .forEach((c) => (c.style.display = "none"));
-    const target = document.getElementById(btn.dataset.tab);
-    target.style.display = "block";
-  });
-});
-
 let globalStartDate = "";
 let globalEndDate = "";
 
@@ -17,6 +7,39 @@ let selectedAreaCode = ""; // 기본값은 빈 문자열 (전체 지역)
 let selectedCategory = ""; // 선택된 카테고리
 let filteredItems = []; // 필터링된 데이터 저장
 const jsonFilePath = "../listEx.json"; // 로컬 파일 경로
+
+// ==================== 캘린더 부분 변수 ====================
+const monthNames = [
+  "1월",
+  "2월",
+  "3월",
+  "4월",
+  "5월",
+  "6월",
+  "7월",
+  "8월",
+  "9월",
+  "10월",
+  "11월",
+  "12월",
+];
+
+let currentMonth1 = new Date().getMonth(); // 현재 달력1의 월
+let currentYear1 = new Date().getFullYear(); // 현재 달력1의 년도
+
+let currentMonth2 = 4; // 달력2는 5월 (0-based index)
+let currentYear2 = 2025; // 달력2는 2025년
+
+let selectedDates = [];
+let selectedStartDate = null;
+let selectedEndDate = null;
+let lastStartDate = null;
+let lastEndDate = null;
+
+// 달력1, 달력2를 생성
+generateCalendar("calendar1", currentMonth1, currentYear1, "calendar1-content");
+generateCalendar("calendar2", currentMonth2, currentYear2, "calendar2-content");
+// ===========================================================
 
 const AREA_CODE_MAP = {
   서울특별시: "1",
@@ -38,10 +61,21 @@ const AREA_CODE_MAP = {
   제주도: "39",
   제주특별자치도: "39",
 };
-
+document.querySelectorAll(".tab").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document
+      .querySelectorAll(".tabContent")
+      .forEach((c) => (c.style.display = "none"));
+    const target = document.getElementById(btn.dataset.tab);
+    target.style.display = "block";
+  });
+});
 document.addEventListener("DOMContentLoaded", () => {
   // 페이지 데이터 로딩 및 더보기 버튼 처리
   loadFestivalData(currentPage);
+
+  // 로드되면 바로 날짜 선택부터
+  document.getElementById("calendarModalBackground").style.display = "flex";
 
   // 더보기 버튼 클릭 이벤트
   const moreBtn = document.getElementById("load-more-btn");
@@ -50,14 +84,15 @@ document.addEventListener("DOMContentLoaded", () => {
       moreBtn.style.display = "none"; // 더 이상 페이지가 없으면 버튼 숨기기
       return;
     }
-
     currentPage += 1;
     loadFestivalData(currentPage);
   });
+
   // 지역 버튼 클릭 이벤트 등록
   document.querySelectorAll(".area-btn").forEach((button) => {
     button.addEventListener("click", (event) => {
       selectedAreaCode = event.target.dataset.value; // 지역 값 가져오기
+      updateCalendarInfo();
       currentPage = 1; // 페이지를 첫 번째 페이지로 초기화
       loadFestivalData(currentPage); // 지역에 맞는 데이터 로드
 
@@ -66,6 +101,11 @@ document.addEventListener("DOMContentLoaded", () => {
         .querySelectorAll(".area-btn")
         .forEach((btn) => btn.classList.remove("active"));
       event.target.classList.add("active"); // 클릭한 버튼에 active 클래스 추가
+      // 탭3으로 이동
+      const tab3Button = document.querySelector('.tab[data-tab="tab3"]');
+      if (tab3Button) {
+        tab3Button.click();
+      }
     });
   });
   // 카테고리 버튼 클릭 이벤트 등록
@@ -83,8 +123,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 모달 처리
+  // 상세정보 모달 처리
   modalHandler();
+  // 달력 모달 처리
+  calendarModalHandler();
 });
 // 리스트 정보가져오기 메인
 function loadFestivalData(page = 1) {
@@ -323,6 +365,207 @@ function modalHandler(e) {
     }
   });
 }
+// 달력 모달 핸들러
+function calendarModalHandler() {
+  const calendarModalBackground = document.getElementById(
+    "calendarModalBackground"
+  );
+  const confirmBtn = document.querySelector(".confirm-btn");
+
+  // 선택 완료 버튼 클릭 시 모달 닫기
+  confirmBtn.addEventListener("click", () => {
+    calendarModalBackground.style.display = "none"; // 모달 닫기
+    updateCalendarInfo();
+    // 탭2 버튼을 찾아서 강제로 클릭해버리기
+    // const tab2Button = document.querySelector('.tab[data-tab="tab2"]');
+    // if (tab2Button) {
+    //   tab2Button.click();
+    // }
+  });
+
+  // 모달 외부 클릭 시 아무 일도 일어나지 않도록
+  calendarModalBackground.addEventListener("click", (e) => {
+    if (e.target === calendarModalBackground) {
+      // 외부 클릭 시 아무 일도 일어나지 않음
+    }
+  });
+
+  // 이전 버튼 누른경우
+  const prevBtn = document.getElementById("calendarPrevBtn");
+  prevBtn.addEventListener("click", () => {
+    changeBothMonths(-1);
+  });
+
+  // 다음 버튼 누른경우
+  const nextBtn = document.getElementById("calendarNextBtn");
+  nextBtn.addEventListener("click", () => {
+    changeBothMonths(1);
+  });
+
+  // 선택 완료 버튼 클릭 시 날짜 로그
+  document
+    .getElementById("confirmBtn")
+    .addEventListener("click", confirmSelection);
+
+  const dateRangeElement = document.getElementById("dateRange");
+  //날짜 눌렀을때, 날짜 설정 모달 동작
+  dateRangeElement.addEventListener("click", () => {
+    calendarModalBackground.style.display = "flex";
+  });
+  // 달력 아이콘 클릭 시 모달 열기
+  const calendarIcon = document.getElementById("calendarIcon");
+  calendarIcon.addEventListener("click", () => {
+    calendarModalBackground.style.display = "flex";
+  });
+  if (!dateRangeElement.textContent.trim()) {
+    calendarIcon.style.display = "none"; // 값이 없으면 아이콘 숨기기
+  } else {
+    calendarIcon.style.display = "inline"; // 값이 있으면 아이콘 보이기
+  }
+}
+// 선택 완료 후 calendarInfo를 업데이트하는 함수 + 시간 수정부분
+function updateCalendarInfo() {
+  const areaNameElement = document.getElementById("areaName");
+  const dateRangeElement = document.getElementById("dateRange");
+  const calendarIcon = document.getElementById("calendarIcon");
+  const selectedDatesList = document.getElementById("selectedDatesList");
+  const timeConfirmBtn = document.getElementById("timeConfirmBtn");
+
+  if (selectedAreaCode !== "") {
+    const areaName = findAreaNameByCode(selectedAreaCode);
+    if (areaName) {
+      areaNameElement.textContent = areaName;
+    }
+  }
+
+  if (selectedStartDate && selectedEndDate) {
+    dateRangeElement.textContent = `${formatDateForRange(
+      selectedStartDate
+    )} ~ ${formatDateForRange(selectedEndDate)}`;
+    calendarIcon.style.display = "inline";
+  } else {
+    dateRangeElement.textContent = `${formatDateForRange(
+      today
+    )} ~ ${formatDateForRange(today)}`;
+    calendarIcon.style.display = "inline";
+  }
+
+  // 날짜별 리스트 초기화
+  selectedDatesList.innerHTML = "";
+
+  const dates = getDatesInRange(selectedStartDate, selectedEndDate);
+  dates.forEach((dateStr) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <div class="schedule-item">
+        <div class="schedule-date">
+          <div class="schedule-date-label">일자</div>
+          <span class="schedule-date-text">${formatDateForTimeAdjustment(
+            dateStr
+          )}</span>
+        </div>
+        <div class="schedule-time-inputs">
+          <div class="schedule-time-input">
+            <div class="schedule-time-label">시작시간</div>
+            <input type="time" value="10:00" class="startTime" />
+          </div>
+          <div class="schedule-time-arrow"><i class="bi bi-arrow-right" id="schedule-arrow"></i></div> <!-- 화살표 추가 -->
+          <div class="schedule-time-input">
+            <div class="schedule-time-label">종료시간</div>
+            <input type="time" value="22:00" class="endTime" />
+          </div>
+        </div>
+      </div>
+    `;
+    selectedDatesList.appendChild(li);
+  });
+
+  if (dates.length > 0) {
+    timeConfirmBtn.style.display = "block";
+  } else {
+    timeConfirmBtn.style.display = "none";
+  }
+
+  // (1) 전체 여행기간 출력용
+  function formatDateForRange(dateStr) {
+    const days = ["일", "월", "화", "수", "목", "금", "토"];
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const dayOfWeek = days[date.getDay()];
+    return `${year}.${month}.${day}(${dayOfWeek})`; // 예: 2025.05.16(금)
+  }
+
+  // (2) 개별 시간 설정용
+  function formatDateForTimeAdjustment(dateStr) {
+    const days = ["일", "월", "화", "수", "목", "금", "토"];
+    const date = new Date(dateStr);
+    const month = date.getMonth() + 1; // pad 없이
+    const day = date.getDate();
+    const dayOfWeek = days[date.getDay()];
+    return `${month}/${day} ${dayOfWeek}`; // 예: 5/16 금
+  }
+
+  selectedDatesList.querySelectorAll(".schedule-item").forEach((item) => {
+    const startTimeInput = item.querySelector(".startTime");
+    const endTimeInput = item.querySelector(".endTime");
+
+    // 시작 시간 변경 시
+    startTimeInput.addEventListener("change", () => {
+      if (startTimeInput.value >= endTimeInput.value) {
+        alert("시작시간은 종료시간보다 빠르거나 같을 수 없습니다.");
+        startTimeInput.value = "10:00"; // 잘못 입력하면 초기값 10:00으로 복구
+      }
+    });
+
+    // 종료 시간 변경 시
+    endTimeInput.addEventListener("change", () => {
+      if (startTimeInput.value >= endTimeInput.value) {
+        alert("종료시간은 시작시간보다 늦어야 합니다.");
+        endTimeInput.value = "22:00"; // 잘못 입력하면 초기값 22:00으로 복구
+      }
+    });
+  });
+
+  //시간 설정완료 버튼 클릭시,
+  document.getElementById("timeConfirmBtn").addEventListener("click", () => {
+    const dateItems = document.querySelectorAll(".schedule-item");
+
+    // 각 날짜 항목에 대해 startTime, endTime을 가져와서 selectedDates 배열에 추가
+    dateItems.forEach((item) => {
+      const date = item.querySelector(".schedule-date-text").textContent;
+      const startTime = item.querySelector(".startTime").value;
+      const endTime = item.querySelector(".endTime").value;
+
+      selectedDates.push({
+        date,
+        startTime,
+        endTime,
+      });
+    });
+    console.log("전역 변수에 저장된 값:", selectedDates);
+    // 탭3으로 이동
+    const tab2Button = document.querySelector('.tab[data-tab="tab2"]');
+    if (tab2Button) {
+      tab2Button.click();
+    }
+  });
+
+  // 날짜 범위 배열 생성
+  function getDatesInRange(startStr, endStr) {
+    const dateArray = [];
+    if (!startStr || !endStr) return dateArray;
+    let currentDate = new Date(startStr);
+    const endDate = new Date(endStr);
+
+    while (currentDate <= endDate) {
+      dateArray.push(currentDate.toISOString().split("T")[0]); // yyyy-mm-dd
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return dateArray;
+  }
+}
 // 주소에서 지역 코드를 추출하는 함수
 function getAreaCodeFromAddress(address) {
   if (!address) return null;
@@ -345,6 +588,259 @@ function resetToInitialState() {
   moreBtn.style.display = "block";
 
   loadFestivalData(currentPage);
+}
+// 두 달력을 생성하는 함수
+function generateCalendar(id, month, year, contentId) {
+  const container = document.getElementById(contentId);
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+  const totalDays = lastDay.getDate();
+  const firstDayOfWeek = firstDay.getDay();
+
+  // 월 이름 표시
+  const monthName = document.createElement("div");
+  monthName.classList.add("month-name");
+  monthName.textContent = `${year} ${monthNames[month]}`;
+  container.innerHTML = ""; // 기존 내용 삭제 후 새로 생성
+  container.appendChild(monthName);
+
+  // 요일 표시
+  const weekdays = document.createElement("div");
+  weekdays.classList.add("weekdays");
+  const weekdaysNames = ["일", "월", "화", "수", "목", "금", "토"];
+  weekdaysNames.forEach((day, index) => {
+    const weekday = document.createElement("div");
+    weekday.textContent = day;
+    if (index === 0) {
+      weekday.classList.add("sunday");
+    } else if (index === 6) {
+      weekday.classList.add("saturday");
+    }
+    weekdays.appendChild(weekday);
+  });
+  container.appendChild(weekdays);
+
+  // 날짜 표시
+  const days = document.createElement("div");
+  days.classList.add("days");
+
+  // 빈 날짜 채우기
+  for (let i = 0; i < firstDayOfWeek; i++) {
+    const emptyDay = document.createElement("div");
+    days.appendChild(emptyDay);
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 맞춰 정확하게 비교
+
+  for (let i = 1; i <= totalDays; i++) {
+    const day = document.createElement("div");
+    day.classList.add("day");
+    day.textContent = i;
+    day.dataset.date = `${year}-${month + 1}-${i}`;
+
+    const thisDate = new Date(year, month, i);
+    if (thisDate < today) {
+      day.classList.add("past");
+    }
+
+    // 시작일, 종료일 하이라이트
+    if (selectedStartDate && selectedEndDate) {
+      const startDate = new Date(selectedStartDate);
+      const endDate = new Date(selectedEndDate);
+
+      // 시작일과 종료일 범위 내 날짜 하이라이팅
+      if (thisDate >= startDate && thisDate <= endDate) {
+        day.classList.add("selected-range");
+      }
+      if (
+        thisDate.getTime() == startDate.getTime() ||
+        thisDate.getTime() == endDate.getTime()
+      ) {
+        day.classList.add("selected", "selected-end");
+      }
+    }
+
+    days.appendChild(day);
+  }
+
+  container.appendChild(days);
+
+  // 클릭 이벤트 추가
+  const dayElements = container.querySelectorAll(".day");
+  dayElements.forEach((day) => {
+    day.addEventListener("click", () => handleDayClick(day));
+  });
+}
+// 날짜 범위 하이라이팅
+function highlightRange(startDate, endDate) {
+  if (startDate === lastStartDate && endDate === lastEndDate) {
+    return; // 이전 상태와 동일하면 하이라이팅을 하지 않음
+  }
+
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  const dayElements = document.querySelectorAll(".day");
+
+  const startTime = start.getTime();
+  const endTime = end.getTime();
+
+  dayElements.forEach((day) => {
+    const dayDate = new Date(day.dataset.date);
+    const dayTime = dayDate.getTime();
+
+    if (dayTime >= startTime && dayTime <= endTime) {
+      if (dayTime === startTime) {
+        day.classList.add("selected", "selected-start");
+      } else if (dayTime === endTime) {
+        day.classList.add("selected", "selected-end");
+      } else {
+        day.classList.add("selected-range");
+      }
+    } else {
+      day.classList.remove("selected-range", "selected-start", "selected-end");
+    }
+  });
+
+  lastStartDate = startDate;
+  lastEndDate = endDate;
+  // 선택된 날짜가 있을 경우 버튼 활성화
+  toggleConfirmButton();
+}
+// 날짜 클릭 시 처리
+function handleDayClick(dayElement) {
+  const clickedDate = dayElement.dataset.date;
+  console.log("클릭한 날짜:", clickedDate);
+
+  if (!selectedStartDate) {
+    selectedStartDate = clickedDate;
+    dayElement.classList.add("selected", "selected-start");
+  } else if (!selectedEndDate) {
+    selectedEndDate = clickedDate;
+
+    if (
+      new Date(selectedEndDate).getTime() <
+      new Date(selectedStartDate).getTime()
+    ) {
+      [selectedStartDate, selectedEndDate] = [
+        selectedEndDate,
+        selectedStartDate,
+      ];
+    }
+
+    highlightRange(selectedStartDate, selectedEndDate);
+  } else {
+    selectedStartDate = clickedDate;
+    selectedEndDate = null;
+    resetSelection();
+    dayElement.classList.add("selected", "selected-start");
+  }
+  // 선택된 날짜가 있을 경우 버튼 활성화
+  toggleConfirmButton();
+}
+// 날짜 초기화
+function resetSelection() {
+  const dayElements = document.querySelectorAll(".day");
+  dayElements.forEach((day) => {
+    day.classList.remove(
+      "selected",
+      "selected-range",
+      "selected-start",
+      "selected-end"
+    );
+  });
+}
+// 월 변경 시 선택된 날짜 유지
+function changeBothMonths(direction) {
+  currentMonth1 += direction;
+  currentMonth2 += direction;
+
+  if (currentMonth1 < 0) {
+    currentMonth1 = 11;
+    currentYear1--;
+  } else if (currentMonth1 > 11) {
+    currentMonth1 = 0;
+    currentYear1++;
+  }
+
+  if (currentMonth2 < 0) {
+    currentMonth2 = 11;
+    currentYear2--;
+  } else if (currentMonth2 > 11) {
+    currentMonth2 = 0;
+    currentYear2++;
+  }
+
+  generateCalendar(
+    "calendar1",
+    currentMonth1,
+    currentYear1,
+    "calendar1-content"
+  );
+  generateCalendar(
+    "calendar2",
+    currentMonth2,
+    currentYear2,
+    "calendar2-content"
+  );
+}
+// 날짜 로그
+function confirmSelection() {
+  if (!selectedStartDate) {
+    console.log("시작일을 선택하세요.");
+    return;
+  }
+
+  if (!selectedEndDate) {
+    console.log("종료일을 선택하세요.");
+    return;
+  }
+
+  function formatDate(dateStr) {
+    const [year, month, day] = dateStr.split("-");
+    return `${year}${month.padStart(2, "0")}${day.padStart(2, "0")}`;
+  }
+
+  function calculateDuration(startDate, endDate) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const diffTime = end - start;
+    const diffDays = diffTime / (1000 * 3600 * 24); // 밀리초를 일로 변환
+    return diffDays;
+  }
+
+  const duration = calculateDuration(selectedStartDate, selectedEndDate) + 1;
+
+  console.log("선택된 기간:");
+  console.log("시작일:", formatDate(selectedStartDate));
+  console.log("종료일:", formatDate(selectedEndDate));
+  console.log("기간:", duration, "일");
+}
+// 선택 완료 버튼의 활성화 여부를 설정하는 함수
+function toggleConfirmButton() {
+  const confirmBtn = document.getElementById("confirmBtn");
+
+  // 시작일과 종료일이 모두 선택되었을 때 버튼을 활성화
+  if (selectedStartDate && selectedEndDate) {
+    confirmBtn.removeAttribute("disabled");
+    // 활성화 상태 스타일 변경 (검은색 배경에 흰색 글씨)
+    confirmBtn.style.backgroundColor = "#282828";
+    confirmBtn.style.color = "white";
+  } else {
+    confirmBtn.setAttribute("disabled", "true");
+    // 비활성화 상태 스타일 변경 (회색 배경에 흰색 글씨)
+    confirmBtn.style.backgroundColor = "#b0b0b0";
+    confirmBtn.style.color = "white";
+  }
+}
+// 지역코드로 지역명을 가져오는 함수
+function findAreaNameByCode(code) {
+  for (const [areaName, areaCode] of Object.entries(AREA_CODE_MAP)) {
+    if (areaCode === code) {
+      return areaName;
+    }
+  }
+  return null;
 }
 
 // 오늘 날짜를 YYYYMMDD 형식으로 반환하는 함수
@@ -370,30 +866,3 @@ function initializeDates() {
   globalStartDate = todayDate;
   globalEndDate = todayDate;
 }
-// 제이쿼리와 daterangepicker 라이브러리를 사용하여 날짜 선택 기능을 추가하는 함수
-$(function () {
-  $("#daterange").daterangepicker({
-    opens: "center",
-    startDate: moment(),
-    endDate: moment(),
-    showDropdowns: true,
-    minDate: moment(),
-    locale: {
-      format: "YYYY-MM-DD",
-      applyLabel: "적용",
-      cancelLabel: "취소",
-    },
-    linkedCalendars: true,
-    showWeekNumbers: false,
-  });
-
-  $("#daterange").on("apply.daterangepicker", function (ev, picker) {
-    globalStartDate = picker.startDate.format("YYYY-MM-DD");
-    globalEndDate = picker.endDate.format("YYYY-MM-DD");
-
-    console.log("선택된 시작 날짜:", globalStartDate);
-    console.log("선택된 종료 날짜:", globalEndDate);
-  });
-});
-
-initializeDates();
