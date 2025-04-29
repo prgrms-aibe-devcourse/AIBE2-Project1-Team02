@@ -1,42 +1,21 @@
-import { saveToLocalStorage, loadFromLocalStorage } from './localStorageUtils.js';
+import { saveToLocalStorage } from './localStorageUtils.js';
 
-async function loadJsonData() {
-    try {
-        const response = await fetch('src/data.json'); // JSON 파일 경로
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const jsonData = await response.json();
-        return jsonData.items;
-    } catch (error) {
-        console.error("JSON 데이터 로드 에러:", error);
-        return [];
-    }
-}
-
-async function generatePlanFromGemini() {
-    const items = await loadJsonData();
-    if (items.length === 0) {
-        document.getElementById('result').textContent = "JSON 데이터를 불러오지 못했습니다.";
+// filteredItems 배열, 시작일, 종료일, customPrompt(선택)를 받아 Gemini API로 일정 생성
+export async function generatePlanFromGemini(filteredItems, startDate, endDate, customPrompt) {
+    if (!filteredItems || filteredItems.length === 0) {
+        document.getElementById('result').textContent = "선택된 장소가 없습니다.";
         return;
     }
 
-    const places = items.map(item => item.placeName).join(', ');
-    const startDate = "2024-04-01"; // 예시 시작 날짜
-    const endDate = "2024-04-03"; // 예시 종료 날짜
-    const promptText = `날짜: ${startDate} ~ ${endDate}\n장소: ${places}\n위의 장소들을 포함하여 여행 일정을 작성해 주세요. 운영시간과 위치를 고려해서 최적의 동선으로 짜줘. 하루에 갈 수 있는 최대치의 장소를 시간을 고려해서 짜야해. 현재 테스트중이니 하루에 5개의 장소만 표기해 결과는 [
-   Item: [
-{
-    Date: 2024-04-01
-    Places: [N서울 타워, 경복궁, 광장시장, 남대문 시장, 롯데월드타워]
-    Date: 2024-04-02
-    Places: [이런저런, 저런이런 등등]
-    Date: 2024-04-03
-    Places: [어쩌구 저쩌구, 어쩌구저쩌구 등등]
-}
-    ]이러한 형식의 json 포맷으로 반환해 주세요. 나머지 부연설명은 필요없이 딱 내가 원하는것만 전시해줘`;
+    let promptText;
+    if (customPrompt) {
+        promptText = customPrompt;
+    } else {
+        const places = filteredItems.map(item => item.placeName).join(', ');
+        promptText = `날짜: ${startDate} ~ ${endDate}\n장소: ${places}\n위의 장소들을 포함하여 여행 일정을 작성해 주세요. 운영시간과 위치를 고려해서 최적의 동선으로 짜줘. 하루에 갈 수 있는 최대치의 장소를 시간을 고려해서 짜야해. 현재 테스트중이니 하루에 5개의 장소만 표기해 결과는 [\n   Item: [\n{\n    Date: ${startDate}\n    Places: [N서울 타워, 경복궁, 광장시장, 남대문 시장, 롯데월드타워]\n    Date: ...\n    Places: [...]\n}\n    ]이러한 형식의 json 포맷으로 반환해 주세요. 나머지 부연설명은 필요없이 딱 내가 원하는것만 전시해줘`;
+    }
 
-    const apiKey = "AIzaSyA0utBpWrVDX4rYPm1FF9PePzXOaUn1PnE"; // 여기에 발급받은 Gemini API Key를 넣어야 함
+    const apiKey = "AIzaSyA0utBpWrVDX4rYPm1FF9PePzXOaUn1PnE"; // Gemini API Key
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
   
     const payload = {
@@ -66,12 +45,8 @@ async function generatePlanFromGemini() {
         const data = await response.json();
         const scheduleText = data.candidates[0].content.parts[0].text;
         console.log("받은 응답:", scheduleText);
-        document.getElementById('result').textContent = data.candidates[0].content.parts[0].text;
-        
-        // 로컬 스토리지에 저장
-        saveToLocalStorage('travelSchedule', scheduleText);
-
         document.getElementById('result').textContent = scheduleText;
+        // saveToLocalStorage('travelSchedule', scheduleText); // 삭제
     } catch (error) {
         console.error("에러 발생:", error);
         document.getElementById('result').textContent = `에러: ${error.message}`;
@@ -143,10 +118,3 @@ async function generateSchedule(selectedIds) {
 document.getElementById('generateBtn').addEventListener('click', generatePlanFromGemini);
 
 
-// 저장
-saveToLocalStorage('travelSchedule', scheduleData);
-
-// 불러오기
-const loadedSchedule = loadFromLocalStorage('travelSchedule');
-console.log(loadedSchedule);
-  

@@ -315,6 +315,8 @@ function loadFestivalData(page = 1) {
       list.innerHTML = `<li>데이터 불러오기 실패: ${err.message}</li>`;
       console.error("API 호출 오류:", err);
     });
+
+  localStorage.setItem('filteredItems', JSON.stringify(filteredItems));
 }
 // 추가 상세정보 (모달의 내용)
 function handleLocationDetail(data) {
@@ -856,6 +858,17 @@ function findAreaNameByCode(code) {
 
 let makeScheduleButton = document.getElementById("makeSchedule");
 makeScheduleButton.addEventListener('click', function(e) {
+  console.log('filteredItems:', filteredItems); // filteredItems 배열 콘솔 출력
+  // 날짜 정보와 filteredItems를 localStorage에 저장
+  localStorage.setItem('filteredItems', JSON.stringify(filteredItems));
+  localStorage.setItem('startDate', selectedStartDate);
+  localStorage.setItem('endDate', selectedEndDate);
+
+  // 저장된 값 콘솔 출력
+  console.log('로컬스토리지 filteredItems:', JSON.parse(localStorage.getItem('filteredItems') || '[]'));
+  console.log('로컬스토리지 startDate:', localStorage.getItem('startDate'));
+  console.log('로컬스토리지 endDate:', localStorage.getItem('endDate'));
+
   document
       .querySelectorAll(".tabContent")
       .forEach((c) => (c.style.display = "none"));
