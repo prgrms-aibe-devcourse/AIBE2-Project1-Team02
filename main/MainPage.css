@@ -14,7 +14,7 @@ li {
 }
 #tab1 {
   border: 1px solid pink;
-  width: 20%;
+  width: 100%;
   float: left;
 }
 
@@ -50,13 +50,13 @@ li {
 
 #tab2 {
   border: 1px solid green;
-  width: 20%;
+  width: 100%;
   float: left;
 }
 
 #tab3 {
   border: 1px solid blue;
-  width: 50%;
+  width: 100%;
   float: left;
 }
 
@@ -140,7 +140,7 @@ li {
 }
 
 #search-input {
-  width: 240px;
+  width: 180px;
 }
 
 #search-btn,
@@ -161,7 +161,7 @@ li {
   margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 2px;
 }
 
 /* 각각 카테고리 버튼 스타일 */
@@ -169,7 +169,7 @@ li {
   background-color: #f0f0f0;
   border: 1px solid #ddd;
   border-radius: 20px;
-  padding: 8px 16px;
+  padding: 8px 10px;
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
@@ -798,4 +798,30 @@ li {
   font-size: 18px;
   color: #666;
   transform: translateY(24px) translateX(-8px); /* 아래로 8px, 왼쪽으로 4px 이동 */
+}
+
+#main-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+#tab-container {
+  width: 40%; /* 왼쪽 영역: 탭 콘텐츠 */
+  height: 100%;
+  overflow-y: auto;
+  background-color: white; /* 필요에 따라 배경색 */
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#map-container {
+  width: 50%; /* 오른쪽 영역: 지도 */
+  height: 100%;
+  position: relative;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
 }

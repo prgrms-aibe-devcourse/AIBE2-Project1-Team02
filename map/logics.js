@@ -83,7 +83,7 @@ function showDayMarkers(dayIndex) {
 }
 
 // 아래 한 줄로 날짜 인덱스를 바꿔가며 확인할 수 있습니다.
-const dayIndex = 0; // 0: 첫째 날, 1: 둘째 날, 2: 셋째 날 ...
+const dayIndex = 1; // 0: 첫째 날, 1: 둘째 날, 2: 셋째 날 ...
 showDayMarkers(dayIndex);
 
 console.log("Final Grouped Data for Kakao Map:", storedData);
@@ -95,3 +95,4 @@ fetch('/AI/src/data.json')
   .then(data => {
     placeInfoList = data.items;
   });
+
