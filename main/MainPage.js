@@ -67,9 +67,17 @@ document.querySelectorAll(".tab").forEach((btn) => {
       .querySelectorAll(".tabContent")
       .forEach((c) => (c.style.display = "none"));
     const target = document.getElementById(btn.dataset.tab);
-    target.style.display = "block";
+
+    // 여기서 btn.dataset.tab은 문자열임
+    if (btn.dataset.tab === "tab4") {
+      target.style.display = "flex";
+      tab4Handler(); // 여기가 실행되도록 수정됨
+    } else {
+      target.style.display = "block";
+    }
   });
 });
+
 document.addEventListener("DOMContentLoaded", () => {
   // 페이지 데이터 로딩 및 더보기 버튼 처리
   loadFestivalData(currentPage);
@@ -910,4 +918,266 @@ function initializeDates() {
 
   globalStartDate = todayDate;
   globalEndDate = todayDate;
+}
+// 탭4 클릭 시 로컬스토리지 데이터 불러오기
+function tab4Handler() {
+  // 로컬스토리지에서 여행 일정 데이터 가져오기
+  const travelScheduleData = localStorage.getItem("travelSchedule");
+
+  if (!travelScheduleData) {
+    console.error("여행 일정 데이터를 찾을 수 없습니다.");
+    return;
+  }
+
+  try {
+    const travelSchedule = JSON.parse(travelScheduleData);
+
+    // 날짜 요약 영역 초기화
+    const scheduleSummary = document.getElementById("scheduleSummary");
+    scheduleSummary.innerHTML = '<h1 id="scheduleSummaryTitle">여행 일정</h1>';
+
+    // ✅ 시작일과 종료일 추출 후 <h3> 태그 추가
+    if (travelSchedule.Item && travelSchedule.Item.length > 0) {
+      const startDate = new Date(travelSchedule.Item[0].Date);
+      const endDate = new Date(
+        travelSchedule.Item[travelSchedule.Item.length - 1].Date
+      );
+
+      const days = ["일", "월", "화", "수", "목", "금", "토"];
+      const formatDateWithDay = (dateObj) => {
+        const yyyy = dateObj.getFullYear();
+        const mm = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+        const dd = dateObj.getDate().toString().padStart(2, "0");
+        const day = days[dateObj.getDay()];
+        return `${yyyy}.${mm}.${dd}(${day})`;
+      };
+
+      const dateRangeHTML = `<h3 id="scheduleSummaryRange">${formatDateWithDay(
+        startDate
+      )} ~ ${formatDateWithDay(endDate)}</h3>`;
+      scheduleSummary.innerHTML += dateRangeHTML;
+    }
+
+    if (!travelSchedule.Item || travelSchedule.Item.length === 0) {
+      scheduleSummary.innerHTML += "<p>등록된 일정이 없습니다.</p>";
+      return;
+    }
+
+    // 날짜 박스 생성
+    travelSchedule.Item.forEach((item, scheduleIndex) => {
+      const dateBoxElement = document.createElement("div");
+      dateBoxElement.className = "custom-date-box"; // 박스 요소의 클래스명 변경
+
+      // 날짜 형식 변환 (YYYY.MM.DD(요일) 형식)
+      const customDateObject = new Date(item.Date);
+      const formattedCustomDate = `${customDateObject.getFullYear()}.${(
+        customDateObject.getMonth() + 1
+      )
+        .toString()
+        .padStart(2, "0")}.${customDateObject
+        .getDate()
+        .toString()
+        .padStart(2, "0")} (${
+        ["일", "월", "화", "수", "목", "금", "토"][customDateObject.getDay()]
+      })`;
+      // "1일차 yyyy.mm.dd(요일)" 한 줄 출력 구성
+      const dayHeader = document.createElement("div");
+
+      // 1일차 (굵고 큼)
+      const dayNumber = document.createElement("span");
+      dayNumber.id = "day-number";
+      dayNumber.textContent = `${scheduleIndex + 1}일차 `;
+
+      // yyyy.mm.dd(요일) (작고 흐림)
+      const dayDate = document.createElement("span");
+      dayDate.id = "day-date";
+      dayDate.textContent = formattedCustomDate;
+
+      // 조립해서 dateBox에 삽입
+      dayHeader.appendChild(dayNumber);
+      dayHeader.appendChild(dayDate);
+      dateBoxElement.appendChild(dayHeader);
+
+      // 장소 이름들 모아서 출력
+      const customPlacesLabel = document.createElement("p");
+      let placeNamesList = "장소 정보 없음";
+
+      if (Array.isArray(item.Places) && item.Places.length > 0) {
+        placeNamesList = item.Places.join(", ");
+      }
+
+      customPlacesLabel.textContent = `${placeNamesList}`;
+      dateBoxElement.appendChild(customPlacesLabel);
+
+      // 날짜 박스 클릭 이벤트 - 상세 정보 표시
+      dateBoxElement.addEventListener("click", function () {
+        // 모든 박스에서 active 클래스 제거
+        document.querySelectorAll(".custom-date-box").forEach((box) => {
+          box.classList.remove("active");
+        });
+
+        // 현재 박스에 active 클래스 추가
+        this.classList.add("active");
+
+        // 상세 정보 영역 확장
+        const scheduleDetailsElement =
+          document.getElementById("scheduleDetails");
+        scheduleDetailsElement.classList.add("expanded");
+
+        // 상세 정보 표시
+        const itemIndex = scheduleIndex; // 현재 클릭된 날짜의 인덱스
+        showScheduleDetails(travelSchedule.Item[itemIndex]);
+      });
+
+      scheduleSummary.appendChild(dateBoxElement);
+    });
+
+    // 첫번째 날짜 자동 선택 (있다면)
+    if (travelSchedule.Item.length > 0) {
+      const firstDateBoxElement =
+        scheduleSummary.querySelector(".custom-date-box");
+      if (firstDateBoxElement) {
+        firstDateBoxElement.click();
+      }
+    }
+  } catch (error) {
+    console.error("여행 일정 데이터 처리 중 오류가 발생했습니다:", error);
+  }
+}
+
+// 일정 상세 정보 표시 함수
+async function showScheduleDetails(daySchedule) {
+  const scheduleDetails = document.getElementById("scheduleDetails");
+  const res = await fetch(jsonFilePath);
+  const listData = await res.json();
+
+  const dateObj = new Date(daySchedule.Date);
+
+  // 연도는 두 자리만 추출
+  const year = dateObj.getFullYear().toString().slice(2); // '2024' -> '24'
+  // 월과 일은 두 자리로 포맷
+  const month = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+  const day = dateObj.getDate().toString().padStart(2, "0");
+
+  // "24.04.01" 형식으로 출력
+  const formattedDate = `${year}.${month}.${day}`;
+
+  let detailsHTML = `<div class="details-date">${formattedDate}</div>`;
+
+  if (daySchedule.Places && daySchedule.Places.length > 0) {
+    const places = daySchedule.Places;
+
+    for (let i = 0; i < places.length; i++) {
+      const placeName = places[i];
+      const matched = listData.items.find(
+        (item) => item.placeName === placeName
+      );
+
+      if (matched) {
+        const thumbnail = matched.images[0];
+
+        // 토글 박스
+        detailsHTML += `
+          <span class="place-order">${i + 1}</span>
+          <div class="place-detail collapsed">
+            <div class="collapsed-summary">
+              <img src="${thumbnail}" alt="${
+          matched.placeName
+        }" class="thumbnail-image" />
+              <span class="place-name">${matched.placeName}</span>
+            </div>
+            <div class="detail-content" style="display: none;">
+              <div class="images">
+                <img src="${matched.images[0]}" alt="${
+          matched.placeName
+        }" class="main-image" />
+              </div>
+              <div class="place-detail-info">
+                <div class="place-detail-feedback">
+                  <span>🩷 ${matched.likes}</span>
+                  <span>⭐ 미정</span>
+                </div>
+                <p id="place-detail-name">${matched.placeName}</p>
+                <p id="place-detail-address">${matched.address}</p>
+                <div class="section-divider"></div>
+                <p id="place-detail-description">${matched.description}</p>
+                <p><i class="bi bi-clock"></i>  ${matched.openHours}</p>
+                <p><i class="bi bi-telephone"></i>  ${matched.contact}</p>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // 🔽 점선 박스와 경로 보기 아이콘 추가 (마지막 박스 뒤에는 추가하지 않음)
+        // 점선 및 경로 링크 추가
+        if (i < places.length - 1) {
+          const nextPlaceName = places[i + 1];
+          const nextMatched = listData.items.find(
+            (item) => item.placeName === nextPlaceName
+          );
+
+          let routeLink = "";
+          if (nextMatched) {
+            const sName = encodeURIComponent(matched.address);
+            const eName = encodeURIComponent(nextMatched.address);
+            const routeUrl = `https://map.kakao.com/?sName=${sName}&eName=${eName}`;
+
+            routeLink = `
+      <div class="connector-line-box">
+        <div class="dotted-line"></div>
+        <div class="route-link">
+          <a href="${routeUrl}" target="_blank">
+            <i class="bi bi-car-front-fill"></i> 경로 보기
+          </a>
+        </div>
+      </div>
+    `;
+          }
+
+          detailsHTML += routeLink;
+        }
+      } else {
+        detailsHTML += `<p>${placeName} - 상세 정보 없음</p>`;
+      }
+    }
+  } else {
+    detailsHTML += "<p>등록된 장소가 없습니다.</p>";
+  }
+
+  scheduleDetails.innerHTML = detailsHTML;
+
+  // ✅ 클릭 시 박스 확장/축소 토글 (하나만 열리도록 변경)
+  scheduleDetails.querySelectorAll(".place-detail").forEach((box) => {
+    box.addEventListener("click", () => {
+      const detailContent = box.querySelector(".detail-content");
+      const collapsedSummary = box.querySelector(".collapsed-summary");
+
+      // 모든 박스에서 확장 상태를 초기화
+      scheduleDetails.querySelectorAll(".place-detail").forEach((otherBox) => {
+        if (otherBox !== box) {
+          otherBox.classList.remove("expanded");
+          otherBox.classList.add("collapsed");
+          const otherDetailContent = otherBox.querySelector(".detail-content");
+          const otherCollapsedSummary =
+            otherBox.querySelector(".collapsed-summary");
+          otherDetailContent.style.display = "none";
+          otherCollapsedSummary.style.display = "flex";
+        }
+      });
+
+      // 현재 박스 상태 토글
+      box.classList.toggle("expanded");
+      box.classList.toggle("collapsed");
+
+      if (box.classList.contains("expanded")) {
+        // 확장되면 상세 정보를 보이게
+        detailContent.style.display = "block";
+        collapsedSummary.style.display = "none";
+      } else {
+        // 축소되면 상세 정보를 숨기고 요약만 보이게
+        detailContent.style.display = "none";
+        collapsedSummary.style.display = "flex";
+      }
+    });
+  });
 }
