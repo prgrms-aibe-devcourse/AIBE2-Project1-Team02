@@ -109,11 +109,38 @@
           </div>
         </div>
         <div id="tab3" class="tabContent" style="display: none">
+          <div id="tagSearchBox">
+            <input type="text" id="tag-input" placeholder="태그로 검색" />
+            <button id="tag-search-btn"><i class="bi bi-search"></i></button>
+            <br/>
+            <br/>
+            <div>
+              추천태그<br/>
+              1. 맛집<br/>
+              2. 옷쇼핑<br/>
+              3. 쇼핑<br/>
+              4. 맛집<br/>
+              5. 커플여행
+            </div>
+            <br/>
+            <div>
+              최근 검색<br/>
+              <span>제주도 x</span>
+              <span>비빔밥 x</span>
+              <span>꽃축제 x</span>
+              <span>바다여행 x</span>
+              <span>산책코스 x</span>
+              <span>맛집탐방 x</span>
+              <span>힐링여행 x</span>
+              <span>당일치기 x</span>
+              <span>오션뷰 x</span>
+            </div>
+          </div>
           <div id="placeSearchBox">
             <div>
               <input type="text" id="search-input" placeholder="키워드로 검색" />
               <button id="search-btn"><i class="bi bi-search"></i></button>
-  <!--            <button id="reset-btn">🔄</button>-->
+
               <div id="placeCategory">
                 <button class="placeCategory" data-value="all">전체</button>
                 <button class="placeCategory" data-value="1">장소</button>
@@ -121,7 +148,7 @@
                 <button class="placeCategory" data-value="3">카페</button>
                 <button class="placeCategory" data-value="4">숙소</button>
               </div>
-              <!--                    <input id="inputPlace" type="text" placeholder="장소를 입력하세요.">-->
+
               <ul id="festival-list">
                 <li>불러오는 중...</li>
               </ul>

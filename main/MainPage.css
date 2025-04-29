@@ -129,7 +129,9 @@ li {
 
 /* 검색 영역 전체 정렬 */
 #search-input,
+#tag-input,
 #search-btn,
+#tag-search-btn,
 #reset-btn {
   font-size: 16px;
   padding: 10px 12px;
@@ -139,12 +141,12 @@ li {
   outline: none;
 }
 
-#search-input {
+#search-input, #tag-input {
   width: 180px;
 }
 
 #search-btn,
-#reset-btn {
+#tag-search-btn {
   background-color: #ff5a5f;
   color: #fff;
   cursor: pointer;
@@ -152,7 +154,7 @@ li {
 }
 
 #search-btn:hover,
-#reset-btn:hover {
+#tag-search-btn:hover {
   background-color: #e14b4f;
 }
 
@@ -186,6 +188,45 @@ li {
   background-color: #ff5a5f;
   color: #fff;
   border-color: #ff5a5f;
+}
+
+#tagSearchBox, #placeSearchBox, #placeSelectBox {
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+
+.hidden {
+  opacity: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.visible {
+  opacity: 1;
+  height: auto;
+  padding: initial;
+  margin: initial;
+  pointer-events: auto;
+}
+
+#tagSearchBox span {
+  display: inline-block;
+  background-color: #f0f0f0;
+  color: #333;
+  border-radius: 20px;
+  padding: 6px 12px;
+  margin: 4px 6px 4px 0;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#tagSearchBox span:hover {
+  background-color: #d0eaff; /* hover 효과 */
+  color: #007bff;
 }
 
 /* 반응형 살짝 */
