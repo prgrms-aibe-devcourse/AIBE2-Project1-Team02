@@ -1,3 +1,6 @@
+let globalStartDate = "";
+let globalEndDate = "";
+
 let currentPage = 1;
 let totalPages = 1; // 전체 페이지 수 초기화
 let selectedAreaCode = ""; // 기본값은 빈 문자열 (전체 지역)
@@ -169,12 +172,11 @@ function loadFestivalData(page = 1) {
 
         // 이미지 URL 처리
         const imageUrl = f.images ? f.images[0] : ""; // 첫 번째 이미지를 사용
-        const imageHtml = imageUrl
-          ? `<img src="${imageUrl}" alt="${f.placeName}" />`
-          : "";
+        const imageHtml = `<img src="${imageUrl}" alt="${f.placeName}" />`;
 
         // 각 장소의 정보 처리
         const id = f.id || "";
+        const image = f.images;
         const placeName = f.placeName || ""; // 장소 이름
         const category = f.category || ""; // 카테고리
         const address = f.address || ""; // 주소
@@ -182,6 +184,7 @@ function loadFestivalData(page = 1) {
         const contact = f.contact || ""; // 연락처
         const description = f.description || "";
         const likes = f.likes || 0;
+        let reviews = f.reviews;
 
         li.dataset.id = id;
         li.dataset.placeName = placeName;
@@ -203,7 +206,7 @@ function loadFestivalData(page = 1) {
             const placeItem = e.target.closest(".placeItem");
 
             // 이미지 src, title, description 추출
-            const imgSrc = placeItem.querySelector("img").src;
+            const imgSrc = placeItem.querySelector("img")?.src || "";
             const placeName = placeItem.querySelectorAll("p")[0].innerHTML;
             const description = placeItem.querySelectorAll("p")[1].textContent;
 
@@ -220,14 +223,23 @@ function loadFestivalData(page = 1) {
             newLi.dataset.likes = placeItem.dataset.likes;
 
             // HTML 구조 삽입
-            newLi.innerHTML = ` <div class="placeImg">
-                                <img src="${imgSrc}">
-                            </div>
-                            <div class="placeDesc">
-                                <p>${placeName}</p>
-                                <p>${description}</p>
-                            </div>
-                            <button class="deletePlace">-</button>`;
+            newLi.innerHTML = ` <div class="placeCard">
+            <div class="placeImg">${imageHtml}</div>
+            <div class="placeContent">
+              <div class="placeText">
+                <p class="plcaeTitle">${placeName}</p>
+                <p class="placeAddress">${address}</p>
+                <div class="placeBottom"> 
+                  <div class="likeInfo">
+                    <span>💬 ${reviews.length}</span>
+                    <span>🩷 ${likes}</span>
+                    <span>⭐ ${reviews[0].rating}</span>
+                   </div>
+                  <button class="deletePlace">-</button>
+                </div>
+              </div>
+             </div>
+          </div>`;
 
             selectedPlaces.appendChild(newLi);
 
@@ -235,13 +247,21 @@ function loadFestivalData(page = 1) {
             const deleteBtn = newLi.querySelector(".deletePlace");
             deleteBtn.addEventListener("click", () => {
               newLi.remove();
+              filteredItems = filteredItems.filter(item => {
+                return item.id != newLi.dataset.id;
+              });
             });
+
+            // item filtering
+            let filteredItem = pagedItems.filter(item => { return item.id == placeItem.dataset.id; });
+            filteredItems.push(filteredItem[0]);
             return;
           }
           // 모달열기기
           if (e.target.closest("li")) {
             handleLocationDetail({
               id,
+              image,
               placeName,
               category,
               address,
@@ -249,18 +269,29 @@ function loadFestivalData(page = 1) {
               operationHours,
               contact,
               likes,
+              reviews,
             });
           }
         });
 
         // 리스트에 HTML 삽입
-        li.innerHTML = `
-          <div class="placeImg">${imageHtml}</div>
-          <div>
-            <p>${placeName}<br/><span class="info-addr">${address}</span></p>
-            <p><strong>좋아요:</strong> ${likes}</p>
+        li.innerHTML = `<div class="placeCard">
+            <div class="placeImg">${imageHtml}</div>
+            <div class="placeContent">
+              <div class="placeText">
+                <p class="plcaeTitle">${placeName}</p>
+                <p class="placeAddress">${address}</p>
+                <div class="placeBottom"> 
+                  <div class="likeInfo">
+                    <span>💬 ${reviews.length}</span>
+                    <span>🩷 ${likes}</span>
+                    <span>⭐ ${reviews[0].rating}</span>
+                   </div>
+                  <button class="addPlace">+</button>
+                </div>
+              </div>
+             </div>
           </div>
-          <button class="addPlace">+</button>
         `;
         list.appendChild(li);
       });
@@ -280,18 +311,43 @@ function handleLocationDetail(data) {
 
   const placeNameEl = document.getElementById("modal-placeName");
   const addressEl = document.getElementById("modal-address");
-  const imageEl = document.getElementById("modal-image");
+  const slider = document.getElementById("image_slider");
   const contactEl = document.getElementById("modal-contact");
   const operationHoursEl = document.getElementById("modal-operationHours");
   const descriptionEl = document.getElementById("modal-description");
+  const reviews = document.getElementById("reviews");
 
   placeNameEl.textContent = data.placeName || "정보 없음";
-  imageEl.src = data.image || "";
-  imageEl.alt = data.placeName || "축제 이미지";
+  data.image.forEach((image) => {
+    let newLi = document.createElement('li');
+    newLi.className = 'splide__slide';
+    newLi.innerHTML = `<img src = ${image} alt="${data.placeName}"/>`;
+    slider.appendChild(newLi);
+  });
   addressEl.textContent = data.address || "정보 없음";
   contactEl.textContent = data.contact || "정보 없음";
   operationHoursEl.textContent = data.operationHours || "운영 시간 정보 없음";
   descriptionEl.textContent = data.description || "상세 정보 없음";
+  reviews.innerHTML = "";
+  data.reviews.forEach(item => {
+    let newLi = document.createElement('li');
+    newLi.innerHTML = `<div>⭐️${item.rating}</div>
+                    <div>${item.comment}</div>
+                    <div>${item.author} | ${item.date}</div>`;
+
+    reviews.appendChild(newLi);
+  });
+
+  new Splide('#travel-slider', {
+    type: 'loop',      // 무한 반복
+    perPage: 1,        // 한 번에 1개 보여줌
+    autoplay: true,    // 자동 재생
+    interval: 3000,    // 3초 간격
+    pauseOnHover: true, // 마우스 올리면 멈춤
+    arrows: true,      // 좌우 버튼 표시
+    pagination: true,  // 하단 점 네비게이션 표시
+  }).mount();
+
 
   // 모달 열기
   modal.classList.remove("hidden");
@@ -788,53 +844,25 @@ function findAreaNameByCode(code) {
 }
 
 // 오늘 날짜를 YYYYMMDD 형식으로 반환하는 함수
-// function getTodayDate() {
-//     const today = new Date();
-//     const year = today.getFullYear();
-//     const month = String(today.getMonth() + 1).padStart(2, "0");
-//     const day = String(today.getDate()).padStart(2, "0");
-//
-//     return `${year}${month}${day}`;
-// }
-// 로드시, 날짜를 오늘 날짜로 초기화하는 함수
-// function initializeDates() {
-//     const dateInput = document.getElementById("daterange");
-//
-//     // 오늘 날짜를 YYYYMMDD 형식으로 설정
-//     const todayDate = getTodayDate();
-//
-//     if (!dateInput.value) {
-//         dateInput.value = todayDate;
-//     }
-//
-//     globalStartDate = todayDate;
-//     globalEndDate = todayDate;
-// }
-// 제이쿼리와 daterangepicker 라이브러리를 사용하여 날짜 선택 기능을 추가하는 함수
-// $(function () {
-// $("#daterange").daterangepicker({
-//     opens: "center",
-//     startDate: moment(),
-//     endDate: moment(),
-//     showDropdowns: true,
-//     minDate: moment(),
-//     locale: {
-//         format: "YYYYMMDD",
-//         applyLabel: "적용",
-//         cancelLabel: "취소",
-//     },
-//     linkedCalendars: true,
-//     showWeekNumbers: false,
-// });
+function getTodayDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
 
-// $("#daterange").on("apply.daterangepicker", function (ev, picker) {
-//     globalStartDate = picker.startDate.format("YYYYMMDD");
-//     globalEndDate = picker.endDate.format("YYYYMMDD");
-//
-//     console.log("선택된 시작 날짜:", globalStartDate);
-//     console.log("선택된 종료 날짜:", globalEndDate);
-//
-//     // 날짜가 변경되었으므로 데이터를 다시 로드
-//     currentPage = 1; // 페이지를 첫 번째 페이지로 초기화
-//     loadFestivalData(currentPage); // 날짜를 기반으로 데이터를 로드
-// });
+  return `${year}${month}${day}`;
+}
+// 로드시, 날짜를 오늘 날짜로 초기화하는 함수
+function initializeDates() {
+  const dateInput = document.getElementById("daterange");
+
+  // 오늘 날짜를 YYYYMMDD 형식으로 설정
+  const todayDate = getTodayDate();
+
+  if (!dateInput.value) {
+    dateInput.value = todayDate;
+  }
+
+  globalStartDate = todayDate;
+  globalEndDate = todayDate;
+}

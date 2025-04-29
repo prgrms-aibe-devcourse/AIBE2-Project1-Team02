@@ -15,6 +15,15 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     />
     <!-- //부트스트랩 -->
+    <!-- splide -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.3/dist/css/splide.min.css">
+    <!-- //splide -->
+    <!-- js-datepicker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <!-- //js-datepicker -->
   </head>
   <body>
     <div>
@@ -22,6 +31,9 @@
         <button class="tab" data-tab="tab1">01. <br />날짜 선택</button>
         <button class="tab" data-tab="tab2">02. <br />지역 선택</button>
         <button class="tab" data-tab="tab3">03. <br />장소 선택</button>
+        <button class="tab" data-tab="tab4">04. <br />일정 확인</button>
+      </div>
+
       </div>
       <div id="tab1" class="tabContent">
         <div id="calendarInfo">
@@ -102,13 +114,12 @@
           <button class="area-btn" data-value="39">제주</button>
         </div>
       </div>
-
       <div id="tab3" class="tabContent" style="display: none">
         <div id="placeSearchBox">
           <div>
             <input type="text" id="search-input" placeholder="키워드로 검색" />
             <button id="search-btn"><i class="bi bi-search"></i></button>
-            <button id="reset-btn">🔄</button>
+<!--            <button id="reset-btn">🔄</button>-->
             <div id="placeCategory">
               <button class="placeCategory" data-value="all">전체</button>
               <button class="placeCategory" data-value="1">장소</button>
@@ -122,34 +133,49 @@
             </ul>
             <button id="load-more-btn">더 보기</button>
           </div>
-          <div id="placeSelectBox">
-            select<br />
-            <ul id="selectedPlaces"></ul>
-          </div>
+        </div>
+        <div id="placeSelectBox">
+          <ul id="selectedPlaces"></ul>
         </div>
       </div>
+      <div id="tab4" class="tabContent" style="display: none">일정 확인</div>
 
       <!-- 모달 -->
       <div id="festival-modal" class="hidden">
         <div class="modal-content">
-          <button class="close-button">&times;</button>
-          <h2 id="modal-placeName"></h2>
-          <img id="modal-image" src="" alt="" />
-          <p id="modal-description"></p>
-          <p>
-            <strong>주소:</strong> <span id="modal-address"></span>
-            <a id="modal-map-link" href="#" target="_blank"
-              ><i class="bi bi-map-fill"></i
-            ></a>
-          </p>
-          <p><strong>tel:</strong> <span id="modal-contact"></span></p>
-          <p>
-            <strong>운영시간:</strong> <span id="modal-operationHours"></span>
-          </p>
+          <div class="modal-content-left">
+            <button class="close-button">&times;</button>
+<!--            <img id="modal-image" src="" alt="" />-->
+            <div id="travel-slider" class="splide">
+              <div class="splide__track">
+                <ul id="image_slider" class="splide__list">
+                </ul>
+              </div>
+            </div>
+            <h2 id="modal-placeName"></h2>
+            <p id="modal-description"></p>
+            <p>
+              <strong>주소:</strong> <span id="modal-address"></span>
+              <a id="modal-map-link" href="#" target="_blank"
+                ><i class="bi bi-map-fill"></i
+              ></a>
+            </p>
+            <p><strong>tel:</strong> <span id="modal-contact"></span></p>
+            <p>
+              <strong>운영시간:</strong> <span id="modal-operationHours"></span>
+            </p>
+          </div>
+          <div class="modal-content-right">
+            <div>Review</div>
+            <input type="text" placeholder="댓글을 입력해주세요.">
+            <ul id="reviews"></ul>
+          </div>
         </div>
       </div>
+      <!-- //모달 -->
     </div>
     <script src="MainPage.js" defer></script>
     <script src="../config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.3/dist/js/splide.min.js"></script>
   </body>
 </html>
