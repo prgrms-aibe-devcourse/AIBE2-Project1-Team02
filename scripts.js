@@ -44,7 +44,27 @@ export async function generatePlanFromOpenAI(filteredItems, startDate, endDate, 
         // 다른 기능(예: 지도, 일정 복원, 분석 등)에서 이 값을 꺼내서 사용하세요!
         // ============================================================================
         console.log('여행 일정 결과:', scheduleText);
-        localStorage.setItem('travelSchedule', scheduleText);
+        // OpenAI 응답 후 날짜별 Places를 하나로 합치는 후처리
+        let cleanText = scheduleText
+            .replace(/```json/g, '')
+            .replace(/```/g, '')
+            .trim();
+        let scheduleArr;
+        try {
+            scheduleArr = JSON.parse(cleanText);
+        } catch (e) {
+            console.error('travelSchedule 파싱 오류:', e);
+            return;
+        }
+        // 날짜별로 Places 합치기
+        const merged = {};
+        scheduleArr.forEach(item => {
+            if (!merged[item.Date]) merged[item.Date] = [];
+            merged[item.Date] = merged[item.Date].concat(item.Places);
+        });
+        const mergedArr = Object.entries(merged).map(([Date, Places]) => ({ Date, Places }));
+        // localStorage에 합쳐진 결과 저장
+        localStorage.setItem('travelSchedule', JSON.stringify(mergedArr));
 
         // =====================[날짜별 장소 추출 및 테스트용 날짜 조작 코드]====================
         // 아래 한 줄로 원하는 날짜를 바꿔가며 테스트할 수 있습니다.

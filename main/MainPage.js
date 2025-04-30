@@ -9,7 +9,7 @@ let filteredItems = []; // 필터링된 데이터 저장
 const jsonFilePath = "../listEx.json"; // 로컬 파일 경로
 
 // 파일 상단에 단 한 번만 선언
-let testSelectedDate = "2025-05-27";
+let testSelectedDate = "2025-05-04";
 
 // ==================== 캘린더 부분 변수 ====================
 const monthNames = [
@@ -481,12 +481,11 @@ function loadFestivalData(page = 1) {
 장소: ${placesPrompt}
 아래 장소만 사용해서 여행 일정을 작성해 주세요. 절대로 다른 장소를 추가하지 마세요.
 조건:
-- 하루에 같은 카테고리(예: 식당, 카페, 관광지 등)만 몰리지 않게 골고루 섞어서 배치해줘.
 - 운영시간과 위치를 반드시 고려해서, 하루에 이동 동선이 최소가 되도록 가까운 장소끼리 **우선순위 10KM 이내** 묶어서 배치해줘.
-- 절대 동선 낭비가 생기지 않게, 하루에 먼 곳을 여러 번 왕복하지 않도록 해줘.
-- 하루에 최소 1개, 최대 4개 장소만 포함해줘.
+- 하루에 최소 1개 이상의 장소를 포함해줘.
 - 장소는 딱 한 번만 이용할 수 있어.
-- 만약 카테고리가와 위치 조건 이 두개의 조건이 충돌한다면, 위치조건이 우선이야.
+- 주어진 모든 장소를 사용해야해.
+- 하나의 일자에는 하나의 배열로만 보내줘 배열을 나누는건 날짜가 나뉜다는 의미야.
 - 결과는 아래와 같은 json 포맷으로만 반환해줘. 부연설명은 필요없어.
 [
   {
@@ -1134,7 +1133,7 @@ function getPlacesByDate(scheduleJson, dateStr) {
   const dayPlan = scheduleJson.Item.find((item) => item.Date === dateStr);
   return dayPlan ? dayPlan.Places : [];
 }
-
+/////////////////////////////////// 카카오맵 마커 설정 //////////////////////////////////////////////////////////////////////////////////  
 // 기존 마커를 모두 지우기 위한 배열
 let kakaoMarkers = [];
 // 기존 선(폴리라인)을 지우기 위한 변수
@@ -1162,10 +1161,27 @@ function setMarkersByPlaceNames(placeNames) {
     geocoder.keywordSearch(placeName, function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        // 순번에 따라 색상 결정
+        let bgColor = '#ffb14b'; // 기본: 주황
+        if (idx === 0) bgColor = '#3ec6ec'; // 첫번째: 파랑
+        else if (idx === placeNames.length - 1) bgColor = '#ff4b7d'; // 마지막: 빨강
+        // SVG로 커스텀 마커 이미지 생성
+        const svg = `
+          <svg xmlns='http://www.w3.org/2000/svg' width='36' height='48'>
+            <circle cx='18' cy='18' r='16' fill='${bgColor}' stroke='white' stroke-width='4'/>
+            <text x='18' y='18' text-anchor='middle' font-size='20' font-weight='bold' fill='white' alignment-baseline='middle' dominant-baseline='middle'>${idx+1}</text>
+          </svg>
+        `;
+        const markerImage = new kakao.maps.MarkerImage(
+          'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg),
+          new kakao.maps.Size(36, 48),
+          {offset: new kakao.maps.Point(18, 40)}
+        );
         const marker = new kakao.maps.Marker({
           map: map,
           position: coords,
           title: placeName,
+          image: markerImage
         });
         kakaoMarkers.push(marker);
         bounds.extend(coords);
@@ -1173,19 +1189,14 @@ function setMarkersByPlaceNames(placeNames) {
 
         // listEx.json에서 해당 장소 정보 찾기
         const item = placeDataItems.find((i) => i.placeName === placeName);
-        let infoHtml = `<div style='min-width:220px;max-width:300px;padding:8px 12px;font-size:14px;'>`;
+        let infoHtml = `<div style='min-width:180px;max-width:220px;padding:8px 12px;text-align:center;'>`;
         if (item) {
-          infoHtml += `<b style='font-size:16px;'>${item.placeName}</b><br/>`;
           if (item.images && item.images[0]) {
-            infoHtml += `<img src='${item.images[0]}' alt='${item.placeName}' style='width:100%;max-width:250px;margin:4px 0;border-radius:6px;'/><br/>`;
+            infoHtml += `<img src='${item.images[0]}' alt='${item.placeName}' style='width:100px;height:auto;display:block;margin:0 auto 8px auto;border-radius:6px;'/>`;
           }
-          infoHtml += `<span>📍 ${item.address}</span><br/>`;
-          infoHtml += `<span>${item.description}</span><br/>`;
-          if (item.openHours)
-            infoHtml += `<span>⏰ ${item.openHours}</span><br/>`;
-          if (item.likes) infoHtml += `<span>🩷 ${item.likes}</span><br/>`;
+          infoHtml += `<b style='font-size:16px;'>${item.placeName}</b>`;
         } else {
-          infoHtml += `<b>${placeName}</b><br/>정보 없음`;
+          infoHtml += `<b>${placeName}</b>`;
         }
         infoHtml += `</div>`;
 
