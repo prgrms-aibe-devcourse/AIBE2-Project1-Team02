@@ -212,6 +212,17 @@ function loadFestivalData(page = 1) {
             // 현재 클릭된 버튼이 속한 placeItem
             const placeItem = e.target.closest(".placeItem");
 
+            // 중복 추가 방지
+            let isReturn = false;
+            filteredItems.forEach(item => {
+              if(placeItem.dataset.id == item.id) {
+                isReturn = true;
+              }
+            });
+            if(isReturn) {
+              return;
+            }
+
             // 이미지 src, title, description 추출
             const imgSrc = placeItem.querySelector("img")?.src || "";
             const placeName = placeItem.querySelectorAll("p")[0].innerHTML;
@@ -919,6 +930,43 @@ function initializeDates() {
   globalStartDate = todayDate;
   globalEndDate = todayDate;
 }
+const searchInput = document.getElementById("search-input");
+const tagSearchBtn = document.getElementById("tag-search-btn");
+const tagBox = document.getElementById("tagSearchBox");
+const placeBox = document.getElementById("placeSearchBox");
+const selectBox = document.getElementById("placeSelectBox");
+
+function showTagBox() {
+  tagBox.classList.add("show");
+  tagBox.classList.remove("hidden");
+
+  placeBox.style.display = "none";
+  selectBox.style.display = "none";
+}
+
+function hideTagBox() {
+  tagBox.classList.remove("show");
+  tagBox.classList.add("hidden");
+
+  placeBox.style.display = "block";
+  selectBox.style.display = "block";
+}
+
+searchInput.addEventListener("focus", showTagBox);
+
+// 문서 클릭 시 input, tagBox 이외는 숨기기
+document.addEventListener("mousedown", (e) => {
+  if (
+      !searchInput.contains(e.target) &&
+      !tagBox.contains(e.target)
+  ) {
+    hideTagBox();
+  }
+});
+
+tagSearchBtn.addEventListener('click', (e) => {
+  hideTagBox();
+})
 // 탭4 클릭 시 로컬스토리지 데이터 불러오기
 function tab4Handler() {
   // 로컬스토리지에서 여행 일정 데이터 가져오기
