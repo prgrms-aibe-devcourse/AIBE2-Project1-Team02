@@ -124,7 +124,7 @@ button {
   box-shadow: 0px 0px 10px gray;
   width: 17%;  /* 로그인 페이지와 동일한 비율로 수정 */
   height: 450px;  /* 로그인 페이지와 동일한 세로 크기 */
-  /* margin-left: 25rem;  사이드바 적용시 */
+  margin-left: 25rem;
   
   /* 👇 애니메이션 속성 추가 */
   animation: popup 0.6s ease-out;

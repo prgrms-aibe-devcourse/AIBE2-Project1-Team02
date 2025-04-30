@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="find_style.css">
 </head>
 <body>
+  <div class="main-container">
+
+    <div id="sidebar-container"></div>
+    
     <div class="findid-container">
       <h2 class="logo">아이디 찾기</h2>
       <form class="findid-form">
@@ -21,8 +25,17 @@
         <p>돌아가기 👉 <a href="../login/login.html">로그인</a></p>
       </div>
     </div>
+    </div>
 
     <script src="findId.js"></script>
+    <script>
+      fetch('../sidebar/sidebar.html')
+        .then(res => res.text())
+        .then(data => {
+          document.getElementById('sidebar-container').innerHTML = data;
+        });
+    </script>
+
   </body>
   
 </html>
