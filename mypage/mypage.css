@@ -1,3 +1,8 @@
+* {
+    box-sizing: border-box;
+}
+
+
 body {
     font-family: 'Noto Sans KR', sans-serif;
     margin: 0;
@@ -5,6 +10,48 @@ body {
     font-size: 18px;
     /* 기본 폰트 사이즈 확대 */
 }
+
+.calendar-icon {
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.calendar-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.calendar-modal.active {
+    display: block;
+}
+
+.calendar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+}
+
+.calendar-overlay.active {
+    display: block;
+}
+
 
 .whose-profile {
     margin-top: 30px;

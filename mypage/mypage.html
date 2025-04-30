@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../mypage/mypage.css" />
 
     <style>
@@ -31,6 +32,12 @@
 
         <div id="sidebar-container"></div>
 
+        <div class="calendar-overlay" id="calendarOverlay" onclick="closeCalendar()"></div>
+        <div class="calendar-modal" id="calendarModal">
+            <h3>달력 보기</h3>
+            <iframe src="https://calendar.google.com/calendar/embed?src=ko.south_korea%23holiday%40group.v.calendar.google.com&ctz=Asia%2FSeoul" style="border:0" width="600" height="400" frameborder="0" scrolling="no"></iframe>
+            <button onclick="closeCalendar()">닫기</button>
+        </div>
         <div class="inner">
             <h2 class="whose-profile">김기현 님의 투어스</h2>
             <div class="profile-section">
@@ -51,52 +58,85 @@
             <hr />
 
             <div class="tour-section">
-                <h3>다녀올 투어스 🧳</h3>
+                <h3>다녀올 투어스 <img class="calendar-icon" src="https://cdn-icons-png.flaticon.com/512/747/747310.png" onclick="openCalendar()" alt="달력 아이콘"></h3>
                 <div class="tour-list">
                     <div class="tour-card">
                         <img class="tour-image"
                             src="https://api.cdn.visitjeju.net/photomng/imgpath/202409/20/b2087c57-7cb6-420d-a840-c6e7e581072e.png"
-                            alt="동대문 여행" />
+                            alt="제주도 여행" />
                         <div class="tour-info">
-                            <h4>동대문 여행</h4>
+                            <h4>제주도 여행</h4>
                             <p class="tour-date">4월 27일 ~ 4월 28일</p>
-                            <p class="tour-plan">
-                                동묘 구제옷 시장<br />
-                                동대문 디자인 플라자<br />
-                                감자 핫도그
-                            </p>
+                            <ul class="tour-plan">
+                                <li>한라산 등반</li>
+                                <li>협재 해수욕장</li>
+                                <li>흑돼지 먹방</li>
+                            </ul>
                         </div>
                     </div>
-
                 </div>
             </div>
-
+    
             <div class="tour-section">
-                <h3>다녀온 투어스 📷</h3>
+                <h3>다녀온 투어스 <img class="calendar-icon" src="https://cdn-icons-png.flaticon.com/512/747/747310.png" onclick="openCalendar()" alt="달력 아이콘"></h3>
                 <div class="tour-list">
                     <div class="tour-card">
                         <img class="tour-image"
-                            src="https://img.hani.co.kr/imgdb/resize/2017/0203/148600326085_20170203.JPG"
-                            alt="동대문 여행" />
+                            src="https://img.hani.co.kr/imgdb/resize/2017/0203/148600326085_20170203.JPG" alt="동대문 여행" />
                         <div class="tour-info">
                             <h4>동대문 여행</h4>
-                            <p>4월 27일 ~ 4월 28일</p>
-                            <p>동묘 구제옷 시장<br />동대문 디자인 플라자<br />감자 핫도그</p>
+                            <p class="tour-date">4월 27일 ~ 4월 28일</p>
+                            <ul class="tour-plan">
+                                <li>동묘 구제옷 시장</li>
+                                <li>동대문 디자인 플라자</li>
+                                <li>감자 핫도그</li>
+                            </ul>
                         </div>
                     </div>
                     <div class="tour-card">
                         <img class="tour-image"
-                            src="https://us.123rf.com/450wm/jackmalipan/jackmalipan1306/jackmalipan130600006/20062416-%EB%B0%A4%EC%97%90-%EC%84%9C%EC%9A%B8-%EB%82%A8%EC%AA%BD%EC%9D%98-%ED%95%9C%EA%B5%AD%EC%9D%98-%EB%8F%99%EB%8C%80%EB%AC%B8-%EA%B2%8C%EC%9D%B4%ED%8A%B8-%EB%9E%9C%EB%93%9C-%EB%A7%88%ED%81%AC.jpg"
-                            alt="동대문 여행" />
+                            src="https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcTiOCHeLB70zg1VmLNBbbwSzAjCqR1ybl7BoXXW3zmqk1PBFFh1ipJrd93qvfGS0l8nlqfahlI_SX62gRtSoMeZQqnEgHFdnNFdCUjvpg"
+                            alt="부산 졸업업 여행" />
                         <div class="tour-info">
-                            <h4>동대문 여행</h4>
-                            <p>4월 27일 ~ 4월 28일</p>
-                            <p>동묘 구제옷 시장<br />동대문 디자인 플라자<br />감자 핫도그</p>
+                            <h4>부산 졸업 여행</h4>
+                            <p class="tour-date">6월 10일 ~ 6월 13일</p>
+                            <ul class="tour-plan">
+                                <li>해운대 해변 산책</li>
+                                <li>감천문화마을</li>
+                                <li>광안대교 야경</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tour-card">
+                        <img class="tour-image"
+                            src="https://www.gptour.go.kr/multi/uploadFile/20211229144539.jpg"
+                            alt="가평 계곡 고고고" />
+                        <div class="tour-info">
+                            <h4>가평 계곡 고고고</h4>
+                            <p class="tour-date">7월 2일 ~ 7월 4일</p>
+                            <ul class="tour-plan">
+                                <li>가평 계곡 물놀이</li>
+                                <li>수상레저 체험</li>
+                                <li>숲속 바비큐 파티</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tour-card">
+                        <img class="tour-image"
+                            src="https://www.gyeongju.go.kr/design/tour2019/img/sub/course/bestshot3.jpg"
+                            alt="경주 산으로 가용" />
+                        <div class="tour-info">
+                            <h4>경주 산으로 가용</h4>
+                            <p class="tour-date">7월 15일 ~ 7월 17일</p>
+                            <ul class="tour-plan">
+                                <li>불국사 탐방</li>
+                                <li>토함산 등산</li>
+                                <li>경주 야경 투어</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
     </div>
 
@@ -108,6 +148,17 @@
             .then(data => {
                 document.getElementById('sidebar-container').innerHTML = data;
             });
+
+        /* 달력 스크립트(달력 연동시 삭제) */
+        function openCalendar() {
+            document.getElementById('calendarOverlay').classList.add('active');
+            document.getElementById('calendarModal').classList.add('active');
+        }
+
+        function closeCalendar() {
+            document.getElementById('calendarOverlay').classList.remove('active');
+            document.getElementById('calendarModal').classList.remove('active');
+        }
     </script>
 
   <script src="../sidebar/sidebar.js"></script>
