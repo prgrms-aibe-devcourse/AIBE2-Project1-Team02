@@ -63,17 +63,77 @@ const AREA_CODE_MAP = {
 };
 document.querySelectorAll(".tab").forEach((btn) => {
   btn.addEventListener("click", () => {
+    // 모든 탭 콘텐츠 숨기기
     document
       .querySelectorAll(".tabContent")
       .forEach((c) => (c.style.display = "none"));
-    const target = document.getElementById(btn.dataset.tab);
-    target.style.display = "block";
+
+    activateTab(btn.dataset.tab);
   });
 });
 
 // 파일 상단에 단 한 번만 선언
 let testSelectedDate = '2025-05-04';
 
+// 탭을 활성화하고 관련된 레이아웃을 적용하는 함수
+function activateTab(tabId) {
+  const tabButton = document.querySelector(`.tab[data-tab="${tabId}"]`);
+  if (!tabButton) return;
+
+  // 모든 탭 콘텐츠 숨기기
+  document
+    .querySelectorAll(".tabContent")
+    .forEach((c) => (c.style.display = "none"));
+
+  // 모든 탭 버튼에서 active 클래스 제거
+  document
+    .querySelectorAll(".tab")
+    .forEach((b) => b.classList.remove("active"));
+
+  // 클릭한 탭 버튼에 active 클래스 추가
+  tabButton.classList.add("active");
+
+  const target = document.getElementById(tabId);
+  const tabContainer = document.getElementById("tab-container");
+  const mapContainer = document.getElementById("map-container");
+
+  // 탭 별로 다른 레이아웃 적용
+  switch (tabId) {
+    case "tab1":
+      // 날짜 선택 탭 - 왼쪽 영역을 좁게
+      tabContainer.style.width = "20%";
+      mapContainer.style.width = "100%"; // 맵 크기 설정
+      target.style.display = "block";
+      break;
+
+    case "tab2":
+      // 지역 선택 탭 - 왼쪽 영역을 중간 크기로
+      tabContainer.style.width = "20%";
+      mapContainer.style.width = "100%";
+      target.style.display = "block";
+      break;
+
+    case "tab3":
+      // 장소 선택 탭 - 왼쪽 영역을 넓게
+      tabContainer.style.width = "40%";
+      mapContainer.style.width = "80%";
+      target.style.display = "block";
+      break;
+
+    case "tab4":
+      // 일정 확인 탭 - 세부 레이아웃이 플렉스이므로
+      tabContainer.style.width = "40%";
+      mapContainer.style.width = "80%";
+      target.style.display = "flex";
+      tab4Handler();
+      break;
+  }
+
+  // 지도 크기 변경 후 relayout 실행
+  if (typeof map !== "undefined") {
+    setTimeout(() => map.relayout(), 100);
+  }
+}
 document.addEventListener("DOMContentLoaded", () => {
   // 새로고침 시 localStorage 값 모두 삭제
   localStorage.removeItem('travelSchedule');
@@ -103,6 +163,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 페이지 데이터 로딩 및 더보기 버튼 처리
   loadFestivalData(currentPage);
+
+  activateTab("tab1");
+
+  // 로드되면 바로 날짜 선택부터
+  document.getElementById("calendarModalBackground").style.display = "flex";
 
   // 더보기 버튼 클릭 이벤트
   const moreBtn = document.getElementById("load-more-btn");
@@ -149,7 +214,6 @@ document.addEventListener("DOMContentLoaded", () => {
       event.target.classList.add("active"); // 클릭한 버튼에 active 클래스 추가
     });
   });
-
   // 상세정보 모달 처리
   modalHandler();
   // 달력 모달 처리
@@ -267,12 +331,12 @@ function loadFestivalData(page = 1) {
 
             // 중복 추가 방지
             let isReturn = false;
-            filteredItems.forEach(item => {
-              if(placeItem.dataset.id == item.id) {
+            filteredItems.forEach((item) => {
+              if (placeItem.dataset.id == item.id) {
                 isReturn = true;
               }
             });
-            if(isReturn) {
+            if (isReturn) {
               return;
             }
 
@@ -318,13 +382,15 @@ function loadFestivalData(page = 1) {
             const deleteBtn = newLi.querySelector(".deletePlace");
             deleteBtn.addEventListener("click", () => {
               newLi.remove();
-              filteredItems = filteredItems.filter(item => {
+              filteredItems = filteredItems.filter((item) => {
                 return item.id != newLi.dataset.id;
               });
             });
 
             // item filtering
-            let filteredItem = pagedItems.filter(item => { return item.id == placeItem.dataset.id; });
+            let filteredItem = pagedItems.filter((item) => {
+              return item.id == placeItem.dataset.id;
+            });
             filteredItems.push(filteredItem[0]);
             return;
           }
@@ -375,8 +441,76 @@ function loadFestivalData(page = 1) {
       list.innerHTML = `<li>데이터 불러오기 실패: ${err.message}</li>`;
       console.error("API 호출 오류:", err);
     });
-
   localStorage.setItem('filteredItems', JSON.stringify(filteredItems));
+  
+  //일정만들기 버튼 클릭 후 프롬프트넘기기
+  let makeScheduleButton = document.getElementById("makeSchedule");
+  makeScheduleButton.addEventListener('click', async function(e) {
+    console.log('filteredItems:', filteredItems); // filteredItems 배열 콘솔 출력
+    // 날짜 정보와 filteredItems를 localStorage에 저장
+    localStorage.setItem('filteredItems', JSON.stringify(filteredItems));
+    localStorage.setItem('startDate', selectedStartDate);
+    localStorage.setItem('endDate', selectedEndDate);
+
+    // 저장된 값 콘솔 출력
+    console.log('로컬스토리지 filteredItems:', JSON.parse(localStorage.getItem('filteredItems') || '[]'));
+    console.log('로컬스토리지 startDate:', localStorage.getItem('startDate'));
+    console.log('로컬스토리지 endDate:', localStorage.getItem('endDate'));
+
+    // 여행 일정 자동 생성기 실행
+    const module = await import('../scripts.js');
+    const filtered = JSON.parse(localStorage.getItem('filteredItems') || '[]');
+    const startDate = localStorage.getItem('startDate') || '';
+    const endDate = localStorage.getItem('endDate') || '';
+    const placesPrompt = filtered.map(item => `${item.placeName}(${item.category})`).join(', ');
+    const customPrompt = 
+    `날짜: ${startDate} ~ ${endDate}
+장소: ${placesPrompt}
+아래 장소만 사용해서 여행 일정을 작성해 주세요. 절대로 다른 장소를 추가하지 마세요.
+조건:
+- 하루에 같은 카테고리(예: 식당, 카페, 관광지 등)만 몰리지 않게 골고루 섞어서 배치해줘.
+- 운영시간과 위치를 반드시 고려해서, 하루에 이동 동선이 최소가 되도록 가까운 장소끼리 **우선순위 10KM 이내** 묶어서 배치해줘.
+- 절대 동선 낭비가 생기지 않게, 하루에 먼 곳을 여러 번 왕복하지 않도록 해줘.
+- 하루에 최소 1개, 최대 4개 장소만 포함해줘.
+- 장소는 딱 한 번만 이용할 수 있어.
+- 만약 카테고리가와 위치 조건 이 두개의 조건이 충돌한다면, 위치조건이 우선이야.
+- 결과는 아래와 같은 json 포맷으로만 반환해줘. 부연설명은 필요없어.
+[
+  {
+    Date: ${startDate},
+    Places: [장소1, 장소2, ...]
+  },
+  ...
+]`;
+    await module.generatePlanFromOpenAI(filtered, startDate, endDate, customPrompt);
+
+    // 새로고침 대신 travelSchedule에서 마커만 불러오기
+    const savedSchedule = localStorage.getItem('travelSchedule');
+    if (savedSchedule) {
+      let cleanText = savedSchedule.replace(/```json/g, '').replace(/```/g, '').trim();
+      let scheduleArr;
+      try {
+        scheduleArr = JSON.parse(cleanText);
+      } catch (e) {
+        console.error('travelSchedule 파싱 오류:', e);
+        return;
+      }
+      // 원하는 날짜(예: testSelectedDate)의 장소만 추출
+      function normalizeDate(dateStr) {
+        return dateStr.replace(/^0+/, '').replace(/-0+/g, '-');
+      }
+      const dayPlan = scheduleArr.find(item => normalizeDate(item.Date) === normalizeDate(testSelectedDate));
+      const places = dayPlan ? dayPlan.Places.map(p => p.replace(/\(.*\)/, '').trim()) : [];
+      setMarkersByPlaceNames(places); // 마커 표시 및 지도 bounds 이동
+    }
+
+    // 탭4로 이동
+    document
+        .querySelectorAll(".tabContent")
+        .forEach((c) => (c.style.display = "none"));
+    const target = document.getElementById("tab4");
+    target.style.display = "block";
+  });
 }
 // 추가 상세정보 (모달의 내용)
 function handleLocationDetail(data) {
@@ -392,8 +526,8 @@ function handleLocationDetail(data) {
 
   placeNameEl.textContent = data.placeName || "정보 없음";
   data.image.forEach((image) => {
-    let newLi = document.createElement('li');
-    newLi.className = 'splide__slide';
+    let newLi = document.createElement("li");
+    newLi.className = "splide__slide";
     newLi.innerHTML = `<img src = ${image} alt="${data.placeName}"/>`;
     slider.appendChild(newLi);
   });
@@ -402,8 +536,8 @@ function handleLocationDetail(data) {
   operationHoursEl.textContent = data.operationHours || "운영 시간 정보 없음";
   descriptionEl.textContent = data.description || "상세 정보 없음";
   reviews.innerHTML = "";
-  data.reviews.forEach(item => {
-    let newLi = document.createElement('li');
+  data.reviews.forEach((item) => {
+    let newLi = document.createElement("li");
     newLi.innerHTML = `<div>⭐️${item.rating}</div>
                     <div>${item.comment}</div>
                     <div>${item.author} | ${item.date}</div>`;
@@ -411,16 +545,15 @@ function handleLocationDetail(data) {
     reviews.appendChild(newLi);
   });
 
-  new Splide('#travel-slider', {
-    type: 'loop',      // 무한 반복
-    perPage: 1,        // 한 번에 1개 보여줌
-    autoplay: true,    // 자동 재생
-    interval: 3000,    // 3초 간격
+  new Splide("#travel-slider", {
+    type: "loop", // 무한 반복
+    perPage: 1, // 한 번에 1개 보여줌
+    autoplay: true, // 자동 재생
+    interval: 3000, // 3초 간격
     pauseOnHover: true, // 마우스 올리면 멈춤
-    arrows: true,      // 좌우 버튼 표시
-    pagination: true,  // 하단 점 네비게이션 표시
+    arrows: true, // 좌우 버튼 표시
+    pagination: true, // 하단 점 네비게이션 표시
   }).mount();
-
 
   // 모달 열기
   modal.classList.remove("hidden");
@@ -503,12 +636,25 @@ function updateCalendarInfo() {
   const calendarIcon = document.getElementById("calendarIcon");
   const selectedDatesList = document.getElementById("selectedDatesList");
   const timeConfirmBtn = document.getElementById("timeConfirmBtn");
+  //탭 2영역
+  const tab2TitleEl = document.getElementById("tab2Title");
+  const tab2SubTitleEl = document.getElementById("tab2SubTitle");
+
+  //탭 3영역
+  const tab3TitleEl = document.getElementById("tab3Title");
+  const tab3SubTitleEl = document.getElementById("tab3SubTitle");
 
   if (selectedAreaCode !== "") {
     const areaName = findAreaNameByCode(selectedAreaCode);
     if (areaName) {
       areaNameElement.textContent = areaName;
+      tab2TitleEl.textContent = areaName;
+      tab3TitleEl.textContent = areaName;
     }
+  } else {
+    areaNameElement.textContent = "여행 일정";
+    tab2TitleEl.textContent = "여행 일정";
+    tab3TitleEl.textContent = "여행 일정";
   }
 
   if (selectedStartDate && selectedEndDate) {
@@ -516,11 +662,27 @@ function updateCalendarInfo() {
       selectedStartDate
     )} ~ ${formatDateForRange(selectedEndDate)}`;
     calendarIcon.style.display = "inline";
+
+    tab2SubTitleEl.textContent = `${formatDateForRange(
+      selectedStartDate
+    )} ~ ${formatDateForRange(selectedEndDate)}`;
+
+    tab3SubTitleEl.textContent = `${formatDateForRange(
+      selectedStartDate
+    )} ~ ${formatDateForRange(selectedEndDate)}`;
   } else {
     dateRangeElement.textContent = `${formatDateForRange(
       today
     )} ~ ${formatDateForRange(today)}`;
     calendarIcon.style.display = "inline";
+
+    tab2SubTitleEl.textContent = `${formatDateForRange(
+      today
+    )} ~ ${formatDateForRange(today)}`;
+
+    tab3SubTitleEl.textContent = `${formatDateForRange(
+      today
+    )} ~ ${formatDateForRange(today)}`;
   }
 
   // 날짜별 리스트 초기화
@@ -916,74 +1078,6 @@ function findAreaNameByCode(code) {
   return null;
 }
 
-let makeScheduleButton = document.getElementById("makeSchedule");
-makeScheduleButton.addEventListener('click', async function(e) {
-  console.log('filteredItems:', filteredItems); // filteredItems 배열 콘솔 출력
-  // 날짜 정보와 filteredItems를 localStorage에 저장
-  localStorage.setItem('filteredItems', JSON.stringify(filteredItems));
-  localStorage.setItem('startDate', selectedStartDate);
-  localStorage.setItem('endDate', selectedEndDate);
-
-  // 저장된 값 콘솔 출력
-  console.log('로컬스토리지 filteredItems:', JSON.parse(localStorage.getItem('filteredItems') || '[]'));
-  console.log('로컬스토리지 startDate:', localStorage.getItem('startDate'));
-  console.log('로컬스토리지 endDate:', localStorage.getItem('endDate'));
-
-  // 여행 일정 자동 생성기 실행
-  const module = await import('../scripts.js');
-  const filtered = JSON.parse(localStorage.getItem('filteredItems') || '[]');
-  const startDate = localStorage.getItem('startDate') || '';
-  const endDate = localStorage.getItem('endDate') || '';
-  const placesPrompt = filtered.map(item => `${item.placeName}(${item.category})`).join(', ');
-  const customPrompt = 
-    `날짜: ${startDate} ~ ${endDate}
-장소: ${placesPrompt}
-아래 장소만 사용해서 여행 일정을 작성해 주세요. 절대로 다른 장소를 추가하지 마세요.
-조건:
-- 하루에 같은 카테고리(예: 식당, 카페, 관광지 등)만 몰리지 않게 골고루 섞어서 배치해줘.
-- 운영시간과 위치를 반드시 고려해서, 하루에 이동 동선이 최소가 되도록 가까운 장소끼리 **우선순위 10KM 이내** 묶어서 배치해줘.
-- 절대 동선 낭비가 생기지 않게, 하루에 먼 곳을 여러 번 왕복하지 않도록 해줘.
-- 하루에 최소 1개, 최대 4개 장소만 포함해줘.
-- 장소는 딱 한 번만 이용할 수 있어.
-- 만약 카테고리가와 위치 조건 이 두개의 조건이 충돌한다면, 위치조건이 우선이야.
-- 결과는 아래와 같은 json 포맷으로만 반환해줘. 부연설명은 필요없어.
-[
-  {
-    Date: ${startDate},
-    Places: [장소1, 장소2, ...]
-  },
-  ...
-]`;
-  await module.generatePlanFromOpenAI(filtered, startDate, endDate, customPrompt);
-
-  // 새로고침 대신 travelSchedule에서 마커만 불러오기
-  const savedSchedule = localStorage.getItem('travelSchedule');
-  if (savedSchedule) {
-    let cleanText = savedSchedule.replace(/```json/g, '').replace(/```/g, '').trim();
-    let scheduleArr;
-    try {
-      scheduleArr = JSON.parse(cleanText);
-    } catch (e) {
-      console.error('travelSchedule 파싱 오류:', e);
-      return;
-    }
-    // 원하는 날짜(예: testSelectedDate)의 장소만 추출
-    function normalizeDate(dateStr) {
-      return dateStr.replace(/^0+/, '').replace(/-0+/g, '-');
-    }
-    const dayPlan = scheduleArr.find(item => normalizeDate(item.Date) === normalizeDate(testSelectedDate));
-    const places = dayPlan ? dayPlan.Places.map(p => p.replace(/\(.*\)/, '').trim()) : [];
-    setMarkersByPlaceNames(places); // 마커 표시 및 지도 bounds 이동
-  }
-
-  // 탭4로 이동
-  document
-      .querySelectorAll(".tabContent")
-      .forEach((c) => (c.style.display = "none"));
-  const target = document.getElementById("tab4");
-  target.style.display = "block";
-});
-
 // 오늘 날짜를 YYYYMMDD 형식으로 반환하는 함수
 function getTodayDate() {
   const today = new Date();
@@ -1007,7 +1101,6 @@ function initializeDates() {
   globalStartDate = todayDate;
   globalEndDate = todayDate;
 }
-
 // 예시: 일정 결과에서 해당 날짜의 장소만 추출하는 함수
 function getPlacesByDate(scheduleJson, dateStr) {
   // scheduleJson: Gemini에서 받은 일정 결과(JSON 파싱된 객체)
@@ -1128,4 +1221,301 @@ function reloadMapMarkers() {
   if (savedSchedule) {
     // ... 기존 마커 표시 코드 ...
   }
+}
+
+const searchInput = document.getElementById("search-input");
+const tagSearchBtn = document.getElementById("tag-search-btn");
+const tagBox = document.getElementById("tagSearchBox");
+const placeBox = document.getElementById("placeSearchBox");
+const selectBox = document.getElementById("placeSelectBox");
+
+function showTagBox() {
+  tagBox.classList.add("show");
+  tagBox.classList.remove("hidden");
+
+  placeBox.style.display = "none";
+  selectBox.style.display = "none";
+}
+
+function hideTagBox() {
+  tagBox.classList.remove("show");
+  tagBox.classList.add("hidden");
+
+  placeBox.style.display = "block";
+  selectBox.style.display = "block";
+}
+
+searchInput.addEventListener("focus", showTagBox);
+
+// 문서 클릭 시 input, tagBox 이외는 숨기기
+document.addEventListener("mousedown", (e) => {
+  if (!searchInput.contains(e.target) && !tagBox.contains(e.target)) {
+    hideTagBox();
+  }
+});
+
+tagSearchBtn.addEventListener("click", (e) => {
+  hideTagBox();
+});
+// 탭4 클릭 시 로컬스토리지 데이터 불러오기
+function tab4Handler() {
+  // 로컬스토리지에서 여행 일정 데이터 가져오기
+  const travelScheduleData = localStorage.getItem("travelSchedule");
+
+  if (!travelScheduleData) {
+    console.error("여행 일정 데이터를 찾을 수 없습니다.");
+    return;
+  }
+
+  try {
+    const travelSchedule = JSON.parse(travelScheduleData);
+
+    // 날짜 요약 영역 초기화
+    const scheduleSummary = document.getElementById("scheduleSummary");
+    scheduleSummary.innerHTML = '<h1 id="scheduleSummaryTitle">여행 일정</h1>';
+
+    // ✅ 시작일과 종료일 추출 후 <h3> 태그 추가
+    if (travelSchedule.Item && travelSchedule.Item.length > 0) {
+      const startDate = new Date(travelSchedule.Item[0].Date);
+      const endDate = new Date(
+        travelSchedule.Item[travelSchedule.Item.length - 1].Date
+      );
+
+      const days = ["일", "월", "화", "수", "목", "금", "토"];
+      const formatDateWithDay = (dateObj) => {
+        const yyyy = dateObj.getFullYear();
+        const mm = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+        const dd = dateObj.getDate().toString().padStart(2, "0");
+        const day = days[dateObj.getDay()];
+        return `${yyyy}.${mm}.${dd}(${day})`;
+      };
+
+      const dateRangeHTML = `<h3 id="scheduleSummaryRange">${formatDateWithDay(
+        startDate
+      )} ~ ${formatDateWithDay(endDate)}</h3>`;
+      scheduleSummary.innerHTML += dateRangeHTML;
+    }
+
+    if (!travelSchedule.Item || travelSchedule.Item.length === 0) {
+      scheduleSummary.innerHTML += "<p>등록된 일정이 없습니다.</p>";
+      return;
+    }
+
+    // 날짜 박스 생성
+    travelSchedule.Item.forEach((item, scheduleIndex) => {
+      const dateBoxElement = document.createElement("div");
+      dateBoxElement.className = "custom-date-box"; // 박스 요소의 클래스명 변경
+
+      // 날짜 형식 변환 (YYYY.MM.DD(요일) 형식)
+      const customDateObject = new Date(item.Date);
+      const formattedCustomDate = `${customDateObject.getFullYear()}.${(
+        customDateObject.getMonth() + 1
+      )
+        .toString()
+        .padStart(2, "0")}.${customDateObject
+        .getDate()
+        .toString()
+        .padStart(2, "0")} (${
+        ["일", "월", "화", "수", "목", "금", "토"][customDateObject.getDay()]
+      })`;
+      // "1일차 yyyy.mm.dd(요일)" 한 줄 출력 구성
+      const dayHeader = document.createElement("div");
+
+      // 1일차 (굵고 큼)
+      const dayNumber = document.createElement("span");
+      dayNumber.id = "day-number";
+      dayNumber.textContent = `${scheduleIndex + 1}일차 `;
+
+      // yyyy.mm.dd(요일) (작고 흐림)
+      const dayDate = document.createElement("span");
+      dayDate.id = "day-date";
+      dayDate.textContent = formattedCustomDate;
+
+      // 조립해서 dateBox에 삽입
+      dayHeader.appendChild(dayNumber);
+      dayHeader.appendChild(dayDate);
+      dateBoxElement.appendChild(dayHeader);
+
+      // 장소 이름들 모아서 출력
+      const customPlacesLabel = document.createElement("p");
+      let placeNamesList = "장소 정보 없음";
+
+      if (Array.isArray(item.Places) && item.Places.length > 0) {
+        placeNamesList = item.Places.join(", ");
+      }
+
+      customPlacesLabel.textContent = `${placeNamesList}`;
+      dateBoxElement.appendChild(customPlacesLabel);
+
+      // 날짜 박스 클릭 이벤트 - 상세 정보 표시
+      dateBoxElement.addEventListener("click", function () {
+        // 모든 박스에서 active 클래스 제거
+        document.querySelectorAll(".custom-date-box").forEach((box) => {
+          box.classList.remove("active");
+        });
+
+        // 현재 박스에 active 클래스 추가
+        this.classList.add("active");
+
+        // 상세 정보 영역 확장
+        const scheduleDetailsElement =
+          document.getElementById("scheduleDetails");
+        scheduleDetailsElement.classList.add("expanded");
+
+        // 상세 정보 표시
+        const itemIndex = scheduleIndex; // 현재 클릭된 날짜의 인덱스
+        showScheduleDetails(travelSchedule.Item[itemIndex]);
+      });
+
+      scheduleSummary.appendChild(dateBoxElement);
+    });
+
+    // 첫번째 날짜 자동 선택 (있다면)
+    if (travelSchedule.Item.length > 0) {
+      const firstDateBoxElement =
+        scheduleSummary.querySelector(".custom-date-box");
+      if (firstDateBoxElement) {
+        firstDateBoxElement.click();
+      }
+    }
+  } catch (error) {
+    console.error("여행 일정 데이터 처리 중 오류가 발생했습니다:", error);
+  }
+}
+
+// 일정 상세 정보 표시 함수
+async function showScheduleDetails(daySchedule) {
+  const scheduleDetails = document.getElementById("scheduleDetails");
+  const res = await fetch(jsonFilePath);
+  const listData = await res.json();
+
+  const dateObj = new Date(daySchedule.Date);
+
+  // 연도는 두 자리만 추출
+  const year = dateObj.getFullYear().toString().slice(2); // '2024' -> '24'
+  // 월과 일은 두 자리로 포맷
+  const month = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+  const day = dateObj.getDate().toString().padStart(2, "0");
+
+  // "24.04.01" 형식으로 출력
+  const formattedDate = `${year}.${month}.${day}`;
+
+  let detailsHTML = `<div class="details-date">${formattedDate}</div>`;
+
+  if (daySchedule.Places && daySchedule.Places.length > 0) {
+    const places = daySchedule.Places;
+
+    for (let i = 0; i < places.length; i++) {
+      const placeName = places[i];
+      const matched = listData.items.find(
+        (item) => item.placeName === placeName
+      );
+
+      if (matched) {
+        const thumbnail = matched.images[0];
+
+        // 토글 박스
+        detailsHTML += `
+          <span class="place-order">${i + 1}</span>
+          <div class="place-detail collapsed">
+            <div class="collapsed-summary">
+              <img src="${thumbnail}" alt="${
+          matched.placeName
+        }" class="thumbnail-image" />
+              <span class="place-name">${matched.placeName}</span>
+            </div>
+            <div class="detail-content" style="display: none;">
+              <div class="images">
+                <img src="${matched.images[0]}" alt="${
+          matched.placeName
+        }" class="main-image" />
+              </div>
+              <div class="place-detail-info">
+                <div class="place-detail-feedback">
+                  <span>🩷 ${matched.likes}</span>
+                  <span>⭐ 미정</span>
+                </div>
+                <p id="place-detail-name">${matched.placeName}</p>
+                <p id="place-detail-address">${matched.address}</p>
+                <div class="section-divider"></div>
+                <p id="place-detail-description">${matched.description}</p>
+                <p><i class="bi bi-clock"></i>  ${matched.openHours}</p>
+                <p><i class="bi bi-telephone"></i>  ${matched.contact}</p>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // 🔽 점선 박스와 경로 보기 아이콘 추가 (마지막 박스 뒤에는 추가하지 않음)
+        // 점선 및 경로 링크 추가
+        if (i < places.length - 1) {
+          const nextPlaceName = places[i + 1];
+          const nextMatched = listData.items.find(
+            (item) => item.placeName === nextPlaceName
+          );
+
+          let routeLink = "";
+          if (nextMatched) {
+            const sName = encodeURIComponent(matched.address);
+            const eName = encodeURIComponent(nextMatched.address);
+            const routeUrl = `https://map.kakao.com/?sName=${sName}&eName=${eName}`;
+
+            routeLink = `
+      <div class="connector-line-box">
+        <div class="dotted-line"></div>
+        <div class="route-link">
+          <a href="${routeUrl}" target="_blank">
+            <i class="bi bi-car-front-fill"></i> 경로 보기
+          </a>
+        </div>
+      </div>
+    `;
+          }
+
+          detailsHTML += routeLink;
+        }
+      } else {
+        detailsHTML += `<p>${placeName} - 상세 정보 없음</p>`;
+      }
+    }
+  } else {
+    detailsHTML += "<p>등록된 장소가 없습니다.</p>";
+  }
+
+  scheduleDetails.innerHTML = detailsHTML;
+
+  // ✅ 클릭 시 박스 확장/축소 토글 (하나만 열리도록 변경)
+  scheduleDetails.querySelectorAll(".place-detail").forEach((box) => {
+    box.addEventListener("click", () => {
+      const detailContent = box.querySelector(".detail-content");
+      const collapsedSummary = box.querySelector(".collapsed-summary");
+
+      // 모든 박스에서 확장 상태를 초기화
+      scheduleDetails.querySelectorAll(".place-detail").forEach((otherBox) => {
+        if (otherBox !== box) {
+          otherBox.classList.remove("expanded");
+          otherBox.classList.add("collapsed");
+          const otherDetailContent = otherBox.querySelector(".detail-content");
+          const otherCollapsedSummary =
+            otherBox.querySelector(".collapsed-summary");
+          otherDetailContent.style.display = "none";
+          otherCollapsedSummary.style.display = "flex";
+        }
+      });
+
+      // 현재 박스 상태 토글
+      box.classList.toggle("expanded");
+      box.classList.toggle("collapsed");
+
+      if (box.classList.contains("expanded")) {
+        // 확장되면 상세 정보를 보이게
+        detailContent.style.display = "block";
+        collapsedSummary.style.display = "none";
+      } else {
+        // 축소되면 상세 정보를 숨기고 요약만 보이게
+        detailContent.style.display = "none";
+        collapsedSummary.style.display = "flex";
+      }
+    });
+  });
 }

@@ -7,15 +7,10 @@ li {
   list-style-type: none;
 }
 
-#stepBox {
-  border: 1px solid red;
-  width: 10%;
-  float: left;
-}
 #tab1 {
   border: 1px solid pink;
   width: 100%;
-  float: left;
+  float: none; /* float 제거 */
 }
 
 #calendar-container {
@@ -51,39 +46,77 @@ li {
 #tab2 {
   border: 1px solid green;
   width: 100%;
-  float: left;
+  float: none; /* float 제거 */
 }
 
 #tab3 {
   border: 1px solid blue;
   width: 100%;
-  float: left;
+  float: none; /* float 제거 */
 }
 
-/* step 전체 박스 */
 #stepBox {
-  /*display: flex;*/
-  justify-content: center;
-  align-items: center;
-  /*gap: 12px;*/
-  /*margin: 20px 0;*/
+  width: 8%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid red;
+  z-index: 10;
+  box-sizing: border-box;
 }
 
 /* 각각의 탭 버튼 */
 .tab {
-  flex: 1;
-  min-width: 120px;
-  max-width: 150px;
   background-color: #f9f9f9;
   border: 2px solid #ddd;
   border-radius: 12px;
   padding: 16px 12px;
   text-align: center;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: #555;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  margin-bottom: 10px; /* 버튼 사이 간격 */
+}
+.tab {
+  width: 100%;
+  margin-bottom: 15px;
+  min-width: auto;
+  max-width: none;
+}
+
+#main-container {
+  display: flex;
+  flex-direction: row; /* 가로 배치로 변경 */
+  height: 100vh;
+  width: 100%;
+  overflow: hidden; /* 내용이 넘치지 않도록 */
+}
+
+#tab-container {
+  height: 100%;
+  background-color: white;
+  padding: 10px;
+  overflow-y: auto;
+  transition: width 0.3s ease;
+  box-sizing: border-box;
+}
+
+#map-container {
+  height: 100%;
+  position: relative;
+  transition: width 0.3s ease;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+.tabContent {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 /* 탭 안에 줄바꿈 텍스트도 깔끔하게 */
@@ -105,18 +138,6 @@ li {
   border-color: #ff5a5f;
 }
 
-/* 반응형 대응 */
-@media (max-width: 480px) {
-  #stepBox {
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .tab {
-    flex: 1 1 45%;
-  }
-}
-
 #scheduleContainer {
   width: 25%;
   float: left;
@@ -129,7 +150,9 @@ li {
 
 /* 검색 영역 전체 정렬 */
 #search-input,
+#tag-input,
 #search-btn,
+#tag-search-btn,
 #reset-btn {
   font-size: 16px;
   padding: 10px 12px;
@@ -139,12 +162,13 @@ li {
   outline: none;
 }
 
-#search-input {
+#search-input,
+#tag-input {
   width: 180px;
 }
 
 #search-btn,
-#reset-btn {
+#tag-search-btn {
   background-color: #ff5a5f;
   color: #fff;
   cursor: pointer;
@@ -152,7 +176,7 @@ li {
 }
 
 #search-btn:hover,
-#reset-btn:hover {
+#tag-search-btn:hover {
   background-color: #e14b4f;
 }
 
@@ -186,6 +210,61 @@ li {
   background-color: #ff5a5f;
   color: #fff;
   border-color: #ff5a5f;
+}
+
+#tagSearchBox,
+#placeSearchBox,
+#placeSelectBox {
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+
+.hidden {
+  opacity: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.visible {
+  opacity: 1;
+  height: auto;
+  padding: initial;
+  margin: initial;
+  pointer-events: auto;
+}
+
+#tagSearchBox span {
+  display: inline-block;
+  background-color: #f0f0f0;
+  color: #333;
+  border-radius: 20px;
+  padding: 6px 12px;
+  margin: 4px 6px 4px 0;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#tagSearchBox span:hover {
+  background-color: #d0eaff; /* hover 효과 */
+  color: #007bff;
+}
+
+/* 초기 상태 (숨김) */
+.slide-box {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+/* 펼쳐질 때 */
+.slide-box.show {
+  max-height: 500px; /* 충분히 큰 값 설정 */
+  opacity: 1;
 }
 
 /* 반응형 살짝 */
@@ -393,8 +472,9 @@ li {
 }
 
 #tab2Title,
-#tab2SubTitle {
-  color: #282828;
+#tab2SubTitle,
+#tab3Title,
+#tab3SubTitle {
   display: flex;
   flex-direction: column; /* 세로 방향으로 배치 */
   gap: 20px; /* areaName과 dateRange 사이 간격 */
@@ -416,8 +496,7 @@ li {
 .area-btn {
   width: calc(45% - 20px); /* 버튼의 너비를 50%로 설정하고 간격을 고려 */
   padding: 12px;
-  background-color: #f0f0f0; /* 밝은 회색 배경 */
-  border: 1px solid #b0b0b0; /* 얇은 테두리 추가 */
+  border: 2.5px solid #ccc;
   border-radius: 30px; /* 둥근 모서리 */
   color: #282828; /* 어두운 회색 글씨 */
   font-size: 16px;
@@ -492,10 +571,6 @@ li {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
-
-.calendar-modal button:hover {
-  background-color: #45a049;
 }
 
 /* 달력부분 */
@@ -800,28 +875,280 @@ li {
   transform: translateY(24px) translateX(-8px); /* 아래로 8px, 왼쪽으로 4px 이동 */
 }
 
-#main-container {
-  display: flex;
-  height: 100vh;
-  width: 100vw;
-}
+/* ----------------------------------------------------------------------------- */
+/* tab4 전체 레이아웃 */
+/* 탭4 전체 레이아웃 */
+/* 탭 콘텐츠 영역 */
 
-#tab-container {
-  width: 40%; /* 왼쪽 영역: 탭 콘텐츠 */
+/* #tab4는 화면의 세로 크기를 꽉 차게 설정 */
+#tab4 {
+  position: relative; /* absolute에서 relative로 변경 */
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
   height: 100%;
-  overflow-y: auto;
-  background-color: white; /* 필요에 따라 배경색 */
-  padding: 10px;
+  align-items: stretch;
   box-sizing: border-box;
 }
 
-#map-container {
-  width: 50%; /* 오른쪽 영역: 지도 */
-  height: 100%;
-  position: relative;
+/* 중앙: 상세 정보 (클릭 시 표시) */
+/* 상세 정보 컨테이너 */
+#scheduleDetails {
+  flex: 0 0 60%; /* 상세 정보 영역 비율 조정 */
+  box-sizing: border-box;
+  box-shadow: 6px 0 12px rgba(0, 0, 0, 0.1);
+  padding-right: 10px;
 }
 
-#map {
+/* 날짜 제목 */
+.details-date {
+  font-size: 50px;
+  font-weight: bold;
+  margin-bottom: 50px;
+  margin-top: 30px;
+  color: #282828;
+}
+
+/* 각 장소의 상세 정보 박스 */
+.place-detail {
+  border: 2.5px solid #ccc;
+  border-radius: 18px;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+
+/* Hover 효과 */
+.place-detail:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* 축소된 상태 (작은 원형 이미지와 장소 이름) */
+.place-detail.collapsed .collapsed-summary {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.place-detail .collapsed-summary .thumbnail-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 0.5px solid #ccc;
+}
+
+.place-detail .collapsed-summary .place-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #666666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 120px;
+}
+
+/* 확장된 상태 (Instagram 스타일) */
+.place-detail.expanded {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+/* 확장된 모드의 큰 이미지 */
+.place-detail.expanded .main-image {
   width: 100%;
-  height: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 0.5px solid #ddd;
+  margin-bottom: 5px;
+}
+
+/* 텍스트 정보 */
+.place-detail #place-detail-name {
+  font-size: 25px;
+  color: #6e6e6e;
+  font-weight: bold;
+}
+
+.place-detail-info {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.place-detail-info p {
+  font-size: 13px;
+  color: #797979;
+}
+
+.place-detail #place-detail-address {
+  font-size: 10px;
+  color: #797979;
+  font-weight: bold;
+}
+
+.section-divider {
+  height: 2px;
+  background-color: #6e6e6e;
+  margin-top: 3px;
+  margin-bottom: 5px;
+}
+
+#place-detail-description {
+  font-size: 14px;
+  color: #666666;
+  font-weight: bold;
+  margin-bottom: 60px;
+}
+.place-detail-feedback {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  color: #ff6b81;
+  margin-bottom: 2px;
+  font-weight: bold;
+}
+.place-detail-feedback span:last-child {
+  color: #f1c40f;
+}
+.place-detail i {
+  color: #797979;
+  margin-right: 6px;
+}
+.place-order {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #797979;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 8px;
+  transform: translate(-5px, 15px);
+}
+
+/* 왼쪽: 간단 정보 (날짜 목록) */
+#scheduleSummary {
+  flex: 0 0 40%; /* 간단 정보 영역 비율 조정 */
+  border-right: 1px solid #ccc; /* 간단 정보와 상세 정보 구분을 위한 경계선 */
+  height: 100%; /* 세로로 꽉 차게 */
+  box-sizing: border-box; /* 경계선 포함 */
+  display: flex; /* 플렉스 컨테이너로 설정 */
+  flex-direction: column; /* 버튼들을 세로로 정렬 */
+}
+
+/* 각 날짜 요약 박스 스타일 */
+.custom-date-box {
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: #ffffff;
+  margin-bottom: 30px;
+}
+
+.custom-date-box:hover {
+  background-color: #f0f0f0;
+  border-color: #999;
+}
+
+.custom-date-box.active {
+  border-color: #282828;
+  background-color: #f0f0f0;
+}
+
+/* 내부 텍스트 스타일 */
+.custom-date-box h4 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.custom-date-box p {
+  margin: 4px 0;
+  color: #555;
+  font-size: 14px;
+}
+#day-number {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+#day-date {
+  font-size: 12px;
+  color: #888;
+}
+
+/* 점선 */
+/* 토글 박스 사이 연결 점선 박스 */
+.connector-line-box {
+  display: flex;
+  align-items: center; /* 수직 중앙 정렬 */
+  justify-content: flex-start; /* 왼쪽 정렬 */
+  margin-top: 10px;
+  height: 60px; /* 점선의 높이를 포함하는 높이 */
+  margin-left: 50px;
+}
+
+.dotted-line {
+  width: 3px; /* 선 굵기 */
+  height: 100%; /* 부모 요소의 높이에 맞게 */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    #d6d6d6 0%,
+    #d6d6d6 6px,
+    /* 점 */ transparent 6px,
+    transparent 12px /* 점과 점 사이 간격 */
+  );
+  margin-right: 20px; /* 점선과 아이콘 사이의 간격 */
+}
+
+.route-link {
+  display: flex;
+  align-items: center;
+}
+
+.route-link a {
+  display: flex;
+  align-items: center;
+  color: #333;
+  text-decoration: none;
+}
+
+.route-link i {
+  margin-right: 8px;
+  font-size: 18px;
+  color: #666666;
+}
+.route-link a:hover i {
+  color: #007bff;
+}
+.route-link a:hover {
+  color: #007bff;
+}
+
+#scheduleSummaryTitle {
+  margin-left: 20px; /* 왼쪽 여백 */
+  margin-top: 20px;
+}
+
+#scheduleSummaryRange {
+  color: #282828;
+  margin-bottom: 60px;
+  margin-left: 20px; /* 왼쪽 여백 */
+  margin-top: 20px;
 }
