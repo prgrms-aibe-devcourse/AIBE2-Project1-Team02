@@ -8,8 +8,9 @@ let selectedCategory = ""; // 선택된 카테고리
 let filteredItems = []; // 필터링된 데이터 저장
 const jsonFilePath = "../listEx.json"; // 로컬 파일 경로
 
-// 파일 상단에 단 한 번만 선언
+// ==================== 지도 부분 변수 ====================
 let testSelectedDate = "2025-05-27";
+let placeDataItems = [];
 
 // ==================== 캘린더 부분 변수 ====================
 const monthNames = [
@@ -134,6 +135,7 @@ function activateTab(tabId) {
     setTimeout(() => map.relayout(), 100);
   }
 }
+//화면 로드시에 실행되는 부분
 document.addEventListener("DOMContentLoaded", () => {
   // 새로고침 시 localStorage 값 모두 삭제
   localStorage.removeItem("travelSchedule");
@@ -257,8 +259,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
-
-let placeDataItems = [];
 
 // 리스트 정보가져오기 메인
 function loadFestivalData(page = 1) {
