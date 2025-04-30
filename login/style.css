@@ -12,29 +12,6 @@ a {
   color: inherit;
 }
 
-/* 사이드바 */
-.sidebar {
-  width: 50px;
-  height: 100%;
-  background-color: #f5f5f5;
-  padding: 1.5rem 1rem;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.sidebar-logo {
-  width: 60px;
-  height: auto;
-  margin-bottom: 2rem;
-}
-
-.sidebar-menu {
-  width: 80%;
-  height: auto;
-}
-
 /* 로그인 박스 */
 .login-container {
   background: white;
@@ -127,4 +104,31 @@ button {
 .divider {
   font-weight: bold;
   color: #ccc;
+}
+
+/* 등장 애니메이션 */
+@keyframes popup {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.login-container {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  text-align: center;
+  box-shadow: 0px 0px 10px gray;
+  width: 300px;
+  height: 450px;
+  margin-left: 25rem;
+  
+  /* 👇 애니메이션 속성 추가 */
+  animation: popup 0.6s ease-out;
+  transform-origin: center;
 }

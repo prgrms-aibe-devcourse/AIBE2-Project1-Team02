@@ -9,10 +9,7 @@
 
   <div class="main-container">
 
-    <div class="sidebar">
-      <img src="../login/login_img/plane_logo.png" alt="로고" class="sidebar-logo">
-      <img src="../login/login_img/menu.png" alt="메뉴" class="sidebar-menu">
-    </div>
+    <div id="sidebar-container"></div>
   
     <div class="login-container">
       <img src="../login/login_img/logo.jpg" alt="로고" class="logo" width="100" height="50">
@@ -59,6 +56,13 @@
 
    </div> 
 
+   <script>
+    fetch('../sidebar.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('sidebar-container').innerHTML = data;
+      });
+  </script>
 
 </body>
 </html>
