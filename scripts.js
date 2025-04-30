@@ -65,7 +65,8 @@ export async function generatePlanFromOpenAI(filteredItems, startDate, endDate, 
             }
             if (!Array.isArray(scheduleArr)) return [];
             const dayPlan = scheduleArr.find(item => normalizeDate(item.Date) === normalizeDate(dateStr));
-            return dayPlan ? dayPlan.Places : [];
+            // 장소 이름에서 괄호+숫자 패턴 제거
+            return dayPlan ? dayPlan.Places.map(name => name.replace(/\(\d+\)/g, '').trim()) : [];
         }
 
         // 실제 사용 예시 (콘솔 출력)
