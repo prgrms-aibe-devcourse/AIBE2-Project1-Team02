@@ -66,7 +66,7 @@ html {
     /* 버튼은 1초 뒤 등장 */
 }
 
-.button {
+.startBtn, .loginBtn {
     flex: 1;
     /* 버튼이 같은 너비를 가지도록 설정 */
     max-width: 200px;

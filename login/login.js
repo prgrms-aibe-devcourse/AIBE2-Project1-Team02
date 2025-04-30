@@ -15,9 +15,9 @@ loginButton.addEventListener('click', function() {
 
   // 아이디와 비밀번호 일치 확인
   if (inputUsername === savedUserData.username && inputPassword === savedUserData.password) {
-    alert('로그인 성공!');
-    // 로그인 성공 처리 (예: 메인 페이지로 이동)
-    window.location.href = '../login/login.html'; 
+    // 로그인 성공 처리
+    localStorage.setItem('isLoggedIn', 'true'); // 로그인 상태 저장
+    window.location.href = '/main.html'; 
   } else {
     alert('아이디 또는 비밀번호가 올바르지 않습니다.');
   }

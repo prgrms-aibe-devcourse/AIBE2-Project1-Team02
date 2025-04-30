@@ -23,7 +23,8 @@
   }
   
   .sidebar-logo,
-  .sidebar-menu {
+  .sidebar-menu,
+  .sidebar-logOut{
     width: 70%;       /* 컨테이너 너비에 맞춤 */
     margin: 0;         /* 여백 제거 */
     padding-left: 11px;        /* 여백 제거 */
@@ -33,7 +34,8 @@
   }
   
   .sidebar-logo:hover,
-  .sidebar-menu:hover {
+  .sidebar-menu:hover,
+  .sidebar-logOut:hover {
     transform: scale(1.2);
   }
   

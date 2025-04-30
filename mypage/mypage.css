@@ -71,10 +71,22 @@ body {
     font-weight: 800;
 }
 
-.edit-profile {
+.edit-profile{
     position: absolute;
     right: 30px;
     top: 30px;
+    padding: 10px 20px;
+    background-color: #eee;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.delete-account {
+    position: absolute;
+    right: 30px;
     padding: 10px 20px;
     background-color: #eee;
     border: none;
