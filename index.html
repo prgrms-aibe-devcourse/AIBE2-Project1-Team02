@@ -14,39 +14,20 @@
 
   <script type="module" src="scripts.js"></script>
   <script type="module">
-    import { generatePlanFromGemini } from './scripts.js';
+    import { generatePlanFromOpenAI } from './scripts.js';
     
     // localStorage에서 값 불러오기
     const filteredItems = JSON.parse(localStorage.getItem('filteredItems') || '[]');
     const startDate = localStorage.getItem('startDate') || '2025-05-01';
     const endDate = localStorage.getItem('endDate') || '2025-05-03';
 
-    // 프롬프트용 장소 문자열
-    const placesPrompt = filteredItems.map(item => `${item.placeName}(${item.category})`).join(', ');
+    // 프롬프트용 장소 문자열 (필요하다면 main/MainPage.js에서 생성)
+    // const placesPrompt = filteredItems.map(item => `${item.placeName}(${item.category})`).join(', ');
 
-    // 프롬프트 생성
-    function makePrompt(startDate, endDate, placesPrompt) {
-      return `날짜: ${startDate} ~ ${endDate}
-장소: ${placesPrompt}
-아래 장소만 사용해서 여행 일정을 작성해 주세요. 절대로 다른 장소를 추가하지 마세요.
-조건:
-- 하루에 같은 카테고리(예: 식당, 카페, 관광지 등)만 몰리지 않게 골고루 섞어서 배치해줘.
-- 날짜별로 장소를 나눠서, 각 날짜마다 다양한 카테고리가 포함되도록 해줘.
-- 운영시간과 위치를 고려해서 최적의 동선으로 짜줘.
-- 하루에 최대 5개 장소만 포함해줘.
-- 결과는 아래와 같은 json 포맷으로만 반환해줘. 부연설명은 필요없어.
-[
-  {
-    Date: 2025-05-01,
-    Places: [장소1, 장소2, ...]
-  },
-  ...
-]`;
-    }
-    const customPrompt = makePrompt(startDate, endDate, placesPrompt);
+    // makePrompt 함수 및 customPrompt 생성 코드 삭제
 
     document.getElementById('generateBtn').addEventListener('click', () => {
-      generatePlanFromGemini(filteredItems, startDate, endDate, customPrompt);
+      generatePlanFromOpenAI(filteredItems, startDate, endDate);
     });
   </script>
 </body>

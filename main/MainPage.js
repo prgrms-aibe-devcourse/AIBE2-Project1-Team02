@@ -70,12 +70,39 @@ document.querySelectorAll(".tab").forEach((btn) => {
     target.style.display = "block";
   });
 });
+
+// 파일 상단에 단 한 번만 선언
+let testSelectedDate = '2025-05-04';
+
 document.addEventListener("DOMContentLoaded", () => {
+  // 새로고침 시 localStorage 값 모두 삭제
+  localStorage.removeItem('travelSchedule');
+  localStorage.removeItem('filteredItems');
+  localStorage.removeItem('startDate');
+  localStorage.removeItem('endDate');
+
+  // 최초 진입 여부를 체크하는 플래그
+  if (!localStorage.getItem('isInitialized')) {
+    // 최초 진입이므로 localStorage 초기화
+    localStorage.setItem('isInitialized', 'true');
+    // 지도 중심 홍대입구, 마커 지우기
+    if (window.kakaoMarkers) window.kakaoMarkers.forEach(marker => marker.setMap(null));
+    window.kakaoMarkers = [];
+    if (typeof map !== 'undefined') {
+      map.setCenter(new kakao.maps.LatLng(37.557192, 126.924863));
+    }
+  }
+
+  // 1. travelSchedule이 없을 때만 달력 모달 자동 표시
+  if (!localStorage.getItem('travelSchedule')) {
+    document.getElementById("calendarModalBackground").style.display = "flex";
+  } else {
+    // travelSchedule이 있으면 달력 모달을 숨김
+    document.getElementById("calendarModalBackground").style.display = "none";
+  }
+
   // 페이지 데이터 로딩 및 더보기 버튼 처리
   loadFestivalData(currentPage);
-
-  // 로드되면 바로 날짜 선택부터
-  document.getElementById("calendarModalBackground").style.display = "flex";
 
   // 더보기 버튼 클릭 이벤트
   const moreBtn = document.getElementById("load-more-btn");
@@ -127,13 +154,46 @@ document.addEventListener("DOMContentLoaded", () => {
   modalHandler();
   // 달력 모달 처리
   calendarModalHandler();
+
+  // 항상 최신 travelSchedule을 읽음
+  const savedSchedule = localStorage.getItem('travelSchedule');
+  if (savedSchedule) {
+    // 코드블록 제거 및 파싱
+    let cleanText = savedSchedule.replace(/```json/g, '').replace(/```/g, '').trim();
+    let scheduleArr;
+    try {
+      scheduleArr = JSON.parse(cleanText);
+    } catch (e) {
+      console.error('travelSchedule 파싱 오류:', e);
+      return;
+    }
+    // 날짜 포맷 통일
+    function normalizeDate(dateStr) {
+      return dateStr.replace(/^0+/, '').replace(/-0+/g, '-');
+    }
+    // testSelectedDate는 상단에서 선언한 값을 사용
+    const dayPlan = scheduleArr.find(item => normalizeDate(item.Date) === normalizeDate(testSelectedDate));
+    const places = dayPlan ? dayPlan.Places.map(p => p.replace(/\(.*\)/, '').trim()) : [];
+    setMarkersByPlaceNames(places);
+  } else {
+    // travelSchedule이 없으면 지도 중심을 홍대입구역으로 이동하고 마커 모두 지우기
+    if (window.kakaoMarkers) window.kakaoMarkers.forEach(marker => marker.setMap(null));
+    window.kakaoMarkers = [];
+    if (typeof map !== 'undefined') {
+      map.setCenter(new kakao.maps.LatLng(37.557192, 126.924863)); // 홍대입구역
+    }
+  }
 });
+
+let placeDataItems = [];
+
 // 리스트 정보가져오기 메인
 function loadFestivalData(page = 1) {
   fetch(jsonFilePath)
     .then((res) => res.json())
     .then((data) => {
       const items = data.items || [];
+      placeDataItems = items; // 전역에 저장
       const list = document.getElementById("festival-list");
 
       // 지역 필터링
@@ -421,11 +481,11 @@ function calendarModalHandler() {
     .addEventListener("click", confirmSelection);
 
   const dateRangeElement = document.getElementById("dateRange");
-  //날짜 눌렀을때, 날짜 설정 모달 동작
+  // 날짜 영역 클릭 시 달력 모달 열기
   dateRangeElement.addEventListener("click", () => {
     calendarModalBackground.style.display = "flex";
   });
-  // 달력 아이콘 클릭 시 모달 열기
+  // 달력 아이콘 클릭 시 달력 모달 열기
   const calendarIcon = document.getElementById("calendarIcon");
   calendarIcon.addEventListener("click", () => {
     calendarModalBackground.style.display = "flex";
@@ -857,7 +917,7 @@ function findAreaNameByCode(code) {
 }
 
 let makeScheduleButton = document.getElementById("makeSchedule");
-makeScheduleButton.addEventListener('click', function(e) {
+makeScheduleButton.addEventListener('click', async function(e) {
   console.log('filteredItems:', filteredItems); // filteredItems 배열 콘솔 출력
   // 날짜 정보와 filteredItems를 localStorage에 저장
   localStorage.setItem('filteredItems', JSON.stringify(filteredItems));
@@ -869,6 +929,54 @@ makeScheduleButton.addEventListener('click', function(e) {
   console.log('로컬스토리지 startDate:', localStorage.getItem('startDate'));
   console.log('로컬스토리지 endDate:', localStorage.getItem('endDate'));
 
+  // 여행 일정 자동 생성기 실행
+  const module = await import('../scripts.js');
+  const filtered = JSON.parse(localStorage.getItem('filteredItems') || '[]');
+  const startDate = localStorage.getItem('startDate') || '';
+  const endDate = localStorage.getItem('endDate') || '';
+  const placesPrompt = filtered.map(item => `${item.placeName}(${item.category})`).join(', ');
+  const customPrompt = 
+    `날짜: ${startDate} ~ ${endDate}
+장소: ${placesPrompt}
+아래 장소만 사용해서 여행 일정을 작성해 주세요. 절대로 다른 장소를 추가하지 마세요.
+조건:
+- 하루에 같은 카테고리(예: 식당, 카페, 관광지 등)만 몰리지 않게 골고루 섞어서 배치해줘.
+- 운영시간과 위치를 반드시 고려해서, 하루에 이동 동선이 최소가 되도록 가까운 장소끼리 **우선순위 10KM 이내** 묶어서 배치해줘.
+- 절대 동선 낭비가 생기지 않게, 하루에 먼 곳을 여러 번 왕복하지 않도록 해줘.
+- 하루에 최소 1개, 최대 4개 장소만 포함해줘.
+- 장소는 딱 한 번만 이용할 수 있어.
+- 만약 카테고리가와 위치 조건 이 두개의 조건이 충돌한다면, 위치조건이 우선이야.
+- 결과는 아래와 같은 json 포맷으로만 반환해줘. 부연설명은 필요없어.
+[
+  {
+    Date: ${startDate},
+    Places: [장소1, 장소2, ...]
+  },
+  ...
+]`;
+  await module.generatePlanFromOpenAI(filtered, startDate, endDate, customPrompt);
+
+  // 새로고침 대신 travelSchedule에서 마커만 불러오기
+  const savedSchedule = localStorage.getItem('travelSchedule');
+  if (savedSchedule) {
+    let cleanText = savedSchedule.replace(/```json/g, '').replace(/```/g, '').trim();
+    let scheduleArr;
+    try {
+      scheduleArr = JSON.parse(cleanText);
+    } catch (e) {
+      console.error('travelSchedule 파싱 오류:', e);
+      return;
+    }
+    // 원하는 날짜(예: testSelectedDate)의 장소만 추출
+    function normalizeDate(dateStr) {
+      return dateStr.replace(/^0+/, '').replace(/-0+/g, '-');
+    }
+    const dayPlan = scheduleArr.find(item => normalizeDate(item.Date) === normalizeDate(testSelectedDate));
+    const places = dayPlan ? dayPlan.Places.map(p => p.replace(/\(.*\)/, '').trim()) : [];
+    setMarkersByPlaceNames(places); // 마커 표시 및 지도 bounds 이동
+  }
+
+  // 탭4로 이동
   document
       .querySelectorAll(".tabContent")
       .forEach((c) => (c.style.display = "none"));
@@ -898,4 +1006,126 @@ function initializeDates() {
 
   globalStartDate = todayDate;
   globalEndDate = todayDate;
+}
+
+// 예시: 일정 결과에서 해당 날짜의 장소만 추출하는 함수
+function getPlacesByDate(scheduleJson, dateStr) {
+  // scheduleJson: Gemini에서 받은 일정 결과(JSON 파싱된 객체)
+  // dateStr: '2025-05-01' 등 날짜 문자열
+  if (!scheduleJson || !scheduleJson.Item) return [];
+  const dayPlan = scheduleJson.Item.find(item => item.Date === dateStr);
+  return dayPlan ? dayPlan.Places : [];
+}
+
+// 기존 마커를 모두 지우기 위한 배열
+let kakaoMarkers = [];
+// 기존 선(폴리라인)을 지우기 위한 변수
+let kakaoPolyline = null;
+
+function setMarkersByPlaceNames(placeNames) {
+  const geocoder = new kakao.maps.services.Places();
+
+  // 기존 마커 지우기
+  kakaoMarkers.forEach(marker => marker.setMap(null));
+  kakaoMarkers = [];
+
+  // 기존 선(폴리라인) 지우기
+  if (kakaoPolyline) {
+    kakaoPolyline.setMap(null);
+    kakaoPolyline = null;
+  }
+
+  // bounds 객체 생성 (모든 마커가 보이도록)
+  const bounds = new kakao.maps.LatLngBounds();
+  let foundCount = 0;
+  const markerCoords = [];
+
+  placeNames.forEach((placeName, idx) => {
+    geocoder.keywordSearch(placeName, function(result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        const marker = new kakao.maps.Marker({
+          map: map,
+          position: coords,
+          title: placeName
+        });
+        kakaoMarkers.push(marker);
+        bounds.extend(coords);
+        markerCoords[idx] = coords; // 순서 보장
+
+        // listEx.json에서 해당 장소 정보 찾기
+        const item = placeDataItems.find(i => i.placeName === placeName);
+        let infoHtml = `<div style='min-width:220px;max-width:300px;padding:8px 12px;font-size:14px;'>`;
+        if (item) {
+          infoHtml += `<b style='font-size:16px;'>${item.placeName}</b><br/>`;
+          if (item.images && item.images[0]) {
+            infoHtml += `<img src='${item.images[0]}' alt='${item.placeName}' style='width:100%;max-width:250px;margin:4px 0;border-radius:6px;'/><br/>`;
+          }
+          infoHtml += `<span>📍 ${item.address}</span><br/>`;
+          infoHtml += `<span>${item.description}</span><br/>`;
+          if (item.openHours) infoHtml += `<span>⏰ ${item.openHours}</span><br/>`;
+          if (item.likes) infoHtml += `<span>🩷 ${item.likes}</span><br/>`;
+        } else {
+          infoHtml += `<b>${placeName}</b><br/>정보 없음`;
+        }
+        infoHtml += `</div>`;
+
+        const infowindow = new kakao.maps.InfoWindow({
+          content: infoHtml,
+        });
+        kakao.maps.event.addListener(marker, 'mouseover', function() {
+          infowindow.open(map, marker);
+        });
+        kakao.maps.event.addListener(marker, 'mouseout', function() {
+          infowindow.close();
+        });
+
+        foundCount++;
+        if (foundCount === placeNames.length) {
+          if (!bounds.isEmpty()) {
+            map.setBounds(bounds);
+          }
+          // 모든 마커 좌표가 준비되면 선(폴리라인) 그리기
+          const validCoords = markerCoords.filter(Boolean);
+          if (validCoords.length > 1) {
+            kakaoPolyline = new kakao.maps.Polyline({
+              map: map,
+              path: validCoords,
+              strokeWeight: 4,
+              strokeColor: '#007bff',
+              strokeOpacity: 0.8,
+              strokeStyle: 'solid'
+            });
+          }
+        }
+      } else {
+        console.warn(`장소 검색 실패: ${placeName}`);
+        foundCount++;
+        if (foundCount === placeNames.length) {
+          if (!bounds.isEmpty()) {
+            map.setBounds(bounds);
+          }
+          // 검색 실패도 카운트해서 폴리라인 그리기
+          const validCoords = markerCoords.filter(Boolean);
+          if (validCoords.length > 1) {
+            kakaoPolyline = new kakao.maps.Polyline({
+              map: map,
+              path: validCoords,
+              strokeWeight: 4,
+              strokeColor: '#007bff',
+              strokeOpacity: 0.8,
+              strokeStyle: 'solid'
+            });
+          }
+        }
+      }
+    });
+  });
+}
+
+function reloadMapMarkers() {
+  const savedSchedule = localStorage.getItem('travelSchedule');
+  if (savedSchedule) {
+    // ... 기존 마커 표시 코드 ...
+  }
 }
