@@ -1,7 +1,7 @@
 /* 사이드바 + 로그인 전체 감싸는 영역 */
 .main-container {
   display: flex;
-  align-items: center;          /* 수직 가운데 정렬 */
+  align-items: flex-start;          /* 수직 가운데 정렬 */
   height: 100vh;
   padding-left: 100px; /* 사이드바 + 여유 공간 */
   width: 100%;
