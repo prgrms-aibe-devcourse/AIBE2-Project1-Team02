@@ -63,24 +63,79 @@ const AREA_CODE_MAP = {
 };
 document.querySelectorAll(".tab").forEach((btn) => {
   btn.addEventListener("click", () => {
+    // 모든 탭 콘텐츠 숨기기
     document
       .querySelectorAll(".tabContent")
       .forEach((c) => (c.style.display = "none"));
-    const target = document.getElementById(btn.dataset.tab);
 
-    // 여기서 btn.dataset.tab은 문자열임
-    if (btn.dataset.tab === "tab4") {
-      target.style.display = "flex";
-      tab4Handler(); // 여기가 실행되도록 수정됨
-    } else {
-      target.style.display = "block";
-    }
+    activateTab(btn.dataset.tab);
   });
 });
+// 탭을 활성화하고 관련된 레이아웃을 적용하는 함수
+function activateTab(tabId) {
+  const tabButton = document.querySelector(`.tab[data-tab="${tabId}"]`);
+  if (!tabButton) return;
+
+  // 모든 탭 콘텐츠 숨기기
+  document
+    .querySelectorAll(".tabContent")
+    .forEach((c) => (c.style.display = "none"));
+
+  // 모든 탭 버튼에서 active 클래스 제거
+  document
+    .querySelectorAll(".tab")
+    .forEach((b) => b.classList.remove("active"));
+
+  // 클릭한 탭 버튼에 active 클래스 추가
+  tabButton.classList.add("active");
+
+  const target = document.getElementById(tabId);
+  const tabContainer = document.getElementById("tab-container");
+  const mapContainer = document.getElementById("map-container");
+
+  // 탭 별로 다른 레이아웃 적용
+  switch (tabId) {
+    case "tab1":
+      // 날짜 선택 탭 - 왼쪽 영역을 좁게
+      tabContainer.style.width = "20%";
+      mapContainer.style.width = "100%"; // 맵 크기 설정
+      target.style.display = "block";
+      break;
+
+    case "tab2":
+      // 지역 선택 탭 - 왼쪽 영역을 중간 크기로
+      tabContainer.style.width = "20%";
+      mapContainer.style.width = "100%";
+      target.style.display = "block";
+      break;
+
+    case "tab3":
+      // 장소 선택 탭 - 왼쪽 영역을 넓게
+      tabContainer.style.width = "40%";
+      mapContainer.style.width = "80%";
+      target.style.display = "block";
+      break;
+
+    case "tab4":
+      // 일정 확인 탭 - 세부 레이아웃이 플렉스이므로
+      tabContainer.style.width = "40%";
+      mapContainer.style.width = "80%";
+      target.style.display = "flex";
+      tab4Handler();
+      break;
+  }
+
+  // 지도 크기 변경 후 relayout 실행
+  if (typeof map !== "undefined") {
+    setTimeout(() => map.relayout(), 100);
+  }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   // 페이지 데이터 로딩 및 더보기 버튼 처리
   loadFestivalData(currentPage);
+
+  activateTab("tab1");
 
   // 로드되면 바로 날짜 선택부터
   document.getElementById("calendarModalBackground").style.display = "flex";
@@ -214,12 +269,12 @@ function loadFestivalData(page = 1) {
 
             // 중복 추가 방지
             let isReturn = false;
-            filteredItems.forEach(item => {
-              if(placeItem.dataset.id == item.id) {
+            filteredItems.forEach((item) => {
+              if (placeItem.dataset.id == item.id) {
                 isReturn = true;
               }
             });
-            if(isReturn) {
+            if (isReturn) {
               return;
             }
 
@@ -956,17 +1011,14 @@ searchInput.addEventListener("focus", showTagBox);
 
 // 문서 클릭 시 input, tagBox 이외는 숨기기
 document.addEventListener("mousedown", (e) => {
-  if (
-      !searchInput.contains(e.target) &&
-      !tagBox.contains(e.target)
-  ) {
+  if (!searchInput.contains(e.target) && !tagBox.contains(e.target)) {
     hideTagBox();
   }
 });
 
-tagSearchBtn.addEventListener('click', (e) => {
+tagSearchBtn.addEventListener("click", (e) => {
   hideTagBox();
-})
+});
 // 탭4 클릭 시 로컬스토리지 데이터 불러오기
 function tab4Handler() {
   // 로컬스토리지에서 여행 일정 데이터 가져오기
