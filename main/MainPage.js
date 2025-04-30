@@ -102,21 +102,21 @@ function activateTab(tabId) {
   switch (tabId) {
     case "tab1":
       // 날짜 선택 탭 - 왼쪽 영역을 좁게
-      tabContainer.style.width = "20%";
-      mapContainer.style.width = "100%"; // 맵 크기 설정
+      tabContainer.style.width = "35%";
+      mapContainer.style.width = "90%"; // 맵 크기 설정
       target.style.display = "block";
       break;
 
     case "tab2":
       // 지역 선택 탭 - 왼쪽 영역을 중간 크기로
-      tabContainer.style.width = "20%";
-      mapContainer.style.width = "100%";
+      tabContainer.style.width = "35%";
+      mapContainer.style.width = "90%";
       target.style.display = "block";
       break;
 
     case "tab3":
       // 장소 선택 탭 - 왼쪽 영역을 넓게
-      tabContainer.style.width = "40%";
+      tabContainer.style.width = "60%";
       mapContainer.style.width = "80%";
       target.style.display = "block";
       break;
