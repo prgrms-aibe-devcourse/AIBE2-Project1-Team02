@@ -1,77 +1,80 @@
-import { saveToLocalStorage, loadFromLocalStorage } from './localStorageUtils.js';
+import { saveToLocalStorage } from './localStorageUtils.js';
+import { OPENAI_API_KEY } from './config.js';
 
-async function loadJsonData() {
-    try {
-        const response = await fetch('src/data.json'); // JSON 파일 경로
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const jsonData = await response.json();
-        return jsonData.items;
-    } catch (error) {
-        console.error("JSON 데이터 로드 에러:", error);
-        return [];
-    }
-}
-
-async function generatePlanFromGemini() {
-    const items = await loadJsonData();
-    if (items.length === 0) {
-        document.getElementById('result').textContent = "JSON 데이터를 불러오지 못했습니다.";
+// filteredItems 배열, 시작일, 종료일, customPrompt(선택)를 받아 OpenAI GPT-4o mini API로 일정 생성
+export async function generatePlanFromOpenAI(filteredItems, startDate, endDate, customPrompt) {
+    if (!filteredItems || filteredItems.length === 0) {
+        document.getElementById('result').textContent = "선택된 장소가 없습니다.";
         return;
     }
 
-    const places = items.map(item => item.placeName).join(', ');
-    const startDate = "2024-04-01"; // 예시 시작 날짜
-    const endDate = "2024-04-03"; // 예시 종료 날짜
-    const promptText = `날짜: ${startDate} ~ ${endDate}\n장소: ${places}\n위의 장소들을 포함하여 여행 일정을 작성해 주세요. 운영시간과 위치를 고려해서 최적의 동선으로 짜줘. 하루에 갈 수 있는 최대치의 장소를 시간을 고려해서 짜야해. 현재 테스트중이니 하루에 5개의 장소만 표기해 결과는 [
-   Item: [
-{
-    Date: 2024-04-01
-    Places: [N서울 타워, 경복궁, 광장시장, 남대문 시장, 롯데월드타워]
-    Date: 2024-04-02
-    Places: [이런저런, 저런이런 등등]
-    Date: 2024-04-03
-    Places: [어쩌구 저쩌구, 어쩌구저쩌구 등등]
-}
-    ]이러한 형식의 json 포맷으로 반환해 주세요. 나머지 부연설명은 필요없이 딱 내가 원하는것만 전시해줘`;
+    let promptText = customPrompt;
+    // OpenAI API Key (환경변수나 안전한 곳에 보관 권장)
+    const apiKey = OPENAI_API_KEY; // config.js에서 import
 
-    const apiKey = "AIzaSyA0utBpWrVDX4rYPm1FF9PePzXOaUn1PnE"; // 여기에 발급받은 Gemini API Key를 넣어야 함
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-  
+    const apiUrl = "https://api.openai.com/v1/chat/completions";
     const payload = {
-        contents: [
-            {
-                role: "user",
-                parts: [
-                    { text: promptText }
-                ]
-            }
-        ]
+        model: "gpt-4o-mini", // 또는 "gpt-4-1106-preview", "gpt-3.5-turbo" 등
+        messages: [
+            { role: "user", content: promptText }
+        ],
+        max_tokens: 2048,
+        temperature: 0.7
     };
-  
+
     try {
         const response = await fetch(apiUrl, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${apiKey}`
             },
             body: JSON.stringify(payload)
         });
-  
+
         if (!response.ok) {
             throw new Error(`서버 응답 오류: ${response.status}`);
         }
-  
-        const data = await response.json();
-        const scheduleText = data.candidates[0].content.parts[0].text;
-        console.log("받은 응답:", scheduleText);
-        document.getElementById('result').textContent = data.candidates[0].content.parts[0].text;
-        
-        // 로컬 스토리지에 저장
-        saveToLocalStorage('travelSchedule', scheduleText);
 
-        document.getElementById('result').textContent = scheduleText;
+        const data = await response.json();
+        const scheduleText = data.choices[0].message.content;
+        // =====================[중요: GPT 여행 일정 결과 저장 위치]====================
+        // 아래 코드에서 GPT가 생성한 여행 일정 결과(scheduleText)는
+        // 반드시 localStorage의 'travelSchedule' 키에 저장됩니다.
+        // 다른 기능(예: 지도, 일정 복원, 분석 등)에서 이 값을 꺼내서 사용하세요!
+        // ============================================================================
+        console.log('여행 일정 결과:', scheduleText);
+        localStorage.setItem('travelSchedule', scheduleText);
+
+        // =====================[날짜별 장소 추출 및 테스트용 날짜 조작 코드]====================
+        // 아래 한 줄로 원하는 날짜를 바꿔가며 테스트할 수 있습니다.
+        let selectedDate = '2025-05-04'; // 예: '2025-05-01'로 지정해서 테스트
+
+        // travelSchedule에서 해당 날짜의 장소 배열만 추출하는 함수
+        function getPlacesByDateFromSchedule(scheduleText, dateStr) {
+            let cleanText = scheduleText
+                .replace(/```json/g, '')
+                .replace(/```/g, '')
+                .trim();
+            let scheduleArr;
+            try {
+                scheduleArr = JSON.parse(cleanText);
+            } catch (e) {
+                console.error('travelSchedule 파싱 오류:', e);
+                return [];
+            }
+            if (!Array.isArray(scheduleArr)) return [];
+            const dayPlan = scheduleArr.find(item => normalizeDate(item.Date) === normalizeDate(dateStr));
+            return dayPlan ? dayPlan.Places : [];
+        }
+
+        // 실제 사용 예시 (콘솔 출력)
+        const savedSchedule = localStorage.getItem('travelSchedule');
+        if (savedSchedule) {
+            const places = getPlacesByDateFromSchedule(savedSchedule, selectedDate);
+            console.log(`[${selectedDate}]의 장소 배열:`, places);
+        }
+        // ============================================================================
     } catch (error) {
         console.error("에러 발생:", error);
         document.getElementById('result').textContent = `에러: ${error.message}`;
@@ -139,14 +142,9 @@ async function generateSchedule(selectedIds) {
     document.getElementById('result').textContent = scheduleText;
 }
 
-// 버튼 클릭 연결
-document.getElementById('generateBtn').addEventListener('click', generatePlanFromGemini);
+function normalizeDate(dateStr) {
+  // '2025-05-04' -> '2025-5-4'
+  return dateStr.replace(/^0+/, '').replace(/-0+/g, '-');
+}
 
 
-// 저장
-saveToLocalStorage('travelSchedule', scheduleData);
-
-// 불러오기
-const loadedSchedule = loadFromLocalStorage('travelSchedule');
-console.log(loadedSchedule);
-  
