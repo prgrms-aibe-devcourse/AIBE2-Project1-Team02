@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <!-- Bootstrap CSS 추가 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div>
+      <div id="tab2">
+        지역 선택
+        <div class="area-btn-container">
+          <button class="area-btn btn btn-primary" data-value="all">
+            전체
+          </button>
+          <button class="area-btn btn btn-secondary" data-value="1">
+            서울
+          </button>
+          <button class="area-btn btn btn-success" data-value="2">인천</button>
+          <button class="area-btn btn btn-danger" data-value="3">대전</button>
+          <button class="area-btn btn btn-warning" data-value="4">대구</button>
+          <button class="area-btn btn btn-info" data-value="5">광주</button>
+          <button class="area-btn btn btn-light" data-value="6">부산</button>
+          <button class="area-btn btn btn-dark" data-value="7">울산</button>
+          <button class="area-btn btn btn-primary" data-value="8">세종</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS 및 Popper.js 추가 (옵션) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // 지역 버튼 클릭 이벤트 등록
+      document.querySelectorAll(".area-btn").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          // 클릭한 버튼의 색상을 변경
+          document
+            .querySelectorAll(".area-btn")
+            .forEach((btn) => btn.classList.remove("active"));
+          event.target.classList.add("active"); // 클릭한 버튼에 active 클래스 추가
+        });
+      });
+    </script>
+  </body>
+</html>
