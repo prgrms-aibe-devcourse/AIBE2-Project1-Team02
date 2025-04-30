@@ -18,9 +18,11 @@
       ],
       "likes": 1542,
       "images": [
-        "https://storage.cloud.google.com/team2project_dummy_img/seonghak-hong-h-BxnAy_5WE-unsplash.jpg",
+        "https://storage.googleapis.com/team2project_dummy_img/seonghak-hong-h-BxnAy_5WE-unsplash.jpg",
         "https://storage.googleapis.com/team2project_dummy_img/thanchanok-sawetjaruthat-9c93NTn22lI-unsplash.jpg",
-        "https://storage.googleapis.com/team2project_dummy_img/yohan-cho-Mwvhyd22Lyw-unsplash.jpg"
+        "https://storage.googleapis.com/team2project_dummy_img/yohan-cho-Mwvhyd22Lyw-unsplash.jpg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_0927.jpg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_0926.jpg"
       ]
     },
     {
@@ -41,7 +43,10 @@
       ],
       "likes": 2031,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_0933.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_0934.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_0935.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_0936.jpeg"
       ]
     },
     {
@@ -62,8 +67,9 @@
       ],
       "likes": 1320,
       "images": [
-        "",
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_0940.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_0939.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_0938.jpeg"
       ]
     },
     {
@@ -84,28 +90,38 @@
       ],
       "likes": 940,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_0945.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_0946.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_0947.jpeg"
       ]
     },
     {
       "id": 5,
-      "placeName": "남대문시장",
-      "category": 2,
-      "address": "서울특별시 중구 남대문시장4길 21",
-      "description": "서울에서 가장 오래된 전통 시장, 쇼핑과 먹거리가 가득!",
-      "openHours": "매일 10:00 - 20:00",
-      "contact": "+82 2-753-2805",
+      "placeName": "그랜드하얏트호텔",
+      "category": 4,
+      "address": "서울 용산구 소월로 322",
+      "description": "서울의 중심부, 남산에 위치한 그랜드 하얏트 서울은 도심 속의 리조트 호텔로, 세심한 서비스와 더불어 편안한 경험을 제공합니다.",
+      "openHours": "매일 00:00 - 24:00",
+      "contact": "02-797-1234",
       "reviews": [
         {
-          "rating": 4,
-          "comment": "관광객도 많고 활기찬 분위기!",
+          "rating": 5,
+          "comment": "오랜만에 그랜드하얏트 스위트룸 숙박이었어요. 위치 너무 좋고 클래식한 정통분위기 조용한 안식처같았어요.",
           "author": "박지은",
+          "date": "2025-03-29"
+        },
+        {
+          "rating": 5,
+          "comment": "자주 가는 호캉스이지만, 파라다이스바에서 수준 높은 라이브 재즈 공연이 일품이에요!!",
+          "author": "테디정",
           "date": "2025-04-10"
         }
       ],
       "likes": 1050,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1008.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1009.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1010.jpeg"
       ]
     },
     {
@@ -126,7 +142,9 @@
       ],
       "likes": 780,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1113_06.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1114_06.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1115_06.jpeg"
       ]
     },
     {
@@ -147,7 +165,9 @@
       ],
       "likes": 600,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1117_07.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1118_07.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1118_07.jpeg"
       ]
     },
     {
@@ -168,7 +188,9 @@
       ],
       "likes": 2000,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1120_08.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1121_08.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1122_08.jpeg"
       ]
     },
     {
@@ -189,7 +211,9 @@
       ],
       "likes": 1100,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1122_09.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1123_09.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1124_09.jpeg"
       ]
     },
     {
@@ -210,7 +234,10 @@
       ],
       "likes": 870,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1124_10.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1125_10.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1126_10.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1127_10.jpeg"
       ]
     },
     {
@@ -231,7 +258,9 @@
       ],
       "likes": 1700,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1216_1101.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1216_1102.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1217_1103.jpeg"
       ]
     },
     {
@@ -252,7 +281,8 @@
       ],
       "likes": 950,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1219_1201.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_0210_1202.jpeg"
       ]
     },
     {
@@ -273,7 +303,8 @@
       ],
       "likes": 1300,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1241_1301.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1244_1302.jpeg"
       ]
     },
     {
@@ -294,7 +325,8 @@
       ],
       "likes": 1150,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_0211_1401.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_0212_1402.jpeg"
       ]
     },
     {
@@ -315,7 +347,7 @@
       ],
       "likes": 1850,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_0213_1501.jpeg"
       ]
     },
     {
@@ -336,7 +368,8 @@
       ],
       "likes": 900,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_0243_1601.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1444_1602.jpeg"
       ]
     },
     {
@@ -357,7 +390,9 @@
       ],
       "likes": 1500,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1445_1701.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1445_1702.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1446_1703.jpeg"
       ]
     },
     {
@@ -378,7 +413,8 @@
       ],
       "likes": 770,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1446_1801.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1447_1802.jpeg"
       ]
     },
     {
@@ -405,7 +441,9 @@
       ],
       "likes": 980,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1448_1901.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1448_1902.png",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1448_1903.png"
       ]
     },
     {
@@ -426,7 +464,8 @@
       ],
       "likes": 640,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1449_2001.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1449_2002.jpeg"
       ]
     },
     {
@@ -447,7 +486,9 @@
       ],
       "likes": 2500,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1450_2101.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1450_2102.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1450_2103.jpeg"
       ]
     },
     {
@@ -468,7 +509,8 @@
       ],
       "likes": 1800,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1451_2201.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1451_2202.jpeg"
       ]
     },
     {
@@ -489,7 +531,8 @@
       ],
       "likes": 1450,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1453_2301.jpg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1500_2302.jpeg"
       ]
     },
     {
@@ -516,7 +559,9 @@
       ],
       "likes": 1500,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1500_2302.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1501_2402.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1501_2403.jpeg"
       ]
     },
     {
@@ -537,7 +582,9 @@
       ],
       "likes": 1100,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1502_2501.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1502_2502.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1502_2503.jpeg"
       ]
     },
     {
@@ -558,7 +605,10 @@
       ],
       "likes": 800,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1520_2601.jpg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1520_2602.jpg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1520_2603.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1521_2604.jpeg"
       ]
     },
     {
@@ -579,7 +629,9 @@
       ],
       "likes": 3000,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1522_2701.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_152_2702.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1522_2703.jpeg"
       ]
     },
     {
@@ -606,7 +658,9 @@
       ],
       "likes": 1200,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1523_2801.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1523_2802.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1523_2803.jpeg"
       ]
     },
     {
@@ -633,7 +687,9 @@
       ],
       "likes": 800,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1524_2901.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1524_2902.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1524_2903.jpeg"
       ]
     },
     {
@@ -654,7 +710,9 @@
       ],
       "likes": 950,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1525_3001.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1525_3002.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1525_3003.jpeg"
       ]
     },
     {
@@ -675,7 +733,11 @@
       ],
       "likes": 2500,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1526_3101.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1526_3102.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1526_3103.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1526_3104.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1526_3105.jpeg"
       ]
     },
     {
@@ -702,7 +764,10 @@
       ],
       "likes": 1800,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1527_3201.png",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1527_3202.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1527_3203.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1527_3204.jpeg"
       ]
     },
     {
@@ -729,7 +794,11 @@
       ],
       "likes": 2200,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3301.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3302.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3303.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3304.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3305.jpeg"
       ]
     },
     {
@@ -750,7 +819,10 @@
       ],
       "likes": 1600,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1530_3401.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1530_3402.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1530_3403.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1530_3404.jpeg"
       ]
     },
     {
@@ -777,7 +849,10 @@
       ],
       "likes": 900,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1531_3501.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1531_3502.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1531_3503.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1531_3504.jpeg"
       ]
     },
     {
@@ -798,7 +873,9 @@
       ],
       "likes": 3000,
       "images": [
-        "https://via.placeholder.com/300x200"
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1532_3601.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1532_3602.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1532_3603.jpeg"
       ]
     },
     {
@@ -819,7 +896,10 @@
       ],
       "likes": 1000,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1533_3701.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1533_3702.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1533_3703.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1533_3704.jpeg"
       ]
     },
     {
@@ -846,7 +926,10 @@
       ],
       "likes": 1450,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1534_3801.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1534_3802.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1534_3803.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1534_3804.jpeg"
       ]
     },
     {
@@ -867,7 +950,10 @@
       ],
       "likes": 1300,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1535_3901.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1535_3902.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1535_3903.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1535_3904.jpeg"
       ]
     },
     {
@@ -894,7 +980,10 @@
       ],
       "likes": 850,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1536_4001.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1536_4002.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1536_4003.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1536_4004.jpeg"
       ]
     },
     {
@@ -921,7 +1010,11 @@
       ],
       "likes": 750,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1549_4101.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1549_4102.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1549_4103.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1549_4104.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1549_4105.png"
       ]
     },
     {
@@ -942,14 +1035,17 @@
       ],
       "likes": 670,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1600_4201.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1600_4202.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1600_4203.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1600_4204.jpeg"
       ]
     },
     {
       "id": 43,
       "placeName": "고이정애월흑돼지보리짚불구이",
       "category": 2,
-      "address": "제주 제주시 애월읍 애월로 6 고이정",
+      "address": "제주특별자치도 제주시 애월읍 애월로 6 고이정",
       "description": "제주 애월 3대흑돼지 보리짚불구이 고이정은 애월 흑돼지 맛집으로 한담해변 바로 앞에 있습니다.",
       "openHours": "매일 11:00 - 24:00",
       "contact": "0507-1350-0401",
@@ -969,7 +1065,9 @@
       ],
       "likes": 1250,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1601_4301.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1601_4302.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1601_4303.jpeg"
       ]
     },
     {
@@ -996,7 +1094,8 @@
       ],
       "likes": 2000,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1602_4401.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1602_4402.jpeg"
       ]
     },
     {
@@ -1017,7 +1116,10 @@
       ],
       "likes": 1800,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1603_4501.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1603_4502.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1603_4503.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1603_4504.jpeg"
       ]
     },
     {
@@ -1038,7 +1140,10 @@
       ],
       "likes": 1700,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1604_4601.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1604_4602.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1604_4603.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1604_4604.jpeg"
       ]
     },
     {
@@ -1065,7 +1170,10 @@
       ],
       "likes": 540,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1605_4701.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1605_4702.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1605_4703.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1605_4704.jpeg"
       ]
     },
     {
@@ -1092,7 +1200,10 @@
       ],
       "likes": 780,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1606_4801.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1606_4802.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1606_4803.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1606_4804.jpeg"
       ]
     },
     {
@@ -1113,7 +1224,11 @@
       ],
       "likes": 820,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1607_4901.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1607_4902.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1607_4904.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1607_4905.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1607_4906.jpeg"
       ]
     },
     {
@@ -1140,7 +1255,10 @@
       ],
       "likes": 2100,
       "images": [
-        ""
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1608_5001.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1608_5002.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1608_5003.jpeg",
+        "https://storage.googleapis.com/team2project_dummy_img/20250429_1608_5004.jpeg"
       ]
     }
   ]
