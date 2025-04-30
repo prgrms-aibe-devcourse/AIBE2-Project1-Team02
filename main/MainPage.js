@@ -8,6 +8,9 @@ let selectedCategory = ""; // 선택된 카테고리
 let filteredItems = []; // 필터링된 데이터 저장
 const jsonFilePath = "../listEx.json"; // 로컬 파일 경로
 
+// 파일 상단에 단 한 번만 선언
+let testSelectedDate = "2025-05-27";
+
 // ==================== 캘린더 부분 변수 ====================
 const monthNames = [
   "1월",
@@ -72,9 +75,6 @@ document.querySelectorAll(".tab").forEach((btn) => {
   });
 });
 
-// 파일 상단에 단 한 번만 선언
-let testSelectedDate = '2025-05-04';
-
 // 탭을 활성화하고 관련된 레이아웃을 적용하는 함수
 function activateTab(tabId) {
   const tabButton = document.querySelector(`.tab[data-tab="${tabId}"]`);
@@ -136,25 +136,26 @@ function activateTab(tabId) {
 }
 document.addEventListener("DOMContentLoaded", () => {
   // 새로고침 시 localStorage 값 모두 삭제
-  localStorage.removeItem('travelSchedule');
-  localStorage.removeItem('filteredItems');
-  localStorage.removeItem('startDate');
-  localStorage.removeItem('endDate');
+  localStorage.removeItem("travelSchedule");
+  localStorage.removeItem("filteredItems");
+  localStorage.removeItem("startDate");
+  localStorage.removeItem("endDate");
 
   // 최초 진입 여부를 체크하는 플래그
-  if (!localStorage.getItem('isInitialized')) {
+  if (!localStorage.getItem("isInitialized")) {
     // 최초 진입이므로 localStorage 초기화
-    localStorage.setItem('isInitialized', 'true');
+    localStorage.setItem("isInitialized", "true");
     // 지도 중심 홍대입구, 마커 지우기
-    if (window.kakaoMarkers) window.kakaoMarkers.forEach(marker => marker.setMap(null));
+    if (window.kakaoMarkers)
+      window.kakaoMarkers.forEach((marker) => marker.setMap(null));
     window.kakaoMarkers = [];
-    if (typeof map !== 'undefined') {
+    if (typeof map !== "undefined") {
       map.setCenter(new kakao.maps.LatLng(37.557192, 126.924863));
     }
   }
 
   // 1. travelSchedule이 없을 때만 달력 모달 자동 표시
-  if (!localStorage.getItem('travelSchedule')) {
+  if (!localStorage.getItem("travelSchedule")) {
     document.getElementById("calendarModalBackground").style.display = "flex";
   } else {
     // travelSchedule이 있으면 달력 모달을 숨김
@@ -220,30 +221,38 @@ document.addEventListener("DOMContentLoaded", () => {
   calendarModalHandler();
 
   // 항상 최신 travelSchedule을 읽음
-  const savedSchedule = localStorage.getItem('travelSchedule');
+  const savedSchedule = localStorage.getItem("travelSchedule");
   if (savedSchedule) {
     // 코드블록 제거 및 파싱
-    let cleanText = savedSchedule.replace(/```json/g, '').replace(/```/g, '').trim();
+    let cleanText = savedSchedule
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
     let scheduleArr;
     try {
       scheduleArr = JSON.parse(cleanText);
     } catch (e) {
-      console.error('travelSchedule 파싱 오류:', e);
+      console.error("travelSchedule 파싱 오류:", e);
       return;
     }
     // 날짜 포맷 통일
     function normalizeDate(dateStr) {
-      return dateStr.replace(/^0+/, '').replace(/-0+/g, '-');
+      return dateStr.replace(/^0+/, "").replace(/-0+/g, "-");
     }
     // testSelectedDate는 상단에서 선언한 값을 사용
-    const dayPlan = scheduleArr.find(item => normalizeDate(item.Date) === normalizeDate(testSelectedDate));
-    const places = dayPlan ? dayPlan.Places.map(p => p.replace(/\(.*\)/, '').trim()) : [];
+    const dayPlan = scheduleArr.find(
+      (item) => normalizeDate(item.Date) === normalizeDate(testSelectedDate)
+    );
+    const places = dayPlan
+      ? dayPlan.Places.map((p) => p.replace(/\(.*\)/, "").trim())
+      : [];
     setMarkersByPlaceNames(places);
   } else {
     // travelSchedule이 없으면 지도 중심을 홍대입구역으로 이동하고 마커 모두 지우기
-    if (window.kakaoMarkers) window.kakaoMarkers.forEach(marker => marker.setMap(null));
+    if (window.kakaoMarkers)
+      window.kakaoMarkers.forEach((marker) => marker.setMap(null));
     window.kakaoMarkers = [];
-    if (typeof map !== 'undefined') {
+    if (typeof map !== "undefined") {
       map.setCenter(new kakao.maps.LatLng(37.557192, 126.924863)); // 홍대입구역
     }
   }
@@ -441,30 +450,34 @@ function loadFestivalData(page = 1) {
       list.innerHTML = `<li>데이터 불러오기 실패: ${err.message}</li>`;
       console.error("API 호출 오류:", err);
     });
-  localStorage.setItem('filteredItems', JSON.stringify(filteredItems));
-  
+  localStorage.setItem("filteredItems", JSON.stringify(filteredItems));
+
   //일정만들기 버튼 클릭 후 프롬프트넘기기
   let makeScheduleButton = document.getElementById("makeSchedule");
-  makeScheduleButton.addEventListener('click', async function(e) {
-    console.log('filteredItems:', filteredItems); // filteredItems 배열 콘솔 출력
+  makeScheduleButton.addEventListener("click", async function (e) {
+    console.log("filteredItems:", filteredItems); // filteredItems 배열 콘솔 출력
     // 날짜 정보와 filteredItems를 localStorage에 저장
-    localStorage.setItem('filteredItems', JSON.stringify(filteredItems));
-    localStorage.setItem('startDate', selectedStartDate);
-    localStorage.setItem('endDate', selectedEndDate);
+    localStorage.setItem("filteredItems", JSON.stringify(filteredItems));
+    localStorage.setItem("startDate", selectedStartDate);
+    localStorage.setItem("endDate", selectedEndDate);
 
     // 저장된 값 콘솔 출력
-    console.log('로컬스토리지 filteredItems:', JSON.parse(localStorage.getItem('filteredItems') || '[]'));
-    console.log('로컬스토리지 startDate:', localStorage.getItem('startDate'));
-    console.log('로컬스토리지 endDate:', localStorage.getItem('endDate'));
+    console.log(
+      "로컬스토리지 filteredItems:",
+      JSON.parse(localStorage.getItem("filteredItems") || "[]")
+    );
+    console.log("로컬스토리지 startDate:", localStorage.getItem("startDate"));
+    console.log("로컬스토리지 endDate:", localStorage.getItem("endDate"));
 
     // 여행 일정 자동 생성기 실행
-    const module = await import('../scripts.js');
-    const filtered = JSON.parse(localStorage.getItem('filteredItems') || '[]');
-    const startDate = localStorage.getItem('startDate') || '';
-    const endDate = localStorage.getItem('endDate') || '';
-    const placesPrompt = filtered.map(item => `${item.placeName}(${item.category})`).join(', ');
-    const customPrompt = 
-    `날짜: ${startDate} ~ ${endDate}
+    const module = await import("../scripts.js");
+    const filtered = JSON.parse(localStorage.getItem("filteredItems") || "[]");
+    const startDate = localStorage.getItem("startDate") || "";
+    const endDate = localStorage.getItem("endDate") || "";
+    const placesPrompt = filtered
+      .map((item) => `${item.placeName}(${item.category})`)
+      .join(", ");
+    const customPrompt = `날짜: ${startDate} ~ ${endDate}
 장소: ${placesPrompt}
 아래 장소만 사용해서 여행 일정을 작성해 주세요. 절대로 다른 장소를 추가하지 마세요.
 조건:
@@ -482,32 +495,44 @@ function loadFestivalData(page = 1) {
   },
   ...
 ]`;
-    await module.generatePlanFromOpenAI(filtered, startDate, endDate, customPrompt);
+    await module.generatePlanFromOpenAI(
+      filtered,
+      startDate,
+      endDate,
+      customPrompt
+    );
 
     // 새로고침 대신 travelSchedule에서 마커만 불러오기
-    const savedSchedule = localStorage.getItem('travelSchedule');
+    const savedSchedule = localStorage.getItem("travelSchedule");
     if (savedSchedule) {
-      let cleanText = savedSchedule.replace(/```json/g, '').replace(/```/g, '').trim();
+      let cleanText = savedSchedule
+        .replace(/```json/g, "")
+        .replace(/```/g, "")
+        .trim();
       let scheduleArr;
       try {
         scheduleArr = JSON.parse(cleanText);
       } catch (e) {
-        console.error('travelSchedule 파싱 오류:', e);
+        console.error("travelSchedule 파싱 오류:", e);
         return;
       }
       // 원하는 날짜(예: testSelectedDate)의 장소만 추출
       function normalizeDate(dateStr) {
-        return dateStr.replace(/^0+/, '').replace(/-0+/g, '-');
+        return dateStr.replace(/^0+/, "").replace(/-0+/g, "-");
       }
-      const dayPlan = scheduleArr.find(item => normalizeDate(item.Date) === normalizeDate(testSelectedDate));
-      const places = dayPlan ? dayPlan.Places.map(p => p.replace(/\(.*\)/, '').trim()) : [];
+      const dayPlan = scheduleArr.find(
+        (item) => normalizeDate(item.Date) === normalizeDate(testSelectedDate)
+      );
+      const places = dayPlan
+        ? dayPlan.Places.map((p) => p.replace(/\(.*\)/, "").trim())
+        : [];
       setMarkersByPlaceNames(places); // 마커 표시 및 지도 bounds 이동
     }
 
     // 탭4로 이동
     document
-        .querySelectorAll(".tabContent")
-        .forEach((c) => (c.style.display = "none"));
+      .querySelectorAll(".tabContent")
+      .forEach((c) => (c.style.display = "none"));
     const target = document.getElementById("tab4");
     target.style.display = "block";
   });
@@ -1106,7 +1131,7 @@ function getPlacesByDate(scheduleJson, dateStr) {
   // scheduleJson: Gemini에서 받은 일정 결과(JSON 파싱된 객체)
   // dateStr: '2025-05-01' 등 날짜 문자열
   if (!scheduleJson || !scheduleJson.Item) return [];
-  const dayPlan = scheduleJson.Item.find(item => item.Date === dateStr);
+  const dayPlan = scheduleJson.Item.find((item) => item.Date === dateStr);
   return dayPlan ? dayPlan.Places : [];
 }
 
@@ -1119,7 +1144,7 @@ function setMarkersByPlaceNames(placeNames) {
   const geocoder = new kakao.maps.services.Places();
 
   // 기존 마커 지우기
-  kakaoMarkers.forEach(marker => marker.setMap(null));
+  kakaoMarkers.forEach((marker) => marker.setMap(null));
   kakaoMarkers = [];
 
   // 기존 선(폴리라인) 지우기
@@ -1134,20 +1159,20 @@ function setMarkersByPlaceNames(placeNames) {
   const markerCoords = [];
 
   placeNames.forEach((placeName, idx) => {
-    geocoder.keywordSearch(placeName, function(result, status) {
+    geocoder.keywordSearch(placeName, function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
         const marker = new kakao.maps.Marker({
           map: map,
           position: coords,
-          title: placeName
+          title: placeName,
         });
         kakaoMarkers.push(marker);
         bounds.extend(coords);
         markerCoords[idx] = coords; // 순서 보장
 
         // listEx.json에서 해당 장소 정보 찾기
-        const item = placeDataItems.find(i => i.placeName === placeName);
+        const item = placeDataItems.find((i) => i.placeName === placeName);
         let infoHtml = `<div style='min-width:220px;max-width:300px;padding:8px 12px;font-size:14px;'>`;
         if (item) {
           infoHtml += `<b style='font-size:16px;'>${item.placeName}</b><br/>`;
@@ -1156,7 +1181,8 @@ function setMarkersByPlaceNames(placeNames) {
           }
           infoHtml += `<span>📍 ${item.address}</span><br/>`;
           infoHtml += `<span>${item.description}</span><br/>`;
-          if (item.openHours) infoHtml += `<span>⏰ ${item.openHours}</span><br/>`;
+          if (item.openHours)
+            infoHtml += `<span>⏰ ${item.openHours}</span><br/>`;
           if (item.likes) infoHtml += `<span>🩷 ${item.likes}</span><br/>`;
         } else {
           infoHtml += `<b>${placeName}</b><br/>정보 없음`;
@@ -1166,10 +1192,10 @@ function setMarkersByPlaceNames(placeNames) {
         const infowindow = new kakao.maps.InfoWindow({
           content: infoHtml,
         });
-        kakao.maps.event.addListener(marker, 'mouseover', function() {
+        kakao.maps.event.addListener(marker, "mouseover", function () {
           infowindow.open(map, marker);
         });
-        kakao.maps.event.addListener(marker, 'mouseout', function() {
+        kakao.maps.event.addListener(marker, "mouseout", function () {
           infowindow.close();
         });
 
@@ -1185,9 +1211,9 @@ function setMarkersByPlaceNames(placeNames) {
               map: map,
               path: validCoords,
               strokeWeight: 4,
-              strokeColor: '#007bff',
+              strokeColor: "#007bff",
               strokeOpacity: 0.8,
-              strokeStyle: 'solid'
+              strokeStyle: "solid",
             });
           }
         }
@@ -1205,9 +1231,9 @@ function setMarkersByPlaceNames(placeNames) {
               map: map,
               path: validCoords,
               strokeWeight: 4,
-              strokeColor: '#007bff',
+              strokeColor: "#007bff",
               strokeOpacity: 0.8,
-              strokeStyle: 'solid'
+              strokeStyle: "solid",
             });
           }
         }
@@ -1217,7 +1243,7 @@ function setMarkersByPlaceNames(placeNames) {
 }
 
 function reloadMapMarkers() {
-  const savedSchedule = localStorage.getItem('travelSchedule');
+  const savedSchedule = localStorage.getItem("travelSchedule");
   if (savedSchedule) {
     // ... 기존 마커 표시 코드 ...
   }
