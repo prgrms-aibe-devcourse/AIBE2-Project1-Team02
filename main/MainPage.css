@@ -56,7 +56,7 @@ li {
 }
 
 #stepBox {
-  width: 8%;
+  width: 220px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -1096,25 +1096,23 @@ li {
 /* 점선 */
 /* 토글 박스 사이 연결 점선 박스 */
 .connector-line-box {
-  display: flex;
-  align-items: center; /* 수직 중앙 정렬 */
-  justify-content: flex-start; /* 왼쪽 정렬 */
-  margin-top: 10px;
-  height: 60px; /* 점선의 높이를 포함하는 높이 */
+  height: 60px;
   margin-left: 50px;
+  display: flex;
+  align-items: center;
 }
 
 .dotted-line {
-  width: 3px; /* 선 굵기 */
-  height: 100%; /* 부모 요소의 높이에 맞게 */
+  width: 3px;
+  height: 60px; /* 직접 높이 고정 */
   background-image: repeating-linear-gradient(
     to bottom,
     #d6d6d6 0%,
     #d6d6d6 6px,
-    /* 점 */ transparent 6px,
-    transparent 12px /* 점과 점 사이 간격 */
+    transparent 6px,
+    transparent 12px
   );
-  margin-right: 20px; /* 점선과 아이콘 사이의 간격 */
+  margin-right: 20px;
 }
 
 .route-link {
