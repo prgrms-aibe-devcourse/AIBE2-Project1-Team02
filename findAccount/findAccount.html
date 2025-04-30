@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="findAccount_style.css">
 </head>
 <body>
+  <div class="main-container">
+
+    <div id="sidebar-container"></div>
+
     <div class="findaccount-container">
       <h2 class="logo">계정 정보 찾기</h2>
       <p class="desc">찾고 싶은 항목을 선택하세요</p>
@@ -20,9 +24,12 @@
         <p>로그인 페이지로 돌아가기 👉 <a href="../login/login.html">로그인</a></p>
       </div>
     </div>
+    </div>
+
+
 
     <script>
-      fetch('../sidebar.html')
+      fetch('../sidebar/sidebar.html')
         .then(res => res.text())
         .then(data => {
           document.getElementById('sidebar-container').innerHTML = data;
