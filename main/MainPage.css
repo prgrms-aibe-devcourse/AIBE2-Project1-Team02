@@ -133,7 +133,8 @@ li {
   outline: none;
 }
 
-#search-input, #tag-input {
+#search-input,
+#tag-input {
   width: 180px;
 }
 
@@ -182,7 +183,9 @@ li {
   border-color: #ff5a5f;
 }
 
-#tagSearchBox, #placeSearchBox, #placeSelectBox {
+#tagSearchBox,
+#placeSearchBox,
+#placeSelectBox {
   transition: all 0.5s ease;
   overflow: hidden;
 }
@@ -843,32 +846,40 @@ li {
   transform: translateY(24px) translateX(-8px); /* 아래로 8px, 왼쪽으로 4px 이동 */
 }
 
-
 #main-container {
   display: flex;
+  flex-direction: column; /* 세로로 배치 */
   height: 100vh;
   width: 100vw;
 }
 
+#content-container {
+  display: flex; /* 탭 콘텐츠와 맵을 나란히 */
+  flex: 1; /* 남은 공간 모두 차지 */
+  overflow: hidden; /* 넘치는 콘텐츠 숨기기 */
+}
+
 #tab-container {
-  width: 40%; /* 왼쪽 영역: 탭 콘텐츠 */
-  height: 100%;
-  overflow-y: auto;
-  background-color: white; /* 필요에 따라 배경색 */
+  width: 20%; /* 탭 콘텐츠가 20% 차지 */
+  height: 100%; /* 높이를 100%로 설정 */
+  overflow-y: auto; /* 세로 스크롤 가능 */
+  background-color: white;
   padding: 10px;
   box-sizing: border-box;
 }
 
 #map-container {
-  width: 50%; /* 오른쪽 영역: 지도 */
+  width: 80%; /* 지도 영역이 80% 차지 */
+  min-width: 30%; /* 지도 영역이 너무 작아지지 않도록 제한 */
   height: 100%;
-  position: relative;
+  position: relative; /* 맵 위치를 적절히 조정 */
 }
 
 #map {
-  width: 100%;
-  height: 100%;
+  width: 100%; /* 지도 크기 조정 */
+  height: 100%; /* 맵이 100% 크기 차지 */
 }
+
 /* ----------------------------------------------------------------------------- */
 /* tab4 전체 레이아웃 */
 /* 탭4 전체 레이아웃 */
@@ -882,6 +893,8 @@ li {
 
 /* #tab4는 화면의 세로 크기를 꽉 차게 설정 */
 #tab4 {
+  position: absolute;
+  width: 100%;
   display: flex;
   flex-direction: row; /* 간단정보, 상세정보, 지도 영역을 가로로 배치 */
   gap: 10px; /* 영역 간의 간격 */
