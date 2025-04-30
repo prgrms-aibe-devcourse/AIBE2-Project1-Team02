@@ -1,0 +1,236 @@
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    /* 기본 폰트 사이즈 확대 */
+}
+
+.whose-profile {
+    margin-top: 30px;
+    margin-left: 20px;
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    padding: 30px;
+    position: relative;
+}
+
+.profile-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+}
+
+.profile-info {
+    margin-left: 50px;
+}
+
+.username {
+    font-size: 28px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.userid {
+    display: block;
+    font-size: 20px;
+    color: gray;
+    margin-top: 6px;
+}
+
+.stats {
+    display: flex;
+    gap: 100px;
+    margin-top: 20px;
+}
+
+.stats div {
+    text-align: left;
+    font-size: 20px;
+    font-weight: 900; 
+    color: #555;
+}
+
+.stats div strong {
+    display: block;
+    font-weight: 900; 
+    color: #111;
+    margin-bottom: 4px;
+}
+
+
+.profile-message {
+    margin-top: 20px;
+    margin-left: 20px;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.edit-profile {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    padding: 10px 20px;
+    background-color: #eee;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.tour-section {
+    padding: 30px 20px;
+}
+
+.tour-list {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+.tour-card {
+    position: relative;
+    width: 300px;
+    height: 360px;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: width 0.5s ease;
+    cursor: pointer;
+}
+
+.tour-card:hover {
+    width: 600px; /* 사진 + info 총 너비 */
+}
+
+.tour-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 360px;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.favorite-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 2;
+    font-size: 20px;
+}
+
+.tour-info {
+    position: absolute;
+    top: 0;
+    left: 300px;
+    width: 300px;
+    height: 100%;
+    background: white;
+    padding: 24px 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    text-align: right;
+    overflow: hidden;
+}
+
+.tour-card:hover .tour-info {
+    opacity: 1;
+}
+
+.tour-info h4 {
+    font-size: 26px;          /* 제목 큼직하게 */
+    font-weight: 900;
+    margin: 0;
+    margin-bottom: 8px;
+    color: #222;
+}
+
+.tour-date {
+    font-size: 18px;          /* 날짜도 큼직하지만 강조 약하게 */
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.tour-plan {
+    font-size: 16px;          /* 일정 내용은 적절한 크기로 */
+    line-height: 1.6;
+    max-height: 180px;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #444;
+}
+
+.tour-card:hover .tour-info {
+    opacity: 1;
+}
+
+.inner {
+    width: 100%;
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+@media (max-width: 480px) {
+    .inner {
+        padding: 10px;
+    }
+
+    .tour-card {
+        width: 100% !important;
+    }
+
+    .tour-card:hover {
+        width: 100% !important;
+    }
+
+    .tour-info {
+        position: relative;
+        left: 0;
+        width: 100%;
+        opacity: 1;
+    }
+
+    .tour-card:hover .tour-info {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 1024px) {
+    .inner {
+        max-width: 700px;
+    }
+}
+
+@media (max-width: 768px) {
+    .inner {
+        max-width: 100%;
+        padding: 15px;
+    }
+}
