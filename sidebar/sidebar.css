@@ -1,0 +1,30 @@
+.sidebar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 100vh;
+    background-color: #f5f5f5;
+    padding: 1.5rem 0; /* 좌우 패딩을 0으로 */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 요소를 가운데 정렬 */
+    z-index: 1000;
+  }
+  
+  .sidebar-logo,
+  .sidebar-menu {
+    width: 80%;       /* 컨테이너 너비에 맞춤 */
+    margin: 0;         /* 여백 제거 */
+    padding-left: 6px;        /* 여백 제거 */
+    padding-bottom: 20px;
+    display: block;    /* 이미지가 inline 요소라면 block으로 변경 */
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .sidebar-logo:hover,
+  .sidebar-menu:hover {
+    transform: scale(1.1);
+  }
+  

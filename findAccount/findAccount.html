@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="findAccount_style.css">
+</head>
+<body>
+    <div class="findaccount-container">
+      <h2 class="logo">계정 정보 찾기</h2>
+      <p class="desc">찾고 싶은 항목을 선택하세요</p>
+  
+      <div class="find-buttons">
+        <a href="findId.html" class="findBtn">아이디 찾기</a>
+        <a href="findPassword.html" class="findBtn">비밀번호 찾기</a>
+      </div>
+  
+      <div class="back-to-login">
+        <p>로그인 페이지로 돌아가기 👉 <a href="../login/login.html">로그인</a></p>
+      </div>
+    </div>
+
+    <script>
+      fetch('../sidebar.html')
+        .then(res => res.text())
+        .then(data => {
+          document.getElementById('sidebar-container').innerHTML = data;
+        });
+    </script>
+
+  </body>
+  
+</html>
