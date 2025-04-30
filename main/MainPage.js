@@ -1169,10 +1169,29 @@ function setMarkersByPlaceNames(placeNames) {
     geocoder.keywordSearch(placeName, function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        // 순번에 따라 색상 결정
+        let bgColor = "#ffb14b"; // 기본: 주황
+        if (idx === 0) bgColor = "#3ec6ec"; // 첫번째: 파랑
+        else if (idx === placeNames.length - 1) bgColor = "#ff4b7d"; // 마지막: 빨강
+        // SVG로 커스텀 마커 이미지 생성
+        const svg = `
+        <svg xmlns='http://www.w3.org/2000/svg' width='36' height='48'>
+          <circle cx='18' cy='18' r='16' fill='${bgColor}' stroke='white' stroke-width='4'/>
+          <text x='18' y='18' text-anchor='middle' font-size='20' font-weight='bold' fill='white' alignment-baseline='middle' dominant-baseline='middle'>${
+            idx + 1
+          }</text>
+        </svg>
+      `;
+        const markerImage = new kakao.maps.MarkerImage(
+          "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg),
+          new kakao.maps.Size(36, 48),
+          { offset: new kakao.maps.Point(18, 40) }
+        );
         const marker = new kakao.maps.Marker({
           map: map,
           position: coords,
           title: placeName,
+          image: markerImage,
         });
         kakaoMarkers.push(marker);
         bounds.extend(coords);
@@ -1180,19 +1199,14 @@ function setMarkersByPlaceNames(placeNames) {
 
         // listEx.json에서 해당 장소 정보 찾기
         const item = placeDataItems.find((i) => i.placeName === placeName);
-        let infoHtml = `<div style='min-width:220px;max-width:300px;padding:8px 12px;font-size:14px;'>`;
+        let infoHtml = `<div style='min-width:180px;max-width:220px;padding:8px 12px;text-align:center;'>`;
         if (item) {
-          infoHtml += `<b style='font-size:16px;'>${item.placeName}</b><br/>`;
           if (item.images && item.images[0]) {
-            infoHtml += `<img src='${item.images[0]}' alt='${item.placeName}' style='width:100%;max-width:250px;margin:4px 0;border-radius:6px;'/><br/>`;
+            infoHtml += `<img src='${item.images[0]}' alt='${item.placeName}' style='width:100px;height:auto;display:block;margin:0 auto 8px auto;border-radius:6px;'/>`;
           }
-          infoHtml += `<span>📍 ${item.address}</span><br/>`;
-          infoHtml += `<span>${item.description}</span><br/>`;
-          if (item.openHours)
-            infoHtml += `<span>⏰ ${item.openHours}</span><br/>`;
-          if (item.likes) infoHtml += `<span>🩷 ${item.likes}</span><br/>`;
+          infoHtml += `<b style='font-size:16px;'>${item.placeName}</b>`;
         } else {
-          infoHtml += `<b>${placeName}</b><br/>정보 없음`;
+          infoHtml += `<b>${placeName}</b>`;
         }
         infoHtml += `</div>`;
 
@@ -1207,24 +1221,36 @@ function setMarkersByPlaceNames(placeNames) {
         });
 
         foundCount++;
+
         if (foundCount === placeNames.length) {
           if (!bounds.isEmpty()) {
             map.setBounds(bounds);
           }
+
           // 모든 마커 좌표가 준비되면 선(폴리라인) 그리기
+
           const validCoords = markerCoords.filter(Boolean);
+
           if (validCoords.length > 1) {
             // 폴리라인 생성 직전에 한 번 더 지우기
+
             if (kakaoPolyline) {
               kakaoPolyline.setMap(null);
+
               kakaoPolyline = null;
             }
+
             kakaoPolyline = new kakao.maps.Polyline({
               map: map,
+
               path: validCoords,
+
               strokeWeight: 4,
+
               strokeColor: "#007bff",
+
               strokeOpacity: 0.8,
+
               strokeStyle: "solid",
             });
           }
