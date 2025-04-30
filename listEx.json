@@ -1,1265 +1,1934 @@
 {
   "items": [
-    {
-      "id": 1,
-      "placeName": "N서울타워",
-      "category": 1,
-      "address": "서울특별시 용산구 남산공원길 105",
-      "description": "서울의 중심 남산 위에 위치한 서울타워는 야경 명소로 유명합니다.",
-      "openHours": "매일 10:00 - 23:00",
-      "contact": "+82 2-3455-9277",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "서울이 한눈에 보이는 곳이에요!",
-          "author": "김민수",
-          "date": "2025-04-01"
-        }
-      ],
-      "likes": 1542,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/seonghak-hong-h-BxnAy_5WE-unsplash.jpg",
-        "https://storage.googleapis.com/team2project_dummy_img/thanchanok-sawetjaruthat-9c93NTn22lI-unsplash.jpg",
-        "https://storage.googleapis.com/team2project_dummy_img/yohan-cho-Mwvhyd22Lyw-unsplash.jpg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_0927.jpg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_0926.jpg"
-      ]
-    },
-    {
-      "id": 2,
-      "placeName": "서울성수천상가옥",
-      "category": 3,
-      "address": "서울특별시 성동구 성수이로14길 14 3층",
-      "description": "누구에게나 따듯함을 내려드리는 카페로서 단순한 카페 그 이상으로 손님 모두의 시간이 가치롭게 저희 매장에서 쓰였으면 하는 바램입니다.",
-      "openHours": "매일 11:00 - 22:00",
-      "contact": "+82 010-8979-8122",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "인스타맛집인줄 알았는데..웬걸 알바생분들(특히 계산하시던 모자쓴여자분)도 친절하시거 일단 빵이 개존맛.. 배불러서 좀 남겼는데 포장하는곳도 따로 잇어서 맘편히 즐기다옴.. 또 갈듯 ",
-          "author": "감자",
-          "date": "2025-04-02"
-        }
-      ],
-      "likes": 2031,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_0933.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_0934.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_0935.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_0936.jpeg"
-      ]
-    },
-    {
-      "id": 3,
-      "placeName": "롯데월드타워",
-      "category": 1,
-      "address": "서울특별시 송파구 올림픽로 300",
-      "description": "123층의 초고층 빌딩, 쇼핑, 식사, 전망대까지 한 번에!",
-      "openHours": "매일 10:00 - 22:00",
-      "contact": "+82 2-3213-5000",
-      "reviews": [
-        {
-          "rating": 4,
-          "comment": "야경이 정말 멋있어요!",
-          "author": "박지훈",
-          "date": "2025-04-05"
-        }
-      ],
-      "likes": 1320,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_0940.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_0939.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_0938.jpeg"
-      ]
-    },
-    {
-      "id": 4,
-      "placeName": "광장시장",
-      "category": 2,
-      "address": "서울특별시 종로구 창경궁로 88",
-      "description": "서울 전통 재래시장에서 맛보는 먹거리 천국!",
-      "openHours": "매일 09:00 - 23:00",
-      "contact": "+82 2-2267-0291",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "빈대떡 진짜 맛있었어요!",
-          "author": "김하늘",
-          "date": "2025-04-08"
-        }
-      ],
-      "likes": 940,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_0945.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_0946.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_0947.jpeg"
-      ]
-    },
-    {
-      "id": 5,
-      "placeName": "그랜드하얏트호텔",
-      "category": 4,
-      "address": "서울 용산구 소월로 322",
-      "description": "서울의 중심부, 남산에 위치한 그랜드 하얏트 서울은 도심 속의 리조트 호텔로, 세심한 서비스와 더불어 편안한 경험을 제공합니다.",
-      "openHours": "매일 00:00 - 24:00",
-      "contact": "02-797-1234",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "오랜만에 그랜드하얏트 스위트룸 숙박이었어요. 위치 너무 좋고 클래식한 정통분위기 조용한 안식처같았어요.",
-          "author": "박지은",
-          "date": "2025-03-29"
-        },
-        {
-          "rating": 5,
-          "comment": "자주 가는 호캉스이지만, 파라다이스바에서 수준 높은 라이브 재즈 공연이 일품이에요!!",
-          "author": "테디정",
-          "date": "2025-04-10"
-        }
-      ],
-      "likes": 1050,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1008.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1009.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1010.jpeg"
-      ]
-    },
-    {
-      "id": 6,
-      "placeName": "경포대",
-      "category": 1,
-      "address": "강원특별자치도 강릉시 경포로 365",
-      "description": "경포해변을 내려다보는 아름다운 누각, 경포호수와 함께하는 뷰포인트.",
-      "openHours": "매일 09:00 - 19:00",
-      "contact": "+82 33-640-5126",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "호수랑 바다 동시에 볼 수 있어요!",
-          "author": "강지훈",
-          "date": "2025-04-12"
-        }
-      ],
-      "likes": 780,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1113_06.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1114_06.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1115_06.jpeg"
-      ]
-    },
-    {
-      "id": 7,
-      "placeName": "주문진수산시장",
-      "category": 2,
-      "address": "강원특별자치도 강릉시 주문진읍 시장길 38",
-      "description": "싱싱한 해산물을 즐길 수 있는 강릉 대표 수산시장!",
-      "openHours": "매일 08:00 - 19:00",
-      "contact": "+82 33-661-7302",
-      "reviews": [
-        {
-          "rating": 4,
-          "comment": "대게 먹으러 갔는데 너무 신선했어요!",
-          "author": "최영수",
-          "date": "2025-04-13"
-        }
-      ],
-      "likes": 600,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1117_07.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1118_07.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1118_07.jpeg"
-      ]
-    },
-    {
-      "id": 8,
-      "placeName": "라라의정원",
-      "category": 3,
-      "address": "강원특별자치도 속초시 학사평길 61 1층 라라의 정원",
-      "description": "설악산 뷰를 한 폭에 담은 라라의정원입니다. 마당있는 집에서 호흡하는 로망을 누릴 수 있는 애견동반 속초예쁜정원카페입니다.",
-      "openHours": "매일 10:00 - 18:00",
-      "contact": "0507-1486-3123",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "가을 단풍 시즌은 진짜 최고!",
-          "author": "이정우",
-          "date": "2025-04-14"
-        }
-      ],
-      "likes": 2000,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1120_08.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1121_08.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1122_08.jpeg"
-      ]
-    },
-    {
-      "id": 9,
-      "placeName": "속초해변",
-      "category": 1,
-      "address": "강원특별자치도 속초시 해오름로 190",
-      "description": "맑고 깨끗한 동해바다를 즐길 수 있는 해수욕장입니다.",
-      "openHours": "매일 09:00 - 18:00",
-      "contact": "+82 33-639-2114",
-      "reviews": [
-        {
-          "rating": 4,
-          "comment": "물이 진짜 맑아요!",
-          "author": "박서연",
-          "date": "2025-04-15"
-        }
-      ],
-      "likes": 1100,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1122_09.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1123_09.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1124_09.jpeg"
-      ]
-    },
-    {
-      "id": 10,
-      "placeName": "아바이마을",
-      "category": 2,
-      "address": "강원특별자치도 속초시 청호동 1-1",
-      "description": "아바이순대와 해물파전이 유명한 전통적인 북한이주민 마을.",
-      "openHours": "매일 10:00 - 20:00",
-      "contact": "+82 33-639-2690",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "아바이순대 꼭 먹어봐야 해요!",
-          "author": "송지훈",
-          "date": "2025-04-16"
-        }
-      ],
-      "likes": 870,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1124_10.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1125_10.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1126_10.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1127_10.jpeg"
-      ]
-    },
-    {
-      "id": 11,
-      "placeName": "불국사",
-      "category": 1,
-      "address": "경상북도 경주시 불국로 385",
-      "description": "한국 불교를 대표하는 사찰, 세계문화유산에 등재된 아름다운 곳입니다.",
-      "openHours": "매일 07:00 - 18:00",
-      "contact": "+82 54-746-9913",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "조용하고 경건한 분위기 최고입니다.",
-          "author": "최은지",
-          "date": "2025-04-17"
-        }
-      ],
-      "likes": 1700,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1216_1101.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1216_1102.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1217_1103.jpeg"
-      ]
-    },
-    {
-      "id": 12,
-      "placeName": "첨성대",
-      "category": 1,
-      "address": "경상북도 경주시 인왕동 839-1",
-      "description": "동양에서 가장 오래된 천문대, 신라 시대의 대표 유적지입니다.",
-      "openHours": "매일 09:00 - 22:00",
-      "contact": "+82 54-779-6087",
-      "reviews": [
-        {
-          "rating": 4,
-          "comment": "밤에 조명이 켜지면 정말 예뻐요.",
-          "author": "홍수진",
-          "date": "2025-04-18"
-        }
-      ],
-      "likes": 950,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1219_1201.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_0210_1202.jpeg"
-      ]
-    },
-    {
-      "id": 13,
-      "placeName": "경주 월정교",
-      "category": 1,
-      "address": "경상북도 경주시 교동 274",
-      "description": "고풍스러운 조명이 아름다운 다리, 야경이 특히 유명합니다.",
-      "openHours": "매일 09:00 - 22:00",
-      "contact": "+82 54-779-6100",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "야경이 너무 멋져서 감동했어요.",
-          "author": "이준호",
-          "date": "2025-04-18"
-        }
-      ],
-      "likes": 1300,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1241_1301.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1244_1302.jpeg"
-      ]
-    },
-    {
-      "id": 14,
-      "placeName": "여수 오동도",
-      "category": 1,
-      "address": "전라남도 여수시 수정동 산1-11",
-      "description": "동백꽃으로 유명한 섬, 겨울에 동백꽃이 만개하는 명소입니다.",
-      "openHours": "매일 09:00 - 18:00",
-      "contact": "+82 61-659-4672",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "봄, 겨울에 가면 동백꽃이 장관입니다!",
-          "author": "김윤서",
-          "date": "2025-04-19"
-        }
-      ],
-      "likes": 1150,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_0211_1401.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_0212_1402.jpeg"
-      ]
-    },
-    {
-      "id": 15,
-      "placeName": "여수 해상케이블카",
-      "category": 1,
-      "address": "전라남도 여수시 돌산읍 돌산로 3600-1",
-      "description": "여수 밤바다를 한눈에 감상할 수 있는 케이블카입니다.",
-      "openHours": "매일 10:00 - 22:00",
-      "contact": "+82 61-664-7301",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "케이블카 타면서 야경 보는 게 최고!",
-          "author": "정호석",
-          "date": "2025-04-20"
-        }
-      ],
-      "likes": 1850,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_0213_1501.jpeg"
-      ]
-    },
-    {
-      "id": 16,
-      "placeName": "여수 낭만포차거리",
-      "category": 2,
-      "address": "전라남도 여수시 종화동",
-      "description": "야경을 보면서 여수 명물 먹거리(꼬막비빔밥, 해산물)를 즐길 수 있는 거리입니다.",
-      "openHours": "매일 18:00 - 02:00",
-      "contact": "정보 없음",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "여수 밤바다 감성 제대로!",
-          "author": "박서진",
-          "date": "2025-04-21"
-        }
-      ],
-      "likes": 900,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_0243_1601.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1444_1602.jpeg"
-      ]
-    },
-    {
-      "id": 17,
-      "placeName": "여수 아쿠아플라넷",
-      "category": 1,
-      "address": "전라남도 여수시 오동도로 61-11",
-      "description": "다양한 해양 생물을 만날 수 있는 대형 아쿠아리움.",
-      "openHours": "매일 10:00 - 19:00",
-      "contact": "+82 61-660-1111",
-      "reviews": [
-        {
-          "rating": 4,
-          "comment": "가족 단위로 놀러 가기 좋아요!",
-          "author": "김재윤",
-          "date": "2025-04-21"
-        }
-      ],
-      "likes": 1500,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1445_1701.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1445_1702.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1446_1703.jpeg"
-      ]
-    },
-    {
-      "id": 18,
-      "placeName": "여수 이순신광장",
-      "category": 1,
-      "address": "전라남도 여수시 중앙동",
-      "description": "충무공 이순신 장군 동상이 서 있는 역사적 명소.",
-      "openHours": "매일 00:00 - 24:00",
-      "contact": "정보 없음",
-      "reviews": [
-        {
-          "rating": 4,
-          "comment": "광장이 깨끗하고 야경이 예뻐요.",
-          "author": "이하늘",
-          "date": "2025-04-22"
-        }
-      ],
-      "likes": 770,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1446_1801.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1447_1802.jpeg"
-      ]
-    },
-    {
-      "id": 19,
-      "placeName": "라테라스리조트",
-      "category": 4,
-      "address": "전라남도 여수시 돌산읍 진모1길 29-12",
-      "description": "라테라스 워터파크&실내수영장, 지금 가장 HOT하다! 쾌적하고 깔끔한 수영장과 리조트를 한번에 GET!",
-      "openHours": "매일 00:00 - 24:00",
-      "contact": "0507-1495-3518",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "깔끔한 숙소에 난방 하나는 끝내줍니다!! 딸과 함께 수영장에서 놀기도 너무 좋았습니다!!",
-          "author": "박수연",
-          "date": "2025-04-14"
-        },
-        {
-          "rating": 5,
-          "comment": "가족여행 오기 좋고 수영장 바로 앞에 바다라서 너무 예뻐요! 재방문 의사 있습니다!",
-          "author": "피치189",
-          "date": "2025-04-20"
-        }
-      ],
-      "likes": 980,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1448_1901.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1448_1902.png",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1448_1903.png"
-      ]
-    },
-    {
-      "id": 20,
-      "placeName": "여수 진남관",
-      "category": 1,
-      "address": "전라남도 여수시 군자동 472",
-      "description": "조선시대 수군을 지휘하던 유서 깊은 건물.",
-      "openHours": "매일 09:00 - 18:00",
-      "contact": "+82 61-659-4616",
-      "reviews": [
-        {
-          "rating": 4,
-          "comment": "역사 공부하기 좋은 장소입니다.",
-          "author": "정은비",
-          "date": "2025-04-23"
-        }
-      ],
-      "likes": 640,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1449_2001.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1449_2002.jpeg"
-      ]
-    },
-    {
-      "id": 21,
-      "placeName": "해운대 해수욕장",
-      "category": 1,
-      "address": "부산광역시 해운대구 우동",
-      "description": "부산을 대표하는 해변, 맑은 바다와 하얀 모래사장이 아름답습니다.",
-      "openHours": "매일 00:00 - 24:00",
-      "contact": "+82 51-749-7611",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "여름에 꼭 가야 할 부산 명소!",
-          "author": "김지수",
-          "date": "2025-04-24"
-        }
-      ],
-      "likes": 2500,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1450_2101.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1450_2102.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1450_2103.jpeg"
-      ]
-    },
-    {
-      "id": 22,
-      "placeName": "광안리 해수욕장",
-      "category": 1,
-      "address": "부산광역시 수영구 광안해변로 219",
-      "description": "광안대교 야경을 배경으로 아름다운 바다를 즐길 수 있는 명소.",
-      "openHours": "매일 00:00 - 24:00",
-      "contact": "+82 51-610-4061",
-      "reviews": [
-        {
-          "rating": 4,
-          "comment": "야경이 정말 예뻐요!",
-          "author": "박민정",
-          "date": "2025-04-24"
-        }
-      ],
-      "likes": 1800,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1451_2201.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1451_2202.jpeg"
-      ]
-    },
-    {
-      "id": 23,
-      "placeName": "자갈치시장",
-      "category": 2,
-      "address": "부산광역시 중구 자갈치로 52",
-      "description": "싱싱한 해산물을 맛볼 수 있는 부산의 대표적인 수산시장.",
-      "openHours": "매일 05:00 - 22:00",
-      "contact": "+82 51-713-8000",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "회가 정말 싱싱했어요!",
-          "author": "정유진",
-          "date": "2025-04-25"
-        }
-      ],
-      "likes": 1450,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1453_2301.jpg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1500_2302.jpeg"
-      ]
-    },
-    {
-      "id": 24,
-      "placeName": "그랜드조선부산",
-      "category": 4,
-      "address": "부산광역시 해운대구 해운대해변로 292",
-      "description": "그랜드 조선의 모든 순간은 즐거움으로 가득 찬 하나의 여정이 됩니다.",
-      "openHours": "매일 00:00 - 24:00",
-      "contact": "051-922-5000",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "지난번에 투숙할 때보다 직원분들이 더 친절해진 것 같아요. 체크인부터 체크아웃까지 많은 배려를 받은 여행이었습니다.",
-          "author": "하겐다즈매니아",
-          "date": "2025-01-29"
-        },
-        {
-          "rating": 4,
-          "comment": "서비스가 우수하여 기분좋게 이용했습니다. 객식 내부도 깨끗하였습니다. 재방문 할 생각입니다!",
-          "author": "정성리뷰",
-          "date": "2025-03-28"
-        }
-      ],
-      "likes": 1500,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1500_2302.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1501_2402.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1501_2403.jpeg"
-      ]
-    },
-    {
-      "id": 25,
-      "placeName": "부산타워",
-      "category": 1,
-      "address": "부산광역시 중구 용두산길 37-55",
-      "description": "용두산공원 내에 위치한 부산 대표 전망대, 도시 전경이 한눈에!",
-      "openHours": "매일 10:00 - 22:00",
-      "contact": "+82 51-661-9393",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "부산 야경을 감상하기 좋은 곳입니다.",
-          "author": "이서준",
-          "date": "2025-04-26"
-        }
-      ],
-      "likes": 1100,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1502_2501.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1502_2502.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1502_2503.jpeg"
-      ]
-    },
-    {
-      "id": 26,
-      "placeName": "남한산성",
-      "category": 1,
-      "address": "경기도 광주시 남한산성면 산성리",
-      "description": "조선시대 군사 방어를 위해 축성된 산성, 세계문화유산.",
-      "openHours": "매일 09:00 - 18:00",
-      "contact": "+82 31-743-6610",
-      "reviews": [
-        {
-          "rating": 4,
-          "comment": "역사적인 장소라 의미 있었어요.",
-          "author": "한지민",
-          "date": "2025-04-27"
-        }
-      ],
-      "likes": 800,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1520_2601.jpg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1520_2602.jpg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1520_2603.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1521_2604.jpeg"
-      ]
-    },
-    {
-      "id": 27,
-      "placeName": "에버랜드",
-      "category": 1,
-      "address": "경기도 용인시 처인구 포곡읍 에버랜드로 199",
-      "description": "대한민국 최대 테마파크, 놀이기구와 동물원이 함께!",
-      "openHours": "매일 10:00 - 22:00",
-      "contact": "+82 31-320-5000",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "하루종일 놀아도 시간 모자랄 정도!",
-          "author": "송유나",
-          "date": "2025-04-27"
-        }
-      ],
-      "likes": 3000,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1522_2701.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_152_2702.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1522_2703.jpeg"
-      ]
-    },
-    {
-      "id": 28,
-      "placeName": "카페조각",
-      "category": 3,
-      "address": "경기도 안양시 동안구 평촌대로217번길 25 동화프라자 203호 2층 카페조각",
-      "description": "분위기 좋은 카페, 디저트가 맛있습니다.",
-      "openHours": "매일 10:00 - 23:00",
-      "contact": "0507-1320-3613",
-      "reviews": [
-        {
-          "rating": 4,
-          "comment": "아이들과 가기 좋은 곳입니다!",
-          "author": "김도훈",
-          "date": "2025-04-28"
-        },
-        {
-          "rating": 5,
-          "comment": "디저트 맛집 인정합니다!",
-          "author": "정유나",
-          "date": "2025-05-01"
-        }
-      ],
-      "likes": 1200,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1523_2801.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1523_2802.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1523_2803.jpeg"
-      ]
-    },
-    {
-      "id": 29,
-      "placeName": "수백당이천직영점",
-      "category": 2,
-      "address": "경기도 이천시 증신로 296 수백당빌딩 1층",
-      "description": "대한민국에서 가장 럭셔리한 순대국집, 영혼을 갈아 넣어서 만든 이천의 명소입니다.",
-      "openHours": "매일 11:30 - 21:30",
-      "contact": "0507-1410-5544",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "가게분위기도 너무 고급스럽고 세트메뉴가 구성이 너무 좋습니다!",
-          "author": "박정수",
-          "date": "2025-04-28"
-        },
-        {
-          "rating": 5,
-          "comment": "한우대창 순대곱새 정말 건더기도 푸집하고 맛있어서 너무 좋았고 세트에 함께 나오는 마늘수육이랑 순대도 완전 꿀맛~!^^",
-          "author": "너부리",
-          "date": "2025-04-23"
-        }
-      ],
-      "likes": 800,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1524_2901.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1524_2902.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1524_2903.jpeg"
-      ]
-    },
-    {
-      "id": 30,
-      "placeName": "헤이리 예술마을",
-      "category": 1,
-      "address": "경기도 파주시 탄현면 헤이리마을길 70-21",
-      "description": "예술과 문화가 살아 숨쉬는 복합문화예술촌.",
-      "openHours": "매일 10:00 - 19:00",
-      "contact": "+82 31-946-8551",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "사진 찍기 좋은 감성 마을!",
-          "author": "이지후",
-          "date": "2025-04-28"
-        }
-      ],
-      "likes": 950,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1525_3001.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1525_3002.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1525_3003.jpeg"
-      ]
-    },
-    {
-      "id": 31,
-      "placeName": "성산일출봉",
-      "category": 1,
-      "address": "제주특별자치도 서귀포시 성산읍 성산리",
-      "description": "제주의 대표적인 일출 명소, 세계자연유산 등재.",
-      "openHours": "매일 07:00 - 19:00",
-      "contact": "+82 64-783-0959",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "일출이 정말 장관이에요!",
-          "author": "박은지",
-          "date": "2025-04-29"
-        }
-      ],
-      "likes": 2500,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1526_3101.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1526_3102.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1526_3103.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1526_3104.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1526_3105.jpeg"
-      ]
-    },
-    {
-      "id": 32,
-      "placeName": "롯데호텔제주",
-      "category": 4,
-      "address": "제주특별자치도 서귀포시 중문관광로72번길 35",
-      "description": "제주도 최초로 인증 받은 5성 호텔 푸른 제주 바다와 하늘이 맞닿은 곳에 위치한 롯데호텔 제주는 천국같은 휴식과 여행의 즐거움을 동시에 누릴 수 있는 대한민국 대표 호텔이다.",
-      "openHours": "매일 00:00 - 24:00",
-      "contact": "064-731-1000",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "방음도 잘 되었고 침구도 깔끔해서 덕분에 좋은 숙면 했습니다. 조식도 맛있었구요!!",
-          "author": "강남토끼",
-          "date": "2025-04-24"
-        },
-        {
-          "rating": 5,
-          "comment": "1박만 하기 너무 아쉬웠습니다.",
-          "author": "은아새",
-          "date": "2025-03-12"
-        }
-      ],
-      "likes": 1800,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1527_3201.png",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1527_3202.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1527_3203.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1527_3204.jpeg"
-      ]
-    },
-    {
-      "id": 33,
-      "placeName": "우도",
-      "category": 1,
-      "address": "제주특별자치도 제주시 우도면",
-      "description": "섬 속의 섬, 투명한 바다와 하얀 백사장이 인상적인 곳.",
-      "openHours": "매일 07:00 - 18:00",
-      "contact": "정보 없음",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "자전거 타고 한 바퀴 돌면 최고!",
-          "author": "김진우",
-          "date": "2025-04-30"
-        },
-        {
-          "rating": 5,
-          "comment": "섬 전체가 한적하고 너무 평화롭더라구요. 전기 스쿠터 타고 한 바퀴 도는데 바다 뷰가 진짜 끝내줬어요!!",
-          "author": "하또엄마",
-          "date": "2025-04-20"
-        }
-      ],
-      "likes": 2200,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3301.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3302.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3303.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3304.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3305.jpeg"
-      ]
-    },
-    {
-      "id": 34,
-      "placeName": "협재해수욕장",
-      "category": 1,
-      "address": "제주특별자치도 제주시 한림읍 협재리",
-      "description": "에메랄드빛 바다가 매력적인 제주 서쪽 해변.",
-      "openHours": "매일 09:00 - 19:00",
-      "contact": "+82 64-796-2406",
-      "reviews": [
-        {
-          "rating": 4,
-          "comment": "물이 정말 맑아요!",
-          "author": "김서연",
-          "date": "2025-04-30"
-        }
-      ],
-      "likes": 1600,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1530_3401.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1530_3402.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1530_3403.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1530_3404.jpeg"
-      ]
-    },
-    {
-      "id": 35,
-      "placeName": "쉼표",
-      "category": 3,
-      "address": "제주특별자치도 제주시 한림읍 한림로 359",
-      "description": "탁 트인 제주 바다를 바라보며 여유롭게 커피를 즐길 수 있는 감성 카페입니다.",
-      "openHours": "매일 09:00 - 18:00",
-      "contact": "정보 없음",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "창밖으로 보이는 제주 바다가 정말 그림 같았어요.",
-          "author": "최민재",
-          "date": "2025-04-30"
-        },
-        {
-          "rating": 5,
-          "comment": "조용하고 여유로운 분위기 덕분에 진짜 힐링하고 왔어요. 다음에 제주 오면 무조건 다시 방문할 거예요!",
-          "author": "내맘빈",
-          "date": "2025-04-06"
-        }
-      ],
-      "likes": 900,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1531_3501.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1531_3502.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1531_3503.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1531_3504.jpeg"
-      ]
-    },
-    {
-      "id": 36,
-      "placeName": "한라산 국립공원",
-      "category": 1,
-      "address": "제주특별자치도 제주시 1100로",
-      "description": "대한민국 최고봉, 사계절 트래킹 명소.",
-      "openHours": "매일 05:00 - 18:00",
-      "contact": "+82 64-713-9950",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "등산하면서 보는 경치가 대박입니다.",
-          "author": "윤지호",
-          "date": "2025-04-30"
-        }
-      ],
-      "likes": 3000,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1532_3601.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1532_3602.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1532_3603.jpeg"
-      ]
-    },
-    {
-      "id": 37,
-      "placeName": "이호테우해변",
-      "category": 1,
-      "address": "제주특별자치도 제주시 이호일동",
-      "description": "빨간색, 흰색 말등대가 상징인 아름다운 해변.",
-      "openHours": "매일 00:00 - 24:00",
-      "contact": "정보 없음",
-      "reviews": [
-        {
-          "rating": 4,
-          "comment": "선셋이 정말 멋있어요!",
-          "author": "이서연",
-          "date": "2025-05-01"
-        }
-      ],
-      "likes": 1000,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1533_3701.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1533_3702.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1533_3703.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1533_3704.jpeg"
-      ]
-    },
-    {
-      "id": 38,
-      "placeName": "애월온기",
-      "category": 2,
-      "address": "제주특별자치도 제주시 애월읍 애월로 11 갈치맛집 온기",
-      "description": "제주 애월 맛집 온기는 제주 여행을 오신 귀한 여행객분들을 생각하며 따뜻한 기운을 드리기 위해 제주도산 식재료로 개별 솥밥에 누릉지 까지 정성스레 준비합니다.",
-      "openHours": "매일 09:00 - 21:00",
-      "contact": "0507-1479-6026",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "밥이 정말 고슬고슬하게 잘 지어져 있었고, 갈치와 전복도 신선해서 제주바다의 맛을 듬뿍 느낄 수 있었습니다.",
-          "author": "뽀로로",
-          "date": "2025-04-01"
-        },
-        {
-          "rating": 5,
-          "comment": "가게 분위기도 아늑하고 따뜻해서, 아기를 데리고 가기에도 정말 좋았습니다.",
-          "author": "다유니",
-          "date": "2025-04-20"
-        }
-      ],
-      "likes": 1450,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1534_3801.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1534_3802.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1534_3803.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1534_3804.jpeg"
-      ]
-    },
-    {
-      "id": 39,
-      "placeName": "용두암",
-      "category": 1,
-      "address": "제주특별자치도 제주시 용담2동",
-      "description": "용이 승천하는 모습을 닮은 바위로 유명한 관광지.",
-      "openHours": "매일 00:00 - 24:00",
-      "contact": "정보 없음",
-      "reviews": [
-        {
-          "rating": 4,
-          "comment": "사진 찍기 좋은 포인트!",
-          "author": "홍지민",
-          "date": "2025-05-01"
-        }
-      ],
-      "likes": 1300,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1535_3901.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1535_3902.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1535_3903.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1535_3904.jpeg"
-      ]
-    },
-    {
-      "id": 40,
-      "placeName": "파르나스호텔제주",
-      "category": 4,
-      "address": "제주특별자치도 서귀포시 중문관광로72번길 100",
-      "description": "제주도 중문 색달 해변 옆에 위치한 파르나스 호텔, 제주 호텔 중 바닷가가 가장 가까운 호텔입니다.",
-      "openHours": "매일 00:00 - 24:00",
-      "contact": "064-801-5555",
-      "reviews": [
-        {
-          "rating": 4,
-          "comment": "호텔 규모가 큽니다. 로비도 크고 층고가 높아서 고급스러운 느낌이 들어요.",
-          "author": "문서현",
-          "date": "2025-03-01"
-        },
-        {
-          "rating": 5,
-          "comment": "제주도에서 파르나스 호텔이 최고인 것 같아요! 특히 조식이 넘넘 좋았어요! 바리스타가 내려주는 커피 맛 또한 일품입니다.",
-          "author": "헤네치아",
-          "date": "2025-04-01"
-        }
-      ],
-      "likes": 850,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1536_4001.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1536_4002.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1536_4003.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1536_4004.jpeg"
-      ]
-    },
-    {
-      "id": 41,
-      "placeName": "해지개",
-      "category": 3,
-      "address": "제주특별자치도 제주시 애월읍 애월북서길 52 . 1~2층",
-      "description": "한옥의 고즈넉한 부분을 살리려고 노력했으며, 오시는 분들의 마음의 온을 더 강조하고자 한옥을 재해석한 카페입니다.",
-      "openHours": "매일 09:00 - 21:00",
-      "contact": "0507-1358-8586",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "바다가 바로 눈앞에 있어서 운치있게 잘 먹을 수 있고 한옥같은 예날 인테리어를 써서 관광객들이 많이 찾아올 수 밖에 없는 거 같아요.",
-          "author": "이재훈",
-          "date": "2025-04-26"
-        },
-        {
-          "rating": 5,
-          "comment": "제주도 여행 마무리로 방문한 애월 해지개 카페 바다뷰가 기가막혀요. 게다가 디저트는 물론 음료도 최고의 수준이에요!",
-          "author": "달콩1",
-          "date": "2025-04-20"
-        }
-      ],
-      "likes": 750,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1549_4101.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1549_4102.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1549_4103.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1549_4104.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1549_4105.png"
-      ]
-    },
-    {
-      "id": 42,
-      "placeName": "제주 러브랜드",
-      "category": 1,
-      "address": "제주특별자치도 제주시 1100로 2894-72",
-      "description": "성(性)을 주제로 한 조각 공원.",
-      "openHours": "매일 09:00 - 24:00",
-      "contact": "+82 64-712-6988",
-      "reviews": [
-        {
-          "rating": 4,
-          "comment": "성인 대상 테마파크라 독특했어요!",
-          "author": "윤지민",
-          "date": "2025-05-02"
-        }
-      ],
-      "likes": 670,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1600_4201.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1600_4202.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1600_4203.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1600_4204.jpeg"
-      ]
-    },
-    {
-      "id": 43,
-      "placeName": "고이정애월흑돼지보리짚불구이",
-      "category": 2,
-      "address": "제주특별자치도 제주시 애월읍 애월로 6 고이정",
-      "description": "제주 애월 3대흑돼지 보리짚불구이 고이정은 애월 흑돼지 맛집으로 한담해변 바로 앞에 있습니다.",
-      "openHours": "매일 11:00 - 24:00",
-      "contact": "0507-1350-0401",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "배가 고프지 않은 상태로 방문했는데, 맛있으니 다 들어가네요ㅎㅎ",
-          "author": "한수진",
-          "date": "2025-04-22"
-        },
-        {
-          "rating": 5,
-          "comment": "왜 제주흑돼지 제주흑돼지 하는지 알거같아요! 제주흑돼지 먹고 싶으면 여기로 올 거 같아요!!",
-          "author": "지수53",
-          "date": "2025-02-03"
-        }
-      ],
-      "likes": 1250,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1601_4301.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1601_4302.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1601_4303.jpeg"
-      ]
-    },
-    {
-      "id": 44,
-      "placeName": "제주한라국수",
-      "category": 2,
-      "address": "제주특별자치도 서귀포시 천제연로188번길 17",
-      "description": "제주의 매력을 한입 가득! 오늘의 여정 속 특별한 맛과 경험을 선물하는 곳, 한라국수입니다.",
-      "openHours": "매일 08:00 - 20:00",
-      "contact": "0507-1361-6392",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "고기국수는 국물부터 면까지 진심 미친듯 마셔버렸어용..ㅎㅎ 개꿀맛!!",
-          "author": "박채원",
-          "date": "2025-03-03"
-        },
-        {
-          "rating": 5,
-          "comment": "제주도여행오면 꼭 들러요!! 아이들도 너무 맛있다 연발하며 먹었어요!! 고기국수 제주한라국수 최고에요!!",
-          "author": "손짱님",
-          "date": "2025-04-15"
-        }
-      ],
-      "likes": 2000,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1602_4401.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1602_4402.jpeg"
-      ]
-    },
-    {
-      "id": 45,
-      "placeName": "천지연폭포",
-      "category": 1,
-      "address": "제주특별자치도 서귀포시 천지동",
-      "description": "아름다운 폭포가 시원하게 떨어지는 경치 명소.",
-      "openHours": "매일 09:00 - 22:00",
-      "contact": "+82 64-733-1528",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "밤에 조명 켜진 폭포가 환상적이에요!",
-          "author": "정윤아",
-          "date": "2025-05-03"
-        }
-      ],
-      "likes": 1800,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1603_4501.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1603_4502.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1603_4503.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1603_4504.jpeg"
-      ]
-    },
-    {
-      "id": 46,
-      "placeName": "정방폭포",
-      "category": 1,
-      "address": "제주특별자치도 서귀포시 동홍동",
-      "description": "바로 바다로 떨어지는 드문 형태의 폭포.",
-      "openHours": "매일 09:00 - 18:00",
-      "contact": "+82 64-733-1530",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "바다와 폭포가 어우러진 멋진 풍경!",
-          "author": "고은별",
-          "date": "2025-05-03"
-        }
-      ],
-      "likes": 1700,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1604_4601.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1604_4602.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1604_4603.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1604_4604.jpeg"
-      ]
-    },
-    {
-      "id": 47,
-      "placeName": "델문도",
-      "category": 3,
-      "address": "제주특별자치도 제주시 조천읍 조함해안로 519-10",
-      "description": "아름다운 제주 함덕해수욕장에서 낮에는 베이커리 카페로, 저녁에는 힙한 감성펍!",
-      "openHours": "매일 06:00 - 24:00",
-      "contact": "064-702-0007",
-      "reviews": [
-        {
-          "rating": 4,
-          "comment": "1,2층은 바다가 보이고 별도건물 함덕별정은 조용하고 아담한 빈티지 컨셉이더라구요. 주변 바다구경하기 너무 좋은 장소라 추천합니다.",
-          "author": "혜봄사랑",
-          "date": "2025-05-04"
-        },
-        {
-          "rating": 5,
-          "comment": "제주에서 가장 아름다운 바다가 아닐까싶어요. 바다를 보며 커피한잔 하기 최고입니다.",
-          "author": "여행하는 너구리",
-          "date": "2025-05-04"
-        }
-      ],
-      "likes": 540,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1605_4701.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1605_4702.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1605_4703.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1605_4704.jpeg"
-      ]
-    },
-    {
-      "id": 48,
-      "placeName": "계절식탁 함덕점",
-      "category": 2,
-      "address": "제주특별자치도 제주시 조천읍 조함해안로 510 2층",
-      "description": "함덕해수욕장 바로 앞에 있어 식사하면서 바다 풍경과 저녁에는 제주 노을을 볼 수 있습니다.",
-      "openHours": "매일 11:00 - 22:00",
-      "contact": "0507-1432-6577",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "진짜 신선하고 맛있어요! 특히 딱새우회가 고소하고 달달해요!ㅎㅎ",
-          "author": "레이유나",
-          "date": "2025-02-18"
-        },
-        {
-          "rating": 5,
-          "comment": "갈치살이 두툼해서 좋았습니다. 반찬도 간이 짜지 않아서 딱이었고 물회는 시원하니 해산물은 싱싱하고 튀김도 튀김옷이 얇아 느끼하지 않고 호박이 달아요! ",
-          "author": "혜봄사랑",
-          "date": "2025-04-10"
-        }
-      ],
-      "likes": 780,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1606_4801.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1606_4802.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1606_4803.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1606_4804.jpeg"
-      ]
-    },
-    {
-      "id": 49,
-      "placeName": "산굼부리",
-      "category": 1,
-      "address": "제주특별자치도 제주시 조천읍 교래리 산119",
-      "description": "화산 분화구가 만들어낸 신비로운 지형, 자연 보호구역.",
-      "openHours": "매일 09:00 - 18:00",
-      "contact": "+82 64-783-9900",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "거대한 분화구가 인상적입니다!",
-          "author": "오승준",
-          "date": "2025-05-04"
-        }
-      ],
-      "likes": 820,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1607_4901.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1607_4902.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1607_4904.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1607_4905.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1607_4906.jpeg"
-      ]
-    },
-    {
-      "id": 50,
-      "placeName": "제주 오설록 티뮤지엄",
-      "category": 1,
-      "address": "제주특별자치도 서귀포시 안덕면 신화역사로 15",
-      "description": "녹차를 테마로 한 전시관과 카페.",
-      "openHours": "매일 09:00 - 18:00",
-      "contact": "+82 64-794-5312",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "녹차 디저트 최고!",
-          "author": "조서윤",
-          "date": "2025-04-14"
-        },
-        {
-          "rating": 4,
-          "comment": "제주도 놀러와서 기념품 산 곳! 제주도스러운 풍경에 사진찍기 좋은 곳!!",
-          "author": "쪼이팡",
-          "date": "2025-03-02"
-        }
-      ],
-      "likes": 2100,
-      "images": [
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1608_5001.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1608_5002.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1608_5003.jpeg",
-        "https://storage.googleapis.com/team2project_dummy_img/20250429_1608_5004.jpeg"
-      ]
-    }
-  ]
+  {
+    "id": 1,
+    "placeName": "N서울타워",
+    "category": 1,
+    "address": "서울특별시 용산구 남산공원길 105",
+    "description": "서울의 중심 남산 위에 위치한 서울타워는 야경 명소로 유명합니다.",
+    "openHours": "매일 10:00 - 23:00",
+    "contact": "+82 2-3455-9277",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "서울이 한눈에 보이는 곳이에요!",
+        "author": "김민수",
+        "date": "2025-04-01"
+      }
+    ],
+    "likes": 1542,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/seonghak-hong-h-BxnAy_5WE-unsplash.jpg",
+      "https://storage.googleapis.com/team2project_dummy_img/thanchanok-sawetjaruthat-9c93NTn22lI-unsplash.jpg",
+	"https://storage.googleapis.com/team2project_dummy_img/yohan-cho-Mwvhyd22Lyw-unsplash.jpg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_0927.jpg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_0926.jpg"
+    ],
+    "tags": ["전망대", "서울야경", "데이트", "남산", "서울전경", "포토스팟", "야경명소"]
+  },
+  {
+    "id": 2,
+    "placeName": "서울성수천상가옥",
+    "category": 3,
+    "address": "서울특별시 성동구 성수이로14길 14 3층",
+    "description": "누구에게나 따듯함을 내려드리는 카페로서 단순한 카페 그 이상으로 손님 모두의 시간이 가치롭게 저희 매장에서 쓰였으면 하는 바램입니다.",
+    "openHours": "매일 11:00 - 22:00",
+    "contact": "+82 010-8979-8122",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "인스타맛집인줄 알았는데..웬걸 알바생분들(특히 계산하시던 모자쓴여자분)도 친절하시거 일단 빵이 개존맛.. 배불러서 좀 남겼는데 포장하는곳도 따로 잇어서 맘편히 즐기다옴.. 또 갈듯 ",
+        "author": "감자",
+        "date": "2025-04-02"
+      }
+    ],
+    "likes": 2031,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_0933.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_0934.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_0935.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_0936.jpeg"
+    ],
+    "tags": ["감성카페", "베이커리카페", "인스타맛집", "성수동", "포장가능", "따뜻한분위기", "애견동반"]
+  },
+  {
+    "id": 3,
+    "placeName": "롯데월드타워",
+    "category": 1,
+    "address": "서울특별시 송파구 올림픽로 300",
+    "description": "123층의 초고층 빌딩, 쇼핑, 식사, 전망대까지 한 번에!",
+    "openHours": "매일 10:00 - 22:00",
+    "contact": "+82 2-3213-5000",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "야경이 정말 멋있어요!",
+        "author": "박지훈",
+        "date": "2025-04-05"
+      }
+    ],
+    "likes": 1320,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_0940.jpeg",
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_0939.jpeg",
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_0938.jpeg"
+    ],
+    "tags": ["초고층", "전망대", "쇼핑", "서울랜드마크", "야경", "데이트코스", "가족여행"]
+  },
+  {
+    "id": 4,
+    "placeName": "광장시장",
+    "category": 2,
+    "address": "서울특별시 종로구 창경궁로 88",
+    "description": "서울 전통 재래시장에서 맛보는 먹거리 천국!",
+    "openHours": "매일 09:00 - 23:00",
+    "contact": "+82 2-2267-0291",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "빈대떡 진짜 맛있었어요!",
+        "author": "김하늘",
+        "date": "2025-04-08"
+      }
+    ],
+    "likes": 940,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_0945.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_0946.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_0947.jpeg"
+    ],
+    "tags": ["전통시장", "로컬푸드", "서울명소", "빈대떡", "먹거리천국", "시장투어", "감성"]
+  },
+  {
+    "id": 5,
+    "placeName": "그랜드하얏트호텔",
+    "category": 4,
+    "address": "서울특별시 용산구 소월로 322",
+    "description": "서울의 중심부, 남산에 위치한 그랜드 하얏트 서울은 도심 속의 리조트 호텔로, 세심한 서비스와 더불어 편안한 경험을 제공합니다.",
+    "openHours": "매일 00:00 - 24:00",
+    "contact": "02-797-1234",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "오랜만에 그랜드하얏트 스위트룸 숙박이었어요. 위치 너무 좋고 클래식한 정통분위기 조용한 안식처같았어요.",
+        "author": "박지은",
+        "date": "2025-03-29"
+      },
+      {
+        "rating": 5,
+        "comment": "자주 가는 호캉스이지만, 파라다이스바에서 수준 높은 라이브 재즈 공연이 일품이에요!!",
+        "author": "테디정",
+        "date": "2025-04-10"
+      }
+    ],
+    "likes": 1050,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1008.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1009.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1010.jpeg"
+    ],
+    "tags": ["럭셔리호텔", "호캉스", "라이브공연", "남산뷰", "클래식호텔", "고급스러운", "애견동반"]
+  },
+  {
+    "id": 6,
+    "placeName": "경포대",
+    "category": 1,
+    "address": "강원특별자치도 강릉시 경포로 365",
+    "description": "경포해변을 내려다보는 아름다운 누각, 경포호수와 함께하는 뷰포인트.",
+    "openHours": "매일 09:00 - 19:00",
+    "contact": "+82 33-640-5126",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "호수랑 바다 동시에 볼 수 있어요!",
+        "author": "강지훈",
+        "date": "2025-04-12"
+      }
+    ],
+    "likes": 780,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1113_06.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1114_06.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1115_06.jpeg"
+    ],
+    "tags": ["호수뷰", "바다전망", "누각", "자연명소", "뷰포인트", "경포해변", "감성"]
+  },
+  {
+    "id": 7,
+    "placeName": "주문진수산시장",
+    "category": 2,
+    "address": "강원특별자치도 강릉시 주문진읍 시장길 38",
+    "description": "싱싱한 해산물을 즐길 수 있는 강릉 대표 수산시장!",
+    "openHours": "매일 08:00 - 19:00",
+    "contact": "+82 33-661-7302",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "대게 먹으러 갔는데 너무 신선했어요!",
+        "author": "최영수",
+        "date": "2025-04-13"
+      }
+    ],
+    "likes": 600,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1117_07.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1118_07.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1118_07.jpeg"
+    ],
+    "tags": ["수산시장", "신선한해산물", "대게", "시장먹거리", "강릉명소", "회", "로컬푸드"]
+  },
+  {
+    "id": 8,
+    "placeName": "라라의정원",
+    "category": 3,
+    "address": "강원특별자치도 속초시 학사평길 61 1층 라라의 정원",
+    "description": "설악산 뷰를 한 폭에 담은 라라의정원입니다. 마당있는 집에서 호흡하는 로망을 누릴 수 있는 애견동반 속초예쁜정원카페입니다.",
+    "openHours": "매일 10:00 - 18:00",
+    "contact": "0507-1486-3123",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "가을 단풍 시즌은 진짜 최고!",
+        "author": "이정우",
+        "date": "2025-04-14"
+      }
+    ],
+    "likes": 2000,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1120_08.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1121_08.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1122_08.jpeg"
+    ],
+    "tags": ["정원카페", "애견동반", "감성", "뷰맛집", "설악산전망", "포토존", "조용한"]
+  },
+  {
+    "id": 9,
+    "placeName": "속초해변",
+    "category": 1,
+    "address": "강원특별자치도 속초시 해오름로 190",
+    "description": "맑고 깨끗한 동해바다를 즐길 수 있는 해수욕장입니다.",
+    "openHours": "매일 09:00 - 18:00",
+    "contact": "+82 33-639-2114",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "물이 진짜 맑아요!",
+        "author": "박서연",
+        "date": "2025-04-15"
+      }
+    ],
+    "likes": 1100,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1122_09.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1123_09.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1124_09.jpeg"
+    ],
+    "tags": ["해변", "동해바다", "맑은물", "가족여행", "썸머스팟", "수영", "애견동반"]
+  },
+  {
+    "id": 10,
+    "placeName": "아바이마을",
+    "category": 2,
+    "address": "강원특별자치도 속초시 청호동 1-1",
+    "description": "아바이순대와 해물파전이 유명한 전통적인 북한이주민 마을.",
+    "openHours": "매일 10:00 - 20:00",
+    "contact": "+82 33-639-2690",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "아바이순대 꼭 먹어봐야 해요!",
+        "author": "송지훈",
+        "date": "2025-04-16"
+      }
+    ],
+    "likes": 870,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1124_10.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1125_10.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1126_10.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1127_10.jpeg"
+    ],
+    "tags": ["로컬푸드", "아바이순대", "전통시장", "북한이주민마을", "해물파전", "속초명소", "애견동반"]
+  },
+  {
+    "id": 11,
+    "placeName": "불국사",
+    "category": 1,
+    "address": "경상북도 경주시 불국로 385",
+    "description": "한국 불교를 대표하는 사찰, 세계문화유산에 등재된 아름다운 곳입니다.",
+    "openHours": "매일 07:00 - 18:00",
+    "contact": "+82 54-746-9913",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "조용하고 경건한 분위기 최고입니다.",
+        "author": "최은지",
+        "date": "2025-04-17"
+      }
+    ],
+    "likes": 1700,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1216_1101.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1216_1102.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1217_1103.jpeg"
+    ],
+    "tags": ["사찰", "불교문화", "세계문화유산", "경건한", "조용한", "역사유적", "전통건축"]
+  },
+  {
+    "id": 12,
+    "placeName": "첨성대",
+    "category": 1,
+    "address": "경상북도 경주시 인왕동 839-1",
+    "description": "동양에서 가장 오래된 천문대, 신라 시대의 대표 유적지입니다.",
+    "openHours": "매일 09:00 - 22:00",
+    "contact": "+82 54-779-6087",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "밤에 조명이 켜지면 정말 예뻐요.",
+        "author": "홍수진",
+        "date": "2025-04-18"
+      }
+    ],
+    "likes": 950,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1219_1201.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_0210_1202.jpeg"
+    ],
+    "tags": ["천문대", "역사유적", "야경", "신라문화", "포토존", "야경스팟", "데이트"]
+  },
+  {
+    "id": 13,
+    "placeName": "경주 월정교",
+    "category": 1,
+    "address": "경상북도 경주시 교동 274",
+    "description": "고풍스러운 조명이 아름다운 다리, 야경이 특히 유명합니다.",
+    "openHours": "매일 09:00 - 22:00",
+    "contact": "+82 54-779-6100",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "야경이 너무 멋져서 감동했어요.",
+        "author": "이준호",
+        "date": "2025-04-18"
+      }
+    ],
+    "likes": 1300,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1241_1301.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1244_1302.jpeg"
+    ],
+    "tags": ["야경", "고풍스러운", "전통건축", "감성", "포토스팟", "경주명소", "데이트"]
+  },
+  {
+    "id": 14,
+    "placeName": "여수 오동도",
+    "category": 1,
+    "address": "전라남도 여수시 수정동 산1-11",
+    "description": "동백꽃으로 유명한 섬, 겨울에 동백꽃이 만개하는 명소입니다.",
+    "openHours": "매일 09:00 - 18:00",
+    "contact": "+82 61-659-4672",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "봄, 겨울에 가면 동백꽃이 장관입니다!",
+        "author": "김윤서",
+        "date": "2025-04-19"
+      }
+    ],
+    "likes": 1150,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_0211_1401.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_0212_1402.jpeg"
+    ],
+    "tags": ["섬", "동백꽃", "자연", "트레킹", "겨울여행", "봄꽃명소", "애견동반"]
+  },
+  {
+    "id": 15,
+    "placeName": "여수 해상케이블카",
+    "category": 1,
+    "address": "전라남도 여수시 돌산읍 돌산로 3600-1",
+    "description": "여수 밤바다를 한눈에 감상할 수 있는 케이블카입니다.",
+    "openHours": "매일 10:00 - 22:00",
+    "contact": "+82 61-664-7301",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "케이블카 타면서 야경 보는 게 최고!",
+        "author": "정호석",
+        "date": "2025-04-20"
+      }
+    ],
+    "likes": 1850,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_0213_1501.jpeg"
+    ],
+    "tags": ["케이블카", "야경", "여수밤바다", "전망", "데이트", "스릴", "포토존"]
+  },
+  {
+    "id": 16,
+    "placeName": "여수 낭만포차거리",
+    "category": 2,
+    "address": "전라남도 여수시 종화동",
+    "description": "야경을 보면서 여수 명물 먹거리(꼬막비빔밥, 해산물)를 즐길 수 있는 거리입니다.",
+    "openHours": "매일 18:00 - 02:00",
+    "contact": "정보 없음",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "여수 밤바다 감성 제대로!",
+        "author": "박서진",
+        "date": "2025-04-21"
+      }
+    ],
+    "likes": 900,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_0243_1601.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1444_1602.jpeg"
+    ],
+    "tags": ["포장마차", "야경", "여수밤바다", "해산물", "꼬막비빔밥", "로컬푸드", "감성"]
+  },
+  {
+    "id": 17,
+    "placeName": "여수 아쿠아플라넷",
+    "category": 1,
+    "address": "전라남도 여수시 오동도로 61-11",
+    "description": "다양한 해양 생물을 만날 수 있는 대형 아쿠아리움.",
+    "openHours": "매일 10:00 - 19:00",
+    "contact": "+82 61-660-1111",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "가족 단위로 놀러 가기 좋아요!",
+        "author": "김재윤",
+        "date": "2025-04-21"
+      }
+    ],
+    "likes": 1500,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1445_1701.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1445_1702.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1446_1703.jpeg"
+    ],
+    "tags": ["아쿠아리움", "가족여행", "아이동반", "해양생물", "실내관광", "체험", "데이트"]
+  },
+  {
+    "id": 18,
+    "placeName": "여수 이순신광장",
+    "category": 1,
+    "address": "전라남도 여수시 중앙동",
+    "description": "충무공 이순신 장군 동상이 서 있는 역사적 명소.",
+    "openHours": "매일 00:00 - 24:00",
+    "contact": "정보 없음",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "광장이 깨끗하고 야경이 예뻐요.",
+        "author": "이하늘",
+        "date": "2025-04-22"
+      }
+    ],
+    "likes": 770,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1446_1801.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1447_1802.jpeg"
+    ],
+    "tags": ["역사", "이순신", "야경", "도심산책", "기념사진", "광장", "애견동반"]
+  },
+  {
+    "id": 19,
+    "placeName": "라테라스리조트",
+    "category": 4,
+    "address": "전라남도 여수시 돌산읍 진모1길 29-12",
+    "description": "라테라스 워터파크&실내수영장, 지금 가장 HOT하다! 쾌적하고 깔끔한 수영장과 리조트를 한번에 GET!",
+    "openHours": "매일 00:00 - 24:00",
+    "contact": "0507-1495-3518",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "깔끔한 숙소에 난방 하나는 끝내줍니다!! 딸과 함께 수영장에서 놀기도 너무 좋았습니다!!",
+        "author": "박수연",
+        "date": "2025-04-14"
+      },
+	{
+        "rating": 5,
+        "comment": "가족여행 오기 좋고 수영장 바로 앞에 바다라서 너무 예뻐요! 재방문 의사 있습니다!",
+        "author": "피치189",
+        "date": "2025-04-20"
+      }
+    ],
+    "likes": 980,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1448_1901.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1448_1902.png",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1448_1903.png"
+    ],
+    "tags": ["숙소", "리조트", "수영장", "가족여행", "바다뷰", "깔끔한", "애견동반"]
+  },
+  {
+    "id": 20,
+    "placeName": "여수 진남관",
+    "category": 1,
+    "address": "전라남도 여수시 군자동 472",
+    "description": "조선시대 수군을 지휘하던 유서 깊은 건물.",
+    "openHours": "매일 09:00 - 18:00",
+    "contact": "+82 61-659-4616",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "역사 공부하기 좋은 장소입니다.",
+        "author": "정은비",
+        "date": "2025-04-23"
+      }
+    ],
+    "likes": 640,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1449_2001.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1449_2002.jpeg"
+    ],
+    "tags": ["역사유적지", "문화재", "전통건축", "이순신", "한옥", "교육", "조용한"]
+  },
+  {
+    "id": 21,
+    "placeName": "해운대 해수욕장",
+    "category": 1,
+    "address": "부산광역시 해운대구 우동",
+    "description": "부산을 대표하는 해변, 맑은 바다와 하얀 모래사장이 아름답습니다.",
+    "openHours": "매일 00:00 - 24:00",
+    "contact": "+82 51-749-7611",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "여름에 꼭 가야 할 부산 명소!",
+        "author": "김지수",
+        "date": "2025-04-24"
+      }
+    ],
+    "likes": 2500,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1450_2101.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1450_2102.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1450_2103.jpeg"
+    ],
+    "tags": ["해변", "물놀이", "여름휴가", "바다", "사진스팟", "서핑", "애견동반"]
+  },
+  {
+    "id": 22,
+    "placeName": "광안리 해수욕장",
+    "category": 1,
+    "address": "부산광역시 수영구 광안해변로 219",
+    "description": "광안대교 야경을 배경으로 아름다운 바다를 즐길 수 있는 명소.",
+    "openHours": "매일 00:00 - 24:00",
+    "contact": "+82 51-610-4061",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "야경이 정말 예뻐요!",
+        "author": "박민정",
+        "date": "2025-04-24"
+      }
+    ],
+    "likes": 1800,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1451_2201.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1451_2202.jpeg"
+    ],
+    "tags": ["해변", "야경", "광안대교", "산책", "바다뷰", "도심", "데이트"]
+  },
+  {
+    "id": 23,
+    "placeName": "자갈치시장",
+    "category": 2,
+    "address": "부산광역시 중구 자갈치로 52",
+    "description": "싱싱한 해산물을 맛볼 수 있는 부산의 대표적인 수산시장.",
+    "openHours": "매일 05:00 - 22:00",
+    "contact": "+82 51-713-8000",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "회가 정말 싱싱했어요!",
+        "author": "정유진",
+        "date": "2025-04-25"
+      }
+    ],
+    "likes": 1450,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1453_2301.jpg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1500_2302.jpeg"
+    ],
+    "tags": ["수산시장", "해산물", "회", "로컬푸드", "시장구경", "활어", "서민맛집"]
+  },
+  {
+    "id": 24,
+    "placeName": "그랜드조선부산",
+    "category": 4,
+    "address": "부산광역시 해운대구 해운대해변로 292",
+    "description": "그랜드 조선의 모든 순간은 즐거움으로 가득 찬 하나의 여정이 됩니다.",
+    "openHours": "매일 00:00 - 24:00",
+    "contact": "051-922-5000",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "지난번에 투숙할 때보다 직원분들이 더 친절해진 것 같아요. 체크인부터 체크아웃까지 많은 배려를 받은 여행이었습니다.",
+        "author": "하겐다즈매니아",
+        "date": "2025-01-29"
+      },
+	{
+        "rating": 4,
+        "comment": "서비스가 우수하여 기분좋게 이용했습니다. 객식 내부도 깨끗하였습니다. 재방문 할 생각입니다!",
+        "author": "정성리뷰",
+        "date": "2025-03-28"
+      }
+    ],
+    "likes": 1500,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1500_2302.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1501_2402.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1501_2403.jpeg"
+    ],
+    "tags": ["숙소", "럭셔리", "바다전망", "서비스좋은", "깔끔한", "조식", "가족여행"]
+  },
+  {
+    "id": 25,
+    "placeName": "부산타워",
+    "category": 1,
+    "address": "부산광역시 중구 용두산길 37-55",
+    "description": "용두산공원 내에 위치한 부산 대표 전망대, 도시 전경이 한눈에!",
+    "openHours": "매일 10:00 - 22:00",
+    "contact": "+82 51-661-9393",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "부산 야경을 감상하기 좋은 곳입니다.",
+        "author": "이서준",
+        "date": "2025-04-26"
+      }
+    ],
+    "likes": 1100,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1502_2501.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1502_2502.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1502_2503.jpeg"
+    ],
+    "tags": ["전망대", "야경", "도심뷰", "사진스팟", "관광지", "용두산공원", "애견동반"]
+  },
+  {
+    "id": 26,
+    "placeName": "남한산성",
+    "category": 1,
+    "address": "경기도 광주시 남한산성면 산성리",
+    "description": "조선시대 군사 방어를 위해 축성된 산성, 세계문화유산.",
+    "openHours": "매일 09:00 - 18:00",
+    "contact": "+82 31-743-6610",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "역사적인 장소라 의미 있었어요.",
+        "author": "한지민",
+        "date": "2025-04-27"
+      }
+    ],
+    "likes": 800,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1520_2601.jpg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1520_2602.jpg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1520_2603.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1521_2604.jpeg"
+    ],
+    "tags": ["역사", "문화유산", "산책", "자연", "풍경좋은", "성곽", "애견동반"]
+  },
+  {
+    "id": 27,
+    "placeName": "에버랜드",
+    "category": 1,
+    "address": "경기도 용인시 처인구 포곡읍 에버랜드로 199",
+    "description": "대한민국 최대 테마파크, 놀이기구와 동물원이 함께!",
+    "openHours": "매일 10:00 - 22:00",
+    "contact": "+82 31-320-5000",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "하루종일 놀아도 시간 모자랄 정도!",
+        "author": "송유나",
+        "date": "2025-04-27"
+      }
+    ],
+    "likes": 3000,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1522_2701.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_152_2702.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1522_2703.jpeg"
+    ],
+    "tags": ["테마파크", "놀이기구", "가족여행", "아이동반", "동물원", "하루코스", "대형시설"]
+  },
+  {
+    "id": 28,
+    "placeName": "카페조각",
+    "category": 3,
+    "address": "경기도 안양시 동안구 평촌대로217번길 25 동화프라자 203호 2층 카페조각",
+    "description": "분위기 좋은 카페, 디저트가 맛있습니다.",
+    "openHours": "매일 10:00 - 23:00",
+    "contact": "0507-1320-3613",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "아이들과 가기 좋은 곳입니다!",
+        "author": "김도훈",
+        "date": "2025-04-28"
+      },
+      {
+        "rating": 5,
+        "comment": "디저트 맛집 인정합니다!",
+        "author": "정유나",
+        "date": "2025-05-01"
+      }
+    ],
+    "likes": 1200,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1523_2801.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1523_2802.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1523_2803.jpeg"
+    ],
+    "tags": ["카페", "디저트", "분위기좋은", "가족친화", "감성", "조용한", "애견동반"]
+  },
+  {
+    "id": 29,
+    "placeName": "수백당이천직영점",
+    "category": 2,
+    "address": "경기도 이천시 증신로 296 수백당빌딩 1층",
+    "description": "대한민국에서 가장 럭셔리한 순대국집, 영혼을 갈아 넣어서 만든 이천의 명소입니다.",
+    "openHours": "매일 11:30 - 21:30",
+    "contact": "0507-1410-5544",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "가게분위기도 너무 고급스럽고 세트메뉴가 구성이 너무 좋습니다!",
+        "author": "박정수",
+        "date": "2025-04-28"
+      },
+	{
+        "rating": 5,
+        "comment": "한우대창 순대곱새 정말 건더기도 푸집하고 맛있어서 너무 좋았고 세트에 함께 나오는 마늘수육이랑 순대도 완전 꿀맛~!^^",
+        "author": "너부리",
+        "date": "2025-04-23"
+      }
+    ],
+    "likes": 800,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1524_2901.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1524_2902.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1524_2903.jpeg"
+    ],
+    "tags": ["순대국", "고급한식", "세트메뉴", "한식", "대창", "마늘수육", "인테리어"]
+  },
+  {
+    "id": 30,
+    "placeName": "헤이리 예술마을",
+    "category": 1,
+    "address": "경기도 파주시 탄현면 헤이리마을길 70-21",
+    "description": "예술과 문화가 살아 숨쉬는 복합문화예술촌.",
+    "openHours": "매일 10:00 - 19:00",
+    "contact": "+82 31-946-8551",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "사진 찍기 좋은 감성 마을!",
+        "author": "이지후",
+        "date": "2025-04-28"
+      }
+    ],
+    "likes": 950,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1525_3001.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1525_3002.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1525_3003.jpeg"
+    ],
+    "tags": ["예술", "전시", "복합문화공간", "감성", "사진스팟", "데이트코스", "산책"]
+  },
+  {
+    "id": 31,
+    "placeName": "성산일출봉",
+    "category": 1,
+    "address": "제주특별자치도 서귀포시 성산읍 성산리",
+    "description": "제주의 대표적인 일출 명소, 세계자연유산 등재.",
+    "openHours": "매일 07:00 - 19:00",
+    "contact": "+82 64-783-0959",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "일출이 정말 장관이에요!",
+        "author": "박은지",
+        "date": "2025-04-29"
+      }
+    ],
+    "likes": 2500,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1526_3101.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1526_3102.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1526_3103.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1526_3104.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1526_3105.jpeg"
+    ],
+    "tags": ["일출명소", "자연", "트래킹", "사진스팟", "세계자연유산", "등산", "애견동반"]
+  },
+  {
+    "id": 32,
+    "placeName": "롯데호텔제주",
+    "category": 4,
+    "address": "제주특별자치도 서귀포시 중문관광로72번길 35",
+    "description": "제주도 최초로 인증 받은 5성 호텔 푸른 제주 바다와 하늘이 맞닿은 곳에 위치한 롯데호텔 제주는 천국같은 휴식과 여행의 즐거움을 동시에 누릴 수 있는 대한민국 대표 호텔이다.",
+    "openHours": "매일 00:00 - 24:00",
+    "contact": "064-731-1000",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "방음도 잘 되었고 침구도 깔끔해서 덕분에 좋은 숙면 했습니다. 조식도 맛있었구요!!",
+        "author": "강남토끼",
+        "date": "2025-04-24"
+      },
+	{
+        "rating": 5,
+        "comment": "1박만 하기 너무 아쉬웠습니다.",
+        "author": "은아새",
+        "date": "2025-03-12"
+      }
+    ],
+    "likes": 1800,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1527_3201.png",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1527_3202.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1527_3203.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1527_3204.jpeg"
+    ],
+    "tags": ["숙소", "럭셔리", "5성급", "조식", "가족여행", "힐링", "커플여행"]
+  },
+  {
+    "id": 33,
+    "placeName": "우도",
+    "category": 1,
+    "address": "제주특별자치도 제주시 우도면",
+    "description": "섬 속의 섬, 투명한 바다와 하얀 백사장이 인상적인 곳.",
+    "openHours": "매일 07:00 - 18:00",
+    "contact": "정보 없음",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "자전거 타고 한 바퀴 돌면 최고!",
+        "author": "김진우",
+        "date": "2025-04-30"
+      },
+	{
+        "rating": 5,
+        "comment": "섬 전체가 한적하고 너무 평화롭더라구요. 전기 스쿠터 타고 한 바퀴 도는데 바다 뷰가 진짜 끝내줬어요!!",
+        "author": "하또엄마",
+        "date": "2025-04-20"
+      }
+    ],
+    "likes": 2200,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3301.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3302.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3303.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3304.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3305.jpeg"
+    ],
+    "tags": ["섬여행", "자전거", "스쿠터", "조용한", "바다뷰", "풍경좋은", "애견동반"]
+  },
+  {
+    "id": 34,
+    "placeName": "협재해수욕장",
+    "category": 1,
+    "address": "제주특별자치도 제주시 한림읍 협재리",
+    "description": "에메랄드빛 바다가 매력적인 제주 서쪽 해변.",
+    "openHours": "매일 09:00 - 19:00",
+    "contact": "+82 64-796-2406",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "물이 정말 맑아요!",
+        "author": "김서연",
+        "date": "2025-04-30"
+      }
+    ],
+    "likes": 1600,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1530_3401.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1530_3402.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1530_3403.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1530_3404.jpeg"
+    ],
+    "tags": ["해변", "에메랄드바다", "물놀이", "사진스팟", "서핑", "산책", "애견동반"]
+  },
+  {
+    "id": 35,
+    "placeName": "쉼표",
+    "category": 3,
+    "address": "제주특별자치도 제주시 한림읍 한림로 359",
+    "description": "탁 트인 제주 바다를 바라보며 여유롭게 커피를 즐길 수 있는 감성 카페입니다.",
+    "openHours": "매일 09:00 - 18:00",
+    "contact": "정보 없음",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "창밖으로 보이는 제주 바다가 정말 그림 같았어요.",
+        "author": "최민재",
+        "date": "2025-04-30"
+      },
+	{
+        "rating": 5,
+        "comment": "조용하고 여유로운 분위기 덕분에 진짜 힐링하고 왔어요. 다음에 제주 오면 무조건 다시 방문할 거예요!",
+        "author": "내맘빈",
+        "date": "2025-04-06"
+      }
+    ],
+    "likes": 900,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1531_3501.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1531_3502.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1531_3503.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1531_3504.jpeg"
+    ],
+    "tags": ["바다전망", "감성카페", "조용한", "힐링", "뷰맛집", "한적한", "애견동반"]
+  },
+  {
+    "id": 36,
+    "placeName": "한라산 국립공원",
+    "category": 1,
+    "address": "제주특별자치도 제주시 1100로",
+    "description": "대한민국 최고봉, 사계절 트래킹 명소.",
+    "openHours": "매일 05:00 - 18:00",
+    "contact": "+82 64-713-9950",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "등산하면서 보는 경치가 대박입니다.",
+        "author": "윤지호",
+        "date": "2025-04-30"
+      }
+    ],
+    "likes": 3000,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1532_3601.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1532_3602.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1532_3603.jpeg"
+    ],
+    "tags": ["자연", "등산", "트레킹", "사계절", "풍경좋은", "운동", "가족여행"]
+  },
+  {
+    "id": 37,
+    "placeName": "이호테우해변",
+    "category": 1,
+    "address": "제주특별자치도 제주시 이호일동",
+    "description": "빨간색, 흰색 말등대가 상징인 아름다운 해변.",
+    "openHours": "매일 00:00 - 24:00",
+    "contact": "정보 없음",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "선셋이 정말 멋있어요!",
+        "author": "이서연",
+        "date": "2025-05-01"
+      }
+    ],
+    "likes": 1000,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1533_3701.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1533_3702.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1533_3703.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1533_3704.jpeg"
+    ],
+    "tags": ["해변", "노을", "산책", "사진스팟", "야외", "자유로운", "애견동반"]
+  },
+  {
+    "id": 38,
+    "placeName": "애월온기",
+    "category": 2,
+    "address": "제주특별자치도 제주시 애월읍 애월로 11 갈치맛집 온기",
+    "description": "제주 애월 맛집 온기는 제주 여행을 오신 귀한 여행객분들을 생각하며 따뜻한 기운을 드리기 위해 제주도산 식재료로 개별 솥밥에 누릉지 까지 정성스레 준비합니다.",
+    "openHours": "매일 09:00 - 21:00",
+    "contact": "0507-1479-6026",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "밥이 정말 고슬고슬하게 잘 지어져 있었고, 갈치와 전복도 신선해서 제주바다의 맛을 듬뿍 느낄 수 있었습니다.",
+        "author": "뽀로로",
+        "date": "2025-04-01"
+      },
+	{
+        "rating": 5,
+        "comment": "가게 분위기도 아늑하고 따뜻해서, 아기를 데리고 가기에도 정말 좋았습니다.",
+        "author": "다유니",
+        "date": "2025-04-20"
+      }
+    ],
+    "likes": 1450,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1534_3801.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1534_3802.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1534_3803.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1534_3804.jpeg"
+    ],
+    "tags": ["한식", "솥밥", "갈치", "전복", "아이동반", "아늑한", "가정식"]
+  },
+  {
+    "id": 39,
+    "placeName": "용두암",
+    "category": 1,
+    "address": "제주특별자치도 제주시 용담2동",
+    "description": "용이 승천하는 모습을 닮은 바위로 유명한 관광지.",
+    "openHours": "매일 00:00 - 24:00",
+    "contact": "정보 없음",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "사진 찍기 좋은 포인트!",
+        "author": "홍지민",
+        "date": "2025-05-01"
+      }
+    ],
+    "likes": 1300,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1535_3901.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1535_3902.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1535_3903.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1535_3904.jpeg"
+    ],
+    "tags": ["자연", "사진스팟", "해안절경", "관광명소", "자유로운", "야경", "애견동반"]
+  },
+  {
+    "id": 40,
+    "placeName": "파르나스호텔제주",
+    "category": 4,
+    "address": "제주특별자치도 서귀포시 중문관광로72번길 100",
+    "description": "제주도 중문 색달 해변 옆에 위치한 파르나스 호텔, 제주 호텔 중 바닷가가 가장 가까운 호텔입니다.",
+    "openHours": "매일 00:00 - 24:00",
+    "contact": "064-801-5555",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "호텔 규모가 큽니다. 로비도 크고 층고가 높아서 고급스러운 느낌이 들어요.",
+        "author": "문서현",
+        "date": "2025-03-01"
+      },
+	{
+        "rating": 5,
+        "comment": "제주도에서 파르나스 호텔이 최고인 것 같아요! 특히 조식이 넘넘 좋았어요! 바리스타가 내려주는 커피 맛 또한 일품입니다.",
+        "author": "헤네치아",
+        "date": "2025-04-01"
+      }
+    ],
+    "likes": 850,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1536_4001.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1536_4002.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1536_4003.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1536_4004.jpeg"
+    ],
+    "tags": ["숙소", "고급", "조식", "바다전망", "커플여행", "힐링", "비즈니스"]
+  },
+  {
+    "id": 41,
+    "placeName": "해지개",
+    "category": 3,
+    "address": "제주특별자치도 제주시 애월읍 애월북서길 52 . 1~2층",
+    "description": "한옥의 고즈넉한 부분을 살리려고 노력했으며, 오시는 분들의 마음의 온을 더 강조하고자 한옥을 재해석한 카페입니다.",
+    "openHours": "매일 09:00 - 21:00",
+    "contact": "0507-1358-8586",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "바다가 바로 눈앞에 있어서 운치있게 잘 먹을 수 있고 한옥같은 예날 인테리어를 써서 관광객들이 많이 찾아올 수 밖에 없는 거 같아요.",
+        "author": "이재훈",
+        "date": "2025-04-26"
+      },
+	{
+        "rating": 5,
+        "comment": "제주도 여행 마무리로 방문한 애월 해지개 카페 바다뷰가 기가막혀요. 게다가 디저트는 물론 음료도 최고의 수준이에요!",
+        "author": "달콩1",
+        "date": "2025-04-20"
+      }
+    ],
+    "likes": 750,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1549_4101.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1549_4102.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1549_4103.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1549_4104.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1549_4105.png"
+    ],
+    "tags": ["카페", "한옥", "전통미", "바다전망", "감성", "조용한", "애견동반"]
+  },
+  {
+    "id": 42,
+    "placeName": "제주 러브랜드",
+    "category": 1,
+    "address": "제주특별자치도 제주시 1100로 2894-72",
+    "description": "성(性)을 주제로 한 조각 공원.",
+    "openHours": "매일 09:00 - 24:00",
+    "contact": "+82 64-712-6988",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "성인 대상 테마파크라 독특했어요!",
+        "author": "윤지민",
+        "date": "2025-05-02"
+      }
+    ],
+    "likes": 670,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1600_4201.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1600_4202.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1600_4203.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1600_4204.jpeg"
+    ],
+    "tags": ["전시", "테마파크", "이색경험", "성인전용", "조각", "관광명소"]
+  },
+  {
+    "id": 43,
+    "placeName": "고이정 애월 흑돼지보리짚불구이",
+    "category": 2,
+    "address": "제주특별자치도 제주시 애월읍 애월로 6 고이정",
+    "description": "제주 애월 3대흑돼지 보리짚불구이 고이정은 애월 흑돼지 맛집으로 한담해변 바로 앞에 있습니다.",
+    "openHours": "매일 11:00 - 24:00",
+    "contact": "0507-1350-0401",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "배가 고프지 않은 상태로 방문했는데, 맛있으니 다 들어가네요ㅎㅎ",
+        "author": "한수진",
+        "date": "2025-04-22"
+      },
+	{
+        "rating": 5,
+        "comment": "왜 제주흑돼지 제주흑돼지 하는지 알거같아요! 제주흑돼지 먹고 싶으면 여기로 올 거 같아요!!",
+        "author": "지수53",
+        "date": "2025-02-03"
+      }
+    ],
+    "likes": 1250,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1601_4301.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1601_4302.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1601_4303.jpeg"
+    ],
+    "tags": ["흑돼지", "제주맛집", "불맛", "한담해변", "고기맛집", "현지인추천"]
+  },
+  {
+    "id": 44,
+    "placeName": "제주한라국수",
+    "category": 2,
+    "address": "제주특별자치도 서귀포시 천제연로188번길 17",
+    "description": "제주의 매력을 한입 가득! 오늘의 여정 속 특별한 맛과 경험을 선물하는 곳, 한라국수입니다.",
+    "openHours": "매일 08:00 - 20:00",
+    "contact": "0507-1361-6392",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "고기국수는 국물부터 면까지 진심 미친듯 마셔버렸어용..ㅎㅎ 개꿀맛!!",
+        "author": "박채원",
+        "date": "2025-03-03"
+      },
+	{
+        "rating": 5,
+        "comment": "제주도여행오면 꼭 들러요!! 아이들도 너무 맛있다 연발하며 먹었어요!! 고기국수 제주한라국수 최고에요!!",
+        "author": "손짱님",
+        "date": "2025-04-15"
+      }
+    ],
+    "likes": 2000,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1602_4401.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1602_4402.jpeg"
+    ],
+    "tags": ["고기국수", "제주맛집", "국물요리", "아이동반", "로컬푸드", "가성비"]
+  },
+  {
+    "id": 45,
+    "placeName": "천지연폭포",
+    "category": 1,
+    "address": "제주특별자치도 서귀포시 천지동",
+    "description": "아름다운 폭포가 시원하게 떨어지는 경치 명소.",
+    "openHours": "매일 09:00 - 22:00",
+    "contact": "+82 64-733-1528",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "밤에 조명 켜진 폭포가 환상적이에요!",
+        "author": "정윤아",
+        "date": "2025-05-03"
+      }
+    ],
+    "likes": 1800,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1603_4501.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1603_4502.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1603_4503.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1603_4504.jpeg"
+    ],
+    "tags": ["자연경관", "폭포", "야경", "산책", "사진스팟", "서귀포", "힐링"]
+  },
+  {
+    "id": 46,
+    "placeName": "정방폭포",
+    "category": 1,
+    "address": "제주특별자치도 서귀포시 동홍동",
+    "description": "바로 바다로 떨어지는 드문 형태의 폭포.",
+    "openHours": "매일 09:00 - 18:00",
+    "contact": "+82 64-733-1530",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "바다와 폭포가 어우러진 멋진 풍경!",
+        "author": "고은별",
+        "date": "2025-05-03"
+      }
+    ],
+    "likes": 1700,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1604_4601.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1604_4602.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1604_4603.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1604_4604.jpeg"
+    ],
+    "tags": ["폭포", "바다풍경", "산책코스", "드문형태", "제주명소", "자연속", "서귀포"]
+  },
+  {
+    "id": 47,
+    "placeName": "델문도",
+    "category": 3,
+    "address": "제주특별자치도 제주시 조천읍 조함해안로 519-10",
+    "description": "아름다운 제주 함덕해수욕장에서 낮에는 베이커리 카페로, 저녁에는 힙한 감성펍!",
+    "openHours": "매일 06:00 - 24:00",
+    "contact": "064-702-0007",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "1,2층은 바다가 보이고 별도건물 함덕별정은 조용하고 아담한 빈티지 컨셉이더라구요. 주변 바다구경하기 너무 좋은 장소라 추천합니다.",
+        "author": "혜봄사랑",
+        "date": "2025-05-04"
+      },
+	{
+        "rating": 5,
+        "comment": "제주에서 가장 아름다운 바다가 아닐까싶어요. 바다를 보며 커피한잔 하기 최고입니다.",
+        "author": "여행하는 너구리",
+        "date": "2025-05-04"
+      }
+    ],
+    "likes": 540,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1605_4701.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1605_4702.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1605_4703.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1605_4704.jpeg"
+    ],
+    "tags": ["카페", "베이커리", "바다뷰", "감성카페", "포토존", "야경", "애견동반"]
+  },
+  {
+    "id": 48,
+    "placeName": "계절식탁 함덕점",
+    "category": 2,
+    "address": "제주특별자치도 제주시 조천읍 조함해안로 510 2층",
+    "description": "함덕해수욕장 바로 앞에 있어 식사하면서 바다 풍경과 저녁에는 제주 노을을 볼 수 있습니다.",
+    "openHours": "매일 11:00 - 22:00",
+    "contact": "0507-1432-6577",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "진짜 신선하고 맛있어요! 특히 딱새우회가 고소하고 달달해요!ㅎㅎ",
+        "author": "레이유나",
+        "date": "2025-02-18"
+      },
+	{
+        "rating": 5,
+        "comment": "갈치살이 두툼해서 좋았습니다. 반찬도 간이 짜지 않아서 딱이었고 물회는 시원하니 해산물은 싱싱하고 튀김도 튀김옷이 얇아 느끼하지 않고 호박이 달아요! ",
+        "author": "혜봄사랑",
+        "date": "2025-04-10"
+      }
+    ],
+    "likes": 780,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1606_4801.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1606_4802.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1606_4803.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1606_4804.jpeg"
+    ],
+    "tags": ["식당", "해산물", "회맛집", "딱새우", "함덕", "바다뷰", "현지인추천"]
+  },
+  {
+    "id": 49,
+    "placeName": "산굼부리",
+    "category": 1,
+    "address": "제주특별자치도 제주시 조천읍 교래리 산119",
+    "description": "화산 분화구가 만들어낸 신비로운 지형, 자연 보호구역.",
+    "openHours": "매일 09:00 - 18:00",
+    "contact": "+82 64-783-9900",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "거대한 분화구가 인상적입니다!",
+        "author": "오승준",
+        "date": "2025-05-04"
+      }
+    ],
+    "likes": 820,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1607_4901.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1607_4902.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1607_4904.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1607_4905.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1607_4906.jpeg"
+    ],
+    "tags": ["자연", "화산지형", "산책", "보호구역", "제주명소", "전망좋은", "애견동반"]
+  },
+  {
+    "id": 50,
+    "placeName": "제주 오설록 티뮤지엄",
+    "category": 1,
+    "address": "제주특별자치도 서귀포시 안덕면 신화역사로 15",
+    "description": "녹차를 테마로 한 전시관과 카페.",
+    "openHours": "매일 09:00 - 18:00",
+    "contact": "+82 64-794-5312",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "녹차 디저트 최고!",
+        "author": "조서윤",
+        "date": "2025-04-14"
+      },
+	{
+        "rating": 4,
+        "comment": "제주도 놀러와서 기념품 산 곳! 제주도스러운 풍경에 사진찍기 좋은 곳!!",
+        "author": "쪼이팡",
+        "date": "2025-03-02"
+      }
+    ],
+    "likes": 2100,
+    "images": [
+      "https://storage.googleapis.com/team2project_dummy_img/20250429_1608_5001.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1608_5002.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1608_5003.jpeg",
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1608_5004.jpeg"
+    ],
+    "tags": ["녹차", "전시관", "디저트", "기념품", "인스타감성", "관광지", "가족추천"]
+  },
+  {
+    "id": 51,
+    "placeName": "스누피가든",
+    "category": 1,
+    "address": "제주특별자치도 제주시 구좌읍 금백조로 930",
+    "description": "스누피가든은 피너츠 에피소드를 자연 속에서 직접 경험하면서 인생의 의미를 할게 되고 자연에서의 휴식을 통한 위로를 얻는 곳입니다.",
+    "openHours": "매일 09:00 - 19:00",
+    "contact": "064-805-1118",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "수누피 잘 몰라도 너무 재밌게 놀았어요!!",
+        "author": "배가연777",
+        "date": "2025-04-20"
+      },
+	{
+        "rating": 5,
+        "comment": "생각보다 엄청 넓어서 이것저것 볼 것도 많았구 너무 잘 꾸며놔서 보는 내내 너무 즐거웠어요~~",
+        "author": "신지히",
+        "date": "2025-03-01"
+      },
+	{
+        "rating": 4,
+        "comment": "입장료가 조금 비싸다고 생각했는데 그만큼 관리가 잘되어있고 정원,숲이 너무 예뻐요!",
+        "author": "regi90",
+        "date": "2025-04-03"
+      }
+	
+    ],
+    "likes": 2100,
+    "images": [
+      ""
+    ],
+    "tags": ["가든", "테마파크", "자연속", "포토존", "피너츠", "힐링", "가족", "애견동반"]
+    
+  },
+  {
+    "id": 52,
+    "placeName": "콜로세움",
+    "category": 3,
+    "address": "제주특별자치도 제주시 민오름길 14",
+    "description": "콜로세움 제주는 대형 브런치 카페 & 탭하우스로, 브런치 메뉴부터 베이커리, 수제 화덕피자, 그리고 국내외 프리미엄 생맥주 11종까지 다양하게 즐길 수 있는 공간입니다.",
+    "openHours": "매일 09:00 - 22:00",
+    "contact": "064-799-1234",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "가격 대비 훌륭한 경험이었어요!",
+        "author": "정예린",
+        "date": "2025-03-02"
+      },
+      {
+        "rating": 5,
+        "comment": "정말 만족스러웠어요!",
+        "author": "윤지우",
+        "date": "2024-11-06"
+      },
+	{
+        "rating": 5,
+        "comment": "강아지랑 민오름 산책 갔다가 애견동반으로 방문한 콜로세움! 메뉴도 다양하고 매우 넓은 대형카페라서 좋아요!!",
+        "author": "서리아빠",
+        "date": "2024-11-29"
+      }
+    ],
+    "likes": 863,
+    "images": [""],
+    "tags": ["카페", "연인", "애견동반", "감성카페", "포토존"]
+  },
+  {
+    "id": 53,
+    "placeName": "흑돼지명가 돈사촌",
+    "category": 2,
+    "address": "제주특별자치도 서귀포시 중문관광로 110",
+    "description": "제주 흑돼지를 맛볼 수 있는 정통 맛집",
+    "openHours": "매일 11:00 - 22:00",
+    "contact": "064-738-8878",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "정말 만족스러웠어요!",
+        "author": "이도현",
+        "date": "2024-11-07"
+      },
+      {
+        "rating": 5,
+        "comment": "직원분들도 친절하고 분위기 최고예요.",
+        "author": "최하나",
+        "date": "2024-11-19"
+      }
+    ],
+    "likes": 1548,
+    "images": [""],
+    "tags": ["식당", "흑돼지", "중문", "고기맛집", "현지인추천"]
+  },
+  {
+    "id": 54,
+    "placeName": "바다풍경 펜션",
+    "category": 4,
+    "address": "제주특별자치도 구좌읍 해맞이해안로 1012",
+    "description": "전 객실 오션뷰를 자랑하는 해안 펜션",
+    "openHours": "체크인 15:00 / 체크아웃 11:00",
+    "contact": "010-4567-8910",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "사진으로만 보던 풍경이 눈앞에!",
+        "author": "한유진",
+        "date": "2024-12-08"
+      },
+      {
+        "rating": 5,
+        "comment": "아이들과 가기에도 좋아요.",
+        "author": "정예린",
+        "date": "2024-11-15"
+      }
+    ],
+    "likes": 942,
+    "images": [""],
+    "tags": ["숙소", "오션뷰", "조용한", "연인추천", "가성비", "애견동반"]
+  },
+  {
+    "id": 55,
+    "placeName": "하도슈퍼카페",
+    "category": 3,
+    "address": "제주특별자치도 구좌읍 해맞이해안로 1206",
+    "description": "슈퍼와 카페가 함께 있는 복고풍 감성 카페",
+    "openHours": "매일 09:30 - 18:30",
+    "contact": "064-782-6670",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "귀여운 감성 공간이에요!",
+        "author": "김슬기",
+        "date": "2025-01-30"
+      }
+    ],
+    "likes": 1210,
+    "images": [""],
+    "tags": ["카페", "레트로", "구좌", "복고", "인스타감성"]
+  },
+  {
+    "id": 56,
+    "placeName": "우유부단",
+    "category": 2,
+    "address": "제주특별자치도 삼도2동 831-2",
+    "description": "우유를 주제로 한 디저트 전문 카페 겸 식당",
+    "openHours": "매일 10:00 - 21:00",
+    "contact": "064-901-1004",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "디저트가 너무 귀엽고 맛있어요!",
+        "author": "최하나",
+        "date": "2025-02-05"
+      }
+    ],
+    "likes": 720,
+    "images": [""],
+    "tags": ["식당", "디저트", "우유", "귀여운", "가족추천"]
+  },
+  {
+    "id": 57,
+    "placeName": "그림카페",
+    "category": 3,
+    "address": "제주특별자치도 서귀포시 대정읍 하모중앙로 52",
+    "description": "그림을 그리고 전시도 가능한 예술 카페",
+    "openHours": "매일 11:00 - 19:00",
+    "contact": "010-1234-5678",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "직접 그림 그리는 재미가 있어요!",
+        "author": "박준형",
+        "date": "2025-01-12"
+      }
+    ],
+    "likes": 410,
+    "images": [""],
+    "tags": ["카페", "예술", "전시", "체험", "힐링"]
+  },
+  {
+    "id": 58,
+    "placeName": "휘닉스 제주 섭지코지",
+    "category": 4,
+    "address": "제주특별자치도 서귀포시 성산읍 섭지코지로 107",
+    "description": "제주의 바다와 절경이 어우러진 프리미엄 리조트",
+    "openHours": "체크인 15:00 / 체크아웃 11:00",
+    "contact": "064-731-7000",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "가족들과 머물기 너무 좋아요!",
+        "author": "정예린",
+        "date": "2025-04-20"
+      }
+    ],
+    "likes": 1730,
+    "images": [""],
+    "tags": ["숙소", "리조트", "섭지코지", "럭셔리", "가족"]
+  },
+  {
+    "id": 59,
+    "placeName": "앤트러사이트",
+    "category": 3,
+    "address": "제주특별자치도 서귀포시 안덕면 창천리 843-3",
+    "description": "공장 개조 감성 카페, 독특한 분위기",
+    "openHours": "매일 10:00 - 19:00",
+    "contact": "064-794-4560",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "분위기가 정말 인상 깊어요!",
+        "author": "박준형",
+        "date": "2025-02-28"
+      }
+    ],
+    "likes": 1044,
+    "images": [""],
+    "tags": ["카페", "감성", "창고", "로스팅", "핫플"]
+  },
+  {
+    "id": 60,
+    "placeName": "카페 봄날",
+    "category": 3,
+    "address": "제주특별자치도 서귀포시 안덕면 사계남로 216",
+    "description": "바다 전망과 복층 구조의 인기 카페",
+    "openHours": "매일 10:00 - 19:00",
+    "contact": "064-794-0999",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "노을 지는 풍경이 정말 멋져요.",
+        "author": "이도현",
+        "date": "2025-03-15"
+      }
+    ],
+    "likes": 1321,
+    "images": [""],
+    "tags": ["카페", "뷰맛집", "사계리", "복층카페", "인스타"]
+  },
+  {
+    "id": 61,
+    "placeName": "카페 서귀피안",
+    "category": 3,
+    "address": "제주특별자치도 서귀포시 칠십리로 75",
+    "description": "서귀포 바다를 내려다볼 수 있는 루프탑 카페",
+    "openHours": "매일 09:00 - 20:00",
+    "contact": "064-763-1234",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "뷰도 좋고 조용해서 힐링돼요.",
+        "author": "최하나",
+        "date": "2025-04-02"
+      }
+    ],
+    "likes": 880,
+    "images": [""],
+    "tags": ["카페", "루프탑", "서귀포", "전망좋은", "차분한"]
+  },
+  {
+    "id": 62,
+    "placeName": "이너피스",
+    "category": 3,
+    "address": "제주특별자치도 조천읍 북촌리 1330-3",
+    "description": "조용한 숲속에서 즐기는 차 한잔",
+    "openHours": "매일 10:30 - 18:00",
+    "contact": "064-789-1122",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "정말 조용해서 혼자 생각 정리하기 좋아요.",
+        "author": "정예린",
+        "date": "2025-01-11"
+      }
+    ],
+    "likes": 723,
+    "images": [""],
+    "tags": ["카페", "조용한", "숲속", "조천", "휴식"]
+  },
+  {
+    "id": 63,
+    "placeName": "카페 하이엔드제주",
+    "category": 3,
+    "address": "제주특별자치도 애월읍 애월리 2555-5",
+    "description": "하이엔드 인테리어와 커피로 유명한 카페",
+    "openHours": "매일 10:00 - 19:00",
+    "contact": "064-799-1222",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "공간도 예쁘고 커피도 정말 맛있어요.",
+        "author": "한유진",
+        "date": "2025-03-10"
+      }
+    ],
+    "likes": 1123,
+    "images": [""],
+    "tags": ["카페", "애월", "하이엔드", "인테리어", "디저트"]
+  },
+  {
+    "id": 64,
+    "placeName": "그랜드조선제주",
+    "category": 4,
+    "address": "제주특별자치도 서귀포시 중문관광로72번길 60",
+    "description": "중문에 위치한 프리미엄 호텔",
+    "openHours": "체크인 15:00 / 체크아웃 11:00",
+    "contact": "064-738-6600",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "수영장도 좋고 서비스도 최고였어요.",
+        "author": "조서윤",
+        "date": "2025-04-17"
+      }
+    ],
+    "likes": 1980,
+    "images": [""],
+    "tags": ["숙소", "호텔", "중문", "럭셔리", "수영장"]
+  },
+  {
+    "id": 65,
+    "placeName": "호텔 더본 제주",
+    "category": 4,
+    "address": "제주특별자치도 서귀포시 색달로 18",
+    "description": "가성비 좋은 깔끔한 비즈니스 호텔",
+    "openHours": "체크인 15:00 / 체크아웃 11:00",
+    "contact": "064-766-1000",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "출장 때마다 여기로 정착했어요.",
+        "author": "박준형",
+        "date": "2025-02-02"
+      }
+    ],
+    "likes": 1100,
+    "images": [""],
+    "tags": ["숙소", "비즈니스", "깔끔한", "조식", "합리적"]
+  },
+  {
+    "id": 66,
+    "placeName": "메이플라워 제주",
+    "category": 4,
+    "address": "제주특별자치도 제주시 연동 262-1",
+    "description": "시내 중심에 위치한 가족형 호텔",
+    "openHours": "체크인 14:00 / 체크아웃 11:00",
+    "contact": "064-711-2222",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "위치가 좋아서 이동하기 편했어요.",
+        "author": "윤지우",
+        "date": "2025-04-25"
+      }
+    ],
+    "likes": 935,
+    "images": [""],
+    "tags": ["숙소", "가족", "연동", "교통편리", "조용한"]
+  },
+  {
+    "id": 67,
+    "placeName": "아르반호텔",
+    "category": 4,
+    "address": "제주특별자치도 제주시 중앙로14길 20",
+    "description": "공항과 가까운 시내 호텔",
+    "openHours": "체크인 15:00 / 체크아웃 11:00",
+    "contact": "064-702-0011",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "늦게 도착해도 체크인이 편해서 좋아요.",
+        "author": "민준오빠",
+        "date": "2025-01-25"
+      }
+    ],
+    "likes": 1178,
+    "images": [""],
+    "tags": ["숙소", "시내", "공항근처", "비즈니스", "편리함"]
+  },
+  {
+    "id": 68,
+    "placeName": "신라스테이 제주",
+    "category": 4,
+    "address": "제주특별자치도 제주시 노연로 100",
+    "description": "프랜차이즈 호텔로 쾌적한 시설 자랑",
+    "openHours": "체크인 15:00 / 체크아웃 11:00",
+    "contact": "064-717-9000",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "체크인부터 체크아웃까지 깔끔 그 자체!",
+        "author": "이도현",
+        "date": "2025-04-26"
+      }
+    ],
+    "likes": 1450,
+    "images": [""],
+    "tags": ["숙소", "신라", "쾌적함", "연동", "모던"]
+  },
+  {
+    "id": 69,
+    "placeName": "카페몽몽",
+    "category": 3,
+    "address": "제주특별자치도 제주시 월광로 145-8 1층 카페몽몽",
+    "description": "제주에 위치한 최대규모의 애견카페입니다. 댕댕이들을 위한 몽몽네컷도 준비되어있습니다. 다양한 소품을 이용하여 사랑스러운 댕댕이의 모습을 기록하실 수 있어요!",
+    "openHours": "매일 12:00 - 22:00",
+    "contact": "0507-1317-3967",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "시설도 너무 깨끗하구 반려견 뛰어놀기에도 정말 잘 되어 있어요!!ㅎㅎ",
+        "author": "한유진",
+        "date": "2025-01-22"
+      },
+      {
+        "rating": 4,
+        "comment": "오랜만에 왔네요. 이제 곧 크리스마스기도 하니까 들어갔는데 분위기 대박!! 직원분들도 친절하고 분위기 최고예요.",
+        "author": "화이팅123",
+        "date": "2024-12-23"
+      }
+    ],
+    "likes": 1390,
+    "images": [""],
+    "tags": ["카페", "애견동반", "식당", "애견카페", "커피"]
+  },
+  {
+    "id": 70,
+    "placeName": "성산스쿠버",
+    "category": 1,
+    "address": "제주특별자치도 서귀포시 성산읍 일출로 258-5 성산스쿠버리조트",
+    "description": "다이빙 포인트가 가까운 거리에 있어 편리하고 입수 지점의 수심이 5~7m에 불과해 경험이 적은 다이버도 부담없이 다이빙을 즐길 수 있습니다.",
+    "openHours": "메일 09:00 - 18:00",
+    "contact": "0507-1426-6117",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "스쿠버는 처음이라 걱정했습니다만 친절하게 알려주신 사장님과 선생님 덕분에 너무 좋은시간이었습니다!",
+        "author": "정예린",
+        "date": "2024-08-17"
+      },
+	{
+        "rating": 5,
+        "comment": "처음 호흡할때 제가 힘들어서 포기할까했는데 강사님이 끝까지 포기하지 않게 다독여주시고 잘 가르쳐주셔서 성공했네요!! 너무너무 감사합니다!!",
+        "author": "YYONS K",
+        "date": "2024-08-24"
+      }
+    ],
+    "likes": 796,
+    "images": [""],
+    "tags": ["스쿠버다이빙", "바다뷰", "액티비티", "물놀이", "인생샷"]
+  },
+  {
+    "id": 71,
+    "placeName": "김녕미로공원",
+    "category": 1,
+    "address": "제주특별자치도 구좌읍 김녕리",
+    "description": "아이들과 즐기기 좋은 미로 체험 공간",
+    "openHours": "매일 09:00 - 18:00",
+    "contact": "064-782-9266",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "직원분들도 친절하고 분위기 최고예요.",
+        "author": "박준형",
+        "date": "2024-12-05"
+      }
+    ],
+    "likes": 1306,
+    "images": [""],
+    "tags": ["미로", "체험", "가족", "아이추천", "자연"]
+  },
+  {
+    "id": 72,
+    "placeName": "비자림",
+    "category": 1,
+    "address": "제주특별자치도 구좌읍 비자숲길 55",
+    "description": "천연기념물로 지정된 비자나무 숲",
+    "openHours": "매일 09:00 - 18:00",
+    "contact": "064-783-3857",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "맛도 좋고 분위기도 굿!",
+        "author": "최하나",
+        "date": "2025-04-29"
+      },
+      {
+        "rating": 5,
+        "comment": "사진으로만 보던 풍경이 눈앞에!",
+        "author": "박준형",
+        "date": "2025-02-27"
+      }
+    ],
+    "likes": 464,
+    "images": [""],
+    "tags": ["숲길", "산책", "자연", "힐링", "포레스트"]
+  },
+  {
+    "id": 73,
+    "placeName": "카멜리아힐",
+    "category": 1,
+    "address": "제주특별자치도 서귀포시 안덕면 병악로 166",
+    "description": "동백꽃과 다양한 식물 전시 정원",
+    "openHours": "매일 08:30 - 17:30",
+    "contact": "064-792-0088",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "정말 만족스러웠어요!",
+        "author": "최하나",
+        "date": "2024-11-09"
+      }
+    ],
+    "likes": 999,
+    "images": [""],
+    "tags": ["동백꽃", "정원", "꽃구경", "사진스팟", "데이트"]
+  },
+  {
+    "id": 74,
+    "placeName": "삼대국수회관",
+    "category": 2,
+    "address": "제주특별자치도 연동 261-16",
+    "description": "고기국수로 유명한 국수 맛집",
+    "openHours": "매일 09:30 - 21:00",
+    "contact": "064-746-3001",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "고기국수가 정말 진해요!",
+        "author": "이도현",
+        "date": "2025-01-08"
+      }
+    ],
+    "likes": 1222,
+    "images": [""],
+    "tags": ["식당", "국수", "연동", "고기국수", "가성비"]
+  },
+  {
+    "id": 75,
+    "placeName": "올래국수",
+    "category": 2,
+    "address": "제주특별자치도 삼도2동 1056-1",
+    "description": "제주식 멸치국수가 인기인 맛집",
+    "openHours": "매일 09:00 - 20:30",
+    "contact": "064-753-0000",
+    "reviews": [
+      {
+        "rating": 4,
+        "comment": "간단하고 맛있는 한끼!",
+        "author": "정예린",
+        "date": "2025-03-16"
+      }
+    ],
+    "likes": 842,
+    "images": [""],
+    "tags": ["식당", "멸치국수", "제주식", "현지인추천", "전통맛"]
+  },
+  {
+    "id": 76,
+    "placeName": "해오름식당",
+    "category": 2,
+    "address": "제주특별자치도 서귀포시 표선면 표선해안로 533",
+    "description": "갈치조림과 고등어구이가 맛있는 식당",
+    "openHours": "매일 10:00 - 20:00",
+    "contact": "064-787-1253",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "생선 요리가 정말 신선해요!",
+        "author": "윤지우",
+        "date": "2025-04-05"
+      }
+    ],
+    "likes": 1530,
+    "images": [""],
+    "tags": ["식당", "해산물", "갈치조림", "표선", "밥집"]
+  },
+  {
+    "id": 77,
+    "placeName": "춘자멸치국수",
+    "category": 2,
+    "address": "제주특별자치도 도남로 75",
+    "description": "멸치국수 하나로 유명해진 집",
+    "openHours": "매일 09:00 - 20:00",
+    "contact": "064-702-4444",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "깔끔하고 개운한 국물 맛!",
+        "author": "민준오빠",
+        "date": "2025-01-19"
+      }
+    ],
+    "likes": 690,
+    "images": [""],
+    "tags": ["국수", "멸치", "도남동", "로컬맛집", "단골"]
+  },
+  {
+    "id": 78,
+    "placeName": "동문시장",
+    "category": 2,
+    "address": "제주특별자치도 관덕로14길 20",
+    "description": "제주 대표 전통시장, 다양한 먹거리와 기념품",
+    "openHours": "매일 07:00 - 21:00",
+    "contact": "064-752-3001",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "먹거리 천국이에요!",
+        "author": "조서윤",
+        "date": "2025-02-12"
+      }
+    ],
+    "likes": 1980,
+    "images": [""],
+    "tags": ["시장", "먹거리", "관광", "기념품", "현지체험"]
+  }
+
+]
 }
