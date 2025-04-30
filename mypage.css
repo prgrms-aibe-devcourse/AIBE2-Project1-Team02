@@ -1,114 +1,133 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: 'Noto Sans KR', sans-serif;
     margin: 0;
     padding: 0;
-    font-size: 18px;
-    /* 기본 폰트 사이즈 확대 */
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #ffffff;
+    color: #333;
+}
+
+.inner {
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 40px;
 }
 
 .whose-profile {
-    margin-top: 30px;
-    margin-left: 20px;
-    font-size: 32px;
-    font-weight: 800;
+    font-size: 36px;
+    font-weight: 900;
+    margin-bottom: 30px;
 }
 
 .profile-section {
     display: flex;
     align-items: center;
+    gap: 40px;
+    background: #fff;
     padding: 30px;
-    position: relative;
+    border-radius: 20px;
 }
 
 .profile-image {
-    width: 180px;
-    height: 180px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #eee;
 }
 
 .profile-info {
-    margin-left: 50px;
+    flex: 1;
 }
 
 .username {
     font-size: 28px;
-    font-weight: 800;
-    margin: 0;
+    font-weight: 700;
+    margin-bottom: 10px;
 }
 
 .userid {
-    display: block;
-    font-size: 20px;
-    color: gray;
-    margin-top: 6px;
+    font-size: 18px;
+    color: #888;
 }
 
 .stats {
     display: flex;
-    gap: 100px;
-    margin-top: 20px;
-}
-
-.stats div {
-    text-align: left;
-    font-size: 20px;
-    font-weight: 900; 
-    color: #555;
+    gap: 50px;
+    margin-top: 15px;
 }
 
 .stats div strong {
     display: block;
-    font-weight: 900; 
-    color: #111;
-    margin-bottom: 4px;
+    font-size: 24px;
+    font-weight: 900;
+    color: #222;
 }
 
-
-.profile-message {
-    margin-top: 20px;
-    margin-left: 20px;
-    font-size: 20px;
-    font-weight: 800;
+.stats div {
+    font-size: 16px;
+    color: #666;
 }
 
 .edit-profile {
-    position: absolute;
-    right: 30px;
-    top: 30px;
-    padding: 10px 20px;
-    background-color: #eee;
+    padding: 10px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: gray;
+    color: white;
     border: none;
-    border-radius: 20px;
+    border-radius: 12px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-profile:hover {
+    background-color: #3730a3;
+}
+
+.profile-message {
+    margin: 30px 0;
     font-size: 18px;
-    font-weight: 900;
+    font-weight: 600;
+    color: #555;
 }
 
 .tour-section {
-    padding: 30px 20px;
+    margin-top: 40px;
+}
+
+.tour-section h3 {
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 20px;
+    color: #111;
 }
 
 .tour-list {
     display: flex;
-    gap: 30px;
     flex-wrap: wrap;
-    margin-top: 25px;
+    gap: 60px;
+    justify-content: flex-start;
 }
 
 .tour-card {
-    position: relative;
     width: 300px;
     height: 360px;
-    background-color: white;
-    border-radius: 10px;
+    position: relative;
+    background: white;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: width 0.5s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+    transition: all 0.3s ease;
     cursor: pointer;
 }
 
 .tour-card:hover {
-    width: 600px; /* 사진 + info 총 너비 */
+    width: 600px;
+    z-index: 10;
 }
 
 .tour-image {
@@ -121,38 +140,22 @@ body {
     z-index: 1;
 }
 
-.favorite-button {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 50%;
-    padding: 10px;
-    cursor: pointer;
-    z-index: 2;
-    font-size: 20px;
-}
-
 .tour-info {
     position: absolute;
     top: 0;
     left: 300px;
     width: 300px;
     height: 100%;
-    background: white;
-    padding: 24px 20px;
+    background: #f9f9f9;
+    padding: 24px;
     box-sizing: border-box;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.3s ease;
     z-index: 2;
-
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-start;
-    text-align: right;
-    overflow: hidden;
+    justify-content: center;
+    gap: 10px;
 }
 
 .tour-card:hover .tour-info {
@@ -160,77 +163,89 @@ body {
 }
 
 .tour-info h4 {
-    font-size: 26px;          /* 제목 큼직하게 */
+    font-size: 22px;
     font-weight: 900;
     margin: 0;
-    margin-bottom: 8px;
     color: #222;
 }
 
 .tour-date {
-    font-size: 18px;          /* 날짜도 큼직하지만 강조 약하게 */
-    color: #888;
-    margin-bottom: 20px;
+    font-size: 16px;
+    color: #666;
+    margin: 0;
 }
 
 .tour-plan {
-    font-size: 16px;          /* 일정 내용은 적절한 크기로 */
+    list-style: disc;
+    padding-left: 20px;
+    margin: 0;
+    color: #888;
+    font-size: 15px;
     line-height: 1.6;
-    max-height: 180px;
-
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 5;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: #444;
 }
 
-.tour-card:hover .tour-info {
-    opacity: 1;
+.calendar-icon {
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+    cursor: pointer;
+    vertical-align: middle;
 }
 
-.inner {
-    width: 100%;
-    max-width: 1800px;
-    margin: 0 auto;
+.calendar-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
     padding: 20px;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-@media (max-width: 480px) {
-    .inner {
-        padding: 10px;
-    }
+.calendar-modal.active {
+    display: block;
+}
 
-    .tour-card {
-        width: 100% !important;
-    }
+.calendar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+}
 
-    .tour-card:hover {
-        width: 100% !important;
-    }
-
-    .tour-info {
-        position: relative;
-        left: 0;
-        width: 100%;
-        opacity: 1;
-    }
-
-    .tour-card:hover .tour-info {
-        opacity: 1;
-    }
+.calendar-overlay.active {
+    display: block;
 }
 
 @media (max-width: 1024px) {
-    .inner {
-        max-width: 700px;
+    .tour-card {
+        width: 100%;
     }
 }
 
 @media (max-width: 768px) {
-    .inner {
-        max-width: 100%;
-        padding: 15px;
+    .profile-section {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .stats {
+        justify-content: center;
+    }
+
+    .tour-list {
+        flex-direction: column;
+    }
+
+    .tour-card {
+        width: 100%;
     }
 }
