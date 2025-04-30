@@ -9,8 +9,11 @@ li {
 
 #stepBox {
   border: 1px solid red;
-  width: 10%;
   float: left;
+  display: flex;
+  flex-direction: column; /* 탭 버튼 세로 정렬 */
+  margin-bottom: 20px; /* 버튼들 간의 여백 */
+  gap: 10px; /* 버튼들 간의 간격 */
 }
 #tab1 {
   border: 1px solid pink;
@@ -63,7 +66,7 @@ li {
 /* step 전체 박스 */
 #stepBox {
   /*display: flex;*/
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   /*gap: 12px;*/
   /*margin: 20px 0;*/
@@ -74,6 +77,7 @@ li {
   flex: 1;
   min-width: 120px;
   max-width: 150px;
+  max-height: 60px;
   background-color: #f9f9f9;
   border: 2px solid #ddd;
   border-radius: 12px;
@@ -103,18 +107,6 @@ li {
   background-color: #ff5a5f;
   color: #fff;
   border-color: #ff5a5f;
-}
-
-/* 반응형 대응 */
-@media (max-width: 480px) {
-  #stepBox {
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .tab {
-    flex: 1 1 45%;
-  }
 }
 
 #scheduleContainer {
@@ -448,8 +440,9 @@ li {
 }
 
 #tab2Title,
-#tab2SubTitle {
-  color: #282828;
+#tab2SubTitle,
+#tab3Title,
+#tab3SubTitle {
   display: flex;
   flex-direction: column; /* 세로 방향으로 배치 */
   gap: 20px; /* areaName과 dateRange 사이 간격 */
@@ -471,8 +464,7 @@ li {
 .area-btn {
   width: calc(45% - 20px); /* 버튼의 너비를 50%로 설정하고 간격을 고려 */
   padding: 12px;
-  background-color: #f0f0f0; /* 밝은 회색 배경 */
-  border: 1px solid #b0b0b0; /* 얇은 테두리 추가 */
+  border: 2.5px solid #ccc;
   border-radius: 30px; /* 둥근 모서리 */
   color: #282828; /* 어두운 회색 글씨 */
   font-size: 16px;
@@ -547,10 +539,6 @@ li {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
-
-.calendar-modal button:hover {
-  background-color: #45a049;
 }
 
 /* 달력부분 */
@@ -855,6 +843,7 @@ li {
   transform: translateY(24px) translateX(-8px); /* 아래로 8px, 왼쪽으로 4px 이동 */
 }
 
+
 #main-container {
   display: flex;
   height: 100vh;
@@ -879,4 +868,294 @@ li {
 #map {
   width: 100%;
   height: 100%;
+}
+/* ----------------------------------------------------------------------------- */
+/* tab4 전체 레이아웃 */
+/* 탭4 전체 레이아웃 */
+/* 탭 콘텐츠 영역 */
+
+/* 전체 화면을 차지하는 부모 요소들 */
+#container,
+#stepBox {
+  height: 100vh; /* 부모 요소들을 화면 높이에 맞게 설정 */
+}
+
+/* #tab4는 화면의 세로 크기를 꽉 차게 설정 */
+#tab4 {
+  display: flex;
+  flex-direction: row; /* 간단정보, 상세정보, 지도 영역을 가로로 배치 */
+  gap: 10px; /* 영역 간의 간격 */
+  height: 100%; /* 세로 크기 꽉 차게 설정 */
+  align-items: stretch; /* flex 아이템들이 세로로 늘어나게 설정 */
+  box-sizing: border-box; /* 경계선 포함하여 크기 계산 */
+}
+
+/* 중앙: 상세 정보 (클릭 시 표시) */
+/* 상세 정보 컨테이너 */
+#scheduleDetails {
+  flex: 0 0 18%;
+  box-sizing: border-box;
+  box-shadow: 6px 0 12px rgba(0, 0, 0, 0.1);
+  padding-right: 10px;
+}
+
+/* 날짜 제목 */
+.details-date {
+  font-size: 50px;
+  font-weight: bold;
+  margin-bottom: 50px;
+  margin-top: 30px;
+  color: #282828;
+}
+
+/* 각 장소의 상세 정보 박스 */
+.place-detail {
+  border: 2.5px solid #ccc;
+  border-radius: 18px;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+
+/* Hover 효과 */
+.place-detail:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* 축소된 상태 (작은 원형 이미지와 장소 이름) */
+.place-detail.collapsed .collapsed-summary {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.place-detail .collapsed-summary .thumbnail-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 0.5px solid #ccc;
+}
+
+.place-detail .collapsed-summary .place-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #666666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 120px;
+}
+
+/* 확장된 상태 (Instagram 스타일) */
+.place-detail.expanded {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+/* 확장된 모드의 큰 이미지 */
+.place-detail.expanded .main-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 0.5px solid #ddd;
+  margin-bottom: 5px;
+}
+
+/* 텍스트 정보 */
+.place-detail #place-detail-name {
+  font-size: 25px;
+  color: #6e6e6e;
+  font-weight: bold;
+}
+
+.place-detail-info {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.place-detail-info p {
+  font-size: 13px;
+  color: #797979;
+}
+
+.place-detail #place-detail-address {
+  font-size: 10px;
+  color: #797979;
+  font-weight: bold;
+}
+
+.section-divider {
+  height: 2px;
+  background-color: #6e6e6e;
+  margin-top: 3px;
+  margin-bottom: 5px;
+}
+
+#place-detail-description {
+  font-size: 14px;
+  color: #666666;
+  font-weight: bold;
+  margin-bottom: 60px;
+}
+.place-detail-feedback {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  color: #ff6b81;
+  margin-bottom: 2px;
+  font-weight: bold;
+}
+.place-detail-feedback span:last-child {
+  color: #f1c40f;
+}
+.place-detail i {
+  color: #797979;
+  margin-right: 6px;
+}
+.place-order {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #797979;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 8px;
+  transform: translate(-5px, 15px);
+}
+
+/* 오른쪽: 지도 영역 (빈 공간으로 유지) */
+#scheduleMapPanel {
+  flex: 1; /* 지도 영역은 나머지 공간을 차지 */
+  max-width: 600px; /* 지도 크기를 적당하게 제한 */
+  padding-left: 10px; /* 경계선과 내용 간 간격 */
+  height: 100%; /* 세로로 꽉 차게 */
+  box-sizing: border-box; /* 경계선 포함 */
+}
+
+/* 왼쪽: 간단 정보 (날짜 목록) */
+#scheduleSummary {
+  flex: 0 0 20; /* 간단 정보 영역, 전체 너비의 20%만 차지 */
+  border-right: 1px solid #ccc; /* 간단 정보와 상세 정보 구분을 위한 경계선 */
+  height: 100%; /* 세로로 꽉 차게 */
+  box-sizing: border-box; /* 경계선 포함 */
+  display: flex; /* 플렉스 컨테이너로 설정 */
+  flex-direction: column; /* 버튼들을 세로로 정렬 */
+}
+
+/* 각 날짜 요약 박스 스타일 */
+.custom-date-box {
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: #ffffff;
+  margin-bottom: 30px;
+}
+
+.custom-date-box:hover {
+  background-color: #f0f0f0;
+  border-color: #999;
+}
+
+.custom-date-box.active {
+  border-color: #282828;
+  background-color: #f0f0f0;
+}
+
+/* 내부 텍스트 스타일 */
+.custom-date-box h4 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.custom-date-box p {
+  margin: 4px 0;
+  color: #555;
+  font-size: 14px;
+}
+#day-number {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+#day-date {
+  font-size: 12px;
+  color: #888;
+}
+
+/* 점선 */
+/* 토글 박스 사이 연결 점선 박스 */
+.connector-line-box {
+  display: flex;
+  align-items: center; /* 수직 중앙 정렬 */
+  justify-content: flex-start; /* 왼쪽 정렬 */
+  margin-top: 10px;
+  height: 60px; /* 점선의 높이를 포함하는 높이 */
+  margin-left: 50px;
+}
+
+.dotted-line {
+  width: 3px; /* 선 굵기 */
+  height: 100%; /* 부모 요소의 높이에 맞게 */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    #d6d6d6 0%,
+    #d6d6d6 6px,
+    /* 점 */ transparent 6px,
+    transparent 12px /* 점과 점 사이 간격 */
+  );
+  margin-right: 20px; /* 점선과 아이콘 사이의 간격 */
+}
+
+.route-link {
+  display: flex;
+  align-items: center;
+}
+
+.route-link a {
+  display: flex;
+  align-items: center;
+  color: #333;
+  text-decoration: none;
+}
+
+.route-link i {
+  margin-right: 8px;
+  font-size: 18px;
+  color: #666666;
+}
+.route-link a:hover i {
+  color: #007bff;
+}
+.route-link a:hover {
+  color: #007bff;
+}
+
+#scheduleSummaryTitle {
+  margin-left: 20px; /* 왼쪽 여백 */
+  margin-top: 20px;
+}
+
+#scheduleSummaryRange {
+  color: #282828;
+  margin-bottom: 60px;
+  margin-left: 20px; /* 왼쪽 여백 */
+  margin-top: 20px;
 }

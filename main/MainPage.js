@@ -67,9 +67,17 @@ document.querySelectorAll(".tab").forEach((btn) => {
       .querySelectorAll(".tabContent")
       .forEach((c) => (c.style.display = "none"));
     const target = document.getElementById(btn.dataset.tab);
-    target.style.display = "block";
+
+    // 여기서 btn.dataset.tab은 문자열임
+    if (btn.dataset.tab === "tab4") {
+      target.style.display = "flex";
+      tab4Handler(); // 여기가 실행되도록 수정됨
+    } else {
+      target.style.display = "block";
+    }
   });
 });
+
 document.addEventListener("DOMContentLoaded", () => {
   // 페이지 데이터 로딩 및 더보기 버튼 처리
   loadFestivalData(currentPage);
@@ -122,7 +130,6 @@ document.addEventListener("DOMContentLoaded", () => {
       event.target.classList.add("active"); // 클릭한 버튼에 active 클래스 추가
     });
   });
-
   // 상세정보 모달 처리
   modalHandler();
   // 달력 모달 처리
@@ -258,13 +265,15 @@ function loadFestivalData(page = 1) {
             const deleteBtn = newLi.querySelector(".deletePlace");
             deleteBtn.addEventListener("click", () => {
               newLi.remove();
-              filteredItems = filteredItems.filter(item => {
+              filteredItems = filteredItems.filter((item) => {
                 return item.id != newLi.dataset.id;
               });
             });
 
             // item filtering
-            let filteredItem = pagedItems.filter(item => { return item.id == placeItem.dataset.id; });
+            let filteredItem = pagedItems.filter((item) => {
+              return item.id == placeItem.dataset.id;
+            });
             filteredItems.push(filteredItem[0]);
             return;
           }
@@ -315,6 +324,23 @@ function loadFestivalData(page = 1) {
       list.innerHTML = `<li>데이터 불러오기 실패: ${err.message}</li>`;
       console.error("API 호출 오류:", err);
     });
+  document
+    .getElementById("makeSchedule")
+    .addEventListener("click", function () {
+      const selectedPlaces = document.getElementById("selectedPlaces");
+      const tab4Button = document.querySelector('[data-tab="tab4"]');
+
+      // selectedPlaces에 아이템이 있는지 확인
+      if (selectedPlaces.children.length === 0) {
+        // 리스트가 비어 있으면 tab4 버튼 숨기기
+        tab4Button.style.display = "none"; // tab4 버튼 숨기기
+        alert("리스트에 아이템이 없습니다. 먼저 장소를 추가해주세요.");
+      } else {
+        // 리스트에 아이템이 있으면 tab4 버튼 보이기
+        tab4Button.style.display = "inline-block"; // tab4 버튼 보이기
+        tab4Button.click();
+      }
+    });
 }
 // 추가 상세정보 (모달의 내용)
 function handleLocationDetail(data) {
@@ -330,8 +356,8 @@ function handleLocationDetail(data) {
 
   placeNameEl.textContent = data.placeName || "정보 없음";
   data.image.forEach((image) => {
-    let newLi = document.createElement('li');
-    newLi.className = 'splide__slide';
+    let newLi = document.createElement("li");
+    newLi.className = "splide__slide";
     newLi.innerHTML = `<img src = ${image} alt="${data.placeName}"/>`;
     slider.appendChild(newLi);
   });
@@ -340,8 +366,8 @@ function handleLocationDetail(data) {
   operationHoursEl.textContent = data.operationHours || "운영 시간 정보 없음";
   descriptionEl.textContent = data.description || "상세 정보 없음";
   reviews.innerHTML = "";
-  data.reviews.forEach(item => {
-    let newLi = document.createElement('li');
+  data.reviews.forEach((item) => {
+    let newLi = document.createElement("li");
     newLi.innerHTML = `<div>⭐️${item.rating}</div>
                     <div>${item.comment}</div>
                     <div>${item.author} | ${item.date}</div>`;
@@ -349,16 +375,15 @@ function handleLocationDetail(data) {
     reviews.appendChild(newLi);
   });
 
-  new Splide('#travel-slider', {
-    type: 'loop',      // 무한 반복
-    perPage: 1,        // 한 번에 1개 보여줌
-    autoplay: true,    // 자동 재생
-    interval: 3000,    // 3초 간격
+  new Splide("#travel-slider", {
+    type: "loop", // 무한 반복
+    perPage: 1, // 한 번에 1개 보여줌
+    autoplay: true, // 자동 재생
+    interval: 3000, // 3초 간격
     pauseOnHover: true, // 마우스 올리면 멈춤
-    arrows: true,      // 좌우 버튼 표시
-    pagination: true,  // 하단 점 네비게이션 표시
+    arrows: true, // 좌우 버튼 표시
+    pagination: true, // 하단 점 네비게이션 표시
   }).mount();
-
 
   // 모달 열기
   modal.classList.remove("hidden");
@@ -441,12 +466,25 @@ function updateCalendarInfo() {
   const calendarIcon = document.getElementById("calendarIcon");
   const selectedDatesList = document.getElementById("selectedDatesList");
   const timeConfirmBtn = document.getElementById("timeConfirmBtn");
+  //탭 2영역
+  const tab2TitleEl = document.getElementById("tab2Title");
+  const tab2SubTitleEl = document.getElementById("tab2SubTitle");
+
+  //탭 3영역
+  const tab3TitleEl = document.getElementById("tab3Title");
+  const tab3SubTitleEl = document.getElementById("tab3SubTitle");
 
   if (selectedAreaCode !== "") {
     const areaName = findAreaNameByCode(selectedAreaCode);
     if (areaName) {
       areaNameElement.textContent = areaName;
+      tab2TitleEl.textContent = areaName;
+      tab3TitleEl.textContent = areaName;
     }
+  } else {
+    areaNameElement.textContent = "여행 일정";
+    tab2TitleEl.textContent = "여행 일정";
+    tab3TitleEl.textContent = "여행 일정";
   }
 
   if (selectedStartDate && selectedEndDate) {
@@ -454,11 +492,27 @@ function updateCalendarInfo() {
       selectedStartDate
     )} ~ ${formatDateForRange(selectedEndDate)}`;
     calendarIcon.style.display = "inline";
+
+    tab2SubTitleEl.textContent = `${formatDateForRange(
+      selectedStartDate
+    )} ~ ${formatDateForRange(selectedEndDate)}`;
+
+    tab3SubTitleEl.textContent = `${formatDateForRange(
+      selectedStartDate
+    )} ~ ${formatDateForRange(selectedEndDate)}`;
   } else {
     dateRangeElement.textContent = `${formatDateForRange(
       today
     )} ~ ${formatDateForRange(today)}`;
     calendarIcon.style.display = "inline";
+
+    tab2SubTitleEl.textContent = `${formatDateForRange(
+      today
+    )} ~ ${formatDateForRange(today)}`;
+
+    tab3SubTitleEl.textContent = `${formatDateForRange(
+      today
+    )} ~ ${formatDateForRange(today)}`;
   }
 
   // 날짜별 리스트 초기화
@@ -853,16 +907,6 @@ function findAreaNameByCode(code) {
   }
   return null;
 }
-
-let makeScheduleButton = document.getElementById("makeSchedule");
-makeScheduleButton.addEventListener('click', function(e) {
-  document
-      .querySelectorAll(".tabContent")
-      .forEach((c) => (c.style.display = "none"));
-  const target = document.getElementById("tab4");
-  target.style.display = "block";
-});
-
 // 오늘 날짜를 YYYYMMDD 형식으로 반환하는 함수
 function getTodayDate() {
   const today = new Date();
@@ -886,29 +930,6 @@ function initializeDates() {
   globalStartDate = todayDate;
   globalEndDate = todayDate;
 }
-
-// const searchInput = document.getElementById('search-input');
-// const placeSearchBox = document.getElementById('placeSearchBox');
-// const placeSelectBox = document.getElementById('placeSelectBox');
-// const tagSearchBox = document.getElementById('tagSearchBox');
-//
-// // 초기 상태: placeSearchBox, placeSelectBox는 visible, tagSearchBox는 hidden
-// placeSearchBox.classList.add('visible');
-// placeSelectBox.classList.add('visible');
-// tagSearchBox.classList.add('hidden');
-//
-// searchInput.addEventListener('focus', () => {
-//   placeSearchBox.classList.remove('visible');
-//   placeSearchBox.classList.add('hidden');
-//
-//   placeSelectBox.classList.remove('visible');
-//   placeSelectBox.classList.add('hidden');
-//
-//   tagSearchBox.classList.remove('hidden');
-//   tagSearchBox.classList.add('visible');
-// });
-
-
 const searchInput = document.getElementById("search-input");
 const tagSearchBtn = document.getElementById("tag-search-btn");
 const tagBox = document.getElementById("tagSearchBox");
@@ -946,3 +967,265 @@ document.addEventListener("mousedown", (e) => {
 tagSearchBtn.addEventListener('click', (e) => {
   hideTagBox();
 })
+// 탭4 클릭 시 로컬스토리지 데이터 불러오기
+function tab4Handler() {
+  // 로컬스토리지에서 여행 일정 데이터 가져오기
+  const travelScheduleData = localStorage.getItem("travelSchedule");
+
+  if (!travelScheduleData) {
+    console.error("여행 일정 데이터를 찾을 수 없습니다.");
+    return;
+  }
+
+  try {
+    const travelSchedule = JSON.parse(travelScheduleData);
+
+    // 날짜 요약 영역 초기화
+    const scheduleSummary = document.getElementById("scheduleSummary");
+    scheduleSummary.innerHTML = '<h1 id="scheduleSummaryTitle">여행 일정</h1>';
+
+    // ✅ 시작일과 종료일 추출 후 <h3> 태그 추가
+    if (travelSchedule.Item && travelSchedule.Item.length > 0) {
+      const startDate = new Date(travelSchedule.Item[0].Date);
+      const endDate = new Date(
+        travelSchedule.Item[travelSchedule.Item.length - 1].Date
+      );
+
+      const days = ["일", "월", "화", "수", "목", "금", "토"];
+      const formatDateWithDay = (dateObj) => {
+        const yyyy = dateObj.getFullYear();
+        const mm = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+        const dd = dateObj.getDate().toString().padStart(2, "0");
+        const day = days[dateObj.getDay()];
+        return `${yyyy}.${mm}.${dd}(${day})`;
+      };
+
+      const dateRangeHTML = `<h3 id="scheduleSummaryRange">${formatDateWithDay(
+        startDate
+      )} ~ ${formatDateWithDay(endDate)}</h3>`;
+      scheduleSummary.innerHTML += dateRangeHTML;
+    }
+
+    if (!travelSchedule.Item || travelSchedule.Item.length === 0) {
+      scheduleSummary.innerHTML += "<p>등록된 일정이 없습니다.</p>";
+      return;
+    }
+
+    // 날짜 박스 생성
+    travelSchedule.Item.forEach((item, scheduleIndex) => {
+      const dateBoxElement = document.createElement("div");
+      dateBoxElement.className = "custom-date-box"; // 박스 요소의 클래스명 변경
+
+      // 날짜 형식 변환 (YYYY.MM.DD(요일) 형식)
+      const customDateObject = new Date(item.Date);
+      const formattedCustomDate = `${customDateObject.getFullYear()}.${(
+        customDateObject.getMonth() + 1
+      )
+        .toString()
+        .padStart(2, "0")}.${customDateObject
+        .getDate()
+        .toString()
+        .padStart(2, "0")} (${
+        ["일", "월", "화", "수", "목", "금", "토"][customDateObject.getDay()]
+      })`;
+      // "1일차 yyyy.mm.dd(요일)" 한 줄 출력 구성
+      const dayHeader = document.createElement("div");
+
+      // 1일차 (굵고 큼)
+      const dayNumber = document.createElement("span");
+      dayNumber.id = "day-number";
+      dayNumber.textContent = `${scheduleIndex + 1}일차 `;
+
+      // yyyy.mm.dd(요일) (작고 흐림)
+      const dayDate = document.createElement("span");
+      dayDate.id = "day-date";
+      dayDate.textContent = formattedCustomDate;
+
+      // 조립해서 dateBox에 삽입
+      dayHeader.appendChild(dayNumber);
+      dayHeader.appendChild(dayDate);
+      dateBoxElement.appendChild(dayHeader);
+
+      // 장소 이름들 모아서 출력
+      const customPlacesLabel = document.createElement("p");
+      let placeNamesList = "장소 정보 없음";
+
+      if (Array.isArray(item.Places) && item.Places.length > 0) {
+        placeNamesList = item.Places.join(", ");
+      }
+
+      customPlacesLabel.textContent = `${placeNamesList}`;
+      dateBoxElement.appendChild(customPlacesLabel);
+
+      // 날짜 박스 클릭 이벤트 - 상세 정보 표시
+      dateBoxElement.addEventListener("click", function () {
+        // 모든 박스에서 active 클래스 제거
+        document.querySelectorAll(".custom-date-box").forEach((box) => {
+          box.classList.remove("active");
+        });
+
+        // 현재 박스에 active 클래스 추가
+        this.classList.add("active");
+
+        // 상세 정보 영역 확장
+        const scheduleDetailsElement =
+          document.getElementById("scheduleDetails");
+        scheduleDetailsElement.classList.add("expanded");
+
+        // 상세 정보 표시
+        const itemIndex = scheduleIndex; // 현재 클릭된 날짜의 인덱스
+        showScheduleDetails(travelSchedule.Item[itemIndex]);
+      });
+
+      scheduleSummary.appendChild(dateBoxElement);
+    });
+
+    // 첫번째 날짜 자동 선택 (있다면)
+    if (travelSchedule.Item.length > 0) {
+      const firstDateBoxElement =
+        scheduleSummary.querySelector(".custom-date-box");
+      if (firstDateBoxElement) {
+        firstDateBoxElement.click();
+      }
+    }
+  } catch (error) {
+    console.error("여행 일정 데이터 처리 중 오류가 발생했습니다:", error);
+  }
+}
+
+// 일정 상세 정보 표시 함수
+async function showScheduleDetails(daySchedule) {
+  const scheduleDetails = document.getElementById("scheduleDetails");
+  const res = await fetch(jsonFilePath);
+  const listData = await res.json();
+
+  const dateObj = new Date(daySchedule.Date);
+
+  // 연도는 두 자리만 추출
+  const year = dateObj.getFullYear().toString().slice(2); // '2024' -> '24'
+  // 월과 일은 두 자리로 포맷
+  const month = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+  const day = dateObj.getDate().toString().padStart(2, "0");
+
+  // "24.04.01" 형식으로 출력
+  const formattedDate = `${year}.${month}.${day}`;
+
+  let detailsHTML = `<div class="details-date">${formattedDate}</div>`;
+
+  if (daySchedule.Places && daySchedule.Places.length > 0) {
+    const places = daySchedule.Places;
+
+    for (let i = 0; i < places.length; i++) {
+      const placeName = places[i];
+      const matched = listData.items.find(
+        (item) => item.placeName === placeName
+      );
+
+      if (matched) {
+        const thumbnail = matched.images[0];
+
+        // 토글 박스
+        detailsHTML += `
+          <span class="place-order">${i + 1}</span>
+          <div class="place-detail collapsed">
+            <div class="collapsed-summary">
+              <img src="${thumbnail}" alt="${
+          matched.placeName
+        }" class="thumbnail-image" />
+              <span class="place-name">${matched.placeName}</span>
+            </div>
+            <div class="detail-content" style="display: none;">
+              <div class="images">
+                <img src="${matched.images[0]}" alt="${
+          matched.placeName
+        }" class="main-image" />
+              </div>
+              <div class="place-detail-info">
+                <div class="place-detail-feedback">
+                  <span>🩷 ${matched.likes}</span>
+                  <span>⭐ 미정</span>
+                </div>
+                <p id="place-detail-name">${matched.placeName}</p>
+                <p id="place-detail-address">${matched.address}</p>
+                <div class="section-divider"></div>
+                <p id="place-detail-description">${matched.description}</p>
+                <p><i class="bi bi-clock"></i>  ${matched.openHours}</p>
+                <p><i class="bi bi-telephone"></i>  ${matched.contact}</p>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // 🔽 점선 박스와 경로 보기 아이콘 추가 (마지막 박스 뒤에는 추가하지 않음)
+        // 점선 및 경로 링크 추가
+        if (i < places.length - 1) {
+          const nextPlaceName = places[i + 1];
+          const nextMatched = listData.items.find(
+            (item) => item.placeName === nextPlaceName
+          );
+
+          let routeLink = "";
+          if (nextMatched) {
+            const sName = encodeURIComponent(matched.address);
+            const eName = encodeURIComponent(nextMatched.address);
+            const routeUrl = `https://map.kakao.com/?sName=${sName}&eName=${eName}`;
+
+            routeLink = `
+      <div class="connector-line-box">
+        <div class="dotted-line"></div>
+        <div class="route-link">
+          <a href="${routeUrl}" target="_blank">
+            <i class="bi bi-car-front-fill"></i> 경로 보기
+          </a>
+        </div>
+      </div>
+    `;
+          }
+
+          detailsHTML += routeLink;
+        }
+      } else {
+        detailsHTML += `<p>${placeName} - 상세 정보 없음</p>`;
+      }
+    }
+  } else {
+    detailsHTML += "<p>등록된 장소가 없습니다.</p>";
+  }
+
+  scheduleDetails.innerHTML = detailsHTML;
+
+  // ✅ 클릭 시 박스 확장/축소 토글 (하나만 열리도록 변경)
+  scheduleDetails.querySelectorAll(".place-detail").forEach((box) => {
+    box.addEventListener("click", () => {
+      const detailContent = box.querySelector(".detail-content");
+      const collapsedSummary = box.querySelector(".collapsed-summary");
+
+      // 모든 박스에서 확장 상태를 초기화
+      scheduleDetails.querySelectorAll(".place-detail").forEach((otherBox) => {
+        if (otherBox !== box) {
+          otherBox.classList.remove("expanded");
+          otherBox.classList.add("collapsed");
+          const otherDetailContent = otherBox.querySelector(".detail-content");
+          const otherCollapsedSummary =
+            otherBox.querySelector(".collapsed-summary");
+          otherDetailContent.style.display = "none";
+          otherCollapsedSummary.style.display = "flex";
+        }
+      });
+
+      // 현재 박스 상태 토글
+      box.classList.toggle("expanded");
+      box.classList.toggle("collapsed");
+
+      if (box.classList.contains("expanded")) {
+        // 확장되면 상세 정보를 보이게
+        detailContent.style.display = "block";
+        collapsedSummary.style.display = "none";
+      } else {
+        // 축소되면 상세 정보를 숨기고 요약만 보이게
+        detailContent.style.display = "none";
+        collapsedSummary.style.display = "flex";
+      }
+    });
+  });
+}
