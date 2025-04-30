@@ -16,13 +16,28 @@
     />
     <!-- //부트스트랩 -->
     <!-- splide -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.3/dist/css/splide.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.3/dist/css/splide.min.css"
+    />
     <!-- //splide -->
     <!-- map -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=510b624b2b131b82ad7aee34c7864031&libraries=services"></script>
   </head>
   <body>
     <div id="main-container">
+    <!-- js-datepicker -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <!-- //js-datepicker -->
+  </head>
+  <body>
+    <div id="container" class="tabContainer">
       <div id="stepBox">
         <button class="tab" data-tab="tab1">01. <br />날짜 선택</button>
         <button class="tab" data-tab="tab2">02. <br />지역 선택</button>
@@ -85,8 +100,8 @@
           </div>
         </div>
         <div id="tab2" class="tabContent" style="display: none">
-          <h1 id="tab2Title">여행 일정</h1>
-          <h2 id="tab2SubTitle">어디로 떠나고 싶으신가요?</h2>
+          <h1 id="tab2Title"></h1>
+          <h3 id="tab2SubTitle"></h3>
           <div class="area-btn-container">
             <button class="area-btn" data-value="all">전체</button>
             <button class="area-btn" data-value="1">서울</button>
@@ -109,6 +124,8 @@
           </div>
         </div>
         <div id="tab3" class="tabContent" style="display: none">
+          <h1 id="tab3Title"></h1>
+          <h3 id="tab3SubTitle"></h3>
           <div id="tagSearchBox" class="slide-box hidden">
             <input type="text" id="tag-input" placeholder="태그로 검색" />
             <button id="tag-search-btn"><i class="bi bi-search"></i></button>
@@ -160,24 +177,36 @@
             <button id="makeSchedule" style="float: right">일정 만들기</button>
           </div>
         </div>
-        <div id="tab4" class="tabContent" style="display: none">일정 확인</div>
-      </div>
+        <div id="tab4" class="tabContent" style="display: none">
+        <!-- 왼쪽: 간단 정보 (날짜 목록) -->
+          <div id="scheduleSummary">
+          <!-- 여기에 날짜 버튼들이 JavaScript에 의해 동적으로 추가됩니다 -->
+          </div>
 
+        <!-- 중앙: 상세 정보 (클릭 시 표시) -->
+          <div id="scheduleDetails" class="collapsed">
+          <!-- 이 부분은 날짜를 클릭할 때 JS에 의해 채워집니다 -->
+          </div>
+
+        <!-- 오른쪽: 지도 영역 (빈 공간으로 유지) -->
+          <div id="scheduleMapPanel">
+            <div id="map">[ 지도 영역 ]</div>
+          </div>
+        </div>
+      </div>
       <div id="map-container">
         <div id="map" style="width:100%;height:100vh;"></div>
       </div>
-
 
       <!-- 모달 -->
       <div id="festival-modal" class="hidden">
         <div class="modal-content">
           <div class="modal-content-left">
             <button class="close-button">&times;</button>
-<!--            <img id="modal-image" src="" alt="" />-->
+            <!--            <img id="modal-image" src="" alt="" />-->
             <div id="travel-slider" class="splide">
               <div class="splide__track">
-                <ul id="image_slider" class="splide__list">
-                </ul>
+                <ul id="image_slider" class="splide__list"></ul>
               </div>
             </div>
             <h2 id="modal-placeName"></h2>
@@ -195,7 +224,7 @@
           </div>
           <div class="modal-content-right">
             <div>Review</div>
-            <input type="text" placeholder="댓글을 입력해주세요.">
+            <input type="text" placeholder="댓글을 입력해주세요." />
             <ul id="reviews"></ul>
           </div>
         </div>
@@ -203,7 +232,6 @@
       <!-- //모달 -->
     </div>
     <script src="MainPage.js" defer></script>
-    <script src="../config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.3/dist/js/splide.min.js"></script>
     <script>
       // map
