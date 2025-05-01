@@ -30,12 +30,28 @@
   <body>
     <div id="main-container">
       <div id="stepBox">
-        <button class="tab" data-tab="tab1">01. <br />날짜 선택</button>
-        <button class="tab" data-tab="tab2">02. <br />지역 선택</button>
-        <button class="tab" data-tab="tab3">03. <br />장소 선택</button>
+        <!-- 홈버튼 추가 -->
+        <a href="../main.html">
+          <img
+            src="../sidebar/sidebar_img/plane_logo.png"
+            alt="홈"
+            class="sidebar-logo"
+          />
+        </a>
+
+        <!-- 탭 버튼들 -->
+        <button class="tab" data-tab="tab1">STEP 1<br />날짜 선택</button>
+        <button class="tab" data-tab="tab2">STEP 2<br />지역 선택</button>
+        <button class="tab" data-tab="tab3">STEP 3<br />장소 선택</button>
         <button class="tab" data-tab="tab4" id="tab4Btn" style="display: none">
-          04. <br />일정 확인
+          STEP 4<br />일정 확인
         </button>
+
+        <!-- 저장/편집 버튼들 (기본적으로 숨김 처리) -->
+        <div id="tab4-buttons" style="display: none; margin-top: auto">
+          <button id="editButton">편집</button>
+          <button id="saveButton">저장</button>
+        </div>
       </div>
       <div id="tab-container">
         <div id="tab1" class="tabContent">

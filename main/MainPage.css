@@ -56,42 +56,55 @@ li {
 }
 
 #stepBox {
-  width: 8%;
-  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 90px; /* 사이드바와 동일한 너비 */
+  height: 100vh;
+  background-color: #f5f5f5;
+  padding: 1.5rem 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  border: 1px solid red;
-  z-index: 10;
-  box-sizing: border-box;
+  align-items: center;
+  z-index: 1000;
 }
 
-/* 각각의 탭 버튼 */
+/* 탭 버튼 기본 스타일 */
 .tab {
-  background-color: #f9f9f9;
-  border: 2px solid #ddd;
-  border-radius: 12px;
+  background-color: transparent;
+  border: none;
+  outline: none;
   padding: 16px 12px;
   text-align: center;
   font-size: 13px;
   font-weight: 500;
-  color: #555;
+  color: #aaa; /* 비활성 상태의 연한 회색 */
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-  margin-bottom: 10px; /* 버튼 사이 간격 */
-}
-.tab {
+  transition: color 0.3s, font-size 0.3s;
+  margin-bottom: 20px;
   width: 100%;
-  margin-bottom: 15px;
-  min-width: auto;
-  max-width: none;
+}
+.sidebar-logo {
+  width: 70%;
+  margin-bottom: 50px;
+  padding-left: 11px;
+  padding-bottom: 20px;
+  display: block;
+  transition: transform 0.2s ease-in-out;
+}
+
+.sidebar-logo:hover {
+  transform: scale(1.2);
 }
 
 #main-container {
+  margin-left: 80px;
   display: flex;
-  flex-direction: row; /* 가로 배치로 변경 */
+  flex-direction: row;
   height: 100vh;
   width: 100%;
-  overflow: hidden; /* 내용이 넘치지 않도록 */
+  overflow: hidden;
 }
 
 #tab-container {
@@ -101,6 +114,7 @@ li {
   overflow-y: auto;
   transition: width 0.3s ease;
   box-sizing: border-box;
+  margin-left: 10px;
 }
 
 #map-container {
@@ -119,23 +133,16 @@ li {
   box-sizing: border-box;
 }
 
-/* 탭 안에 줄바꿈 텍스트도 깔끔하게 */
-.tab br {
-  display: none;
+/* 활성 탭 스타일 */
+.tab.active {
+  color: #3ec6ec; /* 파란색 */
+  font-size: 16px;
+  font-weight: 600;
 }
 
 /* 마우스 오버 효과 */
 .tab:hover {
-  background-color: #ffeaea;
-  color: #ff5a5f;
-  border-color: #ff5a5f;
-}
-
-/* 선택(active)된 탭 */
-.tab.active {
-  background-color: #ff5a5f;
-  color: #fff;
-  border-color: #ff5a5f;
+  color: #3ec6ec;
 }
 
 #scheduleContainer {
@@ -1026,15 +1033,16 @@ li {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 24px;
-  height: 24px;
+  width: 25px; /* 원 살짝 축소 */
+  height: 25px;
   border-radius: 50%;
-  background-color: #797979;
+  background-color: #797979; /* JS에서 동적으로 덮어씀 */
+  border: 4px solid white; /* 흰색 굵은 테두리 */
+  box-shadow: 0 0 0 2px #ccc; /* 흰 테두리 바깥 회색 외곽선 */
   color: white;
-  font-size: 12px;
+  font-size: 18px; /* 숫자 살짝 축소 */
   font-weight: bold;
-  margin-right: 8px;
-  transform: translate(-5px, 15px);
+  transform: translateY(15px); /* 위치 미세 조정 */
 }
 
 /* 왼쪽: 간단 정보 (날짜 목록) */
@@ -1149,4 +1157,49 @@ li {
   margin-bottom: 60px;
   margin-left: 20px; /* 왼쪽 여백 */
   margin-top: 20px;
+}
+
+/* 저장/편집 버튼 스타일 */
+#tab4-buttons {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  margin-top: auto;
+  padding-bottom: 20px;
+  position: sticky;
+  bottom: 20px;
+}
+
+#tab4-buttons button {
+  width: 80px;
+  margin: 5px 0;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+/* 저장 버튼 */
+#saveButton {
+  background-color: #282828;
+  color: white;
+  border: none;
+  height: 60px;
+}
+
+/* 편집 버튼 */
+#editButton {
+  background-color: white;
+  color: #282828;
+  border: 2px solid #282828;
+}
+
+/* 호버 효과 */
+#saveButton:hover {
+  background-color: #1e1e1e;
+}
+
+#editButton:hover {
+  background-color: #e6d1d3;
 }

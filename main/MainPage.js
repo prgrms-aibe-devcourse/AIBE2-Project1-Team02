@@ -31,8 +31,13 @@ const monthNames = [
 let currentMonth1 = new Date().getMonth(); // 현재 달력1의 월
 let currentYear1 = new Date().getFullYear(); // 현재 달력1의 년도
 
-let currentMonth2 = 4; // 달력2는 5월 (0-based index)
-let currentYear2 = 2025; // 달력2는 2025년
+let currentMonth2 = currentMonth1 + 1;
+let currentYear2 = currentYear1;
+
+if (currentMonth2 > 11) {
+  currentMonth2 = 0;
+  currentYear2++;
+}
 
 let selectedDates = [];
 let selectedStartDate = null;
@@ -65,6 +70,19 @@ const AREA_CODE_MAP = {
   제주도: "39",
   제주특별자치도: "39",
 };
+// 새로고침 경고 알트메세지
+window.addEventListener("beforeunload", function (e) {
+  // 사용자에게 경고 메시지 표시
+  const message =
+    "페이지를 떠나시겠습니까? 변경 사항이 저장되지 않을 수 있습니다.";
+
+  // 표준 방식으로 메시지 설정
+  e.returnValue = message;
+
+  // 일부 브라우저에서는 'returnValue'만 사용하면 경고창을 표시함.
+  return message;
+});
+
 document.querySelectorAll(".tab").forEach((btn) => {
   btn.addEventListener("click", () => {
     // 모든 탭 콘텐츠 숨기기
@@ -98,6 +116,9 @@ function activateTab(tabId) {
   const tabContainer = document.getElementById("tab-container");
   const mapContainer = document.getElementById("map-container");
 
+  // 저장 및 편집 버튼 컨테이너
+  const tab4Buttons = document.getElementById("tab4-buttons");
+
   // 탭 별로 다른 레이아웃 적용
   switch (tabId) {
     case "tab1":
@@ -105,6 +126,7 @@ function activateTab(tabId) {
       tabContainer.style.width = "35%";
       mapContainer.style.width = "90%"; // 맵 크기 설정
       target.style.display = "block";
+      tab4Buttons.style.display = "none";
       break;
 
     case "tab2":
@@ -112,6 +134,7 @@ function activateTab(tabId) {
       tabContainer.style.width = "35%";
       mapContainer.style.width = "90%";
       target.style.display = "block";
+      tab4Buttons.style.display = "none";
       break;
 
     case "tab3":
@@ -119,6 +142,7 @@ function activateTab(tabId) {
       tabContainer.style.width = "60%";
       mapContainer.style.width = "80%";
       target.style.display = "block";
+      tab4Buttons.style.display = "none";
       break;
 
     case "tab4":
@@ -126,6 +150,7 @@ function activateTab(tabId) {
       tabContainer.style.width = "40%";
       mapContainer.style.width = "80%";
       target.style.display = "flex";
+      tab4Buttons.style.display = "flex";
       tab4Handler();
       break;
   }
@@ -1584,9 +1609,16 @@ async function showScheduleDetails(daySchedule) {
       if (matched) {
         const thumbnail = matched.images[0];
 
+        // 안쪽에 해당 부분 추가
+        let bgColor = "#ffb14b"; // 기본: 주황
+        if (i === 0) bgColor = "#3ec6ec"; // 첫 장소: 파랑
+        else if (i === places.length - 1) bgColor = "#ff4b7d"; // 마지막: 빨강
+
         // 토글 박스
         detailsHTML += `
-          <span class="place-order">${i + 1}</span>
+          <span class="place-order" style="background-color: ${bgColor};">${
+          i + 1
+        }</span>
           <div class="place-detail collapsed">
             <div class="collapsed-summary">
               <img src="${thumbnail}" alt="${
@@ -1690,3 +1722,5 @@ async function showScheduleDetails(daySchedule) {
     });
   });
 }
+
+// ----------------------- 편집 버튼 클릭시 -----------------------
