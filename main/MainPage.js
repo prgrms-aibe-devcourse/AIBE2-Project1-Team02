@@ -183,7 +183,7 @@ function activateTab(tabId) {
       tab4Handler();
       break;
     case "tab5":
-      tabContainer.style.width = "40%";
+      tabContainer.style.width = "60%";
       mapContainer.style.width = "80%";
       target.style.display = "flex";
       tab4Buttons.style.display = "none";
@@ -192,6 +192,8 @@ function activateTab(tabId) {
       tab2Button.style.display = "none";
       tab3Button.style.display = "none";
       tab4Button.style.display = "none";
+
+      initializeEditMode(); // 편집 모드 함수 호출
       break;
   }
 
@@ -507,7 +509,6 @@ function loadFestivalData(page = 1) {
       });
       // 전체 페이지 수 계산
       totalPages = Math.ceil(filteredData.length / itemsPerPage);
-      console.log("전체 페이지 수:", totalPages);
     })
     .catch((err) => {
       const list = document.getElementById("festival-list");
@@ -525,19 +526,10 @@ function loadFestivalData(page = 1) {
       return;
     }
 
-    console.log("filteredItems:", filteredItems); // filteredItems 배열 콘솔 출력
     // 날짜 정보와 filteredItems를 localStorage에 저장
     localStorage.setItem("filteredItems", JSON.stringify(filteredItems));
     localStorage.setItem("startDate", selectedStartDate);
     localStorage.setItem("endDate", selectedEndDate);
-
-    // 저장된 값 콘솔 출력
-    console.log(
-      "로컬스토리지 filteredItems:",
-      JSON.parse(localStorage.getItem("filteredItems") || "[]")
-    );
-    console.log("로컬스토리지 startDate:", localStorage.getItem("startDate"));
-    console.log("로컬스토리지 endDate:", localStorage.getItem("endDate"));
 
     // 여행 일정 자동 생성기 실행
     const module = await import("../scripts.js");
@@ -596,7 +588,6 @@ function loadFestivalData(page = 1) {
       const places = dayPlan
         ? dayPlan.Places.map((p) => p.replace(/\(.*\)/, "").trim())
         : [];
-      console.log("추출된 장소들:", places);
       setMarkersByPlaceNames(places); // 마커 표시 및 지도 bounds 이동
     }
 
@@ -875,7 +866,6 @@ function updateCalendarInfo() {
         endTime,
       });
     });
-    console.log("전역 변수에 저장된 값:", selectedDates);
     // 탭3으로 이동
     const tab2Button = document.querySelector('.tab[data-tab="tab2"]');
     if (tab2Button) {
@@ -1041,7 +1031,6 @@ function highlightRange(startDate, endDate) {
 // 날짜 클릭 시 처리
 function handleDayClick(dayElement) {
   const clickedDate = dayElement.dataset.date;
-  console.log("클릭한 날짜:", clickedDate);
 
   if (!selectedStartDate) {
     selectedStartDate = clickedDate;
@@ -1118,12 +1107,10 @@ function changeBothMonths(direction) {
 // 날짜 로그
 function confirmSelection() {
   if (!selectedStartDate) {
-    console.log("시작일을 선택하세요.");
     return;
   }
 
   if (!selectedEndDate) {
-    console.log("종료일을 선택하세요.");
     return;
   }
 
@@ -1141,11 +1128,6 @@ function confirmSelection() {
   }
 
   const duration = calculateDuration(selectedStartDate, selectedEndDate) + 1;
-
-  console.log("선택된 기간:");
-  console.log("시작일:", formatDate(selectedStartDate));
-  console.log("종료일:", formatDate(selectedEndDate));
-  console.log("기간:", duration, "일");
 }
 // 선택 완료 버튼의 활성화 여부를 설정하는 함수
 function toggleConfirmButton() {
@@ -1388,11 +1370,8 @@ tagSearchBtn.addEventListener("click", (e) => {
 
 */
 function tab4Handler() {
-  console.log("tab4Handler 실행됨"); // 함수 실행 여부 확인을 위한 로그
-
   // 로컬스토리지에서 여행 일정 데이터 가져오기
   let rawData = localStorage.getItem("travelSchedule");
-  console.log("로컬스토리지에서 가져온 rawData:", rawData); // 가져온 로데이터 확인
 
   if (!rawData) {
     console.error("여행 일정 데이터를 찾을 수 없습니다.");
@@ -1414,8 +1393,6 @@ function tab4Handler() {
         .replace(/\s*```$/, "")
         .trim();
     }
-
-    console.log("파싱 전 정제된 rawData:", rawData); // 정제 후 데이터 확인
 
     // JSON 파싱
     const travelSchedule = JSON.parse(rawData);
@@ -1473,8 +1450,6 @@ function tab4Handler() {
     const groupedSchedule = Object.values(dateGroups).sort(
       (a, b) => new Date(a.Date) - new Date(b.Date)
     );
-
-    console.log("그룹화된 일정:", groupedSchedule);
 
     // 날짜 박스 생성
     groupedSchedule.forEach((item, scheduleIndex) => {
@@ -1545,7 +1520,6 @@ function tab4Handler() {
         // ✅ 여기에 클릭된 날짜 저장
         const selectedDate = groupedSchedule[scheduleIndex].Date;
         testSelectedDate = selectedDate;
-        console.log("선택된 날짜:", testSelectedDate);
 
         // 마커 새로 표시 (해당 날짜의 장소로)
         const savedSchedule = localStorage.getItem("travelSchedule");
@@ -1574,7 +1548,6 @@ function tab4Handler() {
           const places = dayPlan
             ? dayPlan.Places.map((p) => p.replace(/\(.*\)/, "").trim())
             : [];
-          console.log("추출된 장소들:", places);
 
           // 기존마커지우기기
           kakaoMarkers.forEach((marker) => marker.setMap(null));
@@ -1607,7 +1580,6 @@ function tab4Handler() {
     }
   } catch (error) {
     console.error("여행 일정 데이터 처리 중 오류가 발생했습니다:", error);
-    console.log("파싱 실패한 rawData:", rawData);
 
     // 오류 화면 표시
     const scheduleSummary = document.getElementById("scheduleSummary");
@@ -1774,6 +1746,508 @@ document.getElementById("editButton").addEventListener("click", function () {
     tab5Btn.click(); // tab5 버튼 클릭 이벤트 강제로 발생
   }
 });
+// 탭 5의 메인 로직
+// 탭 5의 메인 로직
+let savedForEditTab5 = [];
+let isDragging = false;
+
+// 편집 모드 초기화 함수
+async function initializeEditMode() {
+  console.log("편집 모드로 전환되었습니다.");
+
+  // 컨트롤 패널 생성
+  createControlPanel();
+
+  const raw = localStorage.getItem("travelSchedule");
+  if (!raw) {
+    showEmptyState();
+    return;
+  }
+
+  try {
+    const cleanRaw = raw.replace(/```json|```/g, "").trim();
+    const travelSchedule = JSON.parse(cleanRaw);
+
+    // 날짜별로 장소 정리
+    const grouped = {};
+    travelSchedule.forEach((item) => {
+      if (!grouped[item.Date]) grouped[item.Date] = [];
+      item.Places.forEach((place) => {
+        const cleaned = place.replace(/\(.*\)/, "").trim();
+        grouped[item.Date].push(cleaned);
+      });
+    });
+
+    // 외부 JSON 로드 (상대 경로 기준)
+    const response = await fetch("../listEx.json").catch((e) => {
+      console.error("장소 데이터를 불러오는데 실패했습니다:", e);
+      return { json: () => Promise.resolve({ items: [] }) };
+    });
+    const listData = await response.json();
+    const items = listData.items || [];
+
+    // 날짜별 상세 정보 매핑
+    savedForEditTab5 = Object.entries(grouped).map(([date, names]) => {
+      const uniqueNames = [...new Set(names)];
+      const places = uniqueNames.map((name) => {
+        const matched = items.find((item) => item.placeName === name);
+        return {
+          name,
+          address: matched ? matched.address : "주소 없음",
+          category: matched?.category || "기타",
+        };
+      });
+      return { date, places };
+    });
+
+    renderEditMode();
+  } catch (e) {
+    console.error("편집 모드 초기화 중 오류:", e);
+    showErrorState("일정을 불러오는 데 문제가 발생했습니다.");
+  }
+}
+
+// 편집 모드 UI 렌더링
+function renderEditMode() {
+  const container = document.getElementById("editModeContainer");
+  const contentArea =
+    document.getElementById("editModeContent") || document.createElement("div");
+  contentArea.id = "editModeContent";
+  contentArea.innerHTML = ""; // 내용 초기화
+
+  if (!savedForEditTab5 || savedForEditTab5.length === 0) {
+    showEmptyState();
+    return;
+  }
+
+  // 일차 박스들을 가로로 정렬할 wrapper
+  const dayWrapper = document.createElement("div");
+  dayWrapper.className = "day-wrapper";
+
+  savedForEditTab5.forEach((day, index) => {
+    const dayBox = document.createElement("div");
+    dayBox.className = "edit-day-box";
+    dayBox.setAttribute("data-index", index);
+
+    // 날짜 헤더
+    const header = document.createElement("h3");
+    header.textContent = `${index + 1}일차`;
+    header.className = "day-header";
+
+    // 날짜 표시 추가
+    const dateSpan = document.createElement("span");
+    dateSpan.textContent = ` (${day.date})`;
+    dateSpan.style.fontSize = "0.85rem";
+    dateSpan.style.fontWeight = "normal";
+    dateSpan.style.color = "#64748b";
+    header.appendChild(dateSpan);
+
+    dayBox.appendChild(header);
+
+    // 장소 리스트 (세로 정렬)
+    const placeList = document.createElement("div");
+    placeList.className = "place-list";
+    placeList.setAttribute("data-day-index", index);
+
+    day.places.forEach((place, placeIndex) => {
+      const placeBox = createPlaceBox(place, placeIndex);
+      placeList.appendChild(placeBox);
+    });
+
+    dayBox.appendChild(placeList);
+    dayWrapper.appendChild(dayBox);
+  });
+
+  contentArea.appendChild(dayWrapper);
+
+  // 컨테이너에 콘텐츠 영역 추가 (이미 있으면 대체됨)
+  if (!document.getElementById("editModeContent")) {
+    container.appendChild(contentArea);
+  }
+
+  // Sortable 적용
+  applySortable();
+
+  // 가이드 메시지 표시
+  showGuideMessage(
+    "드래그하여 장소의 순서를 변경하거나 다른 날짜로 이동하세요."
+  );
+}
+
+// 장소 박스 생성 함수 - 주소 표시하지 않음
+function createPlaceBox(place, index) {
+  const placeBox = document.createElement("div");
+  placeBox.className = "place-box";
+  placeBox.setAttribute("data-place-index", index);
+
+  const nameEl = document.createElement("div");
+  nameEl.textContent = place.name;
+  nameEl.style.fontWeight = "500";
+  placeBox.appendChild(nameEl);
+
+  // 카테고리에 따라 색상 스타일 적용
+  const categoryColors = {
+    관광: "#3498db",
+    식당: "#e74c3c",
+    카페: "#9b59b6",
+    쇼핑: "#f39c12",
+    숙소: "#1abc9c",
+    기타: "#7f8c8d",
+  };
+
+  const category = place.category || "기타";
+  const color = categoryColors[category] || categoryColors["기타"];
+  placeBox.style.borderLeftColor = color;
+
+  return placeBox;
+}
+
+// Sortable 적용 함수
+function applySortable() {
+  const placeLists = document.querySelectorAll(".place-list");
+
+  placeLists.forEach((placeList) => {
+    new Sortable(placeList, {
+      animation: 150,
+      ghostClass: "sortable-ghost",
+      chosenClass: "sortable-chosen",
+      dragClass: "sortable-drag",
+      group: "shared",
+
+      // 드래그 시작 시
+      onStart: function (evt) {
+        isDragging = true;
+        document.querySelectorAll(".place-list").forEach((list) => {
+          list.classList.add("highlight-drop-area");
+        });
+      },
+
+      // 드래그 종료 시
+      onEnd: function (evt) {
+        isDragging = false;
+        document.querySelectorAll(".place-list").forEach((list) => {
+          list.classList.remove("highlight-drop-area");
+        });
+
+        const fromIndex = evt.oldIndex;
+        const toIndex = evt.newIndex;
+
+        // 출발 일차와 도착 일차 확인
+        const fromDayIndex = parseInt(evt.from.getAttribute("data-day-index"));
+        const toDayIndex = parseInt(evt.to.getAttribute("data-day-index"));
+
+        console.log(
+          `이동: ${fromDayIndex + 1}일차 ${fromIndex + 1}번째 장소 -> ${
+            toDayIndex + 1
+          }일차 ${toIndex + 1}번째 위치`
+        );
+
+        // 이동할 장소 데이터를 추출
+        const movedPlaceData = savedForEditTab5[fromDayIndex].places[fromIndex];
+
+        // 출발 일차에서 해당 장소 제거
+        savedForEditTab5[fromDayIndex].places.splice(fromIndex, 1);
+
+        // 도착 일차의 해당 위치에 장소 추가
+        savedForEditTab5[toDayIndex].places.splice(toIndex, 0, movedPlaceData);
+
+        // 여기에 데이터 갱신 로그 추가
+        console.log("데이터 갱신됨:", savedForEditTab5);
+
+        // 변경 알림
+        showToast(`장소가 ${toDayIndex + 1}일차로 이동되었습니다.`);
+
+        // 변경 사항 자동 저장 (선택적)
+        // saveChanges();
+      },
+    });
+  });
+}
+
+// 컨트롤 패널 생성
+function createControlPanel() {
+  const container = document.getElementById("editModeContainer");
+
+  // 기존 컨트롤 패널 확인
+  let controlPanel = document.getElementById("editModeControlPanel");
+
+  if (!controlPanel) {
+    controlPanel = document.createElement("div");
+    controlPanel.id = "editModeControlPanel";
+    controlPanel.style.marginBottom = "20px";
+    controlPanel.style.display = "flex";
+    controlPanel.style.justifyContent = "space-between";
+    controlPanel.style.alignItems = "center";
+
+    // 제목 영역
+    const titleArea = document.createElement("div");
+    const title = document.createElement("h2");
+    title.textContent = "여행 일정 편집";
+    title.style.margin = "0";
+    titleArea.appendChild(title);
+
+    // 버튼 영역
+    const buttonArea = document.createElement("div");
+    buttonArea.style.display = "flex";
+    buttonArea.style.gap = "10px";
+
+    const saveBtn = document.createElement("button");
+    saveBtn.textContent = "저장하기";
+    saveBtn.className = "edit-control-btn save-btn";
+    saveBtn.style.backgroundColor = "#3498db";
+    saveBtn.style.color = "white";
+    saveBtn.style.border = "none";
+    saveBtn.style.padding = "8px 16px";
+    saveBtn.style.borderRadius = "6px";
+    saveBtn.style.cursor = "pointer";
+    saveBtn.onclick = saveChanges;
+
+    const resetBtn = document.createElement("button");
+    resetBtn.textContent = "초기화";
+    resetBtn.className = "edit-control-btn reset-btn";
+    resetBtn.style.backgroundColor = "#f8f9fa";
+    resetBtn.style.color = "#333";
+    resetBtn.style.border = "1px solid #ddd";
+    resetBtn.style.padding = "8px 16px";
+    resetBtn.style.borderRadius = "6px";
+    resetBtn.style.cursor = "pointer";
+    resetBtn.onclick = resetChanges;
+
+    buttonArea.appendChild(resetBtn);
+    buttonArea.appendChild(saveBtn);
+
+    controlPanel.appendChild(titleArea);
+    controlPanel.appendChild(buttonArea);
+
+    container.innerHTML = ""; // 컨테이너 초기화
+    container.appendChild(controlPanel);
+  }
+
+  // 알림 영역 (가이드 메시지용)
+  let notificationArea = document.getElementById("editModeNotification");
+  if (!notificationArea) {
+    notificationArea = document.createElement("div");
+    notificationArea.id = "editModeNotification";
+    notificationArea.style.marginBottom = "20px";
+    notificationArea.style.padding = "12px 16px";
+    notificationArea.style.backgroundColor = "#f0f9ff";
+    notificationArea.style.border = "1px solid #bae6fd";
+    notificationArea.style.borderRadius = "8px";
+    notificationArea.style.color = "#0369a1";
+    notificationArea.style.fontSize = "0.95rem";
+    notificationArea.style.display = "none";
+    container.appendChild(notificationArea);
+  }
+
+  // 토스트 메시지 컨테이너
+  if (!document.getElementById("toastContainer")) {
+    const toastContainer = document.createElement("div");
+    toastContainer.id = "toastContainer";
+    toastContainer.style.position = "fixed";
+    toastContainer.style.bottom = "20px";
+    toastContainer.style.right = "20px";
+    toastContainer.style.zIndex = "1000";
+    document.body.appendChild(toastContainer);
+  }
+}
+
+// 변경사항 저장
+function saveChanges() {
+  try {
+    // 저장을 위해 원래 형식으로 변환
+    const formattedSchedule = savedForEditTab5.flatMap((day) => {
+      return day.places.map((place) => ({
+        Date: day.date,
+        Places: [place.name],
+      }));
+    });
+
+    // 날짜별로 장소 합치기
+    const combinedSchedule = [];
+    formattedSchedule.forEach((item) => {
+      const existingDay = combinedSchedule.find((d) => d.Date === item.Date);
+      if (existingDay) {
+        existingDay.Places.push(...item.Places);
+      } else {
+        combinedSchedule.push({
+          Date: item.Date,
+          Places: [...item.Places],
+        });
+      }
+    });
+
+    localStorage.setItem("travelSchedule", JSON.stringify(combinedSchedule));
+    showToast("일정이 저장되었습니다.", "success");
+  } catch (e) {
+    console.error("저장 중 오류 발생:", e);
+    showToast("저장 중 오류가 발생했습니다.", "error");
+  }
+}
+
+// 변경사항 초기화
+function resetChanges() {
+  if (
+    confirm(
+      "편집 내용을 초기화하시겠습니까? 저장되지 않은 변경사항은 사라집니다."
+    )
+  ) {
+    initializeEditMode();
+    showToast("편집 내용이 초기화되었습니다.");
+  }
+}
+
+// 빈 상태 표시
+function showEmptyState() {
+  const container = document.getElementById("editModeContainer");
+
+  // 컨트롤 패널 유지
+  let controlPanel = document.getElementById("editModeControlPanel");
+  let notification = document.getElementById("editModeNotification");
+
+  // 기존 콘텐츠 영역 초기화
+  let contentArea = document.getElementById("editModeContent");
+  if (contentArea) contentArea.remove();
+
+  // 빈 상태 메시지 생성
+  contentArea = document.createElement("div");
+  contentArea.id = "editModeContent";
+
+  const emptyState = document.createElement("div");
+  emptyState.style.textAlign = "center";
+  emptyState.style.padding = "60px 20px";
+  emptyState.style.backgroundColor = "#f8fafc";
+  emptyState.style.borderRadius = "12px";
+  emptyState.style.margin = "20px 0";
+
+  const icon = document.createElement("div");
+  icon.innerHTML = "📝";
+  icon.style.fontSize = "3rem";
+  icon.style.marginBottom = "16px";
+
+  const message = document.createElement("h3");
+  message.textContent = "저장된 일정이 없습니다";
+  message.style.margin = "0 0 8px 0";
+  message.style.color = "#334155";
+
+  const subMessage = document.createElement("p");
+  subMessage.textContent = "먼저 일정을 계획하고 저장해주세요.";
+  subMessage.style.margin = "0";
+  subMessage.style.color = "#64748b";
+
+  emptyState.appendChild(icon);
+  emptyState.appendChild(message);
+  emptyState.appendChild(subMessage);
+  contentArea.appendChild(emptyState);
+
+  // 컨테이너에 추가
+  container.appendChild(contentArea);
+}
+
+// 오류 상태 표시
+function showErrorState(message) {
+  const container = document.getElementById("editModeContainer");
+  let contentArea = document.getElementById("editModeContent");
+  if (contentArea) contentArea.remove();
+
+  contentArea = document.createElement("div");
+  contentArea.id = "editModeContent";
+
+  const errorState = document.createElement("div");
+  errorState.style.textAlign = "center";
+  errorState.style.padding = "40px 20px";
+  errorState.style.backgroundColor = "#fef2f2";
+  errorState.style.borderRadius = "12px";
+  errorState.style.margin = "20px 0";
+  errorState.style.border = "1px solid #fecaca";
+
+  const icon = document.createElement("div");
+  icon.innerHTML = "⚠️";
+  icon.style.fontSize = "2.5rem";
+  icon.style.marginBottom = "16px";
+
+  const messageEl = document.createElement("h3");
+  messageEl.textContent = message || "오류가 발생했습니다";
+  messageEl.style.margin = "0 0 8px 0";
+  messageEl.style.color = "#b91c1c";
+
+  const retryBtn = document.createElement("button");
+  retryBtn.textContent = "다시 시도";
+  retryBtn.style.marginTop = "16px";
+  retryBtn.style.padding = "8px 16px";
+  retryBtn.style.backgroundColor = "#ef4444";
+  retryBtn.style.color = "white";
+  retryBtn.style.border = "none";
+  retryBtn.style.borderRadius = "6px";
+  retryBtn.style.cursor = "pointer";
+  retryBtn.onclick = initializeEditMode;
+
+  errorState.appendChild(icon);
+  errorState.appendChild(messageEl);
+  errorState.appendChild(retryBtn);
+  contentArea.appendChild(errorState);
+
+  container.appendChild(contentArea);
+}
+
+// 가이드 메시지 표시
+function showGuideMessage(message) {
+  const notification = document.getElementById("editModeNotification");
+  if (notification) {
+    notification.textContent = message;
+    notification.style.display = "block";
+  }
+}
+
+// 토스트 메시지 표시
+function showToast(message, type = "info") {
+  const toastContainer = document.getElementById("toastContainer");
+
+  const toast = document.createElement("div");
+  toast.className = "toast-message";
+  toast.textContent = message;
+
+  // 스타일 설정
+  toast.style.padding = "12px 16px";
+  toast.style.marginBottom = "10px";
+  toast.style.borderRadius = "8px";
+  toast.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.15)";
+  toast.style.transition = "all 0.3s ease";
+  toast.style.opacity = "0";
+  toast.style.transform = "translateY(20px)";
+
+  // 타입에 따른 스타일
+  switch (type) {
+    case "success":
+      toast.style.backgroundColor = "#10b981";
+      toast.style.color = "white";
+      break;
+    case "error":
+      toast.style.backgroundColor = "#ef4444";
+      toast.style.color = "white";
+      break;
+    default:
+      toast.style.backgroundColor = "#3498db";
+      toast.style.color = "white";
+  }
+
+  toastContainer.appendChild(toast);
+
+  // 애니메이션
+  setTimeout(() => {
+    toast.style.opacity = "1";
+    toast.style.transform = "translateY(0)";
+  }, 10);
+
+  // 3초 후 제거
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transform = "translateY(20px)";
+
+    setTimeout(() => {
+      toastContainer.removeChild(toast);
+    }, 300);
+  }, 3000);
+}
 
 // 취소 버튼 클릭 시 tab3로 돌아가기 (편집 취소)
 document.getElementById("cancelButton").addEventListener("click", function () {

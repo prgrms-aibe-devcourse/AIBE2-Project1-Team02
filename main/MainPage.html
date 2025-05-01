@@ -26,6 +26,8 @@
       type="text/javascript"
       src="//dapi.kakao.com/v2/maps/sdk.js?appkey=510b624b2b131b82ad7aee34c7864031&libraries=services"
     ></script>
+    <!-- 드래그앤 드롭 라이브러리 SortableJS CDN 추가 -->
+    <script src="../Sortable.min.js"></script>
   </head>
   <body>
     <div id="main-container">
@@ -71,6 +73,7 @@
         </div>
       </div>
       <div id="tab-container">
+        <div id="resize-handle"></div>
         <div id="tab1" class="tabContent">
           <div id="calendarInfo">
             <h1 id="areaName">여행 일정</h1>
@@ -219,7 +222,11 @@
           </div>
         </div>
         <div id="tab5" class="tabContent" style="display: none">
-          <h1 id="tab5Title">편집공간</h1>
+          <div id="editModeContainer">
+            <!-- 컨트롤 패널은 자바스크립트로 동적 생성됨 -->
+            <!-- 알림 영역은 자바스크립트로 동적 생성됨 -->
+            <!-- 여기에 일정 편집 UI가 동적으로 생성됨 -->
+          </div>
         </div>
       </div>
       <div id="map-container">

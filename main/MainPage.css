@@ -122,6 +122,34 @@ li {
   position: relative;
   transition: width 0.3s ease;
 }
+#tab-container {
+  position: relative;
+  min-width: 250px;
+  max-width: 80%;
+  transition: none;
+}
+
+#resize-handle {
+  width: 8px;
+  height: 100%;
+  background-color: #ddd;
+  cursor: col-resize;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  transition: background-color 0.2s;
+}
+
+#resize-handle:hover,
+#resize-handle.active {
+  background-color: #aaa;
+}
+
+#map-container {
+  flex-grow: 1;
+  transition: none;
+}
 
 #map {
   width: 100%;
@@ -1208,4 +1236,146 @@ li {
 #editButton:hover,
 #cancelButton:hover {
   background-color: #e6d1d3;
+}
+
+/* 여기서부터 편집모드 공간 */
+/* 일차 박스들을 가로로 정렬 */
+/* 편집 모드 컨테이너 전체 스타일링 */
+#editModeContainer {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* 일차 박스들을 가로로 정렬 */
+.day-wrapper {
+  display: flex;
+  gap: 24px;
+  padding: 16px 8px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+  min-height: 400px; /* 최소 높이 지정으로 드래그 영역 확보 */
+}
+
+/* 스크롤바 스타일링 */
+.day-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.day-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.day-wrapper::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.day-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* 각 일차 박스 */
+.edit-day-box {
+  min-width: 280px;
+  width: 280px;
+  border: none;
+  border-radius: 16px;
+  background-color: #f0f4f8;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 16px;
+  flex-shrink: 0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.edit-day-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* 일차 제목 */
+.day-header {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  text-align: center;
+  border-bottom: 2px solid #e0e7ee;
+  color: #2c3e50;
+}
+
+/* 장소 리스트 (세로) */
+.place-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* 장소 박스간 간격 증가 */
+  min-height: 200px; /* 최소 높이 설정으로 빈 상태에서도 드래그 가능 */
+  padding: 6px 0;
+}
+
+/* 빈 장소 리스트 표시 */
+.place-list:empty::before {
+  content: "이 날짜에 장소가 없습니다. 다른 날짜에서 장소를 드래그하세요.";
+  display: block;
+  padding: 16px 8px;
+  color: #94a3b8;
+  text-align: center;
+  font-size: 0.9rem;
+  font-style: italic;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  margin: 8px 0;
+}
+
+/* 개별 장소 박스 */
+.place-box {
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px 12px; /* 박스 크기 축소 */
+  font-size: 0.95rem; /* 글자 크기 약간 축소 */
+  cursor: grab;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  position: relative;
+  border-left: 4px solid #3498db;
+}
+
+.place-box:hover {
+  background-color: #f8fafc;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 드래그 중인 요소 스타일 */
+.place-box:active {
+  cursor: grabbing;
+}
+
+/* Sortable.js 관련 클래스 */
+.sortable-ghost {
+  background-color: #e8f4ff !important;
+  border: 2px dashed #3498db !important;
+  opacity: 1; /* 투명도 제거 */
+}
+
+.sortable-drag {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+  z-index: 1000;
+  opacity: 1; /* 투명도 제거 */
+}
+
+/* 드래그 목적지 하이라이트 */
+.sortable-chosen {
+  background-color: #f0f9ff;
+}
+
+/* 드롭 가능한 영역 하이라이트 */
+.place-list.highlight-drop-area {
+  background-color: rgba(52, 152, 219, 0.1);
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
 }
