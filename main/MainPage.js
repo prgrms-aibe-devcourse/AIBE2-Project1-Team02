@@ -82,7 +82,7 @@ window.addEventListener("beforeunload", function (e) {
   // 일부 브라우저에서는 'returnValue'만 사용하면 경고창을 표시함.
   return message;
 });
-
+// 탭버튼 로직
 document.querySelectorAll(".tab").forEach((btn) => {
   btn.addEventListener("click", () => {
     // 모든 탭 콘텐츠 숨기기
@@ -93,11 +93,10 @@ document.querySelectorAll(".tab").forEach((btn) => {
     activateTab(btn.dataset.tab);
   });
 });
-
 // 탭을 활성화하고 관련된 레이아웃을 적용하는 함수
 function activateTab(tabId) {
   const tabButton = document.querySelector(`.tab[data-tab="${tabId}"]`);
-  if (!tabButton) return;
+  if (!tabButton || tabButton.style.display === "none") return; // 숨겨진 탭이면 중단
 
   // 모든 탭 콘텐츠 숨기기
   document
@@ -119,6 +118,16 @@ function activateTab(tabId) {
   // 저장 및 편집 버튼 컨테이너
   const tab4Buttons = document.getElementById("tab4-buttons");
 
+  // 편집 모드에서  취소/적용 버튼 컨테이너
+  const editButtons = document.getElementById("editButtons");
+
+  // 탭 버튼
+  const tab1Button = document.getElementById("tab1Btn");
+  const tab2Button = document.getElementById("tab2Btn");
+  const tab3Button = document.getElementById("tab3Btn");
+  const tab4Button = document.getElementById("tab4Btn");
+  const tab5Button = document.getElementById("tab5Btn");
+
   // 탭 별로 다른 레이아웃 적용
   switch (tabId) {
     case "tab1":
@@ -126,7 +135,12 @@ function activateTab(tabId) {
       tabContainer.style.width = "35%";
       mapContainer.style.width = "90%"; // 맵 크기 설정
       target.style.display = "block";
+      editButtons.style.display = "none"; // 취소/적용 버튼 숨김
+      tab1Button.style.display = "block";
+      tab2Button.style.display = "block";
+      tab3Button.style.display = "block";
       tab4Buttons.style.display = "none";
+      tab5Button.style.display = "none"; // 탭5 버튼 숨김
       break;
 
     case "tab2":
@@ -134,7 +148,12 @@ function activateTab(tabId) {
       tabContainer.style.width = "35%";
       mapContainer.style.width = "90%";
       target.style.display = "block";
+      editButtons.style.display = "none"; // 취소/적용 버튼 숨김
+      tab1Button.style.display = "block";
+      tab2Button.style.display = "block";
+      tab3Button.style.display = "block";
       tab4Buttons.style.display = "none";
+      tab5Button.style.display = "none"; // 탭5 버튼 숨김
       break;
 
     case "tab3":
@@ -142,7 +161,12 @@ function activateTab(tabId) {
       tabContainer.style.width = "60%";
       mapContainer.style.width = "80%";
       target.style.display = "block";
+      editButtons.style.display = "none"; // 취소/적용 버튼 숨김
+      tab1Button.style.display = "block";
+      tab2Button.style.display = "block";
+      tab3Button.style.display = "block";
       tab4Buttons.style.display = "none";
+      tab5Button.style.display = "none"; // 탭5 버튼 숨김
       break;
 
     case "tab4":
@@ -150,8 +174,24 @@ function activateTab(tabId) {
       tabContainer.style.width = "40%";
       mapContainer.style.width = "80%";
       target.style.display = "flex";
-      tab4Buttons.style.display = "flex";
+      editButtons.style.display = "none";
+      tab1Button.style.display = "block";
+      tab2Button.style.display = "block";
+      tab3Button.style.display = "block";
+      tab4Buttons.style.display = "flex"; // 취소/적용 버튼 숨김
+      tab5Button.style.display = "none"; // 탭5 버튼 숨김
       tab4Handler();
+      break;
+    case "tab5":
+      tabContainer.style.width = "40%";
+      mapContainer.style.width = "80%";
+      target.style.display = "flex";
+      tab4Buttons.style.display = "none";
+      editButtons.style.display = "flex"; // 취소/적용 버튼 보이기
+      tab1Button.style.display = "none";
+      tab2Button.style.display = "none";
+      tab3Button.style.display = "none";
+      tab4Button.style.display = "none";
       break;
   }
 
@@ -284,7 +324,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
-
 // 리스트 정보가져오기 메인
 function loadFestivalData(page = 1) {
   fetch(jsonFilePath)
@@ -1134,7 +1173,6 @@ function findAreaNameByCode(code) {
   }
   return null;
 }
-
 // 오늘 날짜를 YYYYMMDD 형식으로 반환하는 함수
 function getTodayDate() {
   const today = new Date();
@@ -1166,12 +1204,10 @@ function getPlacesByDate(scheduleJson, dateStr) {
   const dayPlan = scheduleJson.Item.find((item) => item.Date === dateStr);
   return dayPlan ? dayPlan.Places : [];
 }
-
 // 기존 마커를 모두 지우기 위한 배열
 let kakaoMarkers = [];
 // 기존 선(폴리라인)을 지우기 위한 변수
 let kakaoPolyline = null;
-
 function setMarkersByPlaceNames(placeNames) {
   const geocoder = new kakao.maps.services.Places();
 
@@ -1304,7 +1340,6 @@ function setMarkersByPlaceNames(placeNames) {
     });
   });
 }
-
 function reloadMapMarkers() {
   const savedSchedule = localStorage.getItem("travelSchedule");
   if (savedSchedule) {
@@ -1346,7 +1381,12 @@ document.addEventListener("mousedown", (e) => {
 tagSearchBtn.addEventListener("click", (e) => {
   hideTagBox();
 });
-// 탭4 클릭 시 로컬스토리지 데이터 불러오기
+
+/* 
+
+------------------탭4 핸들러 함수 -------------------
+
+*/
 function tab4Handler() {
   console.log("tab4Handler 실행됨"); // 함수 실행 여부 확인을 위한 로그
 
@@ -1724,3 +1764,31 @@ async function showScheduleDetails(daySchedule) {
 }
 
 // ----------------------- 편집 버튼 클릭시 -----------------------
+// 편집 버튼 클릭 시 tab5로 강제로 이동
+document.getElementById("editButton").addEventListener("click", function () {
+  // tab5 버튼을 강제로 표시하고 클릭
+  const tab5Btn = document.getElementById("tab5Btn");
+  tab5Btn.click(); // tab5 버튼 클릭 이벤트 강제로 발생
+  if (tab5Btn) {
+    tab5Btn.style.display = "block"; // tab5 버튼을 표시
+    tab5Btn.click(); // tab5 버튼 클릭 이벤트 강제로 발생
+  }
+});
+
+// 취소 버튼 클릭 시 tab3로 돌아가기 (편집 취소)
+document.getElementById("cancelButton").addEventListener("click", function () {
+  const tab4Btn = document.getElementById("tab4Btn");
+  tab4Btn.click();
+  if (tab4Btn) {
+    tab4Btn.style.display = "block";
+    tab4Btn.click();
+  }
+});
+
+// 적용 버튼 클릭 시 (변경 적용)
+document.getElementById("applyButton").addEventListener("click", function () {
+  // 여기서 데이터를 저장하거나 적용하는 로직을 추가할 수 있습니다
+  // 예: saveChanges();
+
+  activateTab("tab3"); // 변경 적용 후 tab3으로 돌아가기
+});

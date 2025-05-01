@@ -40,12 +40,29 @@
         </a>
 
         <!-- 탭 버튼들 -->
-        <button class="tab" data-tab="tab1">STEP 1<br />날짜 선택</button>
-        <button class="tab" data-tab="tab2">STEP 2<br />지역 선택</button>
-        <button class="tab" data-tab="tab3">STEP 3<br />장소 선택</button>
+        <button class="tab" data-tab="tab1" id="tab1Btn">
+          STEP 1<br />날짜 선택
+        </button>
+        <button class="tab" data-tab="tab2" id="tab2Btn">
+          STEP 2<br />지역 선택
+        </button>
+        <button class="tab" data-tab="tab3" id="tab3Btn">
+          STEP 3<br />장소 선택
+        </button>
         <button class="tab" data-tab="tab4" id="tab4Btn" style="display: none">
           STEP 4<br />일정 확인
         </button>
+
+        <!-- 새로 추가된 편집 전용 탭 -->
+        <button class="tab" data-tab="tab5" id="tab5Btn" style="display: none">
+          EDIT<br />편집공간
+        </button>
+
+        <!-- 취소/적용 버튼들 (기본적으로 숨김 처리) -->
+        <div id="editButtons" style="display: none; margin-top: auto">
+          <button id="cancelButton">취소</button>
+          <button id="applyButton">적용</button>
+        </div>
 
         <!-- 저장/편집 버튼들 (기본적으로 숨김 처리) -->
         <div id="tab4-buttons" style="display: none; margin-top: auto">
@@ -200,6 +217,9 @@
           <div id="scheduleDetails" class="collapsed">
             <!-- 이 부분은 날짜를 클릭할 때 JS에 의해 채워집니다 -->
           </div>
+        </div>
+        <div id="tab5" class="tabContent" style="display: none">
+          <h1 id="tab5Title">편집공간</h1>
         </div>
       </div>
       <div id="map-container">

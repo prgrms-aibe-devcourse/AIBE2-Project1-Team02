@@ -1160,7 +1160,8 @@ li {
 }
 
 /* 저장/편집 버튼 스타일 */
-#tab4-buttons {
+#tab4-buttons,
+#editButtons {
   display: none;
   flex-direction: column;
   align-items: center;
@@ -1170,7 +1171,8 @@ li {
   bottom: 20px;
 }
 
-#tab4-buttons button {
+#tab4-buttons button,
+#editButtons button {
   width: 80px;
   margin: 5px 0;
   padding: 8px;
@@ -1181,7 +1183,8 @@ li {
 }
 
 /* 저장 버튼 */
-#saveButton {
+#saveButton,
+#applyButton {
   background-color: #282828;
   color: white;
   border: none;
@@ -1189,17 +1192,20 @@ li {
 }
 
 /* 편집 버튼 */
-#editButton {
+#editButton,
+#cancelButton {
   background-color: white;
   color: #282828;
   border: 2px solid #282828;
 }
 
 /* 호버 효과 */
-#saveButton:hover {
+#saveButton:hover,
+#applyButton:hover {
   background-color: #1e1e1e;
 }
 
-#editButton:hover {
+#editButton:hover,
+#cancelButton:hover {
   background-color: #e6d1d3;
 }
