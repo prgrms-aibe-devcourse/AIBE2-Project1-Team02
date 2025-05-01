@@ -128,73 +128,97 @@ function activateTab(tabId) {
   const tab4Button = document.getElementById("tab4Btn");
   const tab5Button = document.getElementById("tab5Btn");
 
-  // 탭 별로 다른 레이아웃 적용
-  switch (tabId) {
-    case "tab1":
-      // 날짜 선택 탭 - 왼쪽 영역을 좁게
-      tabContainer.style.width = "35%";
-      mapContainer.style.width = "90%"; // 맵 크기 설정
-      target.style.display = "block";
-      editButtons.style.display = "none"; // 취소/적용 버튼 숨김
-      tab1Button.style.display = "block";
-      tab2Button.style.display = "block";
-      tab3Button.style.display = "block";
-      tab4Buttons.style.display = "none";
-      tab5Button.style.display = "none"; // 탭5 버튼 숨김
-      break;
+  // 탭 별로 다른 레이아웃 적용 (사용자가 드래그 중이 아닐 때만)
+  if (!isResizing) {
+    switch (tabId) {
+      case "tab1":
+        // 날짜 선택 탭 - 왼쪽 영역을 좁게
+        tabContainer.style.width = "25%";
+        target.style.display = "block";
+        editButtons.style.display = "none";
+        tab1Button.style.display = "block";
+        tab2Button.style.display = "block";
+        tab3Button.style.display = "block";
+        tab4Buttons.style.display = "none";
+        tab5Button.style.display = "none";
+        break;
 
-    case "tab2":
-      // 지역 선택 탭 - 왼쪽 영역을 중간 크기로
-      tabContainer.style.width = "35%";
-      mapContainer.style.width = "90%";
-      target.style.display = "block";
-      editButtons.style.display = "none"; // 취소/적용 버튼 숨김
-      tab1Button.style.display = "block";
-      tab2Button.style.display = "block";
-      tab3Button.style.display = "block";
-      tab4Buttons.style.display = "none";
-      tab5Button.style.display = "none"; // 탭5 버튼 숨김
-      break;
+      case "tab2":
+        // 지역 선택 탭 - 왼쪽 영역을 중간 크기로
+        tabContainer.style.width = "20%";
+        target.style.display = "block";
+        editButtons.style.display = "none";
+        tab1Button.style.display = "block";
+        tab2Button.style.display = "block";
+        tab3Button.style.display = "block";
+        tab4Buttons.style.display = "none";
+        tab5Button.style.display = "none";
+        break;
 
-    case "tab3":
-      // 장소 선택 탭 - 왼쪽 영역을 넓게
-      tabContainer.style.width = "60%";
-      mapContainer.style.width = "80%";
-      target.style.display = "block";
-      editButtons.style.display = "none"; // 취소/적용 버튼 숨김
-      tab1Button.style.display = "block";
-      tab2Button.style.display = "block";
-      tab3Button.style.display = "block";
-      tab4Buttons.style.display = "none";
-      tab5Button.style.display = "none"; // 탭5 버튼 숨김
-      break;
+      case "tab3":
+        // 장소 선택 탭 - 왼쪽 영역을 넓게
+        tabContainer.style.width = "40%";
+        target.style.display = "block";
+        editButtons.style.display = "none";
+        tab1Button.style.display = "block";
+        tab2Button.style.display = "block";
+        tab3Button.style.display = "block";
+        tab4Buttons.style.display = "none";
+        tab5Button.style.display = "none";
+        break;
 
-    case "tab4":
-      // 일정 확인 탭 - 세부 레이아웃이 플렉스이므로
-      tabContainer.style.width = "40%";
-      mapContainer.style.width = "80%";
-      target.style.display = "flex";
-      editButtons.style.display = "none";
-      tab1Button.style.display = "block";
-      tab2Button.style.display = "block";
-      tab3Button.style.display = "block";
-      tab4Buttons.style.display = "flex"; // 취소/적용 버튼 숨김
-      tab5Button.style.display = "none"; // 탭5 버튼 숨김
-      tab4Handler();
-      break;
-    case "tab5":
-      tabContainer.style.width = "60%";
-      mapContainer.style.width = "80%";
-      target.style.display = "flex";
+      case "tab4":
+        // 일정 확인 탭 - 세부 레이아웃이 플렉스이므로
+        tabContainer.style.width = "35%";
+        target.style.display = "flex";
+        editButtons.style.display = "none";
+        tab1Button.style.display = "block";
+        tab2Button.style.display = "block";
+        tab3Button.style.display = "block";
+        tab4Buttons.style.display = "flex";
+        tab5Button.style.display = "none";
+        tab4Handler();
+        break;
+
+      case "tab5":
+        tabContainer.style.width = "38%";
+        target.style.display = "flex";
+        tab4Buttons.style.display = "none";
+        editButtons.style.display = "flex";
+        tab1Button.style.display = "none";
+        tab2Button.style.display = "none";
+        tab3Button.style.display = "none";
+        tab4Button.style.display = "none";
+
+        initializeEditMode();
+        break;
+    }
+  } else {
+    // 드래그 중일 때는 표시 상태만 변경하고 너비는 유지
+    target.style.display =
+      tabId === "tab4" || tabId === "tab5" ? "flex" : "block";
+
+    // 버튼 상태는 동일하게 관리
+    if (tabId === "tab5") {
       tab4Buttons.style.display = "none";
-      editButtons.style.display = "flex"; // 취소/적용 버튼 보이기
+      editButtons.style.display = "flex";
       tab1Button.style.display = "none";
       tab2Button.style.display = "none";
       tab3Button.style.display = "none";
       tab4Button.style.display = "none";
+      initializeEditMode();
+    } else {
+      editButtons.style.display = "none";
+      tab1Button.style.display = "block";
+      tab2Button.style.display = "block";
+      tab3Button.style.display = "block";
+      tab4Buttons.style.display = tabId === "tab4" ? "flex" : "none";
+      tab5Button.style.display = "none";
 
-      initializeEditMode(); // 편집 모드 함수 호출
-      break;
+      if (tabId === "tab4") {
+        tab4Handler();
+      }
+    }
   }
 
   // 지도 크기 변경 후 relayout 실행
@@ -2265,4 +2289,81 @@ document.getElementById("applyButton").addEventListener("click", function () {
   // 예: saveChanges();
 
   activateTab("tab3"); // 변경 적용 후 tab3으로 돌아가기
+});
+
+// ------------------------ 리사이즈 랜들러 ------------------------
+// 전역 변수로 isResizing 추가
+let isResizing = false;
+
+// 리사이즈 핸들러 초기화 함수
+function initializeResizeHandler() {
+  // 리사이즈 핸들 요소 생성 및 추가
+  const tabContainer = document.getElementById("tab-container");
+  const resizeHandle = document.createElement("div");
+  resizeHandle.id = "resize-handle";
+  tabContainer.appendChild(resizeHandle);
+
+  let initialX;
+  let initialWidth;
+
+  // 드래그 시작 처리
+  resizeHandle.addEventListener("mousedown", function (e) {
+    isResizing = true;
+    initialX = e.clientX;
+    initialWidth = parseInt(window.getComputedStyle(tabContainer).width, 10);
+
+    resizeHandle.classList.add("active");
+
+    // 드래그 중 텍스트 선택 방지
+    document.body.style.userSelect = "none";
+    document.body.style.cursor = "col-resize";
+  });
+
+  // 드래그 중 처리
+  document.addEventListener("mousemove", function (e) {
+    if (!isResizing) return;
+
+    const deltaX = e.clientX - initialX;
+    const newWidth = initialWidth + deltaX;
+
+    // 최소/최대 너비 제한
+    const mainContainer = document.getElementById("main-container");
+    const minWidth = 250; // 최소 너비 (픽셀)
+    const maxWidth = mainContainer.offsetWidth * 0.8; // 최대 너비 (메인 컨테이너의 80%)
+
+    // 너비 범위 내에서만 적용
+    if (newWidth >= minWidth && newWidth <= maxWidth) {
+      tabContainer.style.width = `${newWidth}px`;
+
+      // 지도 리레이아웃 실행
+      if (typeof map !== "undefined") {
+        map.relayout();
+      }
+    }
+  });
+
+  // 드래그 종료 처리
+  document.addEventListener("mouseup", function () {
+    if (isResizing) {
+      isResizing = false;
+      resizeHandle.classList.remove("active");
+      document.body.style.userSelect = "";
+      document.body.style.cursor = "";
+    }
+  });
+
+  // 창을 벗어났을 때도 드래그 종료
+  document.addEventListener("mouseleave", function () {
+    if (isResizing) {
+      isResizing = false;
+      resizeHandle.classList.remove("active");
+      document.body.style.userSelect = "";
+      document.body.style.cursor = "";
+    }
+  });
+}
+
+// 페이지 로드 시 리사이즈 핸들러 초기화
+document.addEventListener("DOMContentLoaded", function () {
+  initializeResizeHandler();
 });
