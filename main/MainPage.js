@@ -1771,7 +1771,6 @@ document.getElementById("editButton").addEventListener("click", function () {
   }
 });
 // 탭 5의 메인 로직
-// 탭 5의 메인 로직
 let savedForEditTab5 = [];
 let isDragging = false;
 
@@ -1874,7 +1873,7 @@ function renderEditMode() {
     placeList.setAttribute("data-day-index", index);
 
     day.places.forEach((place, placeIndex) => {
-      const placeBox = createPlaceBox(place, placeIndex);
+      const placeBox = createPlaceBox(place, placeIndex, index);
       placeList.appendChild(placeBox);
     });
 
@@ -1899,29 +1898,34 @@ function renderEditMode() {
 }
 
 // 장소 박스 생성 함수 - 주소 표시하지 않음
-function createPlaceBox(place, index) {
+function createPlaceBox(place, index, dayIndex) {
+  //dayIndex는 일자, index는 장소 순서
   const placeBox = document.createElement("div");
   placeBox.className = "place-box";
   placeBox.setAttribute("data-place-index", index);
 
+  // 순서 원형 UI 생성
+  const orderSpan = document.createElement("span");
+  orderSpan.className = "dayindex-index-circle";
+  orderSpan.textContent = index + 1;
+
+  // 일차별 배경색 설정 (예시: 1일차는 파랑, 2일차는 주황, 3일차는 빨강)
+  const dayColors = ["#3ec6ec", "#ffb14b", "#ff4b7d"];
+  const bgColor = dayColors[dayIndex % dayColors.length] || "#797979";
+  orderSpan.style.backgroundColor = bgColor;
+
+  // 장소 이름 요소 생성
   const nameEl = document.createElement("div");
   nameEl.textContent = place.name;
   nameEl.style.fontWeight = "500";
-  placeBox.appendChild(nameEl);
 
-  // 카테고리에 따라 색상 스타일 적용
-  const categoryColors = {
-    관광: "#3498db",
-    식당: "#e74c3c",
-    카페: "#9b59b6",
-    쇼핑: "#f39c12",
-    숙소: "#1abc9c",
-    기타: "#7f8c8d",
-  };
+  // 숫자 UI와 장소 이름을 감싸는 컨테이너 생성
+  const contentWrapper = document.createElement("div");
+  contentWrapper.className = "place-content";
+  contentWrapper.appendChild(orderSpan);
+  contentWrapper.appendChild(nameEl);
 
-  const category = place.category || "기타";
-  const color = categoryColors[category] || categoryColors["기타"];
-  placeBox.style.borderLeftColor = color;
+  placeBox.appendChild(contentWrapper);
 
   return placeBox;
 }
@@ -1978,12 +1982,36 @@ function applySortable() {
         // 여기에 데이터 갱신 로그 추가
         console.log("데이터 갱신됨:", savedForEditTab5);
 
+        // 순번 UI 갱신
+        updatePlaceOrderUI();
+
         // 변경 알림
         showToast(`장소가 ${toDayIndex + 1}일차로 이동되었습니다.`);
 
         // 변경 사항 자동 저장 (선택적)
         // saveChanges();
       },
+    });
+  });
+}
+//순번 UI 갱신 함수
+function updatePlaceOrderUI() {
+  const dayBoxes = document.querySelectorAll(".edit-day-box");
+
+  dayBoxes.forEach((dayBox, dayIndex) => {
+    const placeList = dayBox.querySelector(".place-list");
+    const placeBoxes = placeList.querySelectorAll(".place-box");
+
+    placeBoxes.forEach((placeBox, index) => {
+      // 순번 원형 UI 요소 선택
+      const orderSpan = placeBox.querySelector(".dayindex-index-circle");
+      if (orderSpan) {
+        orderSpan.textContent = index + 1;
+        // 일차별 배경색 설정
+        const dayColors = ["#3ec6ec", "#ffb14b", "#ff4b7d"];
+        const bgColor = dayColors[dayIndex % dayColors.length] || "#797979";
+        orderSpan.style.backgroundColor = bgColor;
+      }
     });
   });
 }
@@ -2015,17 +2043,6 @@ function createControlPanel() {
     buttonArea.style.display = "flex";
     buttonArea.style.gap = "10px";
 
-    const saveBtn = document.createElement("button");
-    saveBtn.textContent = "저장하기";
-    saveBtn.className = "edit-control-btn save-btn";
-    saveBtn.style.backgroundColor = "#3498db";
-    saveBtn.style.color = "white";
-    saveBtn.style.border = "none";
-    saveBtn.style.padding = "8px 16px";
-    saveBtn.style.borderRadius = "6px";
-    saveBtn.style.cursor = "pointer";
-    saveBtn.onclick = saveChanges;
-
     const resetBtn = document.createElement("button");
     resetBtn.textContent = "초기화";
     resetBtn.className = "edit-control-btn reset-btn";
@@ -2038,7 +2055,6 @@ function createControlPanel() {
     resetBtn.onclick = resetChanges;
 
     buttonArea.appendChild(resetBtn);
-    buttonArea.appendChild(saveBtn);
 
     controlPanel.appendChild(titleArea);
     controlPanel.appendChild(buttonArea);
@@ -2285,10 +2301,13 @@ document.getElementById("cancelButton").addEventListener("click", function () {
 
 // 적용 버튼 클릭 시 (변경 적용)
 document.getElementById("applyButton").addEventListener("click", function () {
-  // 여기서 데이터를 저장하거나 적용하는 로직을 추가할 수 있습니다
-  // 예: saveChanges();
-
-  activateTab("tab3"); // 변경 적용 후 tab3으로 돌아가기
+  saveChanges();
+  const tab4Btn = document.getElementById("tab4Btn");
+  tab4Btn.click();
+  if (tab4Btn) {
+    tab4Btn.style.display = "block";
+    tab4Btn.click();
+  }
 });
 
 // ------------------------ 리사이즈 랜들러 ------------------------
