@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <title>로그인 페이지</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <div class="main-container">
 
     <div id="sidebar-container"></div>
-  
+
     <div class="login-container">
       <img src="../login/login_img/logo.jpg" alt="로고" class="logo" width="100" height="50">
-  
+
       <label for="username" class="input-label">아이디</label>
       <input type="text" id="username" placeholder="아이디 입력">
-      
+
       <label for="password" class="input-label">비밀번호</label>
       <input type="password" id="password" placeholder="비밀번호 입력">
-      
+
       <button class="loginBtn">로그인</button>
-  
+
       <div class="sns-login">
         <p style="color: #666; margin-left: -10px;">SNS 간편 로그인</p>
         <div class="sns-buttons">
@@ -39,7 +41,7 @@
           </button>
         </div>
       </div>
-  
+
       <div class="personal-info">
         <div class="find-signup">
           <span class="find-info"><a href="../findAccount/findAccount.html">아이디 / 비밀번호 찾기</a></span>
@@ -47,22 +49,38 @@
           <span class="signup-link"><a href="../sign_up/sign_up.html">회원가입</a></span>
         </div>
       </div>
-  
-  
-      
+
+
+
     </div>
-  
+
     <script src="login.js"></script>
 
-   </div> 
+  </div>
 
-   <script>
+  <script>
+    // fetch로 사이드바 HTML을 불러오고 나서 로그인 상태에 따라 처리
     fetch('../sidebar/sidebar.html')
       .then(res => res.text())
       .then(data => {
-        document.getElementById('sidebar-container').innerHTML = data;
+        document.getElementById('sidebar-container').innerHTML = data; // 사이드바 삽입
+
+        // 로그인 상태에 따른 처리
+        const isLoggedIn = localStorage.getItem('isLoggedIn'); // 로그인 여부 확인
+        const logOutButton = document.querySelector('.sidebar-logOut'); // 로그아웃 버튼
+
+        if (logOutButton) {
+          if (isLoggedIn === 'true') {
+            logOutButton.style.display = 'block';  // 로그인 상태일 때 버튼 보이기
+          } else {
+            logOutButton.style.display = 'none';  // 로그인 상태가 아니면 버튼 숨기기
+          }
+        }
       });
+
   </script>
-<script src="../sidebar/sidebar.js"></script>
+
+  <script src="../sidebar/sidebar.js"></script>
 </body>
+
 </html>

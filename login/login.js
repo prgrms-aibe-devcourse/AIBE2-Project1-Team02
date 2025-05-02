@@ -1,7 +1,7 @@
 // login.js
 const loginButton = document.querySelector('.loginBtn');
 
-loginButton.addEventListener('click', function() {
+loginButton.addEventListener('click', function () {
   const inputUsername = document.getElementById('username').value;
   const inputPassword = document.getElementById('password').value;
 
@@ -17,7 +17,7 @@ loginButton.addEventListener('click', function() {
   if (inputUsername === savedUserData.username && inputPassword === savedUserData.password) {
     // 로그인 성공 처리
     localStorage.setItem('isLoggedIn', 'true'); // 로그인 상태 저장
-    window.location.href = '/main.html'; 
+    window.location.href = '/main.html';  // 로그인 후 메인 페이지로 이동
   } else {
     alert('아이디 또는 비밀번호가 올바르지 않습니다.');
   }

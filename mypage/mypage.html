@@ -15,15 +15,15 @@
     <script>
         const isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn !== 'true') {
-          // 로그인 안된 경우 바로 리디렉션 (렌더링 이전)
-          window.location.replace('../login/login.html');
+            // 로그인 안된 경우 바로 리디렉션 (렌더링 이전)
+            window.location.replace('../login/login.html');
         } else {
-          // 로그인된 경우에만 body 보여주기
-          window.addEventListener('DOMContentLoaded', function () {
-            document.body.style.display = 'block';
-          });
+            // 로그인된 경우에만 body 보여주기
+            window.addEventListener('DOMContentLoaded', function () {
+                document.body.style.display = 'block';
+            });
         }
-      </script>
+    </script>
 </head>
 
 <body>
@@ -102,16 +102,29 @@
 
 
     <script>
-        /* 사이드바 스크립트 */
+        // fetch로 사이드바 HTML을 불러오고 나서 로그인 상태에 따라 처리
         fetch('../sidebar/sidebar.html')
             .then(res => res.text())
             .then(data => {
-                document.getElementById('sidebar-container').innerHTML = data;
+                document.getElementById('sidebar-container').innerHTML = data; // 사이드바 삽입
+
+                // 로그인 상태에 따른 처리
+                const isLoggedIn = localStorage.getItem('isLoggedIn'); // 로그인 여부 확인
+                const logOutButton = document.querySelector('.sidebar-logOut'); // 로그아웃 버튼
+
+                if (logOutButton) {
+                    if (isLoggedIn === 'true') {
+                        logOutButton.style.display = 'block';  // 로그인 상태일 때 버튼 보이기
+                    } else {
+                        logOutButton.style.display = 'none';  // 로그인 상태가 아니면 버튼 숨기기
+                    }
+                }
             });
+
     </script>
 
-  <script src="../sidebar/sidebar.js"></script>
-  <script src="../mypage/mypage.js"></script>
+    <script src="../sidebar/sidebar.js"></script>
+    <script src="../mypage/mypage.js"></script>
 </body>
 
 </html>
