@@ -70,18 +70,17 @@ const AREA_CODE_MAP = {
   제주도: "39",
   제주특별자치도: "39",
 };
-// 새로고침 경고 알트메세지
-window.addEventListener("beforeunload", function (e) {
+// beforeunload 이벤트 핸들러 함수 정의
+function beforeUnloadHandler(e) {
   // 사용자에게 경고 메시지 표시
   const message =
     "페이지를 떠나시겠습니까? 변경 사항이 저장되지 않을 수 있습니다.";
-
-  // 표준 방식으로 메시지 설정
   e.returnValue = message;
-
-  // 일부 브라우저에서는 'returnValue'만 사용하면 경고창을 표시함.
   return message;
-});
+}
+
+// 새로고침 경고 알트메세지
+window.addEventListener("beforeunload", beforeUnloadHandler);
 // 탭버튼 로직
 document.querySelectorAll(".tab").forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -1759,18 +1758,128 @@ async function showScheduleDetails(daySchedule) {
   });
 }
 
+// --------------------------탭4 화면에서 저장 버튼 클릭 시 처리--------------------------
+// 저장 여부를 추적하는 변수
+let isSaved = false;
+document
+  .getElementById("saveButton")
+  .addEventListener("click", function (event) {
+    // 경고 메시지를 표시하는 모달 창 표시
+    const userConfirmed = confirm("여행 계획을 저장하시겠습니까?");
+
+    if (!userConfirmed) {
+      // 사용자가 '취소'를 누른 경우 함수 종료
+      return;
+    }
+
+    // 사용자가 '확인'을 누른 경우 계속 진행
+    // 1. 저장 버튼 클릭 시 로컬스토리지에 저장
+    const raw = localStorage.getItem("travelSchedule");
+    if (!raw) {
+      return;
+    }
+
+    try {
+      const cleanRaw = raw.replace(/```json|```/g, "").trim();
+      const travelSchedule = JSON.parse(cleanRaw);
+
+      // 2. tempSchedule에 저장할 데이터 준비
+      // 시작일과 종료일 추출
+      const dates = travelSchedule.map((item) => new Date(item.Date));
+      const startDate = new Date(Math.min(...dates))
+        .toISOString()
+        .split("T")[0];
+      const endDate = new Date(Math.max(...dates)).toISOString().split("T")[0];
+
+      // 포맷에 맞게 schedule 데이터 구성 및 장소 이름에서 괄호 부분 제거
+      const schedule = travelSchedule.map((item) => {
+        // 각 장소 이름에서 "(" 이전 부분만 추출
+        const cleanedPlaces = item.Places.map((place) => {
+          const bracketIndex = place.indexOf("(");
+          return bracketIndex > -1 ? place.substring(0, bracketIndex) : place;
+        });
+
+        return {
+          date: item.Date,
+          places: cleanedPlaces,
+        };
+      });
+
+      // 최종 저장할 데이터 구조
+      const scheduleToSave = {
+        startDate: startDate,
+        endDate: endDate,
+        schedule: schedule,
+      };
+
+      // JSON 형식으로 tempSchedule에 저장
+      sessionStorage.setItem("tempSchedule", JSON.stringify(scheduleToSave));
+
+      // 3. 로그인 유무 판단
+      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+      // beforeunload 이벤트 리스너 제거
+      window.removeEventListener("beforeunload", beforeUnloadHandler);
+
+      if (!isLoggedIn) {
+        // 로그인되지 않은 경우 로그인 안내 메시지 표시
+        const loginConfirm = confirm(
+          "일정을 저장하시려면 로그인이 필요합니다.\n로그인 페이지로 이동하시겠습니까?\n해당 일정은 로그인 성공시 자동 저장됩니다."
+        );
+
+        if (loginConfirm) {
+          // beforeunload 이벤트 리스너 제거
+          window.removeEventListener("beforeunload", beforeUnloadHandler);
+          // 로그인 페이지로 이동
+          window.location.href = "../login/login.html";
+        }
+        // 로그인을 취소한 경우 아무 작업도 수행하지 않음
+      } else {
+        // 로그인된 경우 savedSchedule에 추가
+        const savedRaw = localStorage.getItem("savedSchedule");
+        let savedSchedules = [];
+
+        if (savedRaw) {
+          savedSchedules = JSON.parse(savedRaw);
+        }
+
+        // 새 일정에 인덱스 부여
+        const newIndex =
+          savedSchedules.length > 0
+            ? Math.max(...savedSchedules.map((item) => item.index)) + 1
+            : 0;
+
+        // tempSchedule에서 가져온 데이터에 인덱스 추가
+        const tempSchedule = JSON.parse(sessionStorage.getItem("tempSchedule"));
+        tempSchedule.index = newIndex;
+
+        // savedSchedule에 추가
+        savedSchedules.push(tempSchedule);
+        localStorage.setItem("savedSchedule", JSON.stringify(savedSchedules));
+
+        // tempSchedule 삭제
+        sessionStorage.removeItem("tempSchedule");
+        localStorage.removeItem("travelSchedule");
+
+        // 마이페이지로 이동
+        window.location.href = "../mypage/mypage.html";
+      }
+    } catch (e) {
+      console.error("일정 저장 중 오류 발생:", e);
+      alert("일정을 저장하는 중 오류가 발생했습니다.");
+    }
+  });
+
 // ----------------------- 편집 버튼 클릭시 -----------------------
 // 편집 버튼 클릭 시 tab5로 강제로 이동
 document.getElementById("editButton").addEventListener("click", function () {
   // tab5 버튼을 강제로 표시하고 클릭
   const tab5Btn = document.getElementById("tab5Btn");
-  tab5Btn.click(); // tab5 버튼 클릭 이벤트 강제로 발생
   if (tab5Btn) {
     tab5Btn.style.display = "block"; // tab5 버튼을 표시
     tab5Btn.click(); // tab5 버튼 클릭 이벤트 강제로 발생
   }
 });
-// 탭 5의 메인 로직
 // 탭 5의 메인 로직
 let savedForEditTab5 = [];
 let isDragging = false;
@@ -1874,7 +1983,7 @@ function renderEditMode() {
     placeList.setAttribute("data-day-index", index);
 
     day.places.forEach((place, placeIndex) => {
-      const placeBox = createPlaceBox(place, placeIndex);
+      const placeBox = createPlaceBox(place, placeIndex, index);
       placeList.appendChild(placeBox);
     });
 
@@ -1899,29 +2008,34 @@ function renderEditMode() {
 }
 
 // 장소 박스 생성 함수 - 주소 표시하지 않음
-function createPlaceBox(place, index) {
+function createPlaceBox(place, index, dayIndex) {
+  //dayIndex는 일자, index는 장소 순서
   const placeBox = document.createElement("div");
   placeBox.className = "place-box";
   placeBox.setAttribute("data-place-index", index);
 
+  // 순서 원형 UI 생성
+  const orderSpan = document.createElement("span");
+  orderSpan.className = "dayindex-index-circle";
+  orderSpan.textContent = index + 1;
+
+  // 일차별 배경색 설정 (예시: 1일차는 파랑, 2일차는 주황, 3일차는 빨강)
+  const dayColors = ["#3ec6ec", "#ffb14b", "#ff4b7d"];
+  const bgColor = dayColors[dayIndex % dayColors.length] || "#797979";
+  orderSpan.style.backgroundColor = bgColor;
+
+  // 장소 이름 요소 생성
   const nameEl = document.createElement("div");
   nameEl.textContent = place.name;
   nameEl.style.fontWeight = "500";
-  placeBox.appendChild(nameEl);
 
-  // 카테고리에 따라 색상 스타일 적용
-  const categoryColors = {
-    관광: "#3498db",
-    식당: "#e74c3c",
-    카페: "#9b59b6",
-    쇼핑: "#f39c12",
-    숙소: "#1abc9c",
-    기타: "#7f8c8d",
-  };
+  // 숫자 UI와 장소 이름을 감싸는 컨테이너 생성
+  const contentWrapper = document.createElement("div");
+  contentWrapper.className = "place-content";
+  contentWrapper.appendChild(orderSpan);
+  contentWrapper.appendChild(nameEl);
 
-  const category = place.category || "기타";
-  const color = categoryColors[category] || categoryColors["기타"];
-  placeBox.style.borderLeftColor = color;
+  placeBox.appendChild(contentWrapper);
 
   return placeBox;
 }
@@ -1978,12 +2092,36 @@ function applySortable() {
         // 여기에 데이터 갱신 로그 추가
         console.log("데이터 갱신됨:", savedForEditTab5);
 
+        // 순번 UI 갱신
+        updatePlaceOrderUI();
+
         // 변경 알림
         showToast(`장소가 ${toDayIndex + 1}일차로 이동되었습니다.`);
 
         // 변경 사항 자동 저장 (선택적)
         // saveChanges();
       },
+    });
+  });
+}
+//순번 UI 갱신 함수
+function updatePlaceOrderUI() {
+  const dayBoxes = document.querySelectorAll(".edit-day-box");
+
+  dayBoxes.forEach((dayBox, dayIndex) => {
+    const placeList = dayBox.querySelector(".place-list");
+    const placeBoxes = placeList.querySelectorAll(".place-box");
+
+    placeBoxes.forEach((placeBox, index) => {
+      // 순번 원형 UI 요소 선택
+      const orderSpan = placeBox.querySelector(".dayindex-index-circle");
+      if (orderSpan) {
+        orderSpan.textContent = index + 1;
+        // 일차별 배경색 설정
+        const dayColors = ["#3ec6ec", "#ffb14b", "#ff4b7d"];
+        const bgColor = dayColors[dayIndex % dayColors.length] || "#797979";
+        orderSpan.style.backgroundColor = bgColor;
+      }
     });
   });
 }
@@ -2015,17 +2153,6 @@ function createControlPanel() {
     buttonArea.style.display = "flex";
     buttonArea.style.gap = "10px";
 
-    const saveBtn = document.createElement("button");
-    saveBtn.textContent = "저장하기";
-    saveBtn.className = "edit-control-btn save-btn";
-    saveBtn.style.backgroundColor = "#3498db";
-    saveBtn.style.color = "white";
-    saveBtn.style.border = "none";
-    saveBtn.style.padding = "8px 16px";
-    saveBtn.style.borderRadius = "6px";
-    saveBtn.style.cursor = "pointer";
-    saveBtn.onclick = saveChanges;
-
     const resetBtn = document.createElement("button");
     resetBtn.textContent = "초기화";
     resetBtn.className = "edit-control-btn reset-btn";
@@ -2038,7 +2165,6 @@ function createControlPanel() {
     resetBtn.onclick = resetChanges;
 
     buttonArea.appendChild(resetBtn);
-    buttonArea.appendChild(saveBtn);
 
     controlPanel.appendChild(titleArea);
     controlPanel.appendChild(buttonArea);
@@ -2285,10 +2411,13 @@ document.getElementById("cancelButton").addEventListener("click", function () {
 
 // 적용 버튼 클릭 시 (변경 적용)
 document.getElementById("applyButton").addEventListener("click", function () {
-  // 여기서 데이터를 저장하거나 적용하는 로직을 추가할 수 있습니다
-  // 예: saveChanges();
-
-  activateTab("tab3"); // 변경 적용 후 tab3으로 돌아가기
+  saveChanges();
+  const tab4Btn = document.getElementById("tab4Btn");
+  tab4Btn.click();
+  if (tab4Btn) {
+    tab4Btn.style.display = "block";
+    tab4Btn.click();
+  }
 });
 
 // ------------------------ 리사이즈 랜들러 ------------------------
