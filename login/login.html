@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <title>로그인 페이지</title>
   <link rel="stylesheet" href="style.css">
+
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+
 </head>
 
 <body>
@@ -27,18 +31,15 @@
       <div class="sns-login">
         <p style="color: #666; margin-left: -10px;">SNS 간편 로그인</p>
         <div class="sns-buttons">
-          <button class="kakaoBtn">
+          <button class="kakaoBtn" onclick="loginWithKakao()">
             <img src="../login/login_img/KakaoTalk_logo.png" alt="카카오 로그인" width="150">
           </button>
-          <button class="naverBtn">
+          
+          <button id="naver_id_login" onclick="loginWithNaver()"> 
             <img src="../login/login_img/Naver_logo.png" alt="네이버 로그인" width="150">
           </button>
-          <button class="googleBtn">
-            <img src="../login/login_img/Google_logo.png" alt="구글 로그인" width="150">
-          </button>
-          <button class="apppleBtn">
-            <img src="../login/login_img/Apple_logo.png" alt="애플 로그인" width="150">
-          </button>
+
+          <button> </button>
         </div>
       </div>
 
@@ -81,6 +82,10 @@
   </script>
 
   <script src="../sidebar/sidebar.js"></script>
+
+  <script type="module" src="../login/sns_login/kakaoTalkLogin.js"></script>
+  <script type="module" src="../login/sns_login/naverLogin.js"></script>
+
 </body>
 
 </html>
