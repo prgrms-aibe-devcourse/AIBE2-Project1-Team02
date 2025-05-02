@@ -19,51 +19,56 @@
         <div class="text-line">투어스와 함께</div>
         <div class="text-line">To us 여행을 떠나보세요</div>
         <div class="button-group">
-          <button class="startBtn" onclick="location.href='../main/MainPage.html'">시작하기</button>
+          <button class="startBtn">시작하기</button>
           <button class="loginBtn" onclick="location.href='../login/login.html'">로그인</button>
         </div>
       </div>
     </div>
   </div>
 
-
-
+  <!-- 사이드바 HTML 삽입 및 로그아웃 버튼 표시 제어 -->
   <script>
-// fetch로 사이드바 HTML을 불러오고 나서 로그인 상태에 따라 처리
-fetch('../sidebar/sidebar.html')
-  .then(res => res.text())
-  .then(data => {
-    document.getElementById('sidebar-container').innerHTML = data; // 사이드바 삽입
+    fetch('../sidebar/sidebar.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('sidebar-container').innerHTML = data;
 
-    // 로그인 상태에 따른 처리
-    const isLoggedIn = localStorage.getItem('isLoggedIn'); // 로그인 여부 확인
-    const logOutButton = document.querySelector('.sidebar-logOut'); // 로그아웃 버튼
+        // 로그아웃 버튼 로그인 상태에 따라 표시
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        const logOutButton = document.querySelector('.sidebar-logOut');
 
-    if (logOutButton) {
-      if (isLoggedIn === 'true') {
-        logOutButton.style.display = 'block';  // 로그인 상태일 때 버튼 보이기
-      } else {
-        logOutButton.style.display = 'none';  // 로그인 상태가 아니면 버튼 숨기기
-      }
-    }
-  });
-
+        if (logOutButton) {
+          logOutButton.style.display = isLoggedIn === 'true' ? 'block' : 'none';
+        }
+      });
   </script>
 
+  <!-- 로그인 상태에 따라 로그인 버튼 숨기기 -->
   <script>
-    // 로그인 상태에 따라 로그인 버튼 숨기기
     document.addEventListener('DOMContentLoaded', function () {
       const loginBtn = document.querySelector('.loginBtn');
       const isLoggedIn = localStorage.getItem('isLoggedIn');
 
       if (isLoggedIn === 'true') {
-        // 로그인 상태이면 로그인 버튼 숨김
         if (loginBtn) loginBtn.style.display = 'none';
+      }
+
+      const startBtn = document.querySelector('.startBtn');
+      if (startBtn) {
+        startBtn.addEventListener('click', function () {
+          if (isLoggedIn === 'true') {
+            window.location.href = '../main/MainPage.html';
+          } else {
+            alert('로그인이 필요합니다.');
+            window.location.href = '../login/login.html';
+          }
+        });
       }
     });
   </script>
 
-<script src="../sidebar/sidebar.js"></script>
+  <!-- 사이드바 관련 추가 JS (선택사항) -->
+  <script src="../sidebar/sidebar.js"></script>
 </body>
 
 </html>
