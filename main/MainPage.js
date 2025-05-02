@@ -1875,7 +1875,6 @@ document
 document.getElementById("editButton").addEventListener("click", function () {
   // tab5 버튼을 강제로 표시하고 클릭
   const tab5Btn = document.getElementById("tab5Btn");
-  tab5Btn.click(); // tab5 버튼 클릭 이벤트 강제로 발생
   if (tab5Btn) {
     tab5Btn.style.display = "block"; // tab5 버튼을 표시
     tab5Btn.click(); // tab5 버튼 클릭 이벤트 강제로 발생
