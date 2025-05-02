@@ -70,18 +70,17 @@ const AREA_CODE_MAP = {
   제주도: "39",
   제주특별자치도: "39",
 };
-// 새로고침 경고 알트메세지
-window.addEventListener("beforeunload", function (e) {
+// beforeunload 이벤트 핸들러 함수 정의
+function beforeUnloadHandler(e) {
   // 사용자에게 경고 메시지 표시
   const message =
     "페이지를 떠나시겠습니까? 변경 사항이 저장되지 않을 수 있습니다.";
-
-  // 표준 방식으로 메시지 설정
   e.returnValue = message;
-
-  // 일부 브라우저에서는 'returnValue'만 사용하면 경고창을 표시함.
   return message;
-});
+}
+
+// 새로고침 경고 알트메세지
+window.addEventListener("beforeunload", beforeUnloadHandler);
 // 탭버튼 로직
 document.querySelectorAll(".tab").forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -1758,6 +1757,118 @@ async function showScheduleDetails(daySchedule) {
     });
   });
 }
+
+// --------------------------탭4 화면에서 저장 버튼 클릭 시 처리--------------------------
+// 저장 여부를 추적하는 변수
+let isSaved = false;
+document
+  .getElementById("saveButton")
+  .addEventListener("click", function (event) {
+    // 경고 메시지를 표시하는 모달 창 표시
+    const userConfirmed = confirm("여행 계획을 저장하시겠습니까?");
+
+    if (!userConfirmed) {
+      // 사용자가 '취소'를 누른 경우 함수 종료
+      return;
+    }
+
+    // 사용자가 '확인'을 누른 경우 계속 진행
+    // 1. 저장 버튼 클릭 시 로컬스토리지에 저장
+    const raw = localStorage.getItem("travelSchedule");
+    if (!raw) {
+      return;
+    }
+
+    try {
+      const cleanRaw = raw.replace(/```json|```/g, "").trim();
+      const travelSchedule = JSON.parse(cleanRaw);
+
+      // 2. tempSchedule에 저장할 데이터 준비
+      // 시작일과 종료일 추출
+      const dates = travelSchedule.map((item) => new Date(item.Date));
+      const startDate = new Date(Math.min(...dates))
+        .toISOString()
+        .split("T")[0];
+      const endDate = new Date(Math.max(...dates)).toISOString().split("T")[0];
+
+      // 포맷에 맞게 schedule 데이터 구성 및 장소 이름에서 괄호 부분 제거
+      const schedule = travelSchedule.map((item) => {
+        // 각 장소 이름에서 "(" 이전 부분만 추출
+        const cleanedPlaces = item.Places.map((place) => {
+          const bracketIndex = place.indexOf("(");
+          return bracketIndex > -1 ? place.substring(0, bracketIndex) : place;
+        });
+
+        return {
+          date: item.Date,
+          places: cleanedPlaces,
+        };
+      });
+
+      // 최종 저장할 데이터 구조
+      const scheduleToSave = {
+        startDate: startDate,
+        endDate: endDate,
+        schedule: schedule,
+      };
+
+      // JSON 형식으로 tempSchedule에 저장
+      sessionStorage.setItem("tempSchedule", JSON.stringify(scheduleToSave));
+
+      // 3. 로그인 유무 판단
+      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+      // beforeunload 이벤트 리스너 제거
+      window.removeEventListener("beforeunload", beforeUnloadHandler);
+
+      if (!isLoggedIn) {
+        // 로그인되지 않은 경우 로그인 안내 메시지 표시
+        const loginConfirm = confirm(
+          "일정을 저장하시려면 로그인이 필요합니다.\n로그인 페이지로 이동하시겠습니까?\n해당 일정은 로그인 성공시 자동 저장됩니다."
+        );
+
+        if (loginConfirm) {
+          // beforeunload 이벤트 리스너 제거
+          window.removeEventListener("beforeunload", beforeUnloadHandler);
+          // 로그인 페이지로 이동
+          window.location.href = "../login/login.html";
+        }
+        // 로그인을 취소한 경우 아무 작업도 수행하지 않음
+      } else {
+        // 로그인된 경우 savedSchedule에 추가
+        const savedRaw = localStorage.getItem("savedSchedule");
+        let savedSchedules = [];
+
+        if (savedRaw) {
+          savedSchedules = JSON.parse(savedRaw);
+        }
+
+        // 새 일정에 인덱스 부여
+        const newIndex =
+          savedSchedules.length > 0
+            ? Math.max(...savedSchedules.map((item) => item.index)) + 1
+            : 0;
+
+        // tempSchedule에서 가져온 데이터에 인덱스 추가
+        const tempSchedule = JSON.parse(sessionStorage.getItem("tempSchedule"));
+        tempSchedule.index = newIndex;
+
+        // savedSchedule에 추가
+        savedSchedules.push(tempSchedule);
+        localStorage.setItem("savedSchedule", JSON.stringify(savedSchedules));
+
+        // tempSchedule 삭제
+        sessionStorage.removeItem("tempSchedule");
+        localStorage.removeItem("travelSchedule");
+
+        // 마이페이지로 이동
+        window.location.href = "../mypage/mypage.html";
+      }
+    } catch (e) {
+      console.error("일정 저장 중 오류 발생:", e);
+      alert("일정을 저장하는 중 오류가 발생했습니다.");
+    }
+  });
 
 // ----------------------- 편집 버튼 클릭시 -----------------------
 // 편집 버튼 클릭 시 tab5로 강제로 이동
