@@ -397,7 +397,8 @@ function loadFestivalData(page = 1) {
         li.className = "placeItem";
 
         // 이미지 URL 처리
-        const imageUrl = f.images ? f.images[0] : ""; // 첫 번째 이미지를 사용
+        const imageUrl =
+          f.images[0] !== "" ? f.images[0] : "../images/jeju.jpg"; // 첫 번째 이미지를 사용
         const imageHtml = `<img src="${imageUrl}" alt="${f.placeName}" />`;
 
         // 각 장소의 정보 처리
