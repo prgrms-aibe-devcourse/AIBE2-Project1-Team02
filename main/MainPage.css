@@ -510,44 +510,118 @@ li {
 /* 지역 버튼 스타일 */
 .area-btn-container {
   display: flex;
-  flex-wrap: wrap; /* 여러 줄로 배치 */
-  gap: 30px; /* 버튼 간의 간격 */
-  justify-content: flex-start; /* 왼쪽 정렬 */
-  margin-left: 40px; /* 왼쪽 여백 추가 */
-  margin-bottom: 20px; /* 아래쪽 여백 추가 */
-  margin-top: 40px;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
 }
 
 .area-btn {
-  width: calc(45% - 20px); /* 버튼의 너비를 50%로 설정하고 간격을 고려 */
-  padding: 12px;
-  border: 2.5px solid #ccc;
-  border-radius: 30px; /* 둥근 모서리 */
-  color: #282828; /* 어두운 회색 글씨 */
-  font-size: 16px;
-  font-weight: 500;
-  text-align: center;
+  width: calc(33.333% - 20px); /* 3개씩 배치 */
+  height: 120px;
+  border-radius: 15px;
+  overflow: hidden;
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 12px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
-  transition: all 0.3s ease; /* 모든 변화에 부드러운 전환 효과 */
-  box-sizing: border-box; /* 패딩과 테두리가 크기에 포함되도록 설정 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  border: none;
+}
+.area-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.5),
+    transparent
+  ); /* 아래쪽 어둡게 */
+  z-index: 0;
+}
+
+.area-btn span {
+  position: relative;
+  z-index: 1;
+  display: block; /* span을 블록 요소로 만들어야 width 적용됨 */
+  width: 100%; /* 버튼 전체 너비 사용 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  padding: 5px 0;
+  background-color: rgba(0, 0, 0, 0.2); /* 아래 어둡게 배경 */
+  border-radius: 0 0 10px 10px; /* 아래만 둥글게 */
+  font-size: 17px;
+  text-shadow: none;
 }
 
 .area-btn:hover {
-  background-color: #e0e0e0; /* 마우스를 올렸을 때 더 어두운 회색 */
-  transform: translateY(-2px); /* 마우스를 올렸을 때 약간 떠오르는 효과 */
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+.area-btn[data-value="all"] {
+  background-image: url("../images/all.png");
+}
+.area-btn[data-value="1"] {
+  background-image: url("../images/seoul.jpg");
 }
 
-.area-btn:active {
-  transform: translateY(1px); /* 클릭 시 눌리는 효과 */
+.area-btn[data-value="2"] {
+  background-image: url("../images/incheon.jpg");
 }
 
-.area-btn.active {
-  background-color: #282828; /* 활성화된 버튼 색상 */
-  color: #fff; /* 활성화된 버튼은 흰색 글씨 */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 활성화된 버튼에 더 강한 그림자 */
+.area-btn[data-value="3"] {
+  background-image: url("../images/daejeon.jpg");
 }
-
+.area-btn[data-value="4"] {
+  background-image: url("../images/daegu.png");
+}
+.area-btn[data-value="5"] {
+  background-image: url("../images/gwangju.jpg");
+}
+.area-btn[data-value="6"] {
+  background-image: url("../images/busan.jpg");
+}
+.area-btn[data-value="7"] {
+  background-image: url("../images/ulsan.jpg");
+}
+.area-btn[data-value="8"] {
+  background-image: url("../images/sejong.webp");
+}
+.area-btn[data-value="31"] {
+  background-image: url("../images/Gyeonggi-do.webp");
+}
+.area-btn[data-value="32"] {
+  background-image: url("../images/Gangwon.jpg");
+}
+.area-btn[data-value="33"] {
+  background-image: url("../images/Chungcheongbuk-do.jpg");
+}
+.area-btn[data-value="34"] {
+  background-image: url("../images/Chungcheongnam-do.jpg");
+}
+.area-btn[data-value="35"] {
+  background-image: url("../images/Gyeongsangbuk-do.jpg");
+}
+.area-btn[data-value="36"] {
+  background-image: url("../images/Gyeongsangnam-do.jpg");
+}
+.area-btn[data-value="37"] {
+  background-image: url("../images/Jeonbuk.jpg");
+}
+.area-btn[data-value="38"] {
+  background-image: url("../images/Jeollanam-do.jpg");
+}
+.area-btn[data-value="39"] {
+  background-image: url("../images/jeju.jpg");
+}
 /* 달력 모달부분 */
 /* 모달 배경 스타일 */
 .calendar-modal-background {
