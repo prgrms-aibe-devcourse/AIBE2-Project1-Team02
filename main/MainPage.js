@@ -3,7 +3,7 @@ let globalEndDate = "";
 
 let currentPage = 1;
 let totalPages = 1; // 전체 페이지 수 초기화
-let selectedAreaCode = ""; // 기본값은 빈 문자열 (전체 지역)
+let selectedAreaCode = "all"; // 기본값은 빈 문자열 (전체 지역)
 let selectedCategory = ""; // 선택된 카테고리
 let filteredItems = []; // 필터링된 데이터 저장
 const jsonFilePath = "../listEx.json"; // 로컬 파일 경로
@@ -264,9 +264,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("calendarModalBackground").style.display = "none";
   }
 
-  // 페이지 데이터 로딩 및 더보기 버튼 처리
-  loadFestivalData(currentPage);
-
   activateTab("tab1");
 
   // 로드되면 바로 날짜 선택부터
@@ -297,10 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .forEach((btn) => btn.classList.remove("active"));
       event.target.classList.add("active"); // 클릭한 버튼에 active 클래스 추가
       // 탭3으로 이동
-      const tab3Button = document.querySelector('.tab[data-tab="tab3"]');
-      if (tab3Button) {
-        tab3Button.click();
-      }
+      activateTab("tab3");
     });
   });
   // 카테고리 버튼 클릭 이벤트 등록
@@ -547,6 +541,9 @@ function loadFestivalData(page = 1) {
       const list = document.getElementById("festival-list");
       list.innerHTML = `<li>데이터 불러오기 실패: ${err.message}</li>`;
       console.error("API 호출 오류:", err);
+    })
+    .finally(() => {
+      document.getElementById("loadingOverlay").style.display = "none"; // 로딩 종료
     });
   localStorage.setItem("filteredItems", JSON.stringify(filteredItems));
 
@@ -564,6 +561,13 @@ function loadFestivalData(page = 1) {
     localStorage.setItem("startDate", selectedStartDate);
     localStorage.setItem("endDate", selectedEndDate);
 
+    // ✅ 1. 로딩 먼저 표시
+    showLoading();
+
+    // ✅ 2. 딜레이 (고정 3초 유지용, 강제로)
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    // ✅ 3. 일정 생성 실행 (비동기 작업)
     // 여행 일정 자동 생성기 실행
     const module = await import("../scripts.js");
     const filtered = JSON.parse(localStorage.getItem("filteredItems") || "[]");
@@ -597,6 +601,7 @@ function loadFestivalData(page = 1) {
       customPrompt
     );
 
+    // ✅ 4. 마커 처리
     // 새로고침 대신 travelSchedule에서 마커만 불러오기
     const savedSchedule = localStorage.getItem("travelSchedule");
     if (savedSchedule) {
@@ -624,13 +629,24 @@ function loadFestivalData(page = 1) {
       setMarkersByPlaceNames(places); // 마커 표시 및 지도 bounds 이동
     }
 
-    // 탭4 버튼을 강제로 표시하고 클릭
+    // ✅ 5. 탭4 클릭
     const tab4Btn = document.getElementById("tab4Btn");
     if (tab4Btn) {
-      tab4Btn.style.display = "block"; // 버튼을 표시
-      tab4Btn.click(); // 클릭 이벤트 트리거
+      tab4Btn.style.display = "block";
+      tab4Btn.click();
     }
+
+    // ✅ 6. 로딩 숨기기
+    hideLoading();
   });
+}
+// 로딩 화면 표시
+function showLoading() {
+  document.getElementById("loadingOverlay").style.display = "flex";
+}
+// 로딩 화면 숨기기
+function hideLoading() {
+  document.getElementById("loadingOverlay").style.display = "none";
 }
 // 추가 상세정보 (모달의 내용)
 function handleLocationDetail(data) {
@@ -764,7 +780,11 @@ function updateCalendarInfo() {
   const tab3TitleEl = document.getElementById("tab3Title");
   const tab3SubTitleEl = document.getElementById("tab3SubTitle");
 
-  if (selectedAreaCode !== "") {
+  if (selectedAreaCode === "all") {
+    areaNameElement.textContent = "여행 일정";
+    tab2TitleEl.textContent = "여행 일정";
+    tab3TitleEl.textContent = "여행 일정";
+  } else if (selectedAreaCode !== "") {
     const areaName = findAreaNameByCode(selectedAreaCode);
     if (areaName) {
       areaNameElement.textContent = areaName;
@@ -899,7 +919,7 @@ function updateCalendarInfo() {
         endTime,
       });
     });
-    // 탭3으로 이동
+    // 탭2으로 이동
     const tab2Button = document.querySelector('.tab[data-tab="tab2"]');
     if (tab2Button) {
       tab2Button.click();
