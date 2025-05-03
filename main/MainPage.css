@@ -111,7 +111,7 @@ li {
   background-color: white;
   padding: 10px;
   padding-left: 96px;
-  transition: none; /* 드래그 시 즉각적인 변화를 위해 transition 제거 */
+  transition: 0.15s all ease-out;
   box-sizing: border-box;
   margin-left: 10px;
   position: relative; /* 리사이즈 핸들 위치 지정을 위함 */
