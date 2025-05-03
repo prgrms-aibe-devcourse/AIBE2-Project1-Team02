@@ -847,7 +847,7 @@ function updateCalendarInfo() {
     const days = ["일", "월", "화", "수", "목", "금", "토"];
     const date = new Date(dateStr);
     const month = date.getMonth() + 1; // pad 없이
-    const day = date.getDate();
+    const day = date.getDate() + 1;
     const dayOfWeek = days[date.getDay()];
     return `${month}/${day} ${dayOfWeek}`; // 예: 5/16 금
   }
