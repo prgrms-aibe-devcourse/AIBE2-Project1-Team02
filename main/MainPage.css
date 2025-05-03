@@ -526,7 +526,6 @@ li {
   font-size: 18px;
   background-size: cover;
   background-position: center;
-  position: relative;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -536,7 +535,9 @@ li {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   border: none;
+  position: relative; /* 여전히 필요, 하지만 그 안에서만 위치가 조정되도록 */
 }
+
 .area-btn::before {
   content: "";
   position: absolute;
@@ -555,7 +556,7 @@ li {
   display: block; /* span을 블록 요소로 만들어야 width 적용됨 */
   width: 100%; /* 버튼 전체 너비 사용 */
   text-align: center; /* 텍스트 중앙 정렬 */
-  padding: 5px 0;
+  padding: 3px 0;
   background-color: rgba(0, 0, 0, 0.2); /* 아래 어둡게 배경 */
   border-radius: 0 0 10px 10px; /* 아래만 둥글게 */
   font-size: 17px;
