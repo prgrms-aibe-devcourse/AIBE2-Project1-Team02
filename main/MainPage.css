@@ -883,7 +883,7 @@ li {
 #timeConfirmBtn {
   margin-top: 20px;
   padding: 15px 20px; /* 패딩 값 조정 */
-  background-color: #282828;
+  background-color: #3498db;
   color: white;
   border: none;
   border-radius: 6px;
@@ -900,7 +900,7 @@ li {
   justify-content: space-between; /* 항목을 가로로 배치 */
   align-items: flex-start; /* 항목들이 세로로 정렬되지 않도록 상단 정렬 */
   padding: 6px 12px; /* 상하 6px, 좌우 12px */
-  border: 1px solid #e0e0e0;
+  border: 1px solid rgb(186, 230, 253);
   border-radius: 6px;
   margin-bottom: 12px;
   width: calc(100% - 20px); /* 100%에서 20px을 뺀 너비 */
@@ -995,7 +995,7 @@ li {
 /* 중앙: 상세 정보 (클릭 시 표시) */
 /* 상세 정보 컨테이너 */
 #scheduleDetails {
-  flex: 0 0 60%; /* 상세 정보 영역 비율 조정 */
+  flex: 0 0 50%; /* 상세 정보 영역 비율 조정 */
   box-sizing: border-box;
   box-shadow: 6px 0 12px rgba(0, 0, 0, 0.1);
   padding-right: 10px;
@@ -1012,7 +1012,7 @@ li {
 
 /* 각 장소의 상세 정보 박스 */
 .place-detail {
-  border: 2.5px solid #ccc;
+  border: 2.5px solid rgb(186, 230, 253);
   border-radius: 18px;
   padding: 10px;
   margin-bottom: 20px;
@@ -1140,7 +1140,7 @@ li {
 
 /* 왼쪽: 간단 정보 (날짜 목록) */
 #scheduleSummary {
-  flex: 0 0 40%; /* 간단 정보 영역 비율 조정 */
+  flex: 0 0 50%; /* 간단 정보 영역 비율 조정 */
   border-right: 1px solid #ccc; /* 간단 정보와 상세 정보 구분을 위한 경계선 */
   height: 100%; /* 세로로 꽉 차게 */
   box-sizing: border-box; /* 경계선 포함 */
@@ -1150,7 +1150,7 @@ li {
 
 /* 각 날짜 요약 박스 스타일 */
 .custom-date-box {
-  border: 2px solid #ccc;
+  border: 2px solid rgb(186, 230, 253);
   border-radius: 12px;
   padding: 16px;
   cursor: pointer;
@@ -1167,8 +1167,8 @@ li {
 }
 
 .custom-date-box.active {
-  border-color: #282828;
-  background-color: #f0f0f0;
+  border-color: #3498db;
+  background-color: #e8f4fc;
 }
 
 /* 내부 텍스트 스타일 */
@@ -1240,16 +1240,41 @@ li {
   color: #007bff;
 }
 
+.schedule-header {
+  padding: 24px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+}
+
 #scheduleSummaryTitle {
-  margin-left: 20px; /* 왼쪽 여백 */
-  margin-top: 20px;
+  margin: 0 0 16px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a1a1a;
 }
 
 #scheduleSummaryRange {
-  color: #282828;
-  margin-bottom: 60px;
-  margin-left: 20px; /* 왼쪽 여백 */
-  margin-top: 20px;
+  padding: 10px 12px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.date-range {
+  font-size: 16px;
+  font-weight: 500;
+  color: #3498db;
+  text-align: center;
+}
+
+.trip-duration {
+  font-size: 14px;
+  color: #666;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 2px;
 }
 
 /* 저장/편집 버튼 스타일 */

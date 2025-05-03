@@ -174,7 +174,7 @@ function activateTab(tabId) {
 
       case "tab4":
         // 일정 확인 탭 - 세부 레이아웃이 플렉스이므로
-        tabContainer.style.width = "35%";
+        tabContainer.style.width = "40%";
         target.style.display = "flex";
         editButtons.style.display = "none";
         makeScheduleButton.style.display = "none";
@@ -1409,8 +1409,12 @@ function tab4Handler() {
   if (!rawData) {
     console.error("여행 일정 데이터를 찾을 수 없습니다.");
     const scheduleSummary = document.getElementById("scheduleSummary");
-    scheduleSummary.innerHTML =
-      '<h1 id="scheduleSummaryTitle">여행 일정</h1><p>등록된 일정이 없습니다.</p>';
+    scheduleSummary.innerHTML = `
+      <div class="schedule-header">
+        <h1 id="scheduleSummaryTitle">여행 일정</h1>
+        <div class="no-schedule">등록된 일정이 없습니다.</div>
+      </div>
+    `;
     return;
   }
 
@@ -1433,20 +1437,24 @@ function tab4Handler() {
 
     // 날짜 요약 영역 초기화
     const scheduleSummary = document.getElementById("scheduleSummary");
-    scheduleSummary.innerHTML = '<h1 id="scheduleSummaryTitle">여행 일정</h1>';
 
     // 일정이 없는 경우 처리
     if (!travelSchedule || travelSchedule.length === 0) {
-      scheduleSummary.innerHTML += "<p>등록된 일정이 없습니다.</p>";
+      scheduleSummary.innerHTML = `
+        <div class="schedule-header">
+          <h1 id="scheduleSummaryTitle">여행 일정</h1>
+          <div class="no-schedule">등록된 일정이 없습니다.</div>
+        </div>
+      `;
       return;
     }
 
-    // 시작일과 종료일 추출 후 <h3> 태그 추가
     // 중복된 날짜를 제거하고 정렬하여 고유한 날짜만 처리
     const uniqueDates = [
       ...new Set(travelSchedule.map((item) => item.Date)),
     ].sort();
 
+    // 시작일과 종료일 추출
     if (uniqueDates.length > 0) {
       const startDate = new Date(uniqueDates[0]);
       const endDate = new Date(uniqueDates[uniqueDates.length - 1]);
@@ -1460,10 +1468,21 @@ function tab4Handler() {
         return `${yyyy}.${mm}.${dd}(${day})`;
       };
 
-      const dateRangeHTML = `<h3 id="scheduleSummaryRange">${formatDateWithDay(
-        startDate
-      )} ~ ${formatDateWithDay(endDate)}</h3>`;
-      scheduleSummary.innerHTML += dateRangeHTML;
+      // 여행 기간 계산 (일 수)
+      const diffTime = Math.abs(endDate - startDate);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 to include both start and end days
+
+      scheduleSummary.innerHTML = `
+        <div class="schedule-header">
+          <h1 id="scheduleSummaryTitle">여행 일정</h1>
+          <div id="scheduleSummaryRange">
+            <div class="date-range">${formatDateWithDay(
+              startDate
+            )} ~ ${formatDateWithDay(endDate)}</div>
+          </div>
+          <div class="trip-duration">${diffDays}일간의 여행</div>
+        </div>
+      `;
     }
 
     // 날짜별로 데이터 그룹화 (같은 날짜의 Places 합치기)
@@ -1638,7 +1657,16 @@ async function showScheduleDetails(daySchedule) {
   // "24.04.01" 형식으로 출력
   const formattedDate = `${year}.${month}.${day}`;
 
-  let detailsHTML = `<div class="details-date">${formattedDate}</div>`;
+  // 날짜와 가이드 메시지를 포함하는 HTML 생성
+  let detailsHTML = `
+    <div class="details-date">${formattedDate}</div>
+    <div id="placeDetailsGuide" style="margin-bottom: 20px; margin-top: 10px; padding: 12px 16px; background-color: rgb(240, 249, 255); border: 1px solid rgb(186, 230, 253); border-radius: 8px; color: rgb(3, 105, 161); font-size: 0.95rem; display: block;">
+      클릭하여 해당장소의 상세정보를 확인해보세요.
+    </div>
+  `;
+
+  // scheduleDetails에 HTML 설정
+  scheduleDetails.innerHTML = detailsHTML;
 
   if (daySchedule.Places && daySchedule.Places.length > 0) {
     const places = daySchedule.Places;
