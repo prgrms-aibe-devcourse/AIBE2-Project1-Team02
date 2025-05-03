@@ -1254,7 +1254,8 @@ li {
 
 /* 저장/편집 버튼 스타일 */
 #tab4-buttons,
-#editButtons {
+#editButtons,
+#tab3-buttons {
   display: none;
   flex-direction: column;
   align-items: center;
@@ -1265,7 +1266,8 @@ li {
 }
 
 #tab4-buttons button,
-#editButtons button {
+#editButtons button,
+#tab3-buttons button {
   width: 80px;
   margin: 5px 0;
   padding: 8px;
@@ -1277,7 +1279,8 @@ li {
 
 /* 저장 버튼 */
 #saveButton,
-#applyButton {
+#applyButton,
+#makeSchedule {
   background-color: #3498db;
   color: white;
   border: none;
@@ -1291,10 +1294,23 @@ li {
   color: #282828;
   border: 2px solid #ddd;
 }
+#transparentButton {
+  background-color: transparent;
+  border: 2px solid #ddd;
+  width: 80px;
+  height: 60px;
+  margin: 5px 0;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 6px;
+  opacity: 0;
+  box-sizing: border-box; /* 이 속성 추가 */
+}
 
 /* 호버 효과 */
 #saveButton:hover,
-#applyButton:hover {
+#applyButton:hover,
+#makeSchedule:hover {
   background-color: #205e87;
 }
 

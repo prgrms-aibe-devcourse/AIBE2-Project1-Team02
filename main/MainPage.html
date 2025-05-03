@@ -71,6 +71,14 @@
           <button id="editButton">편집</button>
           <button id="saveButton">저장</button>
         </div>
+
+        <!-- 탭3의 일정 생성 버튼 (기본적으로 숨김처리) -->
+        <div id="tab3-buttons" style="display: none; margin-top: auto">
+          <button id="transparentButton" disabled style="cursor: default">
+            투명
+          </button>
+          <button id="makeSchedule">일정 생성</button>
+        </div>
       </div>
       <div id="tab-container">
         <div id="resize-handle"></div>
@@ -207,7 +215,6 @@
           </div>
           <div id="placeSelectBox">
             <ul id="selectedPlaces"></ul>
-            <button id="makeSchedule" style="float: right">일정 만들기</button>
           </div>
         </div>
         <div id="tab4" class="tabContent" style="display: none">

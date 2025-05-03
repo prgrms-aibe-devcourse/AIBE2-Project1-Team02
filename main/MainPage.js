@@ -120,6 +120,9 @@ function activateTab(tabId) {
   // 편집 모드에서  취소/적용 버튼 컨테이너
   const editButtons = document.getElementById("editButtons");
 
+  // 탭3의 일정 생성 버튼
+  const makeScheduleButton = document.getElementById("tab3-buttons");
+
   // 탭 버튼
   const tab1Button = document.getElementById("tab1Btn");
   const tab2Button = document.getElementById("tab2Btn");
@@ -135,6 +138,7 @@ function activateTab(tabId) {
         tabContainer.style.width = "25%";
         target.style.display = "block";
         editButtons.style.display = "none";
+        makeScheduleButton.style.display = "none";
         tab1Button.style.display = "block";
         tab2Button.style.display = "block";
         tab3Button.style.display = "block";
@@ -147,6 +151,7 @@ function activateTab(tabId) {
         tabContainer.style.width = "20%";
         target.style.display = "block";
         editButtons.style.display = "none";
+        makeScheduleButton.style.display = "none";
         tab1Button.style.display = "block";
         tab2Button.style.display = "block";
         tab3Button.style.display = "block";
@@ -159,6 +164,7 @@ function activateTab(tabId) {
         tabContainer.style.width = "40%";
         target.style.display = "block";
         editButtons.style.display = "none";
+        makeScheduleButton.style.display = "flex";
         tab1Button.style.display = "block";
         tab2Button.style.display = "block";
         tab3Button.style.display = "block";
@@ -171,6 +177,7 @@ function activateTab(tabId) {
         tabContainer.style.width = "35%";
         target.style.display = "flex";
         editButtons.style.display = "none";
+        makeScheduleButton.style.display = "none";
         tab1Button.style.display = "block";
         tab2Button.style.display = "block";
         tab3Button.style.display = "block";
@@ -184,6 +191,7 @@ function activateTab(tabId) {
         target.style.display = "flex";
         tab4Buttons.style.display = "none";
         editButtons.style.display = "flex";
+        makeScheduleButton.style.display = "none";
         tab1Button.style.display = "none";
         tab2Button.style.display = "none";
         tab3Button.style.display = "none";
@@ -201,6 +209,7 @@ function activateTab(tabId) {
     if (tabId === "tab5") {
       tab4Buttons.style.display = "none";
       editButtons.style.display = "flex";
+      makeScheduleButton.style.display = "none";
       tab1Button.style.display = "none";
       tab2Button.style.display = "none";
       tab3Button.style.display = "none";
@@ -208,6 +217,7 @@ function activateTab(tabId) {
       initializeEditMode();
     } else {
       editButtons.style.display = "none";
+      makeScheduleButton.style.display = "none";
       tab1Button.style.display = "block";
       tab2Button.style.display = "block";
       tab3Button.style.display = "block";
