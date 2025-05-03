@@ -16,11 +16,21 @@ window.loginWithKakao = function () {
         url: '/v2/user/me',
         success: function (res) {
           const nickname = res.kakao_account.profile.nickname;
-          const profileImageUrl = res.kakao_account.profile.profile_image_url;
+          const email = res.kakao_account.email; // 이메일 정보
+          const profileImg = res.kakao_account.profile.profile_image_url;
+          const kakaoAccessToken = authObj.access_token; // 액세스 토큰
+
+          const userInfo = {
+            nickname: nickname,
+            email: email,
+            profileImg: profileImg,
+            kakaoAccessToken: kakaoAccessToken // 액세스 토큰 저장
+        };
 
           alert(`${nickname}님 환영합니다!`);
           localStorage.setItem('isLoggedIn', 'true'); // 로그인 상태 저장
-          location.href = '../main/main.html'; // 로그인 성공 후 이동
+          localStorage.setItem('kakao_user', JSON.stringify(userInfo));
+          location.href = 'http://127.0.0.1:5500/main.html'; // 로그인 성공 후 이동
         },
         fail: function (error) {
           console.error('사용자 정보 요청 실패:', error);

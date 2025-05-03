@@ -7,8 +7,9 @@
   <link rel="stylesheet" href="style.css">
 
   <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-
+  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+    charset="utf-8"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 
 <body>
@@ -34,8 +35,8 @@
           <button class="kakaoBtn" onclick="loginWithKakao()">
             <img src="../login/login_img/KakaoTalk_logo.png" alt="카카오 로그인" width="150">
           </button>
-          
-          <button id="naver_id_login" onclick="loginWithNaver()"> 
+
+          <button id="naver_id_login">
             <img src="../login/login_img/Naver_logo.png" alt="네이버 로그인" width="150">
           </button>
 
@@ -84,7 +85,30 @@
   <script src="../sidebar/sidebar.js"></script>
 
   <script type="module" src="../login/sns_login/kakaoTalkLogin.js"></script>
-  <script type="module" src="../login/sns_login/naverLogin.js"></script>
+
+  <script type="text/javascript">
+    // 네이버 로그인
+    var naver_id_login = new naver_id_login("QcJXrtQ1k8vdMQwpLBsR",
+      "http://127.0.0.1:5500/login/sns_login/callback.html");
+    var state = naver_id_login.getUniqState();
+    naver_id_login.setDomain("http://127.0.0.1:5500/main.html");
+    naver_id_login.setState(state);
+    naver_id_login.setPopup();
+    naver_id_login.init_naver_id_login();
+
+    window.addEventListener('message', function (event) {
+      if (event.data.type === 'NAVER_LOGIN_SUCCESS') {
+        const userInfo = event.data.payload;
+
+        // 로컬스토리지 저장
+        localStorage.setItem('naver_user', JSON.stringify(userInfo));
+        localStorage.setItem('isLoggedIn', 'true');
+
+        // 사용자에게 확인 창 표시
+        window.location.href = 'http://127.0.0.1:5500/main.html';
+      }
+    });
+  </script>
 
 </body>
 
