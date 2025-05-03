@@ -974,7 +974,7 @@ li {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 120px;
+  max-width: 300px;
 }
 
 /* 확장된 상태 (Instagram 스타일) */
