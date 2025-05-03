@@ -97,7 +97,6 @@ li {
 
 /* 메인 컨테이너 스타일 수정 */
 #main-container {
-  margin-left: 80px;
   display: flex;
   flex-direction: row;
   height: 100vh;
@@ -111,7 +110,7 @@ li {
   height: 100%;
   background-color: white;
   padding: 10px;
-  overflow-y: auto;
+  padding-left: 96px;
   transition: none; /* 드래그 시 즉각적인 변화를 위해 transition 제거 */
   box-sizing: border-box;
   margin-left: 10px;
@@ -120,22 +119,35 @@ li {
   max-width: 80%; /* 최대 너비 설정 */
 }
 
-/* 리사이즈 핸들 스타일 */
+/* 리사이즈 핸들 컨테이너 */
 #resize-handle {
   width: 8px;
   height: 100%;
-  background-color: #ddd;
+  background-color: #ffffff;
   cursor: col-resize;
   position: absolute;
   right: 0;
   top: 0;
   z-index: 10;
   transition: background-color 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 4px;
 }
 
-#resize-handle:hover,
-#resize-handle.active {
-  background-color: #aaa;
+/* 리사이즈 핸들 내부 바 */
+.resize-handle {
+  background-color: #a3a5a8;
+  height: 80px;
+  width: 6px;
+  border-radius: 2px;
+  transition: background-color 0.2s;
+}
+
+/* 마우스 오버 시 내부 바 색상 변경 */
+#resize-handle:hover .resize-handle {
+  background-color: #555;
 }
 
 /* 맵 컨테이너 스타일 수정 */

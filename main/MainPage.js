@@ -2488,6 +2488,7 @@ function initializeResizeHandler() {
   const tabContainer = document.getElementById("tab-container");
   const resizeHandle = document.createElement("div");
   resizeHandle.id = "resize-handle";
+  resizeHandle.innerHTML = `<div class="resize-handle"></div>`; // 내부 문양 div 추가
   tabContainer.appendChild(resizeHandle);
 
   let initialX;
