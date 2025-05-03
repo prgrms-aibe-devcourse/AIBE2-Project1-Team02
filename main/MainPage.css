@@ -117,6 +117,13 @@ li {
   position: relative; /* 리사이즈 핸들 위치 지정을 위함 */
   min-width: 250px; /* 최소 너비 설정 */
   max-width: 80%; /* 최대 너비 설정 */
+
+  overflow-y: auto;
+  overflow-x: hidden; /* 수평 스크롤바 숨김 */
+}
+
+#tab-container::-webkit-scrollbar {
+  display: none;
 }
 
 /* 리사이즈 핸들 컨테이너 */
@@ -143,6 +150,7 @@ li {
   width: 6px;
   border-radius: 2px;
   transition: background-color 0.2s;
+  position: fixed;
 }
 
 /* 마우스 오버 시 내부 바 색상 변경 */
