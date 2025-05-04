@@ -957,11 +957,19 @@ function updateCalendarInfo() {
   // (2) 개별 시간 설정용
   function formatDateForTimeAdjustment(dateStr) {
     const days = ["일", "월", "화", "수", "목", "금", "토"];
-    const date = new Date(dateStr);
-    const month = date.getMonth() + 1; // pad 없이
-    const day = date.getDate() + 1;
-    const dayOfWeek = days[date.getDay()];
-    return `${month}/${day} ${dayOfWeek}`; // 예: 5/16 금
+
+    // "YYYY-MM-DD" → [연, 월, 일]
+    const [year, month, day] = dateStr.split("-").map(Number);
+
+    // ✅ 로컬 기준 Date 객체 생성
+    const localDate = new Date(year, month - 1, day); // UTC 사용 X
+
+    // 날짜 형식
+    const formattedMonth = month;
+    const formattedDay = day;
+    const dayOfWeek = days[localDate.getDay()];
+
+    return `${formattedMonth}/${formattedDay} ${dayOfWeek}`; // 예: 5/30 금
   }
 
   selectedDatesList.querySelectorAll(".schedule-item").forEach((item) => {
@@ -1012,13 +1020,21 @@ function updateCalendarInfo() {
   function getDatesInRange(startStr, endStr) {
     const dateArray = [];
     if (!startStr || !endStr) return dateArray;
+
     let currentDate = new Date(startStr);
     const endDate = new Date(endStr);
 
     while (currentDate <= endDate) {
-      dateArray.push(currentDate.toISOString().split("T")[0]); // yyyy-mm-dd
+      // 로컬 날짜 기준으로 yyyy-mm-dd 문자열 생성
+      const year = currentDate.getFullYear();
+      const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+      const day = String(currentDate.getDate()).padStart(2, "0");
+
+      dateArray.push(`${year}-${month}-${day}`);
+
       currentDate.setDate(currentDate.getDate() + 1);
     }
+
     return dateArray;
   }
 }
