@@ -1715,8 +1715,9 @@ function toggleLike(id, element) {
 
   // 해당 ID가 이미 좋아요에 있는지 확인
   const index = likePlaces.indexOf(id);
+  const isLikedNow = index === -1;
 
-  if (index === -1) {
+  if (isLikedNow) {
     // 좋아요 추가
     likePlaces.push(id);
     element.classList.add("liked");
@@ -1732,7 +1733,24 @@ function toggleLike(id, element) {
   localStorage.setItem("likePlaces", JSON.stringify(likePlaces));
 
   // 동일한 장소의 다른 좋아요 버튼도 업데이트
-  updateAllLikeButtons(id, index === -1);
+  updateAllLikeButtons(id, isLikedNow);
+
+  // 좋아요 수 업데이트
+  const likeCountSpans = document.querySelectorAll(
+    `.place-detail-feedback span:first-child`
+  );
+
+  likeCountSpans.forEach((span) => {
+    const parentBox = span.closest(".place-detail");
+    if (!parentBox) return;
+
+    const likeBtn = parentBox.querySelector(`.like-btn[data-id="${id}"]`);
+    if (!likeBtn) return;
+
+    let currentCount = parseInt(span.textContent.replace(/[^\d]/g, ""), 10);
+    const newCount = isLikedNow ? currentCount + 1 : currentCount - 1;
+    span.textContent = `🩷 ${newCount}`;
+  });
 
   // 이벤트 버블링 방지
   event.stopPropagation();
@@ -1814,8 +1832,8 @@ async function showScheduleDetails(daySchedule) {
         const thumbnail = matched.images[0];
         const isLiked = likePlaces.includes(matched.id);
         const likeIcon = isLiked
-          ? '<i class="bi bi-heart-fill"></i>'
-          : '<i class="bi bi-heart"></i>';
+          ? '<i class="bi bi-heart-fill" id="heartBtn"></i>'
+          : '<i class="bi bi-heart" id="heartBtn"></i>';
         const likedClass = isLiked ? "liked" : "";
 
         // 안쪽에 해당 부분 추가
