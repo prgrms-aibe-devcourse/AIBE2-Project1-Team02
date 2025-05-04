@@ -52,49 +52,12 @@
 
             <div class="tour-section">
                 <h3>다녀올 투어스 🧳</h3>
-                <div class="tour-list">
-                    <div class="tour-card">
-                        <img class="tour-image"
-                            src="https://api.cdn.visitjeju.net/photomng/imgpath/202409/20/b2087c57-7cb6-420d-a840-c6e7e581072e.png"
-                            alt="동대문 여행" />
-                        <div class="tour-info">
-                            <h4>동대문 여행</h4>
-                            <p class="tour-date">4월 27일 ~ 4월 28일</p>
-                            <p class="tour-plan">
-                                동묘 구제옷 시장<br />
-                                동대문 디자인 플라자<br />
-                                감자 핫도그
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
+                <div class="tour-list upcoming"></div> <!-- 다녀올 투어스 -->
             </div>
 
             <div class="tour-section">
                 <h3>다녀온 투어스 📷</h3>
-                <div class="tour-list">
-                    <div class="tour-card">
-                        <img class="tour-image"
-                            src="https://img.hani.co.kr/imgdb/resize/2017/0203/148600326085_20170203.JPG"
-                            alt="동대문 여행" />
-                        <div class="tour-info">
-                            <h4>동대문 여행</h4>
-                            <p>4월 27일 ~ 4월 28일</p>
-                            <p>동묘 구제옷 시장<br />동대문 디자인 플라자<br />감자 핫도그</p>
-                        </div>
-                    </div>
-                    <div class="tour-card">
-                        <img class="tour-image"
-                            src="https://us.123rf.com/450wm/jackmalipan/jackmalipan1306/jackmalipan130600006/20062416-%EB%B0%A4%EC%97%90-%EC%84%9C%EC%9A%B8-%EB%82%A8%EC%AA%BD%EC%9D%98-%ED%95%9C%EA%B5%AD%EC%9D%98-%EB%8F%99%EB%8C%80%EB%AC%B8-%EA%B2%8C%EC%9D%B4%ED%8A%B8-%EB%9E%9C%EB%93%9C-%EB%A7%88%ED%81%AC.jpg"
-                            alt="동대문 여행" />
-                        <div class="tour-info">
-                            <h4>동대문 여행</h4>
-                            <p>4월 27일 ~ 4월 28일</p>
-                            <p>동묘 구제옷 시장<br />동대문 디자인 플라자<br />감자 핫도그</p>
-                        </div>
-                    </div>
-                </div>
+                <div class="tour-list completed"></div> <!-- 다녀온 투어스 -->
             </div>
         </div>
 
@@ -125,6 +88,128 @@
 
     <script src="../sidebar/sidebar.js"></script>
     <script src="../mypage/mypage.js"></script>
+
+    <script>
+        // 여행 카드 생성 스크립트
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentDate = new Date(); // 현재 날짜
+            const savedSchedules = JSON.parse(localStorage.getItem("savedSchedule"));
+
+            // savedSchedules 배열이 존재하는지 확인
+            if (!savedSchedules || !Array.isArray(savedSchedules)) {
+                console.log("여행 일정이 없습니다.");
+                return;
+            }
+
+            // 다녀올 투어스 섹션과 다녀온 투어스 섹션
+            const upcomingTourSection = document.querySelector(".tour-section .tour-list.upcoming");
+            const completedTourSection = document.querySelector(".tour-section .tour-list.completed");
+
+            // 다녀올 투어스 (startDate가 현재일 이후인 여행)
+            const upcomingTours = savedSchedules
+                .filter(tour => new Date(tour.startDate) >= currentDate); // startDate가 현재일 이후인 여행
+
+            // 다녀온 투어스 (endDate가 현재일 이전인 여행)
+            const completedTours = savedSchedules
+                .filter(tour => new Date(tour.endDate) < currentDate); // endDate가 현재일 이전인 여행
+
+            // 다녀올 투어스를 startDate가 가까운 순서로 정렬
+            upcomingTours.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+
+            // 다녀온 투어스를 index 역순으로 정렬 (최근에 저장된 순서로)
+            completedTours.sort((a, b) => b.index - a.index);
+
+            // 여행 카드 생성 함수
+            function createTourCard(tour) {
+                const { startDate, endDate, schedule, index } = tour;
+
+                const tourCard = document.createElement("div");
+                tourCard.classList.add("tour-card");
+
+                const tourImage = document.createElement("img");
+                tourImage.classList.add("tour-image");
+                tourImage.src = "https://api.cdn.visitjeju.net/photomng/imgpath/202409/20/b2087c57-7cb6-420d-a840-c6e7e581072e.png";
+                tourImage.alt = `${schedule[0]} 여행`;
+
+                const tourInfo = document.createElement("div");
+                tourInfo.classList.add("tour-info");
+
+                const tourTitleContainer = document.createElement("div");
+                tourTitleContainer.style.display = "flex";
+                tourTitleContainer.style.alignItems = "center";
+                tourTitleContainer.style.gap = "8px";
+
+                const tourTitle = document.createElement("h4");
+                const firstPlace = schedule[0]?.places?.[0] || "여행지 미정";
+                tourTitle.textContent = firstPlace;
+
+                // ✏️ 편집 버튼
+                const editButton = document.createElement("button");
+                editButton.textContent = "✏️";
+                editButton.style.fontSize = "14px";
+                editButton.style.cursor = "pointer";
+                editButton.style.padding = "2px 6px";
+                editButton.style.border = "1px solid #ccc";
+                editButton.style.borderRadius = "4px";
+                editButton.style.backgroundColor = "#f0f0f0";
+
+                editButton.addEventListener("click", () => {
+                    const newPlace = prompt("첫 번째 장소명을 수정하세요:", firstPlace);
+                    if (newPlace && newPlace.trim() !== "") {
+                        schedule[0].places[0] = newPlace.trim();         // 데이터 수정
+                        tourTitle.textContent = newPlace.trim();         // UI 갱신
+
+                        // 로컬스토리지 반영
+                        const allSchedules = JSON.parse(localStorage.getItem("savedSchedule"));
+                        const updateIndex = allSchedules.findIndex(item => item.index === index);
+                        if (updateIndex !== -1) {
+                            allSchedules[updateIndex].schedule[0].places[0] = newPlace.trim();
+                            localStorage.setItem("savedSchedule", JSON.stringify(allSchedules));
+                        }
+                    }
+                });
+
+                tourTitleContainer.appendChild(tourTitle);
+                tourTitleContainer.appendChild(editButton);
+
+                const tourDate = document.createElement("p");
+                tourDate.classList.add("tour-date");
+                tourDate.textContent = `${startDate} ~ ${endDate}`;
+
+                const tourPlan = document.createElement("p");
+                tourPlan.classList.add("tour-plan");
+                tourPlan.innerHTML = schedule.map(day => {
+                    const date = day.date;
+                    const places = day.places.join(", ");
+                    return `<strong>${date}</strong>: ${places}`;
+                }).join("<br />");
+
+                tourInfo.appendChild(tourTitleContainer);
+                tourInfo.appendChild(tourDate);
+                tourInfo.appendChild(tourPlan);
+                tourCard.appendChild(tourImage);
+                tourCard.appendChild(tourInfo);
+
+                return tourCard;
+            }
+
+            // 다녀올 투어스 카드 삽입
+            upcomingTours.forEach(tour => {
+                const tourCard = createTourCard(tour);
+                upcomingTourSection.appendChild(tourCard);
+            });
+
+            // 다녀온 투어스 카드 삽입
+            completedTours.forEach(tour => {
+                const tourCard = createTourCard(tour);
+                completedTourSection.appendChild(tourCard);
+            });
+        });
+    </script>
+
+
+
 </body>
 
 </html>
