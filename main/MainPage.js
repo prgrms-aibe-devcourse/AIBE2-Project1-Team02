@@ -2029,11 +2029,37 @@ document
         };
       });
 
+      // 자동 제목 생성
+      const firstPlaceRaw = travelSchedule?.[0]?.Places?.[0] || "어디론가";
+      const bracketIndex = firstPlaceRaw.indexOf("(");
+      const firstPlace =
+        bracketIndex > -1
+          ? firstPlaceRaw.substring(0, bracketIndex)
+          : firstPlaceRaw;
+
+      const titleTemplates = [
+        (place) => `${place}부터 시작하는 여행!`,
+        (place) => `${place}부터 가자!`,
+        (place) => `${place}부터!`,
+        (place) => `${place}로 떠나는 설레는 첫걸음`,
+        (place) => `이번 여행, ${place}에서 시작해볼까?`,
+        (place) => `${place}, 첫 목적지로 딱이야!`,
+        (place) => `${place}부터 찬찬히 돌아보자`,
+        (place) => `${place}, 그곳에서 시작된 이야기`,
+        (place) => `${place}부터 출발하는 감성 여행`,
+        (place) => `처음 도착한 곳, ${place}!`,
+      ];
+
+      const randomTemplate =
+        titleTemplates[Math.floor(Math.random() * titleTemplates.length)];
+      const title = randomTemplate(firstPlace);
+
       // 최종 저장할 데이터 구조
       const scheduleToSave = {
         startDate: startDate,
         endDate: endDate,
         schedule: schedule,
+        title: title, // ← 자동 생성된 제목
       };
 
       // JSON 형식으로 tempSchedule에 저장
