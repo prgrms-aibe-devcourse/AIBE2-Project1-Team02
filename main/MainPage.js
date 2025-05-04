@@ -1845,10 +1845,16 @@ document
       // 2. tempSchedule에 저장할 데이터 준비
       // 시작일과 종료일 추출
       const dates = travelSchedule.map((item) => new Date(item.Date));
-      const startDate = new Date(Math.min(...dates))
-        .toISOString()
-        .split("T")[0];
-      const endDate = new Date(Math.max(...dates)).toISOString().split("T")[0];
+
+      // 시작일 계산
+      let startDate = new Date(Math.min(...dates));
+      startDate.setDate(startDate.getDate() + 1); // 하루 추가
+      startDate = startDate.toISOString().split("T")[0]; // ISO 형식으로 변환
+
+      // 종료일 계산
+      let endDate = new Date(Math.max(...dates));
+      endDate.setDate(endDate.getDate() + 1); // 하루 추가
+      endDate = endDate.toISOString().split("T")[0]; // ISO 형식으로 변환
 
       // 포맷에 맞게 schedule 데이터 구성 및 장소 이름에서 괄호 부분 제거
       const schedule = travelSchedule.map((item) => {
