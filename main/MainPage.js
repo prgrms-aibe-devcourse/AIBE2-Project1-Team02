@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentPage += 1;
     loadFestivalData(currentPage);
   });
-
+  // ----------------------------탭 2의 지역 버튼 ----------------------
   // 지역 버튼 클릭 이벤트 등록
   document.querySelectorAll(".area-btn").forEach((button) => {
     button.addEventListener("click", (event) => {
@@ -297,6 +297,11 @@ document.addEventListener("DOMContentLoaded", () => {
       activateTab("tab3");
     });
   });
+  // ----------------------------탭 3의 카테고리 버튼  ----------------------
+  // 처음 로드시, 카테 고리 버튼은 전체로 활성화화
+  document
+    .querySelector('.placeCategory[data-value="all"]')
+    ?.classList.add("active");
   // 카테고리 버튼 클릭 이벤트 등록
   document.querySelectorAll(".placeCategory").forEach((button) => {
     button.addEventListener("click", (event) => {
