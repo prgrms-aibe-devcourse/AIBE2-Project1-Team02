@@ -796,12 +796,12 @@ li {
 /* 시작일, 끝일 동일한 색상 */
 .selected-start,
 .selected-end {
-  background-color: #282828 !important; /* 연한 초록색으로 동일하게 설정 */
+  background-color: #3498db !important; /* 연한 초록색으로 동일하게 설정 */
   color: white;
 }
 
 .selected-range {
-  background-color: #797878bc;
+  background-color: rgb(186, 230, 253);
   color: white;
 }
 
@@ -849,7 +849,7 @@ li {
 
 /* 선택 완료 버튼 스타일 */
 #confirmBtn {
-  background-color: #282828; /* 검은색 배경 */
+  background-color: #3498db; /* 검은색 배경 */
   color: white;
   padding: 10px 20px;
   border: none;
@@ -882,7 +882,7 @@ li {
 #calendarIcon {
   cursor: pointer;
   font-size: 20px;
-  color: #282828;
+  color: #3498db;
   display: inline-block;
 }
 

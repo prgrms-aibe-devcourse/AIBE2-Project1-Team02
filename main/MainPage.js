@@ -148,7 +148,7 @@ function activateTab(tabId) {
 
       case "tab2":
         // 지역 선택 탭 - 왼쪽 영역을 중간 크기로
-        tabContainer.style.width = "20%";
+        tabContainer.style.width = "25%";
         target.style.display = "block";
         editButtons.style.display = "none";
         makeScheduleButton.style.display = "none";
@@ -187,7 +187,7 @@ function activateTab(tabId) {
         break;
 
       case "tab5":
-        tabContainer.style.width = "38%";
+        tabContainer.style.width = "43%";
         target.style.display = "flex";
         tab4Buttons.style.display = "none";
         editButtons.style.display = "flex";
@@ -1191,7 +1191,7 @@ function toggleConfirmButton() {
   if (selectedStartDate && selectedEndDate) {
     confirmBtn.removeAttribute("disabled");
     // 활성화 상태 스타일 변경 (검은색 배경에 흰색 글씨)
-    confirmBtn.style.backgroundColor = "#282828";
+    confirmBtn.style.backgroundColor = "#3498db";
     confirmBtn.style.color = "white";
   } else {
     confirmBtn.setAttribute("disabled", "true");
