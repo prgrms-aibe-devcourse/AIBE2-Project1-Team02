@@ -1019,6 +1019,7 @@ li {
   box-sizing: border-box;
   box-shadow: 6px 0 12px rgba(0, 0, 0, 0.1);
   padding-right: 10px;
+  padding-left: 10px;
 }
 
 /* 날짜 제목 */
@@ -1161,7 +1162,6 @@ li {
 /* 왼쪽: 간단 정보 (날짜 목록) */
 #scheduleSummary {
   flex: 0 0 50%; /* 간단 정보 영역 비율 조정 */
-  border-right: 1px solid #ccc; /* 간단 정보와 상세 정보 구분을 위한 경계선 */
   height: 100%; /* 세로로 꽉 차게 */
   box-sizing: border-box; /* 경계선 포함 */
   display: flex; /* 플렉스 컨테이너로 설정 */
