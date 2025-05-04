@@ -1,215 +1,257 @@
 <!DOCTYPE html>
 <html lang="ko">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Page</title>
     <link rel="stylesheet" href="../mypage/mypage.css" />
 
     <style>
-        .main-container {
-            display: none;
-        }
+      .main-container {
+        display: none;
+      }
     </style>
     <script>
-        const isLoggedIn = localStorage.getItem('isLoggedIn');
-        if (isLoggedIn !== 'true') {
-            // 로그인 안된 경우 바로 리디렉션 (렌더링 이전)
-            window.location.replace('../login/login.html');
-        } else {
-            // 로그인된 경우에만 body 보여주기
-            window.addEventListener('DOMContentLoaded', function () {
-                document.body.style.display = 'block';
-            });
-        }
+      const isLoggedIn = localStorage.getItem("isLoggedIn");
+      if (isLoggedIn !== "true") {
+        // 로그인 안된 경우 바로 리디렉션 (렌더링 이전)
+        window.location.replace("../login/login.html");
+      } else {
+        // 로그인된 경우에만 body 보여주기
+        window.addEventListener("DOMContentLoaded", function () {
+          document.body.style.display = "block";
+        });
+      }
     </script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="main-container">
+      <div id="sidebar-container"></div>
 
-        <div id="sidebar-container"></div>
-
-        <div class="inner">
-            <h2 class="whose-profile">김기현 님의 투어스</h2>
-            <div class="profile-section">
-                <img class="profile-image" src="../mypage/mypage_img/김기현_증명사진1.jpg" alt="프로필 이미지" />
-                <div class="profile-info">
-                    <p class="username">김기현 <span class="userid">@watergon1126</span></p>
-                    <div class="stats">
-                        <div><strong>3<br />투어스</strong></div>
-                        <div><strong>151<br />리뷰 작성</strong></div>
-                        <div><strong>156<br />좋아요</strong></div>
-                    </div>
-                </div>
-                <button class="edit-profile" onclick="window.location.href='../edit/edit.html';">프로필 편집</button>
-                <button class="delete-account">회원탈퇴</button>
+      <div class="inner">
+        <h2 class="whose-profile">김기현 님의 투어스</h2>
+        <div class="profile-section">
+          <img
+            class="profile-image"
+            src="../mypage/mypage_img/김기현_증명사진1.jpg"
+            alt="프로필 이미지"
+          />
+          <div class="profile-info">
+            <p class="username">
+              김기현 <span class="userid">@watergon1126</span>
+            </p>
+            <div class="stats">
+              <div>
+                <strong>3<br />투어스</strong>
+              </div>
+              <div>
+                <strong>151<br />리뷰 작성</strong>
+              </div>
+              <div>
+                <strong>156<br />좋아요</strong>
+              </div>
             </div>
-
-            <p class="profile-message">제주도 여행가려고 돈 모으는 중...</p>
-            <hr />
-
-            <div class="tour-section">
-                <h3>다녀올 투어스 🧳</h3>
-                <div class="tour-list upcoming"></div> <!-- 다녀올 투어스 -->
-            </div>
-
-            <div class="tour-section">
-                <h3>다녀온 투어스 📷</h3>
-                <div class="tour-list completed"></div> <!-- 다녀온 투어스 -->
-            </div>
+          </div>
+          <button
+            class="edit-profile"
+            onclick="window.location.href='../edit/edit.html';"
+          >
+            프로필 편집
+          </button>
+          <button class="delete-account">회원탈퇴</button>
         </div>
 
+        <p class="profile-message">제주도 여행가려고 돈 모으는 중...</p>
+        <hr />
+
+        <div class="tour-section">
+          <h3>다녀올 투어스 🧳</h3>
+          <div class="tour-list upcoming"></div>
+          <!-- 다녀올 투어스 -->
+        </div>
+
+        <div class="tour-section">
+          <h3>다녀온 투어스 📷</h3>
+          <div class="tour-list completed"></div>
+          <!-- 다녀온 투어스 -->
+        </div>
+      </div>
     </div>
 
-
     <script>
-        // fetch로 사이드바 HTML을 불러오고 나서 로그인 상태에 따라 처리
-        fetch('../sidebar/sidebar.html')
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById('sidebar-container').innerHTML = data; // 사이드바 삽입
+      // fetch로 사이드바 HTML을 불러오고 나서 로그인 상태에 따라 처리
+      fetch("../sidebar/sidebar.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("sidebar-container").innerHTML = data; // 사이드바 삽입
 
-                // 로그인 상태에 따른 처리
-                const isLoggedIn = localStorage.getItem('isLoggedIn'); // 로그인 여부 확인
-                const logOutButton = document.querySelector('.sidebar-logOut'); // 로그아웃 버튼
+          // 로그인 상태에 따른 처리
+          const isLoggedIn = localStorage.getItem("isLoggedIn"); // 로그인 여부 확인
+          const logOutButton = document.querySelector(".sidebar-logOut"); // 로그아웃 버튼
 
-                if (logOutButton) {
-                    if (isLoggedIn === 'true') {
-                        logOutButton.style.display = 'block';  // 로그인 상태일 때 버튼 보이기
-                    } else {
-                        logOutButton.style.display = 'none';  // 로그인 상태가 아니면 버튼 숨기기
-                    }
-                }
-            });
-
+          if (logOutButton) {
+            if (isLoggedIn === "true") {
+              logOutButton.style.display = "block"; // 로그인 상태일 때 버튼 보이기
+            } else {
+              logOutButton.style.display = "none"; // 로그인 상태가 아니면 버튼 숨기기
+            }
+          }
+        });
     </script>
 
     <script src="../sidebar/sidebar.js"></script>
     <script src="../mypage/mypage.js"></script>
 
     <script>
-        // 여행 카드 생성 스크립트
+      document.addEventListener("DOMContentLoaded", async function () {
+        const currentDate = new Date();
+        const savedSchedules = JSON.parse(
+          localStorage.getItem("savedSchedule")
+        );
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const currentDate = new Date(); // 현재 날짜
-            const savedSchedules = JSON.parse(localStorage.getItem("savedSchedule"));
+        if (!savedSchedules || !Array.isArray(savedSchedules)) {
+          console.log("여행 일정이 없습니다.");
+          return;
+        }
 
-            // savedSchedules 배열이 존재하는지 확인
-            if (!savedSchedules || !Array.isArray(savedSchedules)) {
-                console.log("여행 일정이 없습니다.");
-                return;
+        // 장소 데이터 로드
+        let placeDataItems = [];
+        try {
+          const response = await fetch("../listEx.json");
+          if (!response.ok)
+            throw new Error("장소 데이터를 불러오는 데 실패했습니다.");
+          const placeData = await response.json();
+          placeDataItems = Array.isArray(placeData)
+            ? placeData
+            : placeData.items;
+        } catch (error) {
+          console.error("장소 데이터를 불러오는 중 오류 발생:", error);
+        }
+
+        const upcomingTourSection = document.querySelector(
+          ".tour-section .tour-list.upcoming"
+        );
+        const completedTourSection = document.querySelector(
+          ".tour-section .tour-list.completed"
+        );
+
+        const upcomingTours = savedSchedules.filter(
+          (tour) => new Date(tour.startDate) >= currentDate
+        );
+        const completedTours = savedSchedules.filter(
+          (tour) => new Date(tour.endDate) < currentDate
+        );
+
+        upcomingTours.sort(
+          (a, b) => new Date(a.startDate) - new Date(b.startDate)
+        );
+        completedTours.sort((a, b) => b.index - a.index);
+
+        function getImageForPlace(placeName) {
+          const matched = placeDataItems.find(
+            (place) => place.placeName === placeName
+          );
+          return (
+            matched?.images?.[0] ||
+            "https://api.cdn.visitjeju.net/photomng/imgpath/202409/20/b2087c57-7cb6-420d-a840-c6e7e581072e.png"
+          );
+        }
+
+        function createTourCard(tour) {
+          const { startDate, endDate, schedule, index } = tour;
+          const firstPlace = schedule[0]?.places?.[0] || "여행지 미정";
+          const displayTitle = tour.title?.trim() || firstPlace;
+
+          const tourCard = document.createElement("div");
+          tourCard.classList.add("tour-card");
+
+          const tourImage = document.createElement("img");
+          tourImage.classList.add("tour-image");
+          tourImage.src = getImageForPlace(firstPlace);
+          tourImage.alt = `${firstPlace} 여행`;
+
+          const tourInfo = document.createElement("div");
+          tourInfo.classList.add("tour-info");
+
+          const tourTitleContainer = document.createElement("div");
+          tourTitleContainer.style.display = "flex";
+          tourTitleContainer.style.alignItems = "center";
+          tourTitleContainer.style.gap = "8px";
+
+          const tourTitle = document.createElement("h4");
+          tourTitle.textContent = displayTitle;
+
+          const editButton = document.createElement("button");
+          editButton.textContent = "✏️";
+          editButton.style.fontSize = "14px";
+          editButton.style.cursor = "pointer";
+          editButton.style.padding = "2px 6px";
+          editButton.style.border = "1px solid #ccc";
+          editButton.style.borderRadius = "4px";
+          editButton.style.backgroundColor = "#f0f0f0";
+
+          editButton.addEventListener("click", () => {
+            const newTitle = prompt(
+              "여행 제목을 입력하세요:",
+              tourTitle.textContent
+            );
+            if (newTitle && newTitle.trim() !== "") {
+              tourTitle.textContent = newTitle.trim();
+
+              const allSchedules = JSON.parse(
+                localStorage.getItem("savedSchedule")
+              );
+              const updateIndex = allSchedules.findIndex(
+                (item) => item.index === index
+              );
+              if (updateIndex !== -1) {
+                allSchedules[updateIndex].title = newTitle.trim();
+                localStorage.setItem(
+                  "savedSchedule",
+                  JSON.stringify(allSchedules)
+                );
+              }
             }
+          });
 
-            // 다녀올 투어스 섹션과 다녀온 투어스 섹션
-            const upcomingTourSection = document.querySelector(".tour-section .tour-list.upcoming");
-            const completedTourSection = document.querySelector(".tour-section .tour-list.completed");
+          tourTitleContainer.appendChild(tourTitle);
+          tourTitleContainer.appendChild(editButton);
 
-            // 다녀올 투어스 (startDate가 현재일 이후인 여행)
-            const upcomingTours = savedSchedules
-                .filter(tour => new Date(tour.startDate) >= currentDate); // startDate가 현재일 이후인 여행
+          const tourDate = document.createElement("p");
+          tourDate.classList.add("tour-date");
+          tourDate.textContent = `${startDate} ~ ${endDate}`;
 
-            // 다녀온 투어스 (endDate가 현재일 이전인 여행)
-            const completedTours = savedSchedules
-                .filter(tour => new Date(tour.endDate) < currentDate); // endDate가 현재일 이전인 여행
+          const tourPlan = document.createElement("p");
+          tourPlan.classList.add("tour-plan");
+          tourPlan.innerHTML = schedule
+            .map((day) => {
+              const date = day.date;
+              const places = day.places.join(", ");
+              return `<strong>${date}</strong>: ${places}`;
+            })
+            .join("<br />");
 
-            // 다녀올 투어스를 startDate가 가까운 순서로 정렬
-            upcomingTours.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+          tourInfo.appendChild(tourTitleContainer);
+          tourInfo.appendChild(tourDate);
+          tourInfo.appendChild(tourPlan);
 
-            // 다녀온 투어스를 index 역순으로 정렬 (최근에 저장된 순서로)
-            completedTours.sort((a, b) => b.index - a.index);
+          tourCard.appendChild(tourImage);
+          tourCard.appendChild(tourInfo);
 
-            // 여행 카드 생성 함수
-            function createTourCard(tour) {
-                const { startDate, endDate, schedule, index } = tour;
+          return tourCard;
+        }
 
-                const tourCard = document.createElement("div");
-                tourCard.classList.add("tour-card");
-
-                const tourImage = document.createElement("img");
-                tourImage.classList.add("tour-image");
-                tourImage.src = "https://api.cdn.visitjeju.net/photomng/imgpath/202409/20/b2087c57-7cb6-420d-a840-c6e7e581072e.png";
-                tourImage.alt = `${schedule[0]} 여행`;
-
-                const tourInfo = document.createElement("div");
-                tourInfo.classList.add("tour-info");
-
-                const tourTitleContainer = document.createElement("div");
-                tourTitleContainer.style.display = "flex";
-                tourTitleContainer.style.alignItems = "center";
-                tourTitleContainer.style.gap = "8px";
-
-                const tourTitle = document.createElement("h4");
-                const firstPlace = schedule[0]?.places?.[0] || "여행지 미정";
-                tourTitle.textContent = firstPlace;
-
-                // ✏️ 편집 버튼
-                const editButton = document.createElement("button");
-                editButton.textContent = "✏️";
-                editButton.style.fontSize = "14px";
-                editButton.style.cursor = "pointer";
-                editButton.style.padding = "2px 6px";
-                editButton.style.border = "1px solid #ccc";
-                editButton.style.borderRadius = "4px";
-                editButton.style.backgroundColor = "#f0f0f0";
-
-                editButton.addEventListener("click", () => {
-                    const newPlace = prompt("첫 번째 장소명을 수정하세요:", firstPlace);
-                    if (newPlace && newPlace.trim() !== "") {
-                        schedule[0].places[0] = newPlace.trim();         // 데이터 수정
-                        tourTitle.textContent = newPlace.trim();         // UI 갱신
-
-                        // 로컬스토리지 반영
-                        const allSchedules = JSON.parse(localStorage.getItem("savedSchedule"));
-                        const updateIndex = allSchedules.findIndex(item => item.index === index);
-                        if (updateIndex !== -1) {
-                            allSchedules[updateIndex].schedule[0].places[0] = newPlace.trim();
-                            localStorage.setItem("savedSchedule", JSON.stringify(allSchedules));
-                        }
-                    }
-                });
-
-                tourTitleContainer.appendChild(tourTitle);
-                tourTitleContainer.appendChild(editButton);
-
-                const tourDate = document.createElement("p");
-                tourDate.classList.add("tour-date");
-                tourDate.textContent = `${startDate} ~ ${endDate}`;
-
-                const tourPlan = document.createElement("p");
-                tourPlan.classList.add("tour-plan");
-                tourPlan.innerHTML = schedule.map(day => {
-                    const date = day.date;
-                    const places = day.places.join(", ");
-                    return `<strong>${date}</strong>: ${places}`;
-                }).join("<br />");
-
-                tourInfo.appendChild(tourTitleContainer);
-                tourInfo.appendChild(tourDate);
-                tourInfo.appendChild(tourPlan);
-                tourCard.appendChild(tourImage);
-                tourCard.appendChild(tourInfo);
-
-                return tourCard;
-            }
-
-            // 다녀올 투어스 카드 삽입
-            upcomingTours.forEach(tour => {
-                const tourCard = createTourCard(tour);
-                upcomingTourSection.appendChild(tourCard);
-            });
-
-            // 다녀온 투어스 카드 삽입
-            completedTours.forEach(tour => {
-                const tourCard = createTourCard(tour);
-                completedTourSection.appendChild(tourCard);
-            });
+        upcomingTours.forEach((tour) => {
+          const card = createTourCard(tour);
+          upcomingTourSection.appendChild(card);
         });
+
+        completedTours.forEach((tour) => {
+          const card = createTourCard(tour);
+          completedTourSection.appendChild(card);
+        });
+      });
     </script>
-
-
-
-</body>
-
+  </body>
 </html>
