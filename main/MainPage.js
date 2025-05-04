@@ -316,11 +316,46 @@ document.addEventListener("DOMContentLoaded", () => {
       event.target.classList.add("active"); // 클릭한 버튼에 active 클래스 추가
     });
   });
+  // ----------------------------탭 3의 검색 버튼 ----------------------
+  // 검색 버튼 클릭 시
+  const searchBtn = document.getElementById("search-btn");
+  const resetSearchBtn = document.getElementById("reset-search-btn"); // 되돌리기 버튼
+  const searchInput = document.getElementById("search-input");
+
+  // 검색 버튼 이벤트 리스너
+  if (searchBtn) {
+    searchBtn.addEventListener("click", () => {
+      currentPage = 1; // 페이지 초기화
+      loadFestivalData(currentPage); // 검색 실행
+    });
+  }
+
+  // 검색 입력창 엔터키 이벤트 리스너
+  if (searchInput) {
+    searchInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        currentPage = 1; // 페이지 초기화
+        loadFestivalData(currentPage); // 검색 실행
+      }
+    });
+  }
+
+  // 되돌리기 버튼 클릭 시
+  if (resetSearchBtn) {
+    resetSearchBtn.addEventListener("click", () => {
+      searchInput.value = ""; // 검색창 초기화
+      currentPage = 1; // 페이지 초기화
+
+      // 검색어를 지우고 현재 선택된 지역과 카테고리 기준으로만 데이터를 다시 로드
+      loadFestivalData(currentPage);
+    });
+  }
+
   // 상세정보 모달 처리
   modalHandler();
   // 달력 모달 처리
   calendarModalHandler();
-
+  // -----------------------------탭 4의 지도 ----------------------
   // 항상 최신 travelSchedule을 읽음
   const savedSchedule = localStorage.getItem("travelSchedule");
   if (savedSchedule) {
@@ -358,8 +393,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
-// 리스트 정보가져오기 메인
+// 탭3의 장소 선택 부분
 function loadFestivalData(page = 1) {
+  // 검색어 가져오기
+  const searchInput = document.getElementById("search-input");
+  const searchKeyword = searchInput.value.trim().toLowerCase();
+
   fetch(jsonFilePath)
     .then((res) => res.json())
     .then((data) => {
@@ -383,6 +422,26 @@ function loadFestivalData(page = 1) {
         );
       }
 
+      // 검색 키워드 필터링 (명확하게 검색어가 있을 때만 필터링)
+      if (searchKeyword) {
+        filteredData = filteredData.filter((item) => {
+          // 장소 이름에서 검색
+          const nameMatch = item.placeName
+            .toLowerCase()
+            .includes(searchKeyword);
+
+          // 태그에서 검색 (태그가 있는 경우)
+          let tagMatch = false;
+          if (item.tags && Array.isArray(item.tags)) {
+            tagMatch = item.tags.some((tag) =>
+              tag.toLowerCase().includes(searchKeyword)
+            );
+          }
+
+          return nameMatch || tagMatch;
+        });
+      }
+
       // 필터링된 데이터에 대한 페이징 처리
       const itemsPerPage = 10; // 한 페이지에 표시할 항목 수
       const startIndex = (page - 1) * itemsPerPage;
@@ -392,8 +451,15 @@ function loadFestivalData(page = 1) {
       if (page === 1) {
         list.innerHTML = ""; // 첫 페이지일 때 목록 초기화
       }
+
+      // 결과가 없을 때 메시지 표시
       if (pagedItems.length === 0 && page === 1) {
-        list.innerHTML = "<li>검색된 축제가 없습니다.</li>";
+        if (searchKeyword) {
+          list.innerHTML = `<li>'${searchKeyword}'에 대한 검색 결과가 없습니다.</li>`;
+        } else {
+          list.innerHTML = "<li>검색된 장소가 없습니다.</li>";
+        }
+        document.getElementById("load-more-btn").style.display = "none"; // 더보기 버튼 숨기기
         return;
       }
 
@@ -542,6 +608,14 @@ function loadFestivalData(page = 1) {
       });
       // 전체 페이지 수 계산
       totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+      // 더보기 버튼 표시/숨김 처리
+      const moreBtn = document.getElementById("load-more-btn");
+      if (currentPage >= totalPages) {
+        moreBtn.style.display = "none"; // 더 이상 페이지가 없으면 버튼 숨기기
+      } else {
+        moreBtn.style.display = "block"; // 페이지가 더 있으면 버튼 표시
+      }
     })
     .catch((err) => {
       const list = document.getElementById("festival-list");
@@ -551,6 +625,8 @@ function loadFestivalData(page = 1) {
     .finally(() => {
       document.getElementById("loadingOverlay").style.display = "none"; // 로딩 종료
     });
+
+  // 검색이 완료된 후 필터링된 아이템 저장
   localStorage.setItem("filteredItems", JSON.stringify(filteredItems));
 
   //일정만들기 버튼 클릭 후 프롬프트넘기기
@@ -1387,41 +1463,6 @@ function reloadMapMarkers() {
     // ... 기존 마커 표시 코드 ...
   }
 }
-
-const searchInput = document.getElementById("search-input");
-const tagSearchBtn = document.getElementById("tag-search-btn");
-const tagBox = document.getElementById("tagSearchBox");
-const placeBox = document.getElementById("placeSearchBox");
-const selectBox = document.getElementById("placeSelectBox");
-
-function showTagBox() {
-  tagBox.classList.add("show");
-  tagBox.classList.remove("hidden");
-
-  placeBox.style.display = "none";
-  selectBox.style.display = "none";
-}
-
-function hideTagBox() {
-  tagBox.classList.remove("show");
-  tagBox.classList.add("hidden");
-
-  placeBox.style.display = "block";
-  selectBox.style.display = "block";
-}
-
-searchInput.addEventListener("focus", showTagBox);
-
-// 문서 클릭 시 input, tagBox 이외는 숨기기
-document.addEventListener("mousedown", (e) => {
-  if (!searchInput.contains(e.target) && !tagBox.contains(e.target)) {
-    hideTagBox();
-  }
-});
-
-tagSearchBtn.addEventListener("click", (e) => {
-  hideTagBox();
-});
 
 /* 
 

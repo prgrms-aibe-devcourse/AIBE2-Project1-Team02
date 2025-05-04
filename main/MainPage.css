@@ -198,10 +198,10 @@ li {
 #tag-input,
 #search-btn,
 #tag-search-btn,
-#reset-btn {
+#reset-search-btn {
   font-size: 16px;
   padding: 10px 12px;
-  margin: 5px;
+  margin-top: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
   outline: none;
@@ -227,10 +227,10 @@ li {
 
 /* 카테고리 버튼 전체 묶음 */
 #placeCategory {
-  margin-top: 20px;
+  margin-top: 5px;
   display: flex;
   flex-wrap: wrap;
-  gap: 2px;
+  gap: 4px;
 }
 
 /* 각각 카테고리 버튼 스타일 */
