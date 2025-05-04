@@ -1472,6 +1472,7 @@ function reloadMapMarkers() {
 function tab4Handler() {
   // 로컬스토리지에서 여행 일정 데이터 가져오기
   let rawData = localStorage.getItem("travelSchedule");
+  let likePlaces = JSON.parse(localStorage.getItem("likePlaces")) || []; // 좋아요 저장된 id들
 
   if (!rawData) {
     console.error("여행 일정 데이터를 찾을 수 없습니다.");
@@ -1707,11 +1708,74 @@ function tab4Handler() {
   }
 }
 
-// 일정 상세 정보 표시 함수
+// 좋아요 버튼 관련 함수 추가
+function toggleLike(id, element) {
+  // 로컬스토리지에서 좋아요 목록 가져오기
+  let likePlaces = JSON.parse(localStorage.getItem("likePlaces")) || [];
+
+  // 해당 ID가 이미 좋아요에 있는지 확인
+  const index = likePlaces.indexOf(id);
+
+  if (index === -1) {
+    // 좋아요 추가
+    likePlaces.push(id);
+    element.classList.add("liked");
+    element.innerHTML = '<i class="bi bi-heart-fill"></i>';
+  } else {
+    // 좋아요 제거
+    likePlaces.splice(index, 1);
+    element.classList.remove("liked");
+    element.innerHTML = '<i class="bi bi-heart"></i>';
+  }
+
+  // 로컬스토리지에 저장
+  localStorage.setItem("likePlaces", JSON.stringify(likePlaces));
+
+  // 동일한 장소의 다른 좋아요 버튼도 업데이트
+  updateAllLikeButtons(id, index === -1);
+
+  // 이벤트 버블링 방지
+  event.stopPropagation();
+  return false;
+}
+
+// 같은 ID를 가진 모든 좋아요 버튼 업데이트
+function updateAllLikeButtons(id, isLiked) {
+  // 모든 좋아요 버튼 찾기
+  const likeButtons = document.querySelectorAll(`.like-btn[data-id="${id}"]`);
+
+  likeButtons.forEach((button) => {
+    if (isLiked) {
+      button.classList.add("liked");
+      button.innerHTML = '<i class="bi bi-heart-fill"></i>';
+    } else {
+      button.classList.remove("liked");
+      button.innerHTML = '<i class="bi bi-heart"></i>';
+    }
+  });
+}
+
+// 좋아요 상태에 따라 버튼 초기 상태 설정
+function setLikeButtonState(button, id) {
+  const likePlaces = JSON.parse(localStorage.getItem("likePlaces")) || [];
+
+  if (likePlaces.includes(id)) {
+    button.classList.add("liked");
+    button.innerHTML = '<i class="bi bi-heart-fill"></i>';
+  } else {
+    button.classList.remove("liked");
+    button.innerHTML = '<i class="bi bi-heart"></i>';
+  }
+}
+
+// 일정 상세 정보 표시 함수 수정
 async function showScheduleDetails(daySchedule) {
   const scheduleDetails = document.getElementById("scheduleDetails");
   const res = await fetch(jsonFilePath);
   const listData = await res.json();
+
+  // 로컬스토리지에서 좋아요 목록 가져오기
+  const likePlaces = JSON.parse(localStorage.getItem("likePlaces")) || [];
 
   const dateObj = new Date(daySchedule.Date);
 
@@ -1748,6 +1812,11 @@ async function showScheduleDetails(daySchedule) {
 
       if (matched) {
         const thumbnail = matched.images[0];
+        const isLiked = likePlaces.includes(matched.id);
+        const likeIcon = isLiked
+          ? '<i class="bi bi-heart-fill"></i>'
+          : '<i class="bi bi-heart"></i>';
+        const likedClass = isLiked ? "liked" : "";
 
         // 안쪽에 해당 부분 추가
         let bgColor = "#ffb14b"; // 기본: 주황
@@ -1765,16 +1834,22 @@ async function showScheduleDetails(daySchedule) {
           matched.placeName
         }" class="thumbnail-image" />
               <span class="place-name">${matched.placeName}</span>
+              <button class="like-btn ${likedClass}" data-id="${
+          matched.id
+        }" onclick="return toggleLike(${matched.id}, this)">${likeIcon}</button>
             </div>
             <div class="detail-content" style="display: none;">
               <div class="images">
                 <img src="${matched.images[0]}" alt="${
           matched.placeName
         }" class="main-image" />
+                <button class="like-btn detail-like-btn ${likedClass}" data-id="${
+          matched.id
+        }" onclick="return toggleLike(${matched.id}, this)">${likeIcon}</button>
               </div>
               <div class="place-detail-info">
                 <div class="place-detail-feedback">
-                  <span>🩷 ${matched.likes}</span>
+                  <span>🩷 ${matched.likes + (isLiked ? 1 : 0)}</span>
                   <span>⭐ 미정</span>
                 </div>
                 <p id="place-detail-name">${matched.placeName}</p>
@@ -1788,7 +1863,6 @@ async function showScheduleDetails(daySchedule) {
           </div>
         `;
 
-        // 🔽 점선 박스와 경로 보기 아이콘 추가 (마지막 박스 뒤에는 추가하지 않음)
         // 점선 및 경로 링크 추가
         if (i < places.length - 1) {
           let nextPlaceName = places[i + 1];
@@ -1827,9 +1901,14 @@ async function showScheduleDetails(daySchedule) {
 
   scheduleDetails.innerHTML = detailsHTML;
 
-  // ✅ 클릭 시 박스 확장/축소 토글 (하나만 열리도록 변경)
+  // 클릭 시 박스 확장/축소 토글 (하나만 열리도록 변경)
   scheduleDetails.querySelectorAll(".place-detail").forEach((box) => {
-    box.addEventListener("click", () => {
+    box.addEventListener("click", (event) => {
+      // 좋아요 버튼 클릭 시 이벤트 버블링 방지
+      if (event.target.closest(".like-btn")) {
+        return;
+      }
+
       const detailContent = box.querySelector(".detail-content");
       const collapsedSummary = box.querySelector(".collapsed-summary");
 

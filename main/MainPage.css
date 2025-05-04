@@ -1568,3 +1568,53 @@ li {
     transform: rotate(360deg);
   }
 }
+
+/* 좋아요 버튼 스타일 */
+.like-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #666;
+  padding: 5px;
+  transition: all 0.2s;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.like-btn:hover {
+  background-color: rgba(255, 0, 0, 0.1);
+  color: #ff0000;
+}
+
+.like-btn.liked {
+  color: #ff0000;
+}
+
+/* 축소 버전의 좋아요 버튼 위치 */
+.collapsed-summary .like-btn {
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+/* 확대 버전의 좋아요 버튼 위치 */
+.detail-like-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 2;
+}
+
+.images {
+  position: relative;
+}
+
+/* 좋아요 버튼 호버 효과 */
+.detail-like-btn:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
