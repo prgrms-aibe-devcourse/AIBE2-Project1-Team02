@@ -2,33 +2,16 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>To us</title>
-  <link rel="stylesheet" href="welcome.css">
-  <link rel="stylesheet" href="../header/header.css"> <!-- 추가 -->
+  <link rel="stylesheet" href="welcome.css" />
+  <link rel="stylesheet" href="../header/header.css" />
 </head>
 
 <body>
-  <!-- 헤더 영역 -->
-  <header class="header-container">
-    <a href="/welcome.html">
-      <img src="login/login_img/logo.jpg" alt="로고" class="header-logo">
-    </a>
-
-    <div class="header-right">
-      <div class="header-profile-container" style="display: none;">
-        <button class="header-profile-btn">
-          <img src="../sidebar/sidebar_img/menu.png" alt="프로필" class="header-menu">
-        </button>
-        <div class="profile-dropdown hidden">
-          <a href="../mypage/mypage.html">마이페이지</a>
-          <button id="logoutBtn">로그아웃</button>
-        </div>
-      </div>
-    </div>
-  </header>
-
+  <!-- 헤더 영역 (컴포넌트 삽입) -->
+  <div id="header-container"></div>
 
   <!-- 메인 콘텐츠 -->
   <div class="main-container">
@@ -44,42 +27,18 @@
       </div>
     </div>
   </div>
-  <script>
-    const profileBtn = document.querySelector('.header-profile-btn');
-    const dropdown = document.querySelector('.profile-dropdown');
-    const logoutBtn = document.getElementById('logoutBtn');
 
-    profileBtn.addEventListener('click', (e) => {
-      e.stopPropagation(); // 이벤트 전파 방지
-      dropdown.classList.toggle('hidden');
-    });
+  <!-- header.js 모듈 로드 및 초기화 -->
+  <script type="module">
+    import { initHeaderLogic } from '../header/header.js';
 
-    // 바깥 클릭 시 닫기
-    document.addEventListener('click', (e) => {
-      if (!dropdown.contains(e.target)) {
-        dropdown.classList.add('hidden');
-      }
-    });
-
-    // 로그아웃 상태일 시 버튼 숨기기
-    document.addEventListener('DOMContentLoaded', function () {
-      const loginBtn = document.querySelector('.loginBtn');
-      const profileContainer = document.querySelector('.header-profile-container');
-      const isLoggedIn = localStorage.getItem('isLoggedIn');
-
-      if (isLoggedIn === 'true') {
-        if (loginBtn) loginBtn.style.display = 'none';
-        if (profileContainer) profileContainer.style.display = 'block';
-      } else {
-        if (profileContainer) profileContainer.style.display = 'none';
-      }
-    });
-
-    // 로그아웃 기능
-    logoutBtn.addEventListener('click', () => {
-      localStorage.removeItem('isLoggedIn');
-      alert('로그아웃 되었습니다.');
-      location.href = '/welcome.html'; // 로그아웃 후 이동
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('../header/header.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('header-container').innerHTML = html;
+          initHeaderLogic();
+        });
     });
   </script>
 </body>
