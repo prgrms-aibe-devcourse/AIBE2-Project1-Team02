@@ -48,7 +48,7 @@ window.loginWithKakao = function () {
           localStorage.setItem('kakao_user', JSON.stringify(userInfo));
 
           alert(`${nickname}님 환영합니다!`);
-          location.href = 'http://127.0.0.1:5500/main.html';
+          location.href = 'http://127.0.0.1:5500/welcome.html';
         },
         fail: function (error) {
           console.error('사용자 정보 요청 실패:', error);

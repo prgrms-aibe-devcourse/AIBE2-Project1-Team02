@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.setItem("isLoggedIn", "false");
 
     alert("로그아웃 되었습니다.");
-    window.location.replace("/main.html");
+    window.location.replace("/welcome.html");
   } else {
     alert("로그인 해주세요.");
     window.location.replace("../login/login.html");

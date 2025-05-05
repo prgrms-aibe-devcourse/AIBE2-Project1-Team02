@@ -1,0 +1,185 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.background {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: url('https://images.unsplash.com/photo-1517176642928-dfc2da661b3f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.header-container {
+    width: 100%;
+    height: 64px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px; /* 좌우 여유 증가 (기존: 20px → 32px) */
+    position: fixed;
+    top: 20px;
+    left: 0;
+    z-index: 1000;
+    box-sizing: border-box;
+  }
+  
+  
+  .header-logo {
+    height: 82px;
+    cursor: pointer;
+    padding: 10px; /* 상하좌우 여유 공간 추가 */
+  }
+  
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .header-menu,
+  .header-logout {
+    height: 32px; /* 조금 키워도 예쁨 */
+    cursor: pointer;
+    padding: 8px;  /* 아이콘 주위 여백 */
+    margin-left: 4px; /* 버튼 간격 */
+    margin-right: 4px;
+  }
+
+  /* 여기서 부터 프로필 호버 */
+  .header-profile-container {
+    position: relative;
+  }
+  
+  .header-profile-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+  
+  .profile-dropdown {
+    position: absolute;
+    top: 60px; /* 기존 48px → 여백 증가 */
+    right: 0;
+    background-color: white;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    min-width: 180px; /* 넉넉한 너비로 증가 */
+    z-index: 2000;
+    padding: 12px 0; /* 상하 여백 증가 */
+    text-align: center;
+  }
+  
+  .profile-dropdown a,
+  .profile-dropdown button {
+    padding: 14px 20px; /* 넉넉한 내부 여백 */
+    background: white;
+    border: none;
+    color: #666;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 10px;
+    margin: 6px 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .profile-dropdown a:hover,
+  .profile-dropdown button:hover {
+    background-color: #f5f5f5;
+  }
+  
+  
+  .hidden {
+    display: none;
+  }
+  
+  
+
+.white-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right,
+            white 25%,
+            rgba(255, 255, 255, 0) 100%);
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    transform: translate(-35%, -50%);
+    text-align: left;
+    font-size: 50px;
+    font-weight: 800;
+    color: black;
+    z-index: 2;
+}
+
+.text-line {
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+}
+
+.text-line:nth-child(1) {
+    animation-delay: 0s;
+    /* 첫 줄은 바로 시작 */
+}
+
+.text-line:nth-child(2) {
+    animation-delay: 0.5s;
+    /* 두 번째 줄은 0.5초 뒤 등장 */
+}
+
+.button-group {
+    display: flex;
+    justify-content: flex-start;
+    gap: 12px;
+    margin-top: 30px;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: 1s;
+  }
+  
+  .startBtn, .loginBtn {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-width: 120px;
+    max-width: 150px;
+  }
+  
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -55%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}

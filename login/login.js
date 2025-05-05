@@ -65,7 +65,7 @@ loginButton.addEventListener("click", function () {
     }
 
     // 일반 로그인 성공 시 메인 페이지 이동
-    window.location.href = "/main.html";
+    window.location.href = "/welcome.html";
   } else {
     alert("아이디 또는 비밀번호가 올바르지 않습니다.");
   }
