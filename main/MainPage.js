@@ -173,6 +173,21 @@ function activateTab(tabId) {
         break;
 
       case "tab4":
+        tabContainer.style.width = "43%";
+        target.style.display = "flex";
+        tab4Buttons.style.display = "none";
+        editButtons.style.display = "flex";
+        makeScheduleButton.style.display = "none";
+        tab1Button.style.display = "block";
+        tab2Button.style.display = "block";
+        tab3Button.style.display = "block";
+        tab4Button.style.display = "block";
+        tab5Button.style.display = "none";
+
+        initializeEditMode();
+        break;
+
+      case "tab5":
         // 일정 확인 탭 - 세부 레이아웃이 플렉스이므로
         tabContainer.style.width = "40%";
         target.style.display = "flex";
@@ -182,22 +197,8 @@ function activateTab(tabId) {
         tab2Button.style.display = "block";
         tab3Button.style.display = "block";
         tab4Buttons.style.display = "flex";
-        tab5Button.style.display = "none";
+        tab5Button.style.display = "block";
         tab4Handler();
-        break;
-
-      case "tab5":
-        tabContainer.style.width = "43%";
-        target.style.display = "flex";
-        tab4Buttons.style.display = "none";
-        editButtons.style.display = "flex";
-        makeScheduleButton.style.display = "none";
-        tab1Button.style.display = "none";
-        tab2Button.style.display = "none";
-        tab3Button.style.display = "none";
-        tab4Button.style.display = "none";
-
-        initializeEditMode();
         break;
     }
   } else {
@@ -1976,7 +1977,7 @@ async function showScheduleDetails(daySchedule) {
   });
 }
 
-// --------------------------탭4 화면에서 저장 버튼 클릭 시 처리--------------------------
+// --------------------------탭5 화면에서 저장 버튼 클릭 시 처리--------------------------
 // 저장 여부를 추적하는 변수
 let isSaved = false;
 document
@@ -2121,13 +2122,13 @@ document
   });
 
 // ----------------------- 편집 버튼 클릭시 -----------------------
-// 편집 버튼 클릭 시 tab5로 강제로 이동
+// 편집 버튼 클릭 시 tab4로 강제로 이동
 document.getElementById("editButton").addEventListener("click", function () {
-  // tab5 버튼을 강제로 표시하고 클릭
-  const tab5Btn = document.getElementById("tab5Btn");
-  if (tab5Btn) {
-    tab5Btn.style.display = "block"; // tab5 버튼을 표시
-    tab5Btn.click(); // tab5 버튼 클릭 이벤트 강제로 발생
+  // tab4 버튼을 강제로 표시하고 클릭
+  const tab4Btn = document.getElementById("tab4Btn");
+  if (tab4Btn) {
+    tab4Btn.style.display = "block"; // tab4 버튼을 표시
+    tab4Btn.click(); // tab4 버튼 클릭 이벤트 강제로 발생
   }
 });
 // 탭 5의 메인 로직
@@ -2651,22 +2652,22 @@ function showToast(message, type = "info") {
 
 // 취소 버튼 클릭 시 tab3로 돌아가기 (편집 취소)
 document.getElementById("cancelButton").addEventListener("click", function () {
-  const tab4Btn = document.getElementById("tab4Btn");
-  tab4Btn.click();
-  if (tab4Btn) {
-    tab4Btn.style.display = "block";
-    tab4Btn.click();
+  const tab3Btn = document.getElementById("tab3Btn");
+  tab3Btn.click();
+  if (tab3Btn) {
+    tab3Btn.style.display = "block";
+    tab3Btn.click();
   }
 });
 
 // 적용 버튼 클릭 시 (변경 적용)
 document.getElementById("applyButton").addEventListener("click", function () {
   saveChanges();
-  const tab4Btn = document.getElementById("tab4Btn");
-  tab4Btn.click();
-  if (tab4Btn) {
-    tab4Btn.style.display = "block";
-    tab4Btn.click();
+  const tab5Btn = document.getElementById("tab5Btn");
+  tab5Btn.click();
+  if (tab5Btn) {
+    tab5Btn.style.display = "block";
+    tab5Btn.click();
   }
 });
 

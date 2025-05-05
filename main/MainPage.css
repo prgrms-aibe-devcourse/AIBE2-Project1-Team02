@@ -1000,8 +1000,8 @@ li {
 /* 탭4 전체 레이아웃 */
 /* 탭 콘텐츠 영역 */
 
-/* #tab4는 화면의 세로 크기를 꽉 차게 설정 */
-#tab4 {
+/* #tab5는 화면의 세로 크기를 꽉 차게 설정 */
+#tab5 {
   position: relative; /* absolute에서 relative로 변경 */
   width: 100%;
   display: flex;

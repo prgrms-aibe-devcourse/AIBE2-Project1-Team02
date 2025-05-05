@@ -52,18 +52,18 @@
           STEP 3<br />장소 선택
         </button>
         <button class="tab" data-tab="tab4" id="tab4Btn" style="display: none">
-          STEP 4<br />일정 확인
+          STEP 4<br />일정 편집
         </button>
 
         <!-- 새로 추가된 편집 전용 탭 -->
         <button class="tab" data-tab="tab5" id="tab5Btn" style="display: none">
-          EDIT<br />편집공간
+          STEP 5<br />일정 확정
         </button>
 
         <!-- 취소/적용 버튼들 (기본적으로 숨김 처리) -->
         <div id="editButtons" style="display: none; margin-top: auto">
-          <button id="cancelButton">취소</button>
-          <button id="applyButton">적용</button>
+          <button id="cancelButton">뒤로</button>
+          <button id="applyButton">확정</button>
         </div>
 
         <!-- 저장/편집 버튼들 (기본적으로 숨김 처리) -->
@@ -200,7 +200,7 @@
             <ul id="selectedPlaces"></ul>
           </div>
         </div>
-        <div id="tab4" class="tabContent" style="display: none">
+        <div id="tab5" class="tabContent" style="display: none">
           <!-- 왼쪽: 간단 정보 (날짜 목록) -->
           <div id="scheduleSummary">
             <!-- 여기에 날짜 버튼들이 JavaScript에 의해 동적으로 추가됩니다 -->
@@ -211,7 +211,7 @@
             <!-- 이 부분은 날짜를 클릭할 때 JS에 의해 채워집니다 -->
           </div>
         </div>
-        <div id="tab5" class="tabContent" style="display: none">
+        <div id="tab4" class="tabContent" style="display: none">
           <div id="editModeContainer">
             <!-- 컨트롤 패널은 자바스크립트로 동적 생성됨 -->
             <!-- 알림 영역은 자바스크립트로 동적 생성됨 -->
