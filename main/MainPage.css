@@ -1610,3 +1610,23 @@ li {
 .images {
   position: relative;
 }
+
+/* 더보기 버튼 */
+#load-more-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+#load-more-btn:hover {
+  background: #dedede;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
