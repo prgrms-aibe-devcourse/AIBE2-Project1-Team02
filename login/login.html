@@ -75,11 +75,9 @@
       }
     });
   </script>
-
   <!-- 모듈: 헤더 동적 로딩 -->
   <script type="module">
     import { initHeaderLogic } from '../header/header.js';
-
     document.addEventListener('DOMContentLoaded', () => {
       fetch('../header/header.html')
         .then(res => res.text())
