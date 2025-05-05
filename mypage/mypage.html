@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="../header/header.css" />
 </head>
 <body>
-<!-- 헤더를 흰 배경으로 덮는 고정 배경층 추가 -->
 <div style="
   position: fixed;
   top: 0;
@@ -18,8 +17,6 @@
   background-color: white;
   z-index: 999;">
 </div>
-
-<!-- 헤더 컴포넌트 삽입 (z-index: 1000 이상이라 위에 뜸) -->
 <div id="header-container"></div>
   <div style="height: 64px; background-color: white;"></div>
   <div class="main-container">
@@ -40,9 +37,7 @@
             </div>
           </div>
         </div>
-        <button class="edit-profile">
-          프로필 편집
-        </button>
+        <button class="edit-profile">프로필 편집</button>
         <button class="delete-account">회원탈퇴</button>
       </div>
       <p class="profile-message">unknown</p>
@@ -50,27 +45,27 @@
       <div class="tour-section">
         <h3>다녀올 투어스 🧳</h3>
         <div class="tour-list upcoming"></div>
-        <!-- 다녀올 투어스 -->
       </div>
       <div class="tour-section">
         <h3>다녀온 투어스 📷</h3>
         <div class="tour-list completed"></div>
-        <!-- 다녀온 투어스 -->
       </div>
     </div>
   </div>
-  <!-- 모달을 동적으로 불러올 곳 -->
   <div id="modal-container"></div>
-  <script>
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
-    if (isLoggedIn !== "true") {
-      window.location.replace("../login/login.html");
-    } else {
-      window.addEventListener("DOMContentLoaded", function () {
-        const main = document.querySelector(".main-container");
-        if (main) main.style.display = "block";
-      });
-    }
+</body>
+</html>
+  <script type="module">
+    import { initHeaderLogic } from '../header/header.js';
+
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch("../header/header.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("header-container").innerHTML = html;
+          initHeaderLogic();
+        });
+    });
   </script>
   <script src="../mypage/mypage.js"></script>
 </body>

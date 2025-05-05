@@ -180,8 +180,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const kakaoUser = JSON.parse(localStorage.getItem("kakao_user"));
     const naverUser = JSON.parse(localStorage.getItem("naver_user"));
     const normalUser = JSON.parse(localStorage.getItem("normal_user"));
-
     if (naverUser && naverUser.login === true) {
+
       const userData = JSON.parse(localStorage.getItem("naver_user"));
       // 닉네임
       const nickname = userData.nickname;
@@ -202,6 +202,7 @@ document.addEventListener('DOMContentLoaded', function () {
       return { user: naverUser, key: "naver_user" };
     }
     else if (kakaoUser && kakaoUser.login === true) {
+
       const userData = JSON.parse(localStorage.getItem("kakao_user"));
       // 닉네임
       const nickname = userData.nickname;
@@ -241,7 +242,6 @@ document.addEventListener('DOMContentLoaded', function () {
       return { user: normalUser, key: "normal_user" };
     }
   }
-
   // 초기 프로필 메시지 로드 함수
   function loadProfileMessage() {
     const { user } = getActiveUser();
@@ -257,7 +257,6 @@ document.addEventListener('DOMContentLoaded', function () {
   if (tourCountElement) {
     tourCountElement.innerHTML = `<strong style="text-align:center">나의 투어스<br />${tourCount}</strong>`;
   }
-
 
   // 페이지 로드 시 메시지 출력
   loadProfileMessage();
@@ -292,7 +291,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
-
 // 좋아요 목록 긁어오기 기능능
 document.addEventListener('DOMContentLoaded', function () {
   const viewLikedPlacesButton = document.getElementById('view-liked-places');
@@ -364,7 +362,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
 });
-
 // 회원 탈퇴 기능
 document.addEventListener("DOMContentLoaded", function () {
   const deleteBtn = document.querySelector(".delete-account");
