@@ -6,6 +6,11 @@ signupButton.addEventListener('click', function(event) {
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
   const email = document.getElementById('email').value;
+  const normal_profile = {
+    type : "normal", // 기본 프로필 이미지 URL
+    profile_message : "나를 설명하는 한 줄!" // 기본 프로필 메시지
+  }
+
 
   if (!username || !password) {
     alert('아이디와 비밀번호를 모두 입력하세요!');
@@ -15,10 +20,12 @@ signupButton.addEventListener('click', function(event) {
   const userData = {
     username: username,
     password: password,
-    email : email
+    email : email,
+    profile : normal_profile,
+    login : true
   };
 
-  localStorage.setItem('userInfo', JSON.stringify(userData));
+  localStorage.setItem('normal_user', JSON.stringify(userData));
 
   alert('회원가입이 완료되었습니다!');
   window.location.href = '../login/login.html'; 

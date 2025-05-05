@@ -1,42 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // 네이버
-  if (localStorage.getItem("naver_user")) {
-    const userData = JSON.parse(localStorage.getItem("naver_user"));
-    // 닉네임
-    const nickname = userData.nickname;
-    // 이메일
-    const email = userData.email;
-    // 프로필 이미지
-    const profileImg = userData.profileImg;
 
-    // 요소에 정보 삽입
-    document.querySelector(
-      ".whose-profile"
-    ).textContent = `${nickname} 님의 투어스`;
-    document.querySelector(".profile-image").src = profileImg;
-    document.querySelector(
-      ".username"
-    ).innerHTML = `${nickname} <span class="userid">@${email}</span>`;
-  }
-  // 카카오
-  else if (localStorage.getItem("kakao_user")) {
-    const userData = JSON.parse(localStorage.getItem("kakao_user"));
-    // 닉네임
-    const nickname = userData.nickname;
-    // 이메일
-    const email = userData.email;
-    // 프로필 이미지
-    const profileImg = userData.profileImg;
-
-    // 요소에 정보 삽입
-    document.querySelector(
-      ".whose-profile"
-    ).textContent = `${nickname} 님의 투어스`;
-    document.querySelector(".profile-image").src = profileImg;
-    document.querySelector(
-      ".username"
-    ).innerHTML = `${nickname} <span class="userid">@${email}</span>`;
-  }
 
   const deleteBtn = document.querySelector(".delete-account");
 
@@ -133,6 +96,16 @@ document.addEventListener("DOMContentLoaded", function () {
               "access_token이 존재하지 않아 탈퇴 처리를 진행할 수 없습니다."
             );
           }
+        }
+      }
+
+      // 일반 탈퇴
+      else {
+        if (confirmDelete) {
+          localStorage.removeItem("userInfo");
+          localStorage.setItem("isLoggedIn", "false");
+          alert("회원탈퇴가 완료되었습니다.");
+          window.location.href = "../login/login.html";
         }
       }
     });

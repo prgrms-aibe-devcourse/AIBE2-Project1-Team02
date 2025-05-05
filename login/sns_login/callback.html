@@ -1,63 +1,64 @@
 <!doctype html>
 <html lang="ko">
-
 <head>
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
-        charset="utf-8"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+          charset="utf-8"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 
 <body>
-    <div id="profile-area"></div>
+  <div id="profile-area"></div>
 
-    <script type="text/javascript">
-        var naver_id_login = new naver_id_login("QcJXrtQ1k8vdMQwpLBsR", "http://127.0.0.1:5500/login/sns_login/callback.html");
+  <script type="text/javascript">
+    var naver_id_login = new naver_id_login("QcJXrtQ1k8vdMQwpLBsR", "http://127.0.0.1:5500/login/sns_login/callback.html");
 
-        // 네이버 사용자 프로필 조회
-        naver_id_login.get_naver_userprofile("naverSignInCallback()");
+    // 네이버 사용자 프로필 조회
+    naver_id_login.get_naver_userprofile("naverSignInCallback()");
 
-        // 콜백 함수
-        function naverSignInCallback() {
-            var nickname = naver_id_login.getProfileData('nickname');
-            var email = naver_id_login.getProfileData('email');
-            var profileImg = naver_id_login.getProfileData('profile_image');
-            var naverTokken = naver_id_login.getAccessToken(); // 네이버 로그인 토큰
+    // 콜백 함수
+    function naverSignInCallback() {
+      var nickname = naver_id_login.getProfileData('nickname');
+      var email = naver_id_login.getProfileData('email');
+      var profileImg = naver_id_login.getProfileData('profile_image');
+      var naverTokken = naver_id_login.getAccessToken(); // 네이버 로그인 토큰
 
-            // 로컬스토리지에 저장
-            const userInfo = {
-                nickname: nickname,
-                email: email,
-                profileImg: profileImg,
-                naverTokken: naverTokken
-            };
+      // 기존 유저 데이터에서 기존 프로필 메시지 가져오기
+      const existingNaverUser = JSON.parse(localStorage.getItem('naver_user')) || {};
+      const currentProfileMessage = existingNaverUser.profile?.profile_message || "나를 설명하는 한 줄!";
 
-            if (confirm('네이버 로그인을 계속 하시겠습니까?.')) {
-                // 부모 창으로 메시지 전송
-                window.opener.postMessage({
-                    type: 'NAVER_LOGIN_SUCCESS',
-                    payload: userInfo
-                }, '*');
-                // 객체를 문자열로 변환해서 저장
-                localStorage.setItem('naver_user', JSON.stringify(userInfo));
-                // 로그인 성공 처리
-                localStorage.setItem("isLoggedIn", "true");
-                // 팝업창 닫기
-                window.close();
-            }
-            else {
-                // 팝업창 닫기
-                window.close();
-            }
+      // 프로필 객체
+      const naver_profile = {
+        type: "naver",
+        profile_message: currentProfileMessage
+      };
 
+      // 전체 사용자 정보
+      const userInfo = {
+        nickname: nickname,
+        email: email,
+        profileImg: profileImg,
+        naverTokken: naverTokken,
+        profile: naver_profile,
+        login: true
+      };
 
-            // 출력 영역에 정보 추가
-            // console.log("저장된 유저 정보:", localStorage.getItem('naver_user'));
-            // const userData = JSON.parse(localStorage.getItem('naver_user'));
-            // console.log(userData.nickname);  // 닉네임
-            // console.log(userData.email);     // 이메일
-            // console.log(userData.profileImg); // 프로필 이미지
-        }
-    </script>
+      if (confirm('네이버 로그인을 계속 하시겠습니까?')) {
+        // 메시지 전송
+        window.opener.postMessage({
+          type: 'NAVER_LOGIN_SUCCESS',
+          payload: userInfo
+        }, '*');
+
+        // 로컬스토리지 저장
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("naver_user", JSON.stringify(userInfo));
+
+        // 팝업창 닫기
+        window.close();
+      } else {
+        window.close();
+      }
+    }
+  </script>
 </body>
-
 </html>

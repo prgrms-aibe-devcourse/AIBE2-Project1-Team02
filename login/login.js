@@ -1,4 +1,3 @@
-// login.js
 const loginButton = document.querySelector(".loginBtn");
 
 loginButton.addEventListener("click", function () {
@@ -6,7 +5,7 @@ loginButton.addEventListener("click", function () {
   const inputPassword = document.getElementById("password").value;
 
   // localStorage에서 회원가입 정보 불러오기
-  const savedUserData = JSON.parse(localStorage.getItem("userInfo"));
+  const savedUserData = JSON.parse(localStorage.getItem("normal_user"));
 
   if (!savedUserData) {
     alert("회원가입된 정보가 없습니다. 먼저 회원가입 해주세요.");
@@ -20,6 +19,23 @@ loginButton.addEventListener("click", function () {
   ) {
     // 로그인 성공 처리
     localStorage.setItem("isLoggedIn", "true");
+
+    // 기존 프로필 메시지를 가져오거나 기본 문구 설정
+    const currentProfileMessage =
+      savedUserData.profile?.profile_message || "나를 설명하는 한 줄!";
+
+    // 프로필 객체 생성
+    const updatedProfile = {
+      type: "normal",
+      profile_message: currentProfileMessage
+    };
+
+    // 사용자 데이터 갱신
+    savedUserData.profile = updatedProfile;         // 공통 접근용 키 추가
+    savedUserData.login = true;                     // 로그인 상태 true
+
+    // 로컬스토리지에 저장
+    localStorage.setItem("normal_user", JSON.stringify(savedUserData));
 
     // 임시 스케줄 처리
     let tempSchedule = JSON.parse(sessionStorage.getItem("tempSchedule"));
