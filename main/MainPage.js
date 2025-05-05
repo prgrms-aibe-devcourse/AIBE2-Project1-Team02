@@ -3,7 +3,7 @@ let globalEndDate = "";
 
 let currentPage = 1;
 let totalPages = 1; // 전체 페이지 수 초기화
-let selectedAreaCode = ""; // 기본값은 빈 문자열 (전체 지역)
+let selectedAreaCode = "all"; // 기본값은 빈 문자열 (전체 지역)
 let selectedCategory = ""; // 선택된 카테고리
 let filteredItems = []; // 필터링된 데이터 저장
 const jsonFilePath = "../listEx.json"; // 로컬 파일 경로
@@ -120,6 +120,9 @@ function activateTab(tabId) {
   // 편집 모드에서  취소/적용 버튼 컨테이너
   const editButtons = document.getElementById("editButtons");
 
+  // 탭3의 일정 생성 버튼
+  const makeScheduleButton = document.getElementById("tab3-buttons");
+
   // 탭 버튼
   const tab1Button = document.getElementById("tab1Btn");
   const tab2Button = document.getElementById("tab2Btn");
@@ -135,6 +138,7 @@ function activateTab(tabId) {
         tabContainer.style.width = "25%";
         target.style.display = "block";
         editButtons.style.display = "none";
+        makeScheduleButton.style.display = "none";
         tab1Button.style.display = "block";
         tab2Button.style.display = "block";
         tab3Button.style.display = "block";
@@ -144,9 +148,10 @@ function activateTab(tabId) {
 
       case "tab2":
         // 지역 선택 탭 - 왼쪽 영역을 중간 크기로
-        tabContainer.style.width = "20%";
+        tabContainer.style.width = "25%";
         target.style.display = "block";
         editButtons.style.display = "none";
+        makeScheduleButton.style.display = "none";
         tab1Button.style.display = "block";
         tab2Button.style.display = "block";
         tab3Button.style.display = "block";
@@ -159,6 +164,7 @@ function activateTab(tabId) {
         tabContainer.style.width = "40%";
         target.style.display = "block";
         editButtons.style.display = "none";
+        makeScheduleButton.style.display = "flex";
         tab1Button.style.display = "block";
         tab2Button.style.display = "block";
         tab3Button.style.display = "block";
@@ -168,9 +174,10 @@ function activateTab(tabId) {
 
       case "tab4":
         // 일정 확인 탭 - 세부 레이아웃이 플렉스이므로
-        tabContainer.style.width = "35%";
+        tabContainer.style.width = "40%";
         target.style.display = "flex";
         editButtons.style.display = "none";
+        makeScheduleButton.style.display = "none";
         tab1Button.style.display = "block";
         tab2Button.style.display = "block";
         tab3Button.style.display = "block";
@@ -180,10 +187,11 @@ function activateTab(tabId) {
         break;
 
       case "tab5":
-        tabContainer.style.width = "38%";
+        tabContainer.style.width = "43%";
         target.style.display = "flex";
         tab4Buttons.style.display = "none";
         editButtons.style.display = "flex";
+        makeScheduleButton.style.display = "none";
         tab1Button.style.display = "none";
         tab2Button.style.display = "none";
         tab3Button.style.display = "none";
@@ -201,6 +209,7 @@ function activateTab(tabId) {
     if (tabId === "tab5") {
       tab4Buttons.style.display = "none";
       editButtons.style.display = "flex";
+      makeScheduleButton.style.display = "none";
       tab1Button.style.display = "none";
       tab2Button.style.display = "none";
       tab3Button.style.display = "none";
@@ -208,6 +217,7 @@ function activateTab(tabId) {
       initializeEditMode();
     } else {
       editButtons.style.display = "none";
+      makeScheduleButton.style.display = "none";
       tab1Button.style.display = "block";
       tab2Button.style.display = "block";
       tab3Button.style.display = "block";
@@ -254,9 +264,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("calendarModalBackground").style.display = "none";
   }
 
-  // 페이지 데이터 로딩 및 더보기 버튼 처리
-  loadFestivalData(currentPage);
-
   activateTab("tab1");
 
   // 로드되면 바로 날짜 선택부터
@@ -272,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentPage += 1;
     loadFestivalData(currentPage);
   });
-
+  // ----------------------------탭 2의 지역 버튼 ----------------------
   // 지역 버튼 클릭 이벤트 등록
   document.querySelectorAll(".area-btn").forEach((button) => {
     button.addEventListener("click", (event) => {
@@ -287,12 +294,14 @@ document.addEventListener("DOMContentLoaded", () => {
         .forEach((btn) => btn.classList.remove("active"));
       event.target.classList.add("active"); // 클릭한 버튼에 active 클래스 추가
       // 탭3으로 이동
-      const tab3Button = document.querySelector('.tab[data-tab="tab3"]');
-      if (tab3Button) {
-        tab3Button.click();
-      }
+      activateTab("tab3");
     });
   });
+  // ----------------------------탭 3의 카테고리 버튼  ----------------------
+  // 처음 로드시, 카테 고리 버튼은 전체로 활성화화
+  document
+    .querySelector('.placeCategory[data-value="all"]')
+    ?.classList.add("active");
   // 카테고리 버튼 클릭 이벤트 등록
   document.querySelectorAll(".placeCategory").forEach((button) => {
     button.addEventListener("click", (event) => {
@@ -307,11 +316,46 @@ document.addEventListener("DOMContentLoaded", () => {
       event.target.classList.add("active"); // 클릭한 버튼에 active 클래스 추가
     });
   });
+  // ----------------------------탭 3의 검색 버튼 ----------------------
+  // 검색 버튼 클릭 시
+  const searchBtn = document.getElementById("search-btn");
+  const resetSearchBtn = document.getElementById("reset-search-btn"); // 되돌리기 버튼
+  const searchInput = document.getElementById("search-input");
+
+  // 검색 버튼 이벤트 리스너
+  if (searchBtn) {
+    searchBtn.addEventListener("click", () => {
+      currentPage = 1; // 페이지 초기화
+      loadFestivalData(currentPage); // 검색 실행
+    });
+  }
+
+  // 검색 입력창 엔터키 이벤트 리스너
+  if (searchInput) {
+    searchInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        currentPage = 1; // 페이지 초기화
+        loadFestivalData(currentPage); // 검색 실행
+      }
+    });
+  }
+
+  // 되돌리기 버튼 클릭 시
+  if (resetSearchBtn) {
+    resetSearchBtn.addEventListener("click", () => {
+      searchInput.value = ""; // 검색창 초기화
+      currentPage = 1; // 페이지 초기화
+
+      // 검색어를 지우고 현재 선택된 지역과 카테고리 기준으로만 데이터를 다시 로드
+      loadFestivalData(currentPage);
+    });
+  }
+
   // 상세정보 모달 처리
   modalHandler();
   // 달력 모달 처리
   calendarModalHandler();
-
+  // -----------------------------탭 4의 지도 ----------------------
   // 항상 최신 travelSchedule을 읽음
   const savedSchedule = localStorage.getItem("travelSchedule");
   if (savedSchedule) {
@@ -349,8 +393,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
-// 리스트 정보가져오기 메인
+// 탭3의 장소 선택 부분
 function loadFestivalData(page = 1) {
+  // 검색어 가져오기
+  const searchInput = document.getElementById("search-input");
+  const searchKeyword = searchInput.value.trim().toLowerCase();
+
   fetch(jsonFilePath)
     .then((res) => res.json())
     .then((data) => {
@@ -374,6 +422,26 @@ function loadFestivalData(page = 1) {
         );
       }
 
+      // 검색 키워드 필터링 (명확하게 검색어가 있을 때만 필터링)
+      if (searchKeyword) {
+        filteredData = filteredData.filter((item) => {
+          // 장소 이름에서 검색
+          const nameMatch = item.placeName
+            .toLowerCase()
+            .includes(searchKeyword);
+
+          // 태그에서 검색 (태그가 있는 경우)
+          let tagMatch = false;
+          if (item.tags && Array.isArray(item.tags)) {
+            tagMatch = item.tags.some((tag) =>
+              tag.toLowerCase().includes(searchKeyword)
+            );
+          }
+
+          return nameMatch || tagMatch;
+        });
+      }
+
       // 필터링된 데이터에 대한 페이징 처리
       const itemsPerPage = 10; // 한 페이지에 표시할 항목 수
       const startIndex = (page - 1) * itemsPerPage;
@@ -383,8 +451,15 @@ function loadFestivalData(page = 1) {
       if (page === 1) {
         list.innerHTML = ""; // 첫 페이지일 때 목록 초기화
       }
+
+      // 결과가 없을 때 메시지 표시
       if (pagedItems.length === 0 && page === 1) {
-        list.innerHTML = "<li>검색된 축제가 없습니다.</li>";
+        if (searchKeyword) {
+          list.innerHTML = `<li>'${searchKeyword}'에 대한 검색 결과가 없습니다.</li>`;
+        } else {
+          list.innerHTML = "<li>검색된 장소가 없습니다.</li>";
+        }
+        document.getElementById("load-more-btn").style.display = "none"; // 더보기 버튼 숨기기
         return;
       }
 
@@ -393,7 +468,8 @@ function loadFestivalData(page = 1) {
         li.className = "placeItem";
 
         // 이미지 URL 처리
-        const imageUrl = f.images ? f.images[0] : ""; // 첫 번째 이미지를 사용
+        const imageUrl =
+          f.images[0] !== "" ? f.images[0] : "../images/jeju.jpg"; // 첫 번째 이미지를 사용
         const imageHtml = `<img src="${imageUrl}" alt="${f.placeName}" />`;
 
         // 각 장소의 정보 처리
@@ -532,12 +608,25 @@ function loadFestivalData(page = 1) {
       });
       // 전체 페이지 수 계산
       totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+      // 더보기 버튼 표시/숨김 처리
+      const moreBtn = document.getElementById("load-more-btn");
+      if (currentPage >= totalPages) {
+        moreBtn.style.display = "none"; // 더 이상 페이지가 없으면 버튼 숨기기
+      } else {
+        moreBtn.style.display = "block"; // 페이지가 더 있으면 버튼 표시
+      }
     })
     .catch((err) => {
       const list = document.getElementById("festival-list");
       list.innerHTML = `<li>데이터 불러오기 실패: ${err.message}</li>`;
       console.error("API 호출 오류:", err);
+    })
+    .finally(() => {
+      document.getElementById("loadingOverlay").style.display = "none"; // 로딩 종료
     });
+
+  // 검색이 완료된 후 필터링된 아이템 저장
   localStorage.setItem("filteredItems", JSON.stringify(filteredItems));
 
   //일정만들기 버튼 클릭 후 프롬프트넘기기
@@ -554,6 +643,13 @@ function loadFestivalData(page = 1) {
     localStorage.setItem("startDate", selectedStartDate);
     localStorage.setItem("endDate", selectedEndDate);
 
+    // ✅ 1. 로딩 먼저 표시
+    showLoading();
+
+    // ✅ 2. 딜레이 (고정 3초 유지용, 강제로)
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    // ✅ 3. 일정 생성 실행 (비동기 작업)
     // 여행 일정 자동 생성기 실행
     const module = await import("../scripts.js");
     const filtered = JSON.parse(localStorage.getItem("filteredItems") || "[]");
@@ -587,6 +683,7 @@ function loadFestivalData(page = 1) {
       customPrompt
     );
 
+    // ✅ 4. 마커 처리
     // 새로고침 대신 travelSchedule에서 마커만 불러오기
     const savedSchedule = localStorage.getItem("travelSchedule");
     if (savedSchedule) {
@@ -614,13 +711,24 @@ function loadFestivalData(page = 1) {
       setMarkersByPlaceNames(places); // 마커 표시 및 지도 bounds 이동
     }
 
-    // 탭4 버튼을 강제로 표시하고 클릭
+    // ✅ 5. 탭4 클릭
     const tab4Btn = document.getElementById("tab4Btn");
     if (tab4Btn) {
-      tab4Btn.style.display = "block"; // 버튼을 표시
-      tab4Btn.click(); // 클릭 이벤트 트리거
+      tab4Btn.style.display = "block";
+      tab4Btn.click();
     }
+
+    // ✅ 6. 로딩 숨기기
+    hideLoading();
   });
+}
+// 로딩 화면 표시
+function showLoading() {
+  document.getElementById("loadingOverlay").style.display = "flex";
+}
+// 로딩 화면 숨기기
+function hideLoading() {
+  document.getElementById("loadingOverlay").style.display = "none";
 }
 // 추가 상세정보 (모달의 내용)
 function handleLocationDetail(data) {
@@ -754,7 +862,11 @@ function updateCalendarInfo() {
   const tab3TitleEl = document.getElementById("tab3Title");
   const tab3SubTitleEl = document.getElementById("tab3SubTitle");
 
-  if (selectedAreaCode !== "") {
+  if (selectedAreaCode === "all") {
+    areaNameElement.textContent = "여행 일정";
+    tab2TitleEl.textContent = "여행 일정";
+    tab3TitleEl.textContent = "여행 일정";
+  } else if (selectedAreaCode !== "") {
     const areaName = findAreaNameByCode(selectedAreaCode);
     if (areaName) {
       areaNameElement.textContent = areaName;
@@ -845,11 +957,19 @@ function updateCalendarInfo() {
   // (2) 개별 시간 설정용
   function formatDateForTimeAdjustment(dateStr) {
     const days = ["일", "월", "화", "수", "목", "금", "토"];
-    const date = new Date(dateStr);
-    const month = date.getMonth() + 1; // pad 없이
-    const day = date.getDate();
-    const dayOfWeek = days[date.getDay()];
-    return `${month}/${day} ${dayOfWeek}`; // 예: 5/16 금
+
+    // "YYYY-MM-DD" → [연, 월, 일]
+    const [year, month, day] = dateStr.split("-").map(Number);
+
+    // ✅ 로컬 기준 Date 객체 생성
+    const localDate = new Date(year, month - 1, day); // UTC 사용 X
+
+    // 날짜 형식
+    const formattedMonth = month;
+    const formattedDay = day;
+    const dayOfWeek = days[localDate.getDay()];
+
+    return `${formattedMonth}/${formattedDay} ${dayOfWeek}`; // 예: 5/30 금
   }
 
   selectedDatesList.querySelectorAll(".schedule-item").forEach((item) => {
@@ -889,7 +1009,7 @@ function updateCalendarInfo() {
         endTime,
       });
     });
-    // 탭3으로 이동
+    // 탭2으로 이동
     const tab2Button = document.querySelector('.tab[data-tab="tab2"]');
     if (tab2Button) {
       tab2Button.click();
@@ -900,13 +1020,21 @@ function updateCalendarInfo() {
   function getDatesInRange(startStr, endStr) {
     const dateArray = [];
     if (!startStr || !endStr) return dateArray;
+
     let currentDate = new Date(startStr);
     const endDate = new Date(endStr);
 
     while (currentDate <= endDate) {
-      dateArray.push(currentDate.toISOString().split("T")[0]); // yyyy-mm-dd
+      // 로컬 날짜 기준으로 yyyy-mm-dd 문자열 생성
+      const year = currentDate.getFullYear();
+      const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+      const day = String(currentDate.getDate()).padStart(2, "0");
+
+      dateArray.push(`${year}-${month}-${day}`);
+
       currentDate.setDate(currentDate.getDate() + 1);
     }
+
     return dateArray;
   }
 }
@@ -1160,7 +1288,7 @@ function toggleConfirmButton() {
   if (selectedStartDate && selectedEndDate) {
     confirmBtn.removeAttribute("disabled");
     // 활성화 상태 스타일 변경 (검은색 배경에 흰색 글씨)
-    confirmBtn.style.backgroundColor = "#282828";
+    confirmBtn.style.backgroundColor = "#3498db";
     confirmBtn.style.color = "white";
   } else {
     confirmBtn.setAttribute("disabled", "true");
@@ -1352,41 +1480,6 @@ function reloadMapMarkers() {
   }
 }
 
-const searchInput = document.getElementById("search-input");
-const tagSearchBtn = document.getElementById("tag-search-btn");
-const tagBox = document.getElementById("tagSearchBox");
-const placeBox = document.getElementById("placeSearchBox");
-const selectBox = document.getElementById("placeSelectBox");
-
-function showTagBox() {
-  tagBox.classList.add("show");
-  tagBox.classList.remove("hidden");
-
-  placeBox.style.display = "none";
-  selectBox.style.display = "none";
-}
-
-function hideTagBox() {
-  tagBox.classList.remove("show");
-  tagBox.classList.add("hidden");
-
-  placeBox.style.display = "block";
-  selectBox.style.display = "block";
-}
-
-searchInput.addEventListener("focus", showTagBox);
-
-// 문서 클릭 시 input, tagBox 이외는 숨기기
-document.addEventListener("mousedown", (e) => {
-  if (!searchInput.contains(e.target) && !tagBox.contains(e.target)) {
-    hideTagBox();
-  }
-});
-
-tagSearchBtn.addEventListener("click", (e) => {
-  hideTagBox();
-});
-
 /* 
 
 ------------------탭4 핸들러 함수 -------------------
@@ -1395,12 +1488,17 @@ tagSearchBtn.addEventListener("click", (e) => {
 function tab4Handler() {
   // 로컬스토리지에서 여행 일정 데이터 가져오기
   let rawData = localStorage.getItem("travelSchedule");
+  let likePlaces = JSON.parse(localStorage.getItem("likePlaces")) || []; // 좋아요 저장된 id들
 
   if (!rawData) {
     console.error("여행 일정 데이터를 찾을 수 없습니다.");
     const scheduleSummary = document.getElementById("scheduleSummary");
-    scheduleSummary.innerHTML =
-      '<h1 id="scheduleSummaryTitle">여행 일정</h1><p>등록된 일정이 없습니다.</p>';
+    scheduleSummary.innerHTML = `
+      <div class="schedule-header">
+        <h1 id="scheduleSummaryTitle">여행 일정</h1>
+        <div class="no-schedule">등록된 일정이 없습니다.</div>
+      </div>
+    `;
     return;
   }
 
@@ -1423,20 +1521,24 @@ function tab4Handler() {
 
     // 날짜 요약 영역 초기화
     const scheduleSummary = document.getElementById("scheduleSummary");
-    scheduleSummary.innerHTML = '<h1 id="scheduleSummaryTitle">여행 일정</h1>';
 
     // 일정이 없는 경우 처리
     if (!travelSchedule || travelSchedule.length === 0) {
-      scheduleSummary.innerHTML += "<p>등록된 일정이 없습니다.</p>";
+      scheduleSummary.innerHTML = `
+        <div class="schedule-header">
+          <h1 id="scheduleSummaryTitle">여행 일정</h1>
+          <div class="no-schedule">등록된 일정이 없습니다.</div>
+        </div>
+      `;
       return;
     }
 
-    // 시작일과 종료일 추출 후 <h3> 태그 추가
     // 중복된 날짜를 제거하고 정렬하여 고유한 날짜만 처리
     const uniqueDates = [
       ...new Set(travelSchedule.map((item) => item.Date)),
     ].sort();
 
+    // 시작일과 종료일 추출
     if (uniqueDates.length > 0) {
       const startDate = new Date(uniqueDates[0]);
       const endDate = new Date(uniqueDates[uniqueDates.length - 1]);
@@ -1450,10 +1552,21 @@ function tab4Handler() {
         return `${yyyy}.${mm}.${dd}(${day})`;
       };
 
-      const dateRangeHTML = `<h3 id="scheduleSummaryRange">${formatDateWithDay(
-        startDate
-      )} ~ ${formatDateWithDay(endDate)}</h3>`;
-      scheduleSummary.innerHTML += dateRangeHTML;
+      // 여행 기간 계산 (일 수)
+      const diffTime = Math.abs(endDate - startDate);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 to include both start and end days
+
+      scheduleSummary.innerHTML = `
+        <div class="schedule-header">
+          <h1 id="scheduleSummaryTitle">여행 일정</h1>
+          <div id="scheduleSummaryRange">
+            <div class="date-range">${formatDateWithDay(
+              startDate
+            )} ~ ${formatDateWithDay(endDate)}</div>
+          </div>
+          <div class="trip-duration">${diffDays}일간의 여행</div>
+        </div>
+      `;
     }
 
     // 날짜별로 데이터 그룹화 (같은 날짜의 Places 합치기)
@@ -1611,11 +1724,92 @@ function tab4Handler() {
   }
 }
 
-// 일정 상세 정보 표시 함수
+// 좋아요 버튼 관련 함수 추가
+function toggleLike(id, element) {
+  // 로컬스토리지에서 좋아요 목록 가져오기
+  let likePlaces = JSON.parse(localStorage.getItem("likePlaces")) || [];
+
+  // 해당 ID가 이미 좋아요에 있는지 확인
+  const index = likePlaces.indexOf(id);
+  const isLikedNow = index === -1;
+
+  if (isLikedNow) {
+    // 좋아요 추가
+    likePlaces.push(id);
+    element.classList.add("liked");
+    element.innerHTML = '<i class="bi bi-heart-fill"></i>';
+  } else {
+    // 좋아요 제거
+    likePlaces.splice(index, 1);
+    element.classList.remove("liked");
+    element.innerHTML = '<i class="bi bi-heart"></i>';
+  }
+
+  // 로컬스토리지에 저장
+  localStorage.setItem("likePlaces", JSON.stringify(likePlaces));
+
+  // 동일한 장소의 다른 좋아요 버튼도 업데이트
+  updateAllLikeButtons(id, isLikedNow);
+
+  // 좋아요 수 업데이트
+  const likeCountSpans = document.querySelectorAll(
+    `.place-detail-feedback span:first-child`
+  );
+
+  likeCountSpans.forEach((span) => {
+    const parentBox = span.closest(".place-detail");
+    if (!parentBox) return;
+
+    const likeBtn = parentBox.querySelector(`.like-btn[data-id="${id}"]`);
+    if (!likeBtn) return;
+
+    let currentCount = parseInt(span.textContent.replace(/[^\d]/g, ""), 10);
+    const newCount = isLikedNow ? currentCount + 1 : currentCount - 1;
+    span.textContent = `🩷 ${newCount}`;
+  });
+
+  // 이벤트 버블링 방지
+  event.stopPropagation();
+  return false;
+}
+
+// 같은 ID를 가진 모든 좋아요 버튼 업데이트
+function updateAllLikeButtons(id, isLiked) {
+  // 모든 좋아요 버튼 찾기
+  const likeButtons = document.querySelectorAll(`.like-btn[data-id="${id}"]`);
+
+  likeButtons.forEach((button) => {
+    if (isLiked) {
+      button.classList.add("liked");
+      button.innerHTML = '<i class="bi bi-heart-fill"></i>';
+    } else {
+      button.classList.remove("liked");
+      button.innerHTML = '<i class="bi bi-heart"></i>';
+    }
+  });
+}
+
+// 좋아요 상태에 따라 버튼 초기 상태 설정
+function setLikeButtonState(button, id) {
+  const likePlaces = JSON.parse(localStorage.getItem("likePlaces")) || [];
+
+  if (likePlaces.includes(id)) {
+    button.classList.add("liked");
+    button.innerHTML = '<i class="bi bi-heart-fill"></i>';
+  } else {
+    button.classList.remove("liked");
+    button.innerHTML = '<i class="bi bi-heart"></i>';
+  }
+}
+
+// 일정 상세 정보 표시 함수 수정
 async function showScheduleDetails(daySchedule) {
   const scheduleDetails = document.getElementById("scheduleDetails");
   const res = await fetch(jsonFilePath);
   const listData = await res.json();
+
+  // 로컬스토리지에서 좋아요 목록 가져오기
+  const likePlaces = JSON.parse(localStorage.getItem("likePlaces")) || [];
 
   const dateObj = new Date(daySchedule.Date);
 
@@ -1628,7 +1822,16 @@ async function showScheduleDetails(daySchedule) {
   // "24.04.01" 형식으로 출력
   const formattedDate = `${year}.${month}.${day}`;
 
-  let detailsHTML = `<div class="details-date">${formattedDate}</div>`;
+  // 날짜와 가이드 메시지를 포함하는 HTML 생성
+  let detailsHTML = `
+    <div class="details-date">${formattedDate}</div>
+    <div id="placeDetailsGuide" style="margin-bottom: 20px; margin-top: 10px; padding: 12px 16px; background-color: rgb(240, 249, 255); border: 1px solid rgb(186, 230, 253); border-radius: 8px; color: rgb(3, 105, 161); font-size: 0.95rem; display: block;">
+      클릭하여 해당장소의 상세정보를 확인해보세요.
+    </div>
+  `;
+
+  // scheduleDetails에 HTML 설정
+  scheduleDetails.innerHTML = detailsHTML;
 
   if (daySchedule.Places && daySchedule.Places.length > 0) {
     const places = daySchedule.Places;
@@ -1643,6 +1846,11 @@ async function showScheduleDetails(daySchedule) {
 
       if (matched) {
         const thumbnail = matched.images[0];
+        const isLiked = likePlaces.includes(matched.id);
+        const likeIcon = isLiked
+          ? '<i class="bi bi-heart-fill" id="heartBtn"></i>'
+          : '<i class="bi bi-heart" id="heartBtn"></i>';
+        const likedClass = isLiked ? "liked" : "";
 
         // 안쪽에 해당 부분 추가
         let bgColor = "#ffb14b"; // 기본: 주황
@@ -1660,16 +1868,22 @@ async function showScheduleDetails(daySchedule) {
           matched.placeName
         }" class="thumbnail-image" />
               <span class="place-name">${matched.placeName}</span>
+              <button class="like-btn ${likedClass}" data-id="${
+          matched.id
+        }" onclick="return toggleLike(${matched.id}, this)">${likeIcon}</button>
             </div>
             <div class="detail-content" style="display: none;">
               <div class="images">
                 <img src="${matched.images[0]}" alt="${
           matched.placeName
         }" class="main-image" />
+                <button class="like-btn detail-like-btn ${likedClass}" data-id="${
+          matched.id
+        }" onclick="return toggleLike(${matched.id}, this)">${likeIcon}</button>
               </div>
               <div class="place-detail-info">
                 <div class="place-detail-feedback">
-                  <span>🩷 ${matched.likes}</span>
+                  <span>🩷 ${matched.likes + (isLiked ? 1 : 0)}</span>
                   <span>⭐ 미정</span>
                 </div>
                 <p id="place-detail-name">${matched.placeName}</p>
@@ -1683,7 +1897,6 @@ async function showScheduleDetails(daySchedule) {
           </div>
         `;
 
-        // 🔽 점선 박스와 경로 보기 아이콘 추가 (마지막 박스 뒤에는 추가하지 않음)
         // 점선 및 경로 링크 추가
         if (i < places.length - 1) {
           let nextPlaceName = places[i + 1];
@@ -1722,9 +1935,14 @@ async function showScheduleDetails(daySchedule) {
 
   scheduleDetails.innerHTML = detailsHTML;
 
-  // ✅ 클릭 시 박스 확장/축소 토글 (하나만 열리도록 변경)
+  // 클릭 시 박스 확장/축소 토글 (하나만 열리도록 변경)
   scheduleDetails.querySelectorAll(".place-detail").forEach((box) => {
-    box.addEventListener("click", () => {
+    box.addEventListener("click", (event) => {
+      // 좋아요 버튼 클릭 시 이벤트 버블링 방지
+      if (event.target.closest(".like-btn")) {
+        return;
+      }
+
       const detailContent = box.querySelector(".detail-content");
       const collapsedSummary = box.querySelector(".collapsed-summary");
 
@@ -1786,10 +2004,16 @@ document
       // 2. tempSchedule에 저장할 데이터 준비
       // 시작일과 종료일 추출
       const dates = travelSchedule.map((item) => new Date(item.Date));
-      const startDate = new Date(Math.min(...dates))
-        .toISOString()
-        .split("T")[0];
-      const endDate = new Date(Math.max(...dates)).toISOString().split("T")[0];
+
+      // 시작일 계산
+      let startDate = new Date(Math.min(...dates));
+      startDate.setDate(startDate.getDate() + 1); // 하루 추가
+      startDate = startDate.toISOString().split("T")[0]; // ISO 형식으로 변환
+
+      // 종료일 계산
+      let endDate = new Date(Math.max(...dates));
+      endDate.setDate(endDate.getDate() + 1); // 하루 추가
+      endDate = endDate.toISOString().split("T")[0]; // ISO 형식으로 변환
 
       // 포맷에 맞게 schedule 데이터 구성 및 장소 이름에서 괄호 부분 제거
       const schedule = travelSchedule.map((item) => {
@@ -1805,11 +2029,37 @@ document
         };
       });
 
+      // 자동 제목 생성
+      const firstPlaceRaw = travelSchedule?.[0]?.Places?.[0] || "어디론가";
+      const bracketIndex = firstPlaceRaw.indexOf("(");
+      const firstPlace =
+        bracketIndex > -1
+          ? firstPlaceRaw.substring(0, bracketIndex)
+          : firstPlaceRaw;
+
+      const titleTemplates = [
+        (place) => `${place}부터 시작하는 여행!`,
+        (place) => `${place}부터 가자!`,
+        (place) => `${place}부터!`,
+        (place) => `${place}로 떠나는 설레는 첫걸음`,
+        (place) => `이번 여행, ${place}에서 시작해볼까?`,
+        (place) => `${place}, 첫 목적지로 딱이야!`,
+        (place) => `${place}부터 찬찬히 돌아보자`,
+        (place) => `${place}, 그곳에서 시작된 이야기`,
+        (place) => `${place}부터 출발하는 감성 여행`,
+        (place) => `처음 도착한 곳, ${place}!`,
+      ];
+
+      const randomTemplate =
+        titleTemplates[Math.floor(Math.random() * titleTemplates.length)];
+      const title = randomTemplate(firstPlace);
+
       // 최종 저장할 데이터 구조
       const scheduleToSave = {
         startDate: startDate,
         endDate: endDate,
         schedule: schedule,
+        title: title, // ← 자동 생성된 제목
       };
 
       // JSON 형식으로 tempSchedule에 저장
@@ -2430,6 +2680,7 @@ function initializeResizeHandler() {
   const tabContainer = document.getElementById("tab-container");
   const resizeHandle = document.createElement("div");
   resizeHandle.id = "resize-handle";
+  resizeHandle.innerHTML = `<div class="resize-handle"></div>`; // 내부 문양 div 추가
   tabContainer.appendChild(resizeHandle);
 
   let initialX;

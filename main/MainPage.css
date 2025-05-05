@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  caret-color: transparent;
 }
 
 li {
@@ -97,7 +98,6 @@ li {
 
 /* 메인 컨테이너 스타일 수정 */
 #main-container {
-  margin-left: 80px;
   display: flex;
   flex-direction: row;
   height: 100vh;
@@ -111,31 +111,52 @@ li {
   height: 100%;
   background-color: white;
   padding: 10px;
-  overflow-y: auto;
-  transition: none; /* 드래그 시 즉각적인 변화를 위해 transition 제거 */
+  padding-left: 96px;
+  transition: 0.15s all ease-out;
   box-sizing: border-box;
   margin-left: 10px;
   position: relative; /* 리사이즈 핸들 위치 지정을 위함 */
   min-width: 250px; /* 최소 너비 설정 */
   max-width: 80%; /* 최대 너비 설정 */
+
+  overflow-y: auto;
+  overflow-x: hidden; /* 수평 스크롤바 숨김 */
 }
 
-/* 리사이즈 핸들 스타일 */
+#tab-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* 리사이즈 핸들 컨테이너 */
 #resize-handle {
   width: 8px;
   height: 100%;
-  background-color: #ddd;
+  background-color: #ffffff;
   cursor: col-resize;
   position: absolute;
   right: 0;
   top: 0;
   z-index: 10;
   transition: background-color 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 4px;
 }
 
-#resize-handle:hover,
-#resize-handle.active {
-  background-color: #aaa;
+/* 리사이즈 핸들 내부 바 */
+.resize-handle {
+  background-color: #a3a5a8;
+  height: 80px;
+  width: 6px;
+  border-radius: 2px;
+  transition: background-color 0.2s;
+  position: fixed;
+}
+
+/* 마우스 오버 시 내부 바 색상 변경 */
+#resize-handle:hover .resize-handle {
+  background-color: #555;
 }
 
 /* 맵 컨테이너 스타일 수정 */
@@ -178,10 +199,10 @@ li {
 #tag-input,
 #search-btn,
 #tag-search-btn,
-#reset-btn {
+#reset-search-btn {
   font-size: 16px;
   padding: 10px 12px;
-  margin: 5px;
+  margin-top: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
   outline: none;
@@ -207,10 +228,10 @@ li {
 
 /* 카테고리 버튼 전체 묶음 */
 #placeCategory {
-  margin-top: 20px;
+  margin-top: 5px;
   display: flex;
   flex-wrap: wrap;
-  gap: 2px;
+  gap: 4px;
 }
 
 /* 각각 카테고리 버튼 스타일 */
@@ -510,44 +531,119 @@ li {
 /* 지역 버튼 스타일 */
 .area-btn-container {
   display: flex;
-  flex-wrap: wrap; /* 여러 줄로 배치 */
-  gap: 30px; /* 버튼 간의 간격 */
-  justify-content: flex-start; /* 왼쪽 정렬 */
-  margin-left: 40px; /* 왼쪽 여백 추가 */
-  margin-bottom: 20px; /* 아래쪽 여백 추가 */
-  margin-top: 40px;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
 }
 
 .area-btn {
-  width: calc(45% - 20px); /* 버튼의 너비를 50%로 설정하고 간격을 고려 */
-  padding: 12px;
-  border: 2.5px solid #ccc;
-  border-radius: 30px; /* 둥근 모서리 */
-  color: #282828; /* 어두운 회색 글씨 */
-  font-size: 16px;
-  font-weight: 500;
-  text-align: center;
+  width: calc(33.333% - 20px); /* 3개씩 배치 */
+  height: 120px;
+  border-radius: 15px;
+  overflow: hidden;
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 12px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
-  transition: all 0.3s ease; /* 모든 변화에 부드러운 전환 효과 */
-  box-sizing: border-box; /* 패딩과 테두리가 크기에 포함되도록 설정 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  border: none;
+  position: relative; /* 여전히 필요, 하지만 그 안에서만 위치가 조정되도록 */
+}
+
+.area-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.5),
+    transparent
+  ); /* 아래쪽 어둡게 */
+  z-index: 0;
+}
+
+.area-btn span {
+  position: relative;
+  z-index: 1;
+  display: block; /* span을 블록 요소로 만들어야 width 적용됨 */
+  width: 100%; /* 버튼 전체 너비 사용 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  padding: 3px 0;
+  background-color: rgba(0, 0, 0, 0.2); /* 아래 어둡게 배경 */
+  border-radius: 0 0 10px 10px; /* 아래만 둥글게 */
+  font-size: 17px;
+  text-shadow: none;
 }
 
 .area-btn:hover {
-  background-color: #e0e0e0; /* 마우스를 올렸을 때 더 어두운 회색 */
-  transform: translateY(-2px); /* 마우스를 올렸을 때 약간 떠오르는 효과 */
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+.area-btn[data-value="all"] {
+  background-image: url("../images/all.png");
+}
+.area-btn[data-value="1"] {
+  background-image: url("../images/seoul.jpg");
 }
 
-.area-btn:active {
-  transform: translateY(1px); /* 클릭 시 눌리는 효과 */
+.area-btn[data-value="2"] {
+  background-image: url("../images/incheon.jpg");
 }
 
-.area-btn.active {
-  background-color: #282828; /* 활성화된 버튼 색상 */
-  color: #fff; /* 활성화된 버튼은 흰색 글씨 */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 활성화된 버튼에 더 강한 그림자 */
+.area-btn[data-value="3"] {
+  background-image: url("../images/daejeon.jpg");
 }
-
+.area-btn[data-value="4"] {
+  background-image: url("../images/daegu.png");
+}
+.area-btn[data-value="5"] {
+  background-image: url("../images/gwangju.jpg");
+}
+.area-btn[data-value="6"] {
+  background-image: url("../images/busan.jpg");
+}
+.area-btn[data-value="7"] {
+  background-image: url("../images/ulsan.jpg");
+}
+.area-btn[data-value="8"] {
+  background-image: url("../images/sejong.webp");
+}
+.area-btn[data-value="31"] {
+  background-image: url("../images/Gyeonggi-do.webp");
+}
+.area-btn[data-value="32"] {
+  background-image: url("../images/Gangwon.jpg");
+}
+.area-btn[data-value="33"] {
+  background-image: url("../images/Chungcheongbuk-do.jpg");
+}
+.area-btn[data-value="34"] {
+  background-image: url("../images/Chungcheongnam-do.jpg");
+}
+.area-btn[data-value="35"] {
+  background-image: url("../images/Gyeongsangbuk-do.jpg");
+}
+.area-btn[data-value="36"] {
+  background-image: url("../images/Gyeongsangnam-do.jpg");
+}
+.area-btn[data-value="37"] {
+  background-image: url("../images/Jeonbuk.jpg");
+}
+.area-btn[data-value="38"] {
+  background-image: url("../images/Jeollanam-do.jpg");
+}
+.area-btn[data-value="39"] {
+  background-image: url("../images/jeju.jpg");
+}
 /* 달력 모달부분 */
 /* 모달 배경 스타일 */
 .calendar-modal-background {
@@ -701,12 +797,12 @@ li {
 /* 시작일, 끝일 동일한 색상 */
 .selected-start,
 .selected-end {
-  background-color: #282828 !important; /* 연한 초록색으로 동일하게 설정 */
+  background-color: #3498db !important; /* 연한 초록색으로 동일하게 설정 */
   color: white;
 }
 
 .selected-range {
-  background-color: #797878bc;
+  background-color: rgb(186, 230, 253);
   color: white;
 }
 
@@ -754,7 +850,7 @@ li {
 
 /* 선택 완료 버튼 스타일 */
 #confirmBtn {
-  background-color: #282828; /* 검은색 배경 */
+  background-color: #3498db; /* 검은색 배경 */
   color: white;
   padding: 10px 20px;
   border: none;
@@ -787,7 +883,7 @@ li {
 #calendarIcon {
   cursor: pointer;
   font-size: 20px;
-  color: #282828;
+  color: #3498db;
   display: inline-block;
 }
 
@@ -808,7 +904,7 @@ li {
 #timeConfirmBtn {
   margin-top: 20px;
   padding: 15px 20px; /* 패딩 값 조정 */
-  background-color: #282828;
+  background-color: #3498db;
   color: white;
   border: none;
   border-radius: 6px;
@@ -825,7 +921,7 @@ li {
   justify-content: space-between; /* 항목을 가로로 배치 */
   align-items: flex-start; /* 항목들이 세로로 정렬되지 않도록 상단 정렬 */
   padding: 6px 12px; /* 상하 6px, 좌우 12px */
-  border: 1px solid #e0e0e0;
+  border: 1px solid rgb(186, 230, 253);
   border-radius: 6px;
   margin-bottom: 12px;
   width: calc(100% - 20px); /* 100%에서 20px을 뺀 너비 */
@@ -920,10 +1016,11 @@ li {
 /* 중앙: 상세 정보 (클릭 시 표시) */
 /* 상세 정보 컨테이너 */
 #scheduleDetails {
-  flex: 0 0 60%; /* 상세 정보 영역 비율 조정 */
+  flex: 0 0 50%; /* 상세 정보 영역 비율 조정 */
   box-sizing: border-box;
   box-shadow: 6px 0 12px rgba(0, 0, 0, 0.1);
   padding-right: 10px;
+  padding-left: 10px;
 }
 
 /* 날짜 제목 */
@@ -937,7 +1034,7 @@ li {
 
 /* 각 장소의 상세 정보 박스 */
 .place-detail {
-  border: 2.5px solid #ccc;
+  border: 2.5px solid rgb(186, 230, 253);
   border-radius: 18px;
   padding: 10px;
   margin-bottom: 20px;
@@ -974,7 +1071,7 @@ li {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 120px;
+  max-width: 300px;
 }
 
 /* 확장된 상태 (Instagram 스타일) */
@@ -1065,8 +1162,7 @@ li {
 
 /* 왼쪽: 간단 정보 (날짜 목록) */
 #scheduleSummary {
-  flex: 0 0 40%; /* 간단 정보 영역 비율 조정 */
-  border-right: 1px solid #ccc; /* 간단 정보와 상세 정보 구분을 위한 경계선 */
+  flex: 0 0 50%; /* 간단 정보 영역 비율 조정 */
   height: 100%; /* 세로로 꽉 차게 */
   box-sizing: border-box; /* 경계선 포함 */
   display: flex; /* 플렉스 컨테이너로 설정 */
@@ -1075,7 +1171,7 @@ li {
 
 /* 각 날짜 요약 박스 스타일 */
 .custom-date-box {
-  border: 2px solid #ccc;
+  border: 2px solid rgb(186, 230, 253);
   border-radius: 12px;
   padding: 16px;
   cursor: pointer;
@@ -1092,8 +1188,8 @@ li {
 }
 
 .custom-date-box.active {
-  border-color: #282828;
-  background-color: #f0f0f0;
+  border-color: #3498db;
+  background-color: #e8f4fc;
 }
 
 /* 내부 텍스트 스타일 */
@@ -1165,21 +1261,47 @@ li {
   color: #007bff;
 }
 
+.schedule-header {
+  padding: 24px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+}
+
 #scheduleSummaryTitle {
-  margin-left: 20px; /* 왼쪽 여백 */
-  margin-top: 20px;
+  margin: 0 0 16px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a1a1a;
 }
 
 #scheduleSummaryRange {
-  color: #282828;
-  margin-bottom: 60px;
-  margin-left: 20px; /* 왼쪽 여백 */
-  margin-top: 20px;
+  padding: 10px 12px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.date-range {
+  font-size: 16px;
+  font-weight: 500;
+  color: #3498db;
+  text-align: center;
+}
+
+.trip-duration {
+  font-size: 14px;
+  color: #666;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 2px;
 }
 
 /* 저장/편집 버튼 스타일 */
 #tab4-buttons,
-#editButtons {
+#editButtons,
+#tab3-buttons {
   display: none;
   flex-direction: column;
   align-items: center;
@@ -1190,7 +1312,8 @@ li {
 }
 
 #tab4-buttons button,
-#editButtons button {
+#editButtons button,
+#tab3-buttons button {
   width: 80px;
   margin: 5px 0;
   padding: 8px;
@@ -1202,7 +1325,8 @@ li {
 
 /* 저장 버튼 */
 #saveButton,
-#applyButton {
+#applyButton,
+#makeSchedule {
   background-color: #3498db;
   color: white;
   border: none;
@@ -1216,10 +1340,23 @@ li {
   color: #282828;
   border: 2px solid #ddd;
 }
+#transparentButton {
+  background-color: transparent;
+  border: 2px solid #ddd;
+  width: 80px;
+  height: 60px;
+  margin: 5px 0;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 6px;
+  opacity: 0;
+  box-sizing: border-box; /* 이 속성 추가 */
+}
 
 /* 호버 효과 */
 #saveButton:hover,
-#applyButton:hover {
+#applyButton:hover,
+#makeSchedule:hover {
   background-color: #205e87;
 }
 
@@ -1390,4 +1527,106 @@ li {
   display: flex;
   align-items: center;
   gap: 10px; /* 숫자와 이름 사이 간격 */
+}
+
+/* 로딩화면 */
+#loadingOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* 텍스트와 스피너가 세로로 정렬되게 함 */
+  z-index: 9999;
+}
+
+#loadingMessage {
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 20px; /* 스피너와 메시지 간격 */
+  text-align: center;
+  font-weight: bold;
+}
+
+.spinner {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 좋아요 버튼 스타일 */
+.like-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: red;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.like-btn i {
+  color: red;
+}
+
+.like-btn.liked {
+  color: red;
+}
+
+/* 축소 버전의 좋아요 버튼 위치 */
+.collapsed-summary .like-btn {
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+/* 확대 버전의 좋아요 버튼 위치 */
+.detail-like-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent; /* ✅ 투명 처리 */
+  z-index: 2;
+}
+
+.images {
+  position: relative;
+}
+
+/* 더보기 버튼 */
+#load-more-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+#load-more-btn:hover {
+  background: #dedede;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
 }

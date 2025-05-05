@@ -71,9 +71,19 @@
           <button id="editButton">편집</button>
           <button id="saveButton">저장</button>
         </div>
+
+        <!-- 탭3의 일정 생성 버튼 (기본적으로 숨김처리) -->
+        <div id="tab3-buttons" style="display: none; margin-top: auto">
+          <button id="transparentButton" disabled style="cursor: default">
+            투명
+          </button>
+          <button id="makeSchedule">일정 생성</button>
+        </div>
       </div>
       <div id="tab-container">
-        <div id="resize-handle"></div>
+        <div id="resize-handle">
+          <div class="resize-handle"></div>
+        </div>
         <div id="tab1" class="tabContent">
           <div id="calendarInfo">
             <h1 id="areaName">여행 일정</h1>
@@ -132,24 +142,24 @@
           <h1 id="tab2Title"></h1>
           <h3 id="tab2SubTitle"></h3>
           <div class="area-btn-container">
-            <button class="area-btn" data-value="all">전체</button>
-            <button class="area-btn" data-value="1">서울</button>
-            <button class="area-btn" data-value="2">인천</button>
-            <button class="area-btn" data-value="3">대전</button>
-            <button class="area-btn" data-value="4">대구</button>
-            <button class="area-btn" data-value="5">광주</button>
-            <button class="area-btn" data-value="6">부산</button>
-            <button class="area-btn" data-value="7">울산</button>
-            <button class="area-btn" data-value="8">세종</button>
-            <button class="area-btn" data-value="31">경기</button>
-            <button class="area-btn" data-value="32">강원</button>
-            <button class="area-btn" data-value="33">충북</button>
-            <button class="area-btn" data-value="34">충남</button>
-            <button class="area-btn" data-value="35">경북</button>
-            <button class="area-btn" data-value="36">경남</button>
-            <button class="area-btn" data-value="37">전북</button>
-            <button class="area-btn" data-value="38">전남</button>
-            <button class="area-btn" data-value="39">제주</button>
+            <button class="area-btn" data-value="all"><span>전체</span></button>
+            <button class="area-btn" data-value="1"><span>서울</span></button>
+            <button class="area-btn" data-value="2"><span>인천</span></button>
+            <button class="area-btn" data-value="3"><span>대전</span></button>
+            <button class="area-btn" data-value="4"><span>대구</span></button>
+            <button class="area-btn" data-value="5"><span>광주</span></button>
+            <button class="area-btn" data-value="6"><span>부산</span></button>
+            <button class="area-btn" data-value="7"><span>울산</span></button>
+            <button class="area-btn" data-value="8"><span>세종</span></button>
+            <button class="area-btn" data-value="31"><span>경기</span></button>
+            <button class="area-btn" data-value="32"><span>강원</span></button>
+            <button class="area-btn" data-value="33"><span>충북</span></button>
+            <button class="area-btn" data-value="34"><span>충남</span></button>
+            <button class="area-btn" data-value="35"><span>경북</span></button>
+            <button class="area-btn" data-value="36"><span>경남</span></button>
+            <button class="area-btn" data-value="37"><span>전북</span></button>
+            <button class="area-btn" data-value="38"><span>전남</span></button>
+            <button class="area-btn" data-value="39"><span>제주</span></button>
           </div>
         </div>
         <div id="tab3" class="tabContent" style="display: none">
@@ -158,29 +168,6 @@
           <div id="tagSearchBox" class="slide-box hidden">
             <input type="text" id="tag-input" placeholder="태그로 검색" />
             <button id="tag-search-btn"><i class="bi bi-search"></i></button>
-            <br />
-            <br />
-            <div>
-              추천태그<br />
-              1. 맛집<br />
-              2. 옷쇼핑<br />
-              3. 쇼핑<br />
-              4. 맛집<br />
-              5. 커플여행
-            </div>
-            <br />
-            <div>
-              최근 검색<br />
-              <span>제주도 x</span>
-              <span>비빔밥 x</span>
-              <span>꽃축제 x</span>
-              <span>바다여행 x</span>
-              <span>산책코스 x</span>
-              <span>맛집탐방 x</span>
-              <span>힐링여행 x</span>
-              <span>당일치기 x</span>
-              <span>오션뷰 x</span>
-            </div>
           </div>
           <div id="placeSearchBox">
             <div>
@@ -191,6 +178,10 @@
               />
               <button id="search-btn"><i class="bi bi-search"></i></button>
 
+              <button id="reset-search-btn">
+                <i class="bi bi-arrow-clockwise"></i>
+              </button>
+
               <div id="placeCategory">
                 <button class="placeCategory" data-value="all">전체</button>
                 <button class="placeCategory" data-value="1">장소</button>
@@ -200,14 +191,13 @@
               </div>
 
               <ul id="festival-list">
-                <li>불러오는 중...</li>
+                <li>지역을 선택해주세요!</li>
               </ul>
               <button id="load-more-btn">더 보기</button>
             </div>
           </div>
           <div id="placeSelectBox">
             <ul id="selectedPlaces"></ul>
-            <button id="makeSchedule" style="float: right">일정 만들기</button>
           </div>
         </div>
         <div id="tab4" class="tabContent" style="display: none">
@@ -264,6 +254,10 @@
             <ul id="reviews"></ul>
           </div>
         </div>
+      </div>
+      <div id="loadingOverlay" style="display: none">
+        <p id="loadingMessage">AI가 추천 여행 일정을 생성하고 있습니다...</p>
+        <div class="spinner"></div>
       </div>
     </div>
     <script src="MainPage.js" defer></script>

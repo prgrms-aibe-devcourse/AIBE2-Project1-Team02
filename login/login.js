@@ -63,7 +63,6 @@ loginButton.addEventListener("click", function () {
       window.location.href = "../mypage/mypage.html";
       return;
     }
-
     // 일반 로그인 성공 시 메인 페이지 이동
     window.location.href = "/welcome.html";
   } else {
