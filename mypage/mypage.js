@@ -1,3 +1,4 @@
+
 // 로그인 여부 체크
 document.addEventListener("DOMContentLoaded", () => {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // 장소 긁어오는 기능
+// 투어스 관련 모듈 js 코드
 document.addEventListener("DOMContentLoaded", async function () {
   const currentDate = new Date();
   const savedSchedules = JSON.parse(
@@ -181,7 +183,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const naverUser = JSON.parse(localStorage.getItem("naver_user"));
     const normalUser = JSON.parse(localStorage.getItem("normal_user"));
     if (naverUser && naverUser.login === true) {
-
       const userData = JSON.parse(localStorage.getItem("naver_user"));
       // 닉네임
       const nickname = userData.nickname;
@@ -202,7 +203,6 @@ document.addEventListener('DOMContentLoaded', function () {
       return { user: naverUser, key: "naver_user" };
     }
     else if (kakaoUser && kakaoUser.login === true) {
-
       const userData = JSON.parse(localStorage.getItem("kakao_user"));
       // 닉네임
       const nickname = userData.nickname;
@@ -248,7 +248,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const message = user?.profile?.profile_message || "프로필 문구 없음";
     profileMessageEl.textContent = message;
   }
-
   const tourCountElement = document.querySelector(".tour-count");
 
   const savedSchedules = JSON.parse(localStorage.getItem("savedSchedule"));
@@ -257,7 +256,6 @@ document.addEventListener('DOMContentLoaded', function () {
   if (tourCountElement) {
     tourCountElement.innerHTML = `<strong style="text-align:center">나의 투어스<br />${tourCount}</strong>`;
   }
-
   // 페이지 로드 시 메시지 출력
   loadProfileMessage();
 
@@ -291,7 +289,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
-// 좋아요 목록 긁어오기 기능능
+// 좋아요 목록 긁어오기 기능
 document.addEventListener('DOMContentLoaded', function () {
   const viewLikedPlacesButton = document.getElementById('view-liked-places');
   const modalContainer = document.getElementById('modal-container');
