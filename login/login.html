@@ -5,22 +5,21 @@
   <meta charset="UTF-8">
   <title>로그인 페이지</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../header/header.css" />
 
+  <!-- 외부 라이브러리 -->
   <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
-    charset="utf-8"></script>
+  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 
 <body>
+  <!-- 헤더 위치 -->
+  <div id="header-container"></div>
 
   <div class="main-container">
-
-    <div id="sidebar-container"></div>
-
     <div class="login-container">
-      <img src="../login/login_img/logo.jpg" alt="로고" class="logo" width="100" height="50">
-
+      <img src="../login/login_img/logo.jpg" alt="로고" class="header-logo">
       <label for="username" class="input-label">아이디</label>
       <input type="text" id="username" placeholder="아이디 입력">
 
@@ -51,45 +50,16 @@
           <span class="signup-link"><a href="../sign_up/sign_up.html">회원가입</a></span>
         </div>
       </div>
-
-
-
     </div>
-
-    <script src="login.js"></script>
-
   </div>
 
-  <script>
-    // fetch로 사이드바 HTML을 불러오고 나서 로그인 상태에 따라 처리
-    fetch('../sidebar/sidebar.html')
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById('sidebar-container').innerHTML = data; // 사이드바 삽입
-
-        // 로그인 상태에 따른 처리
-        const isLoggedIn = localStorage.getItem('isLoggedIn'); // 로그인 여부 확인
-        const logOutButton = document.querySelector('.sidebar-logOut'); // 로그아웃 버튼
-
-        if (logOutButton) {
-          if (isLoggedIn === 'true') {
-            logOutButton.style.display = 'block';  // 로그인 상태일 때 버튼 보이기
-          } else {
-            logOutButton.style.display = 'none';  // 로그인 상태가 아니면 버튼 숨기기
-          }
-        }
-      });
-
-  </script>
-
-  <script src="../sidebar/sidebar.js"></script>
-
+  <!-- 일반 JS -->
+  <script src="login.js"></script>
   <script type="module" src="../login/sns_login/kakaoTalkLogin.js"></script>
 
+  <!-- 네이버 로그인 처리 -->
   <script type="text/javascript">
-    // 네이버 로그인
-    var naver_id_login = new naver_id_login("QcJXrtQ1k8vdMQwpLBsR",
-      "http://127.0.0.1:5500/login/sns_login/callback.html");
+    var naver_id_login = new naver_id_login("QcJXrtQ1k8vdMQwpLBsR", "http://127.0.0.1:5500/login/sns_login/callback.html");
     var state = naver_id_login.getUniqState();
     naver_id_login.setDomain("http://127.0.0.1:5500/welcome.html");
     naver_id_login.setState(state);
@@ -99,17 +69,26 @@
     window.addEventListener('message', function (event) {
       if (event.data.type === 'NAVER_LOGIN_SUCCESS') {
         const userInfo = event.data.payload;
-
-        // 로컬스토리지 저장
         localStorage.setItem('naver_user', JSON.stringify(userInfo));
         localStorage.setItem('isLoggedIn', 'true');
-
-        // 사용자에게 확인 창 표시
         window.location.href = 'http://127.0.0.1:5500/welcome.html';
       }
     });
   </script>
 
+  <!-- 모듈: 헤더 동적 로딩 -->
+  <script type="module">
+    import { initHeaderLogic } from '../header/header.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('../header/header.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('header-container').innerHTML = html;
+          initHeaderLogic();
+        });
+    });
+  </script>
 </body>
 
 </html>
