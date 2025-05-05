@@ -1,3 +1,9 @@
+fetch('../sidebar/sidebar.html')
+.then(res => res.text())
+.then(data => {
+  document.getElementById('sidebar-container').innerHTML = data;
+});
+
 const signupButton = document.querySelector('.signupBtn');
 
 signupButton.addEventListener('click', function(event) {
