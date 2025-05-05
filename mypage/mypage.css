@@ -246,3 +246,11 @@ body {
         padding: 15px;
     }
 }
+
+#view-liked-places {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  #view-liked-places:hover {
+    transform: scale(1.1); /* 글자 크기 10% 증가 */
+  }

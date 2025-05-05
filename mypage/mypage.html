@@ -31,22 +31,19 @@
     <div id="sidebar-container"></div>
 
     <div class="inner">
-      <h2 class="whose-profile">김기현 dd님의 투어스</h2>
+      <h2 class="whose-profile">unknown의 투어스</h2>
       <div class="profile-section">
         <img class="profile-image" src="../mypage/mypage_img/김기현_증명사진1.jpg" alt="프로필 이미지" />
         <div class="profile-info">
           <p class="username">
-            김기현 <span class="userid">@watergon1126</span>
+            김기현 <span class="userid">@unknown</span>
           </p>
           <div class="stats">
             <div>
-              <strong>3<br />투어스</strong>
+              <strong class="tour-count">0<br /> 내 투어스</strong>
             </div>
             <div>
-              <strong>151<br />리뷰 작성</strong>
-            </div>
-            <div>
-              <strong>156<br />좋아요</strong>
+              <strong id="view-liked-places"> 좋아요 </strong>
             </div>
           </div>
         </div>
@@ -56,7 +53,7 @@
         <button class="delete-account">회원탈퇴</button>
       </div>
 
-      <p class="profile-message">제주도 여행가려고 돈 모으는 중...</p>
+      <p class="profile-message">unknown</p>
       <hr />
 
       <div class="tour-section">
@@ -72,6 +69,9 @@
       </div>
     </div>
   </div>
+
+  <!-- 모달을 동적으로 불러올 곳 -->
+  <div id="modal-container"></div>
 
   <script>
     // fetch로 사이드바 HTML을 불러오고 나서 로그인 상태에 따라 처리
@@ -253,70 +253,72 @@
     document.addEventListener('DOMContentLoaded', function () {
       const profileMessageEl = document.querySelector(".profile-message");
 
-  // 현재 로그인된 사용자 정보를 가져오는 함수
-  function getActiveUser() {
-    const kakaoUser = JSON.parse(localStorage.getItem("kakao_user"));
-    const naverUser = JSON.parse(localStorage.getItem("naver_user"));
-    const normalUser = JSON.parse(localStorage.getItem("normal_user"));
+      // 현재 로그인된 사용자 정보를 가져오는 함수
+      function getActiveUser() {
+        const kakaoUser = JSON.parse(localStorage.getItem("kakao_user"));
+        const naverUser = JSON.parse(localStorage.getItem("naver_user"));
+        const normalUser = JSON.parse(localStorage.getItem("normal_user"));
 
-    if (naverUser?.login === true) {
-      const userData = JSON.parse(localStorage.getItem("naver_user"));
-      // 닉네임
-      const nickname = userData.nickname;
-      // 이메일
-      const email = userData.email;
-      // 프로필 이미지
-      const profileImg = userData.profileImg;
+        if (naverUser?.login === true) {
+          const userData = JSON.parse(localStorage.getItem("naver_user"));
+          // 닉네임
+          const nickname = userData.nickname;
+          // 이메일
+          const email = userData.email;
+          // 프로필 이미지
+          const profileImg = userData.profileImg;
 
-      // 요소에 정보 삽입
-      document.querySelector(
-        ".whose-profile"
-      ).textContent = `${nickname} 님의 투어스`;
-      document.querySelector(".profile-image").src = profileImg;
-      document.querySelector(
-        ".username"
-      ).innerHTML = `${nickname} <span class="userid">@${email}</span>`;
+          // 요소에 정보 삽입
+          document.querySelector(
+            ".whose-profile"
+          ).textContent = `${nickname} 님의 투어스`;
+          document.querySelector(".profile-image").src = profileImg;
+          document.querySelector(
+            ".username"
+          ).innerHTML = `${nickname} <span class="userid">@${email}</span>`;
 
-      return { user: naverUser, key: "naver_user" };
-    } else if (kakaoUser.login === true) {
-      const userData = JSON.parse(localStorage.getItem("kakao_user"));
-      // 닉네임
-      const nickname = userData.nickname;
-      // 이메일
-      const email = userData.email;
-      // 프로필 이미지
-      const profileImg = userData.profileImg;
+          return { user: naverUser, key: "naver_user" };
+        }
+        else if (kakaoUser?.login === true) {
+          const userData = JSON.parse(localStorage.getItem("kakao_user"));
+          // 닉네임
+          const nickname = userData.nickname;
+          // 이메일
+          const email = userData.email;
+          // 프로필 이미지
+          const profileImg = userData.profileImg;
 
-      // 요소에 정보 삽입
-      document.querySelector(
-        ".whose-profile"
-      ).textContent = `${nickname} 님의 투어스`;
-      document.querySelector(".profile-image").src = profileImg;
-      document.querySelector(
-        ".username"
-      ).innerHTML = `${nickname} <span class="userid">@${email}</span>`;
-      return { user: kakaoUser, key: "kakao_user" };
-    } else if (normalUser?.login === true) {
-      const userData = JSON.parse(localStorage.getItem("normal_user"));
-      // 닉네임
-      const nickname = "김ddd기현";
-      // 이메일
-      const email = "watergon1126";
-      // 프로필 이미지
-      const profileImg = "../mypage/mypage_img/김기현_증명사진1.jpg";
+          // 요소에 정보 삽입
+          document.querySelector(
+            ".whose-profile"
+          ).textContent = `${nickname} 님의 투어스`;
+          document.querySelector(".profile-image").src = profileImg;
+          document.querySelector(
+            ".username"
+          ).innerHTML = `${nickname} <span class="userid">@${email}</span>`;
+          return { user: kakaoUser, key: "kakao_user" };
+        }
+        else if (normalUser?.login === true) {
+          const userData = JSON.parse(localStorage.getItem("normal_user"));
+          // 닉네임
+          const nickname = "김기현";
+          // 이메일
+          const email = "watergon1126";
+          // 프로필 이미지
+          const profileImg = "../mypage/mypage_img/김기현_증명사진1.jpg";
 
-      // 요소에 정보 삽입
-      document.querySelector(
-        ".whose-profile"
-      ).textContent = `${nickname} 님의 투어스`;
-      document.querySelector(".profile-image").src = profileImg;
-      document.querySelector(
-        ".username"
-      ).innerHTML = `${nickname} <span class="userid">@${email}</span>`;;
-    }
-    return { user: normalUser, key: "normal_user" };
-  }
+          // 요소에 정보 삽입
+          document.querySelector(
+            ".whose-profile"
+          ).textContent = `${nickname} 님의 투어스`;
+          document.querySelector(".profile-image").src = profileImg;
+          document.querySelector(
+            ".username"
+          ).innerHTML = `${nickname} <span class="userid">@${email}</span>`;
 
+          return { user: normalUser, key: "normal_user" };
+        }
+      }
 
       // 초기 프로필 메시지 로드 함수
       function loadProfileMessage() {
@@ -324,6 +326,16 @@
         const message = user?.profile?.profile_message || "프로필 문구 없음";
         profileMessageEl.textContent = message;
       }
+
+      const tourCountElement = document.querySelector(".tour-count");
+
+      const savedSchedules = JSON.parse(localStorage.getItem("savedSchedule"));
+      const tourCount = Array.isArray(savedSchedules) ? savedSchedules.length : 0;
+
+      if (tourCountElement) {
+        tourCountElement.innerHTML = `<strong style="text-align:center">나의 투어스<br />${tourCount}</strong>`;
+      }
+
 
       // 페이지 로드 시 메시지 출력
       loadProfileMessage();
@@ -360,6 +372,87 @@
     });
   </script>
 
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const viewLikedPlacesButton = document.getElementById('view-liked-places');
+      const modalContainer = document.getElementById('modal-container');
+
+      const likedPlacesElement = document.getElementById("view-liked-places");
+      const likePlaces = JSON.parse(localStorage.getItem("likePlaces"));
+      const likedCount = likePlaces ? likePlaces.length : 0;
+
+      if (likedPlacesElement) {
+        likedPlacesElement.innerHTML = `좋아요<br /><strong style="text-align:center">${likedCount}</span>`;
+      }
+
+      // 모달 HTML 파일을 동적으로 불러오기
+      fetch('modal.html')
+        .then(response => response.text())
+        .then(data => {
+          modalContainer.innerHTML = data;
+          const modal = document.getElementById('likedPlacesModal');
+          const closeModal = document.querySelector('.close');
+          const likedPlacesList = document.getElementById('likedPlacesList');
+
+          // 좋아요 버튼 클릭 시 처리
+          viewLikedPlacesButton.addEventListener('click', function () {
+            console.log('좋아요 버튼 클릭됨');
+
+            // 로컬 스토리지에서 좋아요 장소 목록 가져오기 (ID만 저장된 배열)
+            const likedPlaceIds = JSON.parse(localStorage.getItem('likePlaces')) || [];
+            console.log(likedPlaceIds);
+
+            // 좋아요 목록이 없으면 경고 메시지 출력
+            if (likedPlaceIds.length === 0) {
+              alert('좋아요 장소가 없습니다!');
+              return;
+            }
+
+            // listEx.json 파일에서 장소 데이터를 불러오기
+            fetch('../listEx.json')
+              .then(response => response.json())
+              .then(data => {
+                const places = data.items;
+                const likedPlaces = places.filter(place => likedPlaceIds.includes(place.id));
+
+                if (likedPlaces.length === 0) {
+                  alert('저장된 장소가 없습니다!');
+                  return;
+                }
+
+                // 모달에 좋아요 장소 목록을 표시
+                likedPlacesList.innerHTML = likedPlaces.map(place => `
+              <li class="liked-place-item">
+                <h4>${place.placeName}</h4>
+                <p>${place.description}</p>
+                <p><strong>주소:</strong> ${place.address}</p>
+                <p><strong>운영시간:</strong> ${place.openHours}</p>
+                <p><strong>좋아요 수:</strong> ${place.likes}</p>
+                <img src="${place.images[0]}" alt="${place.placeName}" />
+              </li>
+            `).join('');
+
+                // 모달을 화면에 보이게 하기
+                modal.style.display = 'block';
+              });
+          });
+
+          // 모달 닫기 버튼 클릭 시 처리
+          closeModal.addEventListener('click', function () {
+            modal.style.display = 'none';
+          });
+
+          // 모달 바깥 클릭 시 모달 닫기
+          window.addEventListener('click', function (event) {
+            if (event.target === modal) {
+              modal.style.display = 'none';
+            }
+          });
+        });
+    });
+
+  </script>
 
 </body>
 
