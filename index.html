@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>🗺️ Gemini 기반 여행 일정 생성기</title>
+</head>
+<body>
+  <h1>🗺️ 여행 일정 자동 생성기 (Google Gemini API)</h1>
+
+  <button id="generateBtn">여행 일정 생성하기</button>
+
+  <h2>📋 결과</h2>
+  <pre id="result"></pre>
+
+  <script type="module" src="scripts.js"></script>
+  <script type="module">
+    import { generatePlanFromOpenAI } from './scripts.js';
+    
+    // localStorage에서 값 불러오기
+    const filteredItems = JSON.parse(localStorage.getItem('filteredItems') || '[]');
+    const startDate = localStorage.getItem('startDate') || '2025-05-01';
+    const endDate = localStorage.getItem('endDate') || '2025-05-03';
+
+    // 프롬프트용 장소 문자열 (필요하다면 main/MainPage.js에서 생성)
+    // const placesPrompt = filteredItems.map(item => `${item.placeName}(${item.category})`).join(', ');
+
+    // makePrompt 함수 및 customPrompt 생성 코드 삭제
+
+    document.getElementById('generateBtn').addEventListener('click', () => {
+      generatePlanFromOpenAI(filteredItems, startDate, endDate);
+    });
+  </script>
+</body>
+</html>

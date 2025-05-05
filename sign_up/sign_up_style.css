@@ -1,0 +1,132 @@
+body {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+.signup-container {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  text-align: center;
+  box-shadow: 0px 0px 10px gray;
+  width: 17%;  /* 로그인 페이지와 동일한 비율로 수정 */
+  height: 450px;  /* 로그인 페이지와 동일한 세로 크기 */
+}
+
+.logo {
+  margin-bottom: 0rem;  /* 로고 크기 수정 */
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-label {
+  display: block;
+  text-align: left;
+  width: 100%;
+  margin-bottom: 0.3125rem;
+  font-size: 0.75rem;  /* 폰트 크기 줄이기 */
+  color: #333;
+}
+
+input {
+  display: block;
+  margin-bottom: 0.4rem;
+  padding: 0.5rem;
+  width: 90%;
+  border-radius: 0.625rem;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 0.875rem;
+}
+
+button {
+  padding: 0.625rem 1.25rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  font-size: 0.875rem;  /* 버튼 글씨 크기 줄이기 */
+}
+
+.signupBtn {
+  width: 100%;
+  max-width: 250px;  /* 버튼 크기 줄이기 */
+  border-radius: 1.25rem;
+  color: white;
+  background-color: black;
+}
+
+.sns-login {
+  text-align: center;
+  margin-top: 1.5rem;  /* SNS 로그인 영역 위쪽 여백 줄이기 */
+}
+
+.sns-login p {
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.sns-buttons {
+  text-align: center;
+}
+
+.sns-buttons button {
+  display: inline-block;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 1rem 1rem 0.5rem;
+  cursor: pointer;
+}
+
+.sns-buttons img {
+  width: 25px;  /* SNS 아이콘 크기 줄이기 */
+  height: auto;
+}
+
+.login-redirect {
+  margin-top: 1.5rem;
+}
+
+.login-redirect p {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.login-redirect a {
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+}
+
+/* 등장 애니메이션 */
+@keyframes popup {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.signup-container {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  text-align: center;
+  box-shadow: 0px 0px 10px gray;
+  width: 17%;  /* 로그인 페이지와 동일한 비율로 수정 */
+  height: 450px;  /* 로그인 페이지와 동일한 세로 크기 */
+  margin-left: 25rem;
+  margin-top: 100px;
+  /* 👇 애니메이션 속성 추가 */
+  animation: popup 0.6s ease-out;
+  transform-origin: center;
+}

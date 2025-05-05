@@ -1,0 +1,107 @@
+body {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+  }
+  
+  .findid-container,
+  .findpw-container {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    text-align: center;
+    box-shadow: 0px 0px 10px gray;
+    width: 17%;
+    height: 450px;
+  }
+  
+  .logo {
+    margin-bottom: 2rem;
+  }
+  
+  .findid-form,
+  .findpw-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .input-label {
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin-bottom: 0.3125rem;
+    font-size: 0.75rem;
+    color: #333;
+  }
+  
+  input {
+    display: block;
+    margin: 0.625rem auto;
+    padding: 0.625rem;
+    width: 90%;
+    border-radius: 0.625rem;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 0.875rem;
+  }
+  
+  button {
+    padding: 0.625rem 1.25rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+  }
+  
+  .findidBtn,
+  .findpwBtn {
+    width: 100%;
+    max-width: 250px;
+    border-radius: 1.25rem;
+    color: white;
+    background-color: black;
+  }
+  
+  .back-to-login {
+    margin-top: 1.5rem;
+  }
+  
+  .back-to-login p {
+    font-size: 0.75rem;
+    color: #666;
+  }
+  
+  .back-to-login a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+  }
+  
+  /* 등장 애니메이션 */
+@keyframes popup {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.findid-container, .findpw-container {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  text-align: center;
+  box-shadow: 0px 0px 10px gray;
+  width: 17%;  /* 로그인 페이지와 동일한 비율로 수정 */
+  height: 450px;  /* 로그인 페이지와 동일한 세로 크기 */
+  margin-left: 25rem;
+  margin-top: 100px;
+  /* 👇 애니메이션 속성 추가 */
+  animation: popup 0.6s ease-out;
+  transform-origin: center;
+}
