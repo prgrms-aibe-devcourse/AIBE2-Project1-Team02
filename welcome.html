@@ -2,17 +2,19 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>To us</title>
-  <link rel="stylesheet" href="welcome.css">
+  <link rel="stylesheet" href="welcome.css" />
+  <link rel="stylesheet" href="../header/header.css" />
 </head>
 
 <body>
+  <!-- 헤더 영역 (컴포넌트 삽입) -->
+  <div id="header-container"></div>
+
+  <!-- 메인 콘텐츠 -->
   <div class="main-container">
-
-    <div id="sidebar-container"></div>
-
     <div class="background">
       <div class="white-overlay"></div>
       <div class="content">
@@ -26,30 +28,19 @@
     </div>
   </div>
 
+  <!-- header.js 모듈 로드 및 초기화 -->
+  <script type="module">
+    import { initHeaderLogic } from '../header/header.js';
 
-
-  <script>
-    fetch('../sidebar/sidebar.html')
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById('sidebar-container').innerHTML = data;
-      });
-  </script>
-
-  <script>
-    // 로그인 상태에 따라 로그인 버튼 숨기기
-    document.addEventListener('DOMContentLoaded', function () {
-      const loginBtn = document.querySelector('.loginBtn');
-      const isLoggedIn = localStorage.getItem('isLoggedIn');
-
-      if (isLoggedIn === 'true') {
-        // 로그인 상태이면 로그인 버튼 숨김
-        if (loginBtn) loginBtn.style.display = 'none';
-      }
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('../header/header.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('header-container').innerHTML = html;
+          initHeaderLogic();
+        });
     });
   </script>
-
-<script src="../sidebar/sidebar.js"></script>
 </body>
 
 </html>

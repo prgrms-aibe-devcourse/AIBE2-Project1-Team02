@@ -1,117 +1,72 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Page</title>
-    <link rel="stylesheet" href="../mypage/mypage.css" />
-
-    <style>
-        .main-container {
-            display: none;
-        }
-    </style>
-    <script>
-        const isLoggedIn = localStorage.getItem('isLoggedIn');
-        if (isLoggedIn !== 'true') {
-          // 로그인 안된 경우 바로 리디렉션 (렌더링 이전)
-          window.location.replace('../login/login.html');
-        } else {
-          // 로그인된 경우에만 body 보여주기
-          window.addEventListener('DOMContentLoaded', function () {
-            document.body.style.display = 'block';
-          });
-        }
-      </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Page</title>
+  <link rel="stylesheet" href="../mypage/mypage.css" />
+  <link rel="stylesheet" href="../header/header.css" />
 </head>
-
 <body>
-    <div class="main-container">
-
-        <div id="sidebar-container"></div>
-
-        <div class="inner">
-            <h2 class="whose-profile">김기현 님의 투어스</h2>
-            <div class="profile-section">
-                <img class="profile-image" src="../mypage/mypage_img/김기현_증명사진1.jpg" alt="프로필 이미지" />
-                <div class="profile-info">
-                    <p class="username">김기현 <span class="userid">@watergon1126</span></p>
-                    <div class="stats">
-                        <div><strong>3<br />투어스</strong></div>
-                        <div><strong>151<br />리뷰 작성</strong></div>
-                        <div><strong>156<br />좋아요</strong></div>
-                    </div>
-                </div>
-                <button class="edit-profile" onclick="window.location.href='../edit/edit.html';">프로필 편집</button>
-                <button class="delete-account">회원탈퇴</button>
+<div style="
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background-color: white;
+  z-index: 999;">
+</div>
+<div id="header-container"></div>
+  <div style="height: 64px; background-color: white;"></div>
+  <div class="main-container">
+    <div class="inner">
+      <h2 class="whose-profile">unknown의 투어스</h2>
+      <div class="profile-section">
+        <img class="profile-image" src="../mypage/mypage_img/김기현_증명사진1.jpg" alt="프로필 이미지" />
+        <div class="profile-info">
+          <p class="username">
+            김기현 <span class="userid">@unknown</span>
+          </p>
+          <div class="stats">
+            <div>
+              <strong class="tour-count">0<br /> 내 투어스</strong>
             </div>
-
-            <p class="profile-message">제주도 여행가려고 돈 모으는 중...</p>
-            <hr />
-
-            <div class="tour-section">
-                <h3>다녀올 투어스 🧳</h3>
-                <div class="tour-list">
-                    <div class="tour-card">
-                        <img class="tour-image"
-                            src="https://api.cdn.visitjeju.net/photomng/imgpath/202409/20/b2087c57-7cb6-420d-a840-c6e7e581072e.png"
-                            alt="동대문 여행" />
-                        <div class="tour-info">
-                            <h4>동대문 여행</h4>
-                            <p class="tour-date">4월 27일 ~ 4월 28일</p>
-                            <p class="tour-plan">
-                                동묘 구제옷 시장<br />
-                                동대문 디자인 플라자<br />
-                                감자 핫도그
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
+            <div>
+              <strong id="view-liked-places"> 좋아요 </strong>
             </div>
-
-            <div class="tour-section">
-                <h3>다녀온 투어스 📷</h3>
-                <div class="tour-list">
-                    <div class="tour-card">
-                        <img class="tour-image"
-                            src="https://img.hani.co.kr/imgdb/resize/2017/0203/148600326085_20170203.JPG"
-                            alt="동대문 여행" />
-                        <div class="tour-info">
-                            <h4>동대문 여행</h4>
-                            <p>4월 27일 ~ 4월 28일</p>
-                            <p>동묘 구제옷 시장<br />동대문 디자인 플라자<br />감자 핫도그</p>
-                        </div>
-                    </div>
-                    <div class="tour-card">
-                        <img class="tour-image"
-                            src="https://us.123rf.com/450wm/jackmalipan/jackmalipan1306/jackmalipan130600006/20062416-%EB%B0%A4%EC%97%90-%EC%84%9C%EC%9A%B8-%EB%82%A8%EC%AA%BD%EC%9D%98-%ED%95%9C%EA%B5%AD%EC%9D%98-%EB%8F%99%EB%8C%80%EB%AC%B8-%EA%B2%8C%EC%9D%B4%ED%8A%B8-%EB%9E%9C%EB%93%9C-%EB%A7%88%ED%81%AC.jpg"
-                            alt="동대문 여행" />
-                        <div class="tour-info">
-                            <h4>동대문 여행</h4>
-                            <p>4월 27일 ~ 4월 28일</p>
-                            <p>동묘 구제옷 시장<br />동대문 디자인 플라자<br />감자 핫도그</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-
+        <button class="edit-profile">프로필 편집</button>
+        <button class="delete-account">회원탈퇴</button>
+      </div>
+      <p class="profile-message">unknown</p>
+      <hr />
+      <div class="tour-section">
+        <h3>다녀올 투어스 🧳</h3>
+        <div class="tour-list upcoming"></div>
+      </div>
+      <div class="tour-section">
+        <h3>다녀온 투어스 📷</h3>
+        <div class="tour-list completed"></div>
+      </div>
     </div>
+  </div>
+  <div id="modal-container"></div>
 
-
-    <script>
-        /* 사이드바 스크립트 */
-        fetch('../sidebar/sidebar.html')
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById('sidebar-container').innerHTML = data;
-            });
-    </script>
-
-  <script src="../sidebar/sidebar.js"></script>
+</body>
+</html>
+  <script type="module">
+    import { initHeaderLogic } from '../header/header.js';
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch("../header/header.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("header-container").innerHTML = html;
+          initHeaderLogic();
+        });
+    });
+  </script>
   <script src="../mypage/mypage.js"></script>
 </body>
-
 </html>

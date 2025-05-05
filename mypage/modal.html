@@ -1,0 +1,105 @@
+<!-- modal.html -->
+<div id="likedPlacesModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>좋아요한 장소들</h3>
+    <ul id="likedPlacesList">
+      <!-- 여기에 좋아요 장소가 나열됩니다. -->
+    </ul>
+  </div>
+</div>
+
+<style>
+  /* 모달 전체 스타일 */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    /* 반투명 배경 */
+    padding-top: 60px;
+  }
+
+  /* 모달 내용 박스 */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 12px;
+    /* 모서리를 둥글게 */
+  }
+
+  /* 닫기 버튼 */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* 좋아요한 장소 리스트 */
+  #likedPlacesList {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 한 줄에 3개 아이템 배치 */
+    gap: 15px;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  /* 각 좋아요 장소 아이템 */
+  .liked-place-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 10px;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .liked-place-item:hover {
+    transform: scale(1.05);
+    /* 마우스 오버 시 크기 확대 효과 */
+  }
+
+  /* 장소 이미지 */
+  .liked-place-item img {
+    width: 100%;
+    /* 너비를 100%로 설정하여 컨테이너 크기에 맞게 */
+    height: 200px;
+    /* 고정된 높이 */
+    object-fit: cover;
+    /* 이미지를 꽉 차게 만듦 (내용물이 비율을 유지하면서 잘리지 않도록) */
+    object-position: center;
+    /* 이미지가 중앙에 위치하도록 */
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+
+  /* 장소 제목 */
+  .liked-place-item h4 {
+    font-size: 1rem;
+    text-align: center;
+    margin: 0;
+    padding: 5px 0;
+    font-weight: bold;
+  }
+</style>

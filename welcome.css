@@ -62,34 +62,27 @@ html {
 
 .button-group {
     display: flex;
-    gap: 20px;
-    /* 버튼 사이 간격 */
+    justify-content: flex-start;
+    gap: 12px;
     margin-top: 30px;
     opacity: 0;
     animation: fadeIn 1s ease forwards;
     animation-delay: 1s;
-    /* 버튼은 1초 뒤 등장 */
-}
-
-.startBtn, .loginBtn {
-    flex: 1;
-    /* 버튼이 같은 너비를 가지도록 설정 */
-    max-width: 200px;
-    /* 버튼이 너무 커지지 않게 최대 너비 제한 */
-    min-width: 150px;
-    /* 버튼이 너무 작아지지 않게 최소 너비 설정 */
-    background-color: black;
-    color: white;
+  }
+  
+  .startBtn, .loginBtn {
     background-color: #333;
     color: #fff;
-    padding: 12px 24px;
-    font-size: 18px;
-    font-weight: 800;
-    font: bold;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 700;
     border: none;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
+    transition: background-color 0.3s ease;
+    min-width: 120px;
+    max-width: 150px;
+  }
 
 @keyframes fadeIn {
     0% {

@@ -1,6 +1,19 @@
+* {
+  caret-color: transparent;
+}
+
 a {
   text-decoration: none;
   color: inherit;
+}
+
+/* 전체 레이아웃 중앙 정렬 */
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 세로 중앙 정렬 */
+  background-color: white;
 }
 
 /* 로그인 박스 */
@@ -10,34 +23,38 @@ a {
   border-radius: 1.25rem;
   text-align: center;
   box-shadow: 0px 0px 10px gray;
-  width: 17%;
-  height: 450px;
-  margin-left: 25rem;
-  margin-top: 100px;
-
-  /* 👇 애니메이션 속성 추가 */
+  width: 100%;
+  max-width: 400px;
+  min-height: 75%; 
   animation: popup 0.6s ease-out;
   transform-origin: center;
+}
+
+/* 로그인 페이지 상단 로고 스타일 */
+.login-container .header-logo {
+  width: 120px;   /* 원하는 크기로 축소 */
+  height: auto;
+  margin-bottom: 20px;
 }
 
 input {
   display: block;
   margin: 0.625rem auto;
   padding: 0.625rem;
-
-  width: 90%;  /* input 크기 줄이기 */
+  width: 90%;
   border-radius: 0.625rem;
   border: 1px solid #ccc;
   outline: none;
-  font-size: 0.875rem;  /* 폰트 크기 줄이기 */
+  font-size: 0.875rem;
+  caret-color: auto;
 }
 
 .input-label {
   display: block;
   text-align: left;
-  width: 100%;
-  margin-bottom: 0.3125rem;
-  font-size: 0.75rem;  /* 폰트 크기 줄이기 */
+  width: 90%;
+  margin: 0 auto 0.3125rem auto;
+  font-size: 0.75rem;
   color: #333;
 }
 
@@ -45,12 +62,11 @@ button {
   padding: 0.625rem 1.25rem;
   margin-top: 1rem;
   cursor: pointer;
-  font-size: 0.875rem;  /* 버튼 글씨 크기 줄이기 */
+  font-size: 0.875rem;
 }
 
 .loginBtn {
-  width: 100%;
-  max-width: 250px;  /* 버튼 크기 줄이기 */
+  width: 90%;
   border-radius: 1.25rem;
   color: white;
   background-color: black;
@@ -58,7 +74,7 @@ button {
 
 .sns-login {
   text-align: center;
-  margin-top: 1.5rem;  /* SNS 로그인 영역 위쪽 여백 줄이기 */
+  margin-top: 1.5rem;
 }
 
 .sns-login p {
@@ -67,25 +83,28 @@ button {
 }
 
 .sns-buttons {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap; /* 반응형 대응 */
+  padding: 0;
 }
 
 .sns-buttons button {
-  display: inline-block;
   background: none;
   border: none;
   padding: 0;
-  margin: 0 1rem 1rem 0.5rem;
+  margin: 0;
   cursor: pointer;
 }
 
 .sns-buttons img {
-  width: 25px;  /* SNS 아이콘 크기 줄이기 */
+  width: 40px;
   height: auto;
 }
 
 .personal-info {
-  margin-top: 1.5rem;  /* 여백 줄이기 */
+  margin-top: 1.5rem;
   text-align: center;
 }
 
@@ -93,7 +112,7 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 1rem;
-  font-size: 0.75rem;  /* 폰트 크기 줄이기 */
+  font-size: 0.75rem;
   color: #666;
 }
 
@@ -102,7 +121,7 @@ button {
   color: #ccc;
 }
 
-/* 등장 애니메이션 */
+/* 애니메이션 */
 @keyframes popup {
   0% {
     transform: scale(0.5);
@@ -114,4 +133,23 @@ button {
   }
 }
 
+/* 반응형: 모바일 대응 */
+@media (max-width: 600px) {
+  .login-container {
+    width: 90%;
+    padding: 1rem;
+  }
 
+  .input-label {
+    font-size: 0.7rem;
+  }
+
+  button {
+    font-size: 0.8rem;
+  }
+
+  .find-signup {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

@@ -1,9 +1,17 @@
+* {
+    caret-color: transparent;
+}
+
 body {
     font-family: 'Noto Sans KR', sans-serif;
     margin: 0;
     padding: 0;
     font-size: 18px;
     /* 기본 폰트 사이즈 확대 */
+}
+
+.main-container {
+    display: none;
 }
 
 .whose-profile {
@@ -52,13 +60,13 @@ body {
 .stats div {
     text-align: left;
     font-size: 20px;
-    font-weight: 900; 
+    font-weight: 900;
     color: #555;
 }
 
 .stats div strong {
     display: block;
-    font-weight: 900; 
+    font-weight: 900;
     color: #111;
     margin-bottom: 4px;
 }
@@ -71,7 +79,7 @@ body {
     font-weight: 800;
 }
 
-.edit-profile{
+.edit-profile {
     position: absolute;
     right: 30px;
     top: 30px;
@@ -120,7 +128,8 @@ body {
 }
 
 .tour-card:hover {
-    width: 600px; /* 사진 + info 총 너비 */
+    width: 600px;
+    /* 사진 + info 총 너비 */
 }
 
 .tour-image {
@@ -172,7 +181,8 @@ body {
 }
 
 .tour-info h4 {
-    font-size: 26px;          /* 제목 큼직하게 */
+    font-size: 26px;
+    /* 제목 큼직하게 */
     font-weight: 900;
     margin: 0;
     margin-bottom: 8px;
@@ -180,13 +190,15 @@ body {
 }
 
 .tour-date {
-    font-size: 18px;          /* 날짜도 큼직하지만 강조 약하게 */
+    font-size: 18px;
+    /* 날짜도 큼직하지만 강조 약하게 */
     color: #888;
     margin-bottom: 20px;
 }
 
 .tour-plan {
-    font-size: 16px;          /* 일정 내용은 적절한 크기로 */
+    font-size: 16px;
+    /* 일정 내용은 적절한 크기로 */
     line-height: 1.6;
     max-height: 180px;
 
@@ -245,4 +257,13 @@ body {
         max-width: 100%;
         padding: 15px;
     }
+}
+
+#view-liked-places {
+    transition: transform 0.3s ease-in-out;
+}
+
+#view-liked-places:hover {
+    transform: scale(1.1);
+    /* 글자 크기 10% 증가 */
 }
