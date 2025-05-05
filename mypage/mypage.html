@@ -422,16 +422,9 @@
                 }
 
                 // 모달에 좋아요 장소 목록을 표시
-                likedPlacesList.innerHTML = likedPlaces.map(place => `
-              <li class="liked-place-item">
-                <h4>${place.placeName}</h4>
-                <p>${place.description}</p>
-                <p><strong>주소:</strong> ${place.address}</p>
-                <p><strong>운영시간:</strong> ${place.openHours}</p>
-                <p><strong>좋아요 수:</strong> ${place.likes}</p>
-                <img src="${place.images[0]}" alt="${place.placeName}" />
-              </li>
-            `).join('');
+                likedPlacesList.innerHTML = likedPlaces.map(place =>
+                  `<li class="liked-place-item"><img src="${place.images[0]}" 
+                    alt="${place.placeName}" /> <h4>${place.placeName}</h4> </li>`).join('');
 
                 // 모달을 화면에 보이게 하기
                 modal.style.display = 'block';
