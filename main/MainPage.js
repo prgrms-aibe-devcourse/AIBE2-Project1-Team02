@@ -2986,12 +2986,12 @@ function showGptReasonModal(result) {
     } else {
       reasonText = result.reason; // 문자열
     }
-    html += `<div style="margin-bottom:18px;"><b>일정 재정렬 이유</b><br>${reasonText}</div>`;
+    html += `<div style="margin-bottom:18px;"><b>이 일정, 이유 있음(by GPT)</b><br>${reasonText}</div>`;
   }
 
   // 장소별 추천/장점
   if (result.tips) {
-    html += `<div style="margin-bottom:18px;"><b>장소별 추천/장점</b>`;
+    html += `<div style="margin-bottom:18px;"><b>장소별 추천/장점 </b>`;
     if (Array.isArray(result.tips)) {
       // 한글자씩 배열로 온 경우
       html += result.tips.join('') + '</div>';
