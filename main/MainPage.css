@@ -1629,3 +1629,37 @@ li {
   background: #dedede;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
 }
+
+#gptPromptBox {
+  width: 100%;
+  border: 1px solid #bae6fd;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#gptPromptInput {
+  flex: 1;
+  min-width: 0; /* ⬅️ 이게 flex item이 너비를 가져가도록 보장함 */
+  padding: 10px 14px;
+  border: none;
+  font-size: 16px;
+  outline: none;
+  cursor: text;
+}
+
+#gptPromptInput::placeholder {
+  color: #94a3b8;
+}
+
+#gptPromptBtn {
+  padding: 0 16px;
+  border: none;
+  background-color: #38bdf8;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}

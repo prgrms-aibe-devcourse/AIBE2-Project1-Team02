@@ -1355,8 +1355,11 @@ function getPlacesByDate(scheduleJson, dateStr) {
 let kakaoMarkers = [];
 // 기존 선(폴리라인)을 지우기 위한 변수
 let kakaoPolyline = null;
-function setMarkersByPlaceNames(placeNames, useDefaultMarker = false, drawPolyline = true) {
-
+function setMarkersByPlaceNames(
+  placeNames,
+  useDefaultMarker = false,
+  drawPolyline = true
+) {
   const geocoder = new kakao.maps.services.Places();
 
   // 기존 마커 지우기
@@ -1391,7 +1394,9 @@ function setMarkersByPlaceNames(placeNames, useDefaultMarker = false, drawPolyli
           const svg = `
             <svg xmlns='http://www.w3.org/2000/svg' width='36' height='48'>
               <circle cx='18' cy='18' r='16' fill='${bgColor}' stroke='white' stroke-width='4'/>
-              <text x='18' y='18' text-anchor='middle' font-size='20' font-weight='bold' fill='white' alignment-baseline='middle' dominant-baseline='middle'>${idx + 1}</text>
+              <text x='18' y='18' text-anchor='middle' font-size='20' font-weight='bold' fill='white' alignment-baseline='middle' dominant-baseline='middle'>${
+                idx + 1
+              }</text>
             </svg>
           `;
           markerImage = new kakao.maps.MarkerImage(
@@ -2159,7 +2164,7 @@ async function initializeEditMode() {
   try {
     const filtered = JSON.parse(localStorage.getItem("filteredItems") || "[]");
     if (filtered.length > 0) {
-      const placeNames = filtered.map(item => item.placeName);
+      const placeNames = filtered.map((item) => item.placeName);
       setMarkersByPlaceNames(placeNames, true, false); // 기본 마커, 선 없음
     }
   } catch (e) {
@@ -2214,8 +2219,7 @@ async function initializeEditMode() {
     showErrorState("일정을 불러오는 데 문제가 발생했습니다.");
   }
 
-  renderStep4UI();  // ← 반드시 여기에 추가!
-
+  renderStep4UI(); // ← 반드시 여기에 추가!
 }
 
 // 편집 모드 UI 렌더링
@@ -2281,7 +2285,7 @@ function renderEditMode() {
 
   // 가이드 메시지 표시
   showGuideMessage(
-    "드래그하여 장소의 순서를 변경하거나 다른 날짜로 이동하세요."
+    "드래그하여 장소의 순서를 변경하거나 다른 날짜로 이동하세요.<br><br>AI에게 요청하여 저희가 제공하지 않은 장소 또한 추가할 수 있습니다."
   );
 }
 
@@ -2627,7 +2631,7 @@ function showErrorState(message) {
 function showGuideMessage(message) {
   const notification = document.getElementById("editModeNotification");
   if (notification) {
-    notification.textContent = message;
+    notification.innerHTML = message; // HTML 태그 사용 가능하도록 변경
     notification.style.display = "block";
   }
 }
@@ -2797,12 +2801,18 @@ function renderStep4UI() {
     const input = document.createElement("input");
     input.type = "text";
     input.id = "gptPromptInput";
-    input.placeholder = "예: 동선을 최소화해서 재정렬해줘";
+    input.placeholder = "예: 2일차 마지막에 제주공항을 넣어줘";
     input.style.flex = "1";
+    input.style.cursor = "text"; // 텍스트 커서로 변경
+    input.focus(); // 포커스를 주어 커서가 깜빡이게 함
+
+    console.log("disabled?", input.disabled);
+    console.log("readonly?", input.readOnly);
+    console.log("offsetWidth / height:", input.offsetWidth, input.offsetHeight);
 
     const btn = document.createElement("button");
     btn.id = "gptPromptBtn";
-    btn.textContent = "GPT로 일정 생성/재정렬";
+    btn.textContent = "AI에게 요청";
 
     gptPromptBox.appendChild(input);
     gptPromptBox.appendChild(btn);
@@ -2819,9 +2829,9 @@ function renderStep4UI() {
       }
 
       // 현재 편집 중인 일정 데이터 준비 (날짜별 장소 배열)
-      const currentSchedule = savedForEditTab5.map(day => ({
+      const currentSchedule = savedForEditTab5.map((day) => ({
         Date: day.date,
-        Places: day.places.map(p => p.name)
+        Places: day.places.map((p) => p.name),
       }));
 
       // 사용자 입력 + 기존 프롬프트 합치기
@@ -2884,10 +2894,6 @@ document.getElementById("applyButton").addEventListener("click", function () {
   const gptSchedule = sessionStorage.getItem("gptSchedule");
   if (gptSchedule) {
     localStorage.setItem("travelSchedule", gptSchedule);
-    alert("최종 일정이 저장되었습니다.");
-    // 필요시 UI 갱신
-  } else {
-    alert("생성된 일정이 없습니다.");
   }
 });
 
@@ -2897,9 +2903,9 @@ function renderScheduleFromSession() {
     try {
       const arr = JSON.parse(gptSchedule);
       // 날짜별로 장소 정리
-      savedForEditTab5 = arr.map(day => ({
+      savedForEditTab5 = arr.map((day) => ({
         date: day.Date,
-        places: day.Places.map(name => ({ name }))
+        places: day.Places.map((name) => ({ name })),
       }));
       renderEditMode();
     } catch (e) {
@@ -2940,9 +2946,8 @@ setMarkersByPlaceNames(places);
 
 function normalizeDate(dateStr) {
   // '2025-05-04' → '2025-5-4'
-  return dateStr.replace(/^0+/, '').replace(/-0+/g, '-');
+  return dateStr.replace(/^0+/, "").replace(/-0+/g, "-");
 }
-
 
 // originalTravelSchedule이 있으면 그걸로 복원
 const raw = localStorage.getItem("originalTravelSchedule");
