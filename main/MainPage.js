@@ -700,13 +700,23 @@ function loadFestivalData(page = 1) {
       customPrompt
     );
 
-    if (result && Array.isArray(result) && result.length > 0) {
+    if (result && result.schedule && Array.isArray(result.schedule)) {
       // 최초 한 번만 저장
+      if (!localStorage.getItem("originalTravelSchedule")) {
+        localStorage.setItem("originalTravelSchedule", JSON.stringify(result.schedule));
+      }
+      // 기존대로 travelSchedule도 저장
+      localStorage.setItem("travelSchedule", JSON.stringify(result.schedule));
+    } else if (result && Array.isArray(result) && result.length > 0) {
+      // 혹시 배열로 올 때도 대비
       if (!localStorage.getItem("originalTravelSchedule")) {
         localStorage.setItem("originalTravelSchedule", JSON.stringify(result));
       }
-      // 기존대로 travelSchedule도 저장
       localStorage.setItem("travelSchedule", JSON.stringify(result));
+    } else {
+      // 오류 처리
+      showToast("GPT 응답이 올바르지 않습니다.", "error");
+      return;
     }
 
     // ✅ 4. 마커 처리
