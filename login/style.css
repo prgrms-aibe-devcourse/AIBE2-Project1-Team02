@@ -1,0 +1,155 @@
+* {
+  caret-color: transparent;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 전체 레이아웃 중앙 정렬 */
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 세로 중앙 정렬 */
+  background-color: white;
+}
+
+/* 로그인 박스 */
+.login-container {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  text-align: center;
+  box-shadow: 0px 0px 10px gray;
+  width: 100%;
+  max-width: 400px;
+  min-height: 75%; 
+  animation: popup 0.6s ease-out;
+  transform-origin: center;
+}
+
+/* 로그인 페이지 상단 로고 스타일 */
+.login-container .header-logo {
+  width: 120px;   /* 원하는 크기로 축소 */
+  height: auto;
+  margin-bottom: 20px;
+}
+
+input {
+  display: block;
+  margin: 0.625rem auto;
+  padding: 0.625rem;
+  width: 90%;
+  border-radius: 0.625rem;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 0.875rem;
+  caret-color: auto;
+}
+
+.input-label {
+  display: block;
+  text-align: left;
+  width: 90%;
+  margin: 0 auto 0.3125rem auto;
+  font-size: 0.75rem;
+  color: #333;
+}
+
+button {
+  padding: 0.625rem 1.25rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.loginBtn {
+  width: 90%;
+  border-radius: 1.25rem;
+  color: white;
+  background-color: black;
+}
+
+.sns-login {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.sns-login p {
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.sns-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap; /* 반응형 대응 */
+  padding: 0;
+}
+
+.sns-buttons button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.sns-buttons img {
+  width: 40px;
+  height: auto;
+}
+
+.personal-info {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.find-signup {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.divider {
+  font-weight: bold;
+  color: #ccc;
+}
+
+/* 애니메이션 */
+@keyframes popup {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 반응형: 모바일 대응 */
+@media (max-width: 600px) {
+  .login-container {
+    width: 90%;
+    padding: 1rem;
+  }
+
+  .input-label {
+    font-size: 0.7rem;
+  }
+
+  button {
+    font-size: 0.8rem;
+  }
+
+  .find-signup {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

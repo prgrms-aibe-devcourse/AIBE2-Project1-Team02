@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <title>로그인 페이지</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../header/header.css" />
+
+  <!-- 외부 라이브러리 -->
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
+
+<body>
+  <!-- 헤더 위치 -->
+  <div id="header-container"></div>
+
+  <div class="main-container">
+    <div class="login-container">
+      <img src="../login/login_img/logo.jpg" alt="로고" class="header-logo">
+      <label for="username" class="input-label">아이디</label>
+      <input type="text" id="username" placeholder="아이디 입력">
+
+      <label for="password" class="input-label">비밀번호</label>
+      <input type="password" id="password" placeholder="비밀번호 입력">
+
+      <button class="loginBtn">로그인</button>
+
+      <div class="sns-login">
+        <p style="color: #666; margin-left: -10px;">SNS 간편 로그인</p>
+        <div class="sns-buttons">
+          <button class="kakaoBtn" onclick="loginWithKakao()">
+            <img src="../login/login_img/KakaoTalk_logo.png" alt="카카오 로그인" width="150">
+          </button>
+
+          <button id="naver_id_login">
+            <img src="../login/login_img/Naver_logo.png" alt="네이버 로그인" width="150">
+          </button>
+
+          <button> </button>
+        </div>
+      </div>
+
+      <div class="personal-info">
+        <div class="find-signup">
+          <span class="find-info"><a href="../findAccount/findAccount.html">아이디 / 비밀번호 찾기</a></span>
+          <span class="divider">|</span>
+          <span class="signup-link"><a href="../sign_up/sign_up.html">회원가입</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 일반 JS -->
+  <script src="login.js"></script>
+  <script type="module" src="../login/sns_login/kakaoTalkLogin.js"></script>
+
+  <!-- 네이버 로그인 처리 -->
+  <script type="text/javascript">
+    var naver_id_login = new naver_id_login("QcJXrtQ1k8vdMQwpLBsR", "http://127.0.0.1:5500/login/sns_login/callback.html");
+    var state = naver_id_login.getUniqState();
+    naver_id_login.setDomain("http://127.0.0.1:5500/welcome.html");
+    naver_id_login.setState(state);
+    naver_id_login.setPopup();
+    naver_id_login.init_naver_id_login();
+
+    window.addEventListener('message', function (event) {
+      if (event.data.type === 'NAVER_LOGIN_SUCCESS') {
+        const userInfo = event.data.payload;
+        localStorage.setItem('naver_user', JSON.stringify(userInfo));
+        localStorage.setItem('isLoggedIn', 'true');
+        window.location.href = 'http://127.0.0.1:5500/welcome.html';
+      }
+    });
+  </script>
+  <!-- 모듈: 헤더 동적 로딩 -->
+  <script type="module">
+    import { initHeaderLogic } from '../header/header.js';
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('../header/header.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('header-container').innerHTML = html;
+          initHeaderLogic();
+        });
+    });
+  </script>
+</body>
+
+</html>

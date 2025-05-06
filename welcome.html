@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To us</title>
+  <link rel="stylesheet" href="welcome.css" />
+  <link rel="stylesheet" href="../header/header.css" />
+</head>
+
+<body>
+  <!-- 헤더 영역 (컴포넌트 삽입) -->
+  <div id="header-container"></div>
+
+  <!-- 메인 콘텐츠 -->
+  <div class="main-container">
+    <div class="background">
+      <div class="white-overlay"></div>
+      <div class="content">
+        <div class="text-line">투어스와 함께</div>
+        <div class="text-line">To us 여행을 떠나보세요</div>
+        <div class="button-group">
+          <button class="startBtn" onclick="location.href='../main/MainPage.html'">시작하기</button>
+          <button class="loginBtn" onclick="location.href='../login/login.html'">로그인</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- header.js 모듈 로드 및 초기화 -->
+  <script type="module">
+    import { initHeaderLogic } from '../header/header.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('../header/header.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('header-container').innerHTML = html;
+          initHeaderLogic();
+        });
+    });
+  </script>
+</body>
+
+</html>

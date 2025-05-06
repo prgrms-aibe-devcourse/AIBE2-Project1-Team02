@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="MainPage.css" />
+    <!-- 부트스트랩 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <!-- //부트스트랩 -->
+    <!-- splide -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.3/dist/css/splide.min.css"
+    />
+    <!-- //splide -->
+    <!-- map -->
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=510b624b2b131b82ad7aee34c7864031&libraries=services"
+    ></script>
+    <!-- 드래그앤 드롭 라이브러리 SortableJS CDN 추가 -->
+    <script src="../Sortable.min.js"></script>
+  </head>
+  <body>
+    <div id="main-container">
+      <div id="stepBox">
+        <!-- 홈버튼 추가 -->
+        <a href="../welcome.html">
+          <img
+            src="../login/login_img/logo.jpg"
+            alt="홈"
+            class="sidebar-logo"
+          />
+        </a>
+
+        <!-- 탭 버튼들 -->
+        <button class="tab" data-tab="tab1" id="tab1Btn">
+          STEP 1<br />날짜 선택
+        </button>
+        <button class="tab" data-tab="tab2" id="tab2Btn">
+          STEP 2<br />지역 선택
+        </button>
+        <button class="tab" data-tab="tab3" id="tab3Btn">
+          STEP 3<br />장소 선택
+        </button>
+        <button class="tab" data-tab="tab4" id="tab4Btn" style="display: none">
+          STEP 4<br />일정 편집 <br />(선택사항)
+        </button>
+
+        <!-- 새로 추가된 편집 전용 탭 -->
+        <button class="tab" data-tab="tab5" id="tab5Btn" style="display: none">
+          STEP 5<br />일정 확정
+        </button>
+
+        <!-- 취소/적용 버튼들 (기본적으로 숨김 처리) -->
+        <div id="editButtons" style="display: none; margin-top: auto">
+          <button id="cancelButton">뒤로</button>
+          <button id="applyButton">확정</button>
+        </div>
+
+        <!-- 저장/편집 버튼들 (기본적으로 숨김 처리) -->
+        <div id="tab4-buttons" style="display: none; margin-top: auto">
+          <button id="editButton">편집</button>
+          <button id="saveButton">저장</button>
+        </div>
+
+        <!-- 탭3의 일정 생성 버튼 (기본적으로 숨김처리) -->
+        <div id="tab3-buttons" style="display: none; margin-top: auto">
+          <button id="transparentButton" disabled style="cursor: default">
+            투명
+          </button>
+          <button id="makeSchedule">일정 생성</button>
+        </div>
+      </div>
+      <div id="tab-container">
+        <div id="resize-handle">
+          <div class="resize-handle"></div>
+        </div>
+        <div id="tab1" class="tabContent">
+          <div id="calendarInfo">
+            <h1 id="areaName">여행 일정</h1>
+            <div id="dateRangeDiv">
+              <h3 id="dateRange"></h3>
+              <i class="bi bi-calendar" id="calendarIcon"></i>
+            </div>
+          </div>
+          <ul id="selectedDatesList"></ul>
+          <!-- 날짜별 시간 설정용 리스트 -->
+          <button id="timeConfirmBtn" style="display: none">
+            시간 설정 완료
+          </button>
+
+          <div
+            id="calendarModalBackground"
+            class="calendar-modal-background"
+            style="display: none"
+          >
+            <div class="calendar-modal">
+              <!-- 달력 HTML 삽입 -->
+              <div class="calendar-div">
+                <h1>여행 계획 달력</h1>
+                <div class="calendar-container">
+                  <button
+                    class="month-nav"
+                    id="calendarPrevBtn"
+                    onclick="changeBothMonths(-1)"
+                  >
+                    <i class="bi bi-chevron-left"></i>
+                  </button>
+                  <div class="calendar" id="calendar1">
+                    <div class="calendar-content" id="calendar1-content"></div>
+                  </div>
+                  <div class="calendar" id="calendar2">
+                    <div class="calendar-content" id="calendar2-content"></div>
+                  </div>
+                  <button
+                    class="month-nav"
+                    id="calendarNextBtn"
+                    onclick="changeBothMonths(1)"
+                  >
+                    <i class="bi bi-chevron-right"></i>
+                  </button>
+                </div>
+                <div class="button-container">
+                  <button id="confirmBtn" class="confirm-btn" disabled>
+                    선택 완료
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="tab2" class="tabContent" style="display: none">
+          <h1 id="tab2Title"></h1>
+          <h3 id="tab2SubTitle"></h3>
+          <div class="area-btn-container">
+            <button class="area-btn" data-value="all"><span>전체</span></button>
+            <button class="area-btn" data-value="1"><span>서울</span></button>
+            <button class="area-btn" data-value="2"><span>인천</span></button>
+            <button class="area-btn" data-value="3"><span>대전</span></button>
+            <button class="area-btn" data-value="4"><span>대구</span></button>
+            <button class="area-btn" data-value="5"><span>광주</span></button>
+            <button class="area-btn" data-value="6"><span>부산</span></button>
+            <button class="area-btn" data-value="7"><span>울산</span></button>
+            <button class="area-btn" data-value="8"><span>세종</span></button>
+            <button class="area-btn" data-value="31"><span>경기</span></button>
+            <button class="area-btn" data-value="32"><span>강원</span></button>
+            <button class="area-btn" data-value="33"><span>충북</span></button>
+            <button class="area-btn" data-value="34"><span>충남</span></button>
+            <button class="area-btn" data-value="35"><span>경북</span></button>
+            <button class="area-btn" data-value="36"><span>경남</span></button>
+            <button class="area-btn" data-value="37"><span>전북</span></button>
+            <button class="area-btn" data-value="38"><span>전남</span></button>
+            <button class="area-btn" data-value="39"><span>제주</span></button>
+          </div>
+        </div>
+        <div id="tab3" class="tabContent" style="display: none">
+          <h1 id="tab3Title"></h1>
+          <h3 id="tab3SubTitle"></h3>
+          <div id="tagSearchBox" class="slide-box hidden">
+            <input type="text" id="tag-input" placeholder="태그로 검색" />
+            <button id="tag-search-btn"><i class="bi bi-search"></i></button>
+          </div>
+          <div id="placeSearchBox">
+            <div>
+              <input
+                type="text"
+                id="search-input"
+                placeholder="키워드로 검색"
+              />
+              <button id="search-btn"><i class="bi bi-search"></i></button>
+
+              <button id="reset-search-btn">
+                <i class="bi bi-arrow-clockwise"></i>
+              </button>
+
+              <div id="placeCategory">
+                <button class="placeCategory" data-value="all">전체</button>
+                <button class="placeCategory" data-value="1">장소</button>
+                <button class="placeCategory" data-value="2">식당</button>
+                <button class="placeCategory" data-value="3">카페</button>
+                <button class="placeCategory" data-value="4">숙소</button>
+              </div>
+
+              <ul id="festival-list">
+                <li>지역을 선택해주세요!</li>
+              </ul>
+              <button id="load-more-btn">더 보기</button>
+            </div>
+          </div>
+          <div id="placeSelectBox">
+            <ul id="selectedPlaces"></ul>
+          </div>
+        </div>
+        <div id="tab5" class="tabContent" style="display: none">
+          <!-- 왼쪽: 간단 정보 (날짜 목록) -->
+          <div id="scheduleSummary">
+            <!-- 여기에 날짜 버튼들이 JavaScript에 의해 동적으로 추가됩니다 -->
+          </div>
+
+          <!-- 중앙: 상세 정보 (클릭 시 표시) -->
+          <div id="scheduleDetails" class="collapsed">
+            <!-- 이 부분은 날짜를 클릭할 때 JS에 의해 채워집니다 -->
+          </div>
+        </div>
+        <div id="tab4" class="tabContent" style="display: none">
+          <div id="editModeContainer">
+            <!-- 컨트롤 패널은 자바스크립트로 동적 생성됨 -->
+            <!-- 알림 영역은 자바스크립트로 동적 생성됨 -->
+            <!-- 여기에 일정 편집 UI가 동적으로 생성됨 -->
+          </div>
+        </div>
+      </div>
+      <div id="map-container">
+        <div id="map" style="width: 100%; height: 100vh"></div>
+      </div>
+
+      <!-- 모달 -->
+      <div id="festival-modal" class="hidden">
+        <div class="modal-content">
+          <div class="modal-content-left">
+            <button class="close-button">&times;</button>
+            <!--            <img id="modal-image" src="" alt="" />-->
+            <div id="travel-slider" class="splide">
+              <div class="splide__track">
+                <ul id="image_slider" class="splide__list"></ul>
+              </div>
+            </div>
+            <h2 id="modal-placeName"></h2>
+            <p id="modal-description"></p>
+            <p>
+              <strong>주소:</strong> <span id="modal-address"></span>
+              <a id="modal-map-link" href="#" target="_blank"
+                ><i class="bi bi-map-fill"></i
+              ></a>
+            </p>
+            <p><strong>tel:</strong> <span id="modal-contact"></span></p>
+            <p>
+              <strong>운영시간:</strong>
+              <span id="modal-operationHours"></span>
+            </p>
+          </div>
+          <div class="modal-content-right">
+            <div>Review</div>
+            <input type="text" placeholder="댓글을 입력해주세요." />
+            <ul id="reviews"></ul>
+          </div>
+        </div>
+      </div>
+      <div id="loadingOverlay" style="display: none">
+        <p id="loadingMessage">AI가 추천 여행 일정을 생성하고 있습니다.. 잠시만 기다려 주세요</p>
+        <div class="spinner"></div>
+      </div>
+    </div>
+    <div id="gpt-reason-modal" class="hidden">
+      <div class="modal-content">
+        <button class="close-button">&times;</button>
+        <h2>왜 이런 일정? GPT의 선택 기준!</h2>
+        <div id="gpt-reason-text"></div>
+      </div>
+    </div>
+    <script src="MainPage.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.3/dist/js/splide.min.js"></script>
+    <script>
+      // map
+      var mapContainer = document.getElementById("map"), // 지도를 표시할 div
+        mapOption = {
+          center: new kakao.maps.LatLng(37.5563, 126.9723), // 지도의 중심좌표를 서울역으로 변경
+          level: 3, // 지도의 확대 레벨
+        };
+
+      // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+      var map = new kakao.maps.Map(mapContainer, mapOption);
+    </script>
+  </body>
+</html>

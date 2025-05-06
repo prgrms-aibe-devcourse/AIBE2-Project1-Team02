@@ -1,0 +1,99 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.background {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: url('https://images.unsplash.com/photo-1517176642928-dfc2da661b3f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.white-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right,
+            white 25%,
+            rgba(255, 255, 255, 0) 100%);
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    transform: translate(-35%, -50%);
+    text-align: left;
+    font-size: 50px;
+    font-weight: 800;
+    color: black;
+    z-index: 2;
+}
+
+.text-line {
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+}
+
+.text-line:nth-child(1) {
+    animation-delay: 0s;
+    /* 첫 줄은 바로 시작 */
+}
+
+.text-line:nth-child(2) {
+    animation-delay: 0.5s;
+    /* 두 번째 줄은 0.5초 뒤 등장 */
+}
+
+.button-group {
+    display: flex;
+    gap: 20px;
+    /* 버튼 사이 간격 */
+    margin-top: 30px;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: 1s;
+    /* 버튼은 1초 뒤 등장 */
+}
+
+.startBtn, .loginBtn {
+    flex: 1;
+    /* 버튼이 같은 너비를 가지도록 설정 */
+    max-width: 200px;
+    /* 버튼이 너무 커지지 않게 최대 너비 제한 */
+    min-width: 150px;
+    /* 버튼이 너무 작아지지 않게 최소 너비 설정 */
+    background-color: black;
+    color: white;
+    background-color: #333;
+    color: #fff;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: 800;
+    font: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -55%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}

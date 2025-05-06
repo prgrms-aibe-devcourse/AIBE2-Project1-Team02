@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Page</title>
+  <link rel="stylesheet" href="../mypage/mypage.css" />
+  <link rel="stylesheet" href="../header/header.css" />
+</head>
+<body>
+<div style="
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background-color: white;
+  z-index: 999;">
+</div>
+<div id="header-container"></div>
+  <div style="height: 64px; background-color: white;"></div>
+  <div class="main-container">
+    <div class="inner">
+      <h2 class="whose-profile">unknown의 투어스</h2>
+      <div class="profile-section">
+        <img class="profile-image" src="../mypage/mypage_img/김기현_증명사진1.jpg" alt="프로필 이미지" />
+        <div class="profile-info">
+          <p class="username">
+            김기현 <span class="userid">@unknown</span>
+          </p>
+          <div class="stats">
+            <div>
+              <strong class="tour-count">0<br /> 내 투어스</strong>
+            </div>
+            <div>
+              <strong id="view-liked-places"> 좋아요 </strong>
+            </div>
+          </div>
+        </div>
+        <button class="edit-profile">프로필 편집</button>
+        <button class="delete-account">회원탈퇴</button>
+      </div>
+      <p class="profile-message">unknown</p>
+      <hr />
+      <div class="tour-section">
+        <h3>다녀올 투어스 🧳</h3>
+        <div class="tour-list upcoming"></div>
+      </div>
+      <div class="tour-section">
+        <h3>다녀온 투어스 📷</h3>
+        <div class="tour-list completed"></div>
+      </div>
+    </div>
+  </div>
+  <div id="modal-container"></div>
+
+</body>
+</html>
+  <script type="module">
+    import { initHeaderLogic } from '../header/header.js';
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch("../header/header.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("header-container").innerHTML = html;
+          initHeaderLogic();
+        });
+    });
+  </script>
+  <script src="../mypage/mypage.js"></script>
+</body>
+</html>
