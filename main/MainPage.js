@@ -393,7 +393,6 @@ document.addEventListener("DOMContentLoaded", () => {
       map.setCenter(new kakao.maps.LatLng(37.557192, 126.924863)); // 홍대입구역
     }
   }
-
   // originalTravelSchedule 초기화 (최초 진입 시 비움)
   localStorage.removeItem("originalTravelSchedule");
 });
@@ -649,7 +648,6 @@ function loadFestivalData(page = 1) {
 
     // ✅ 1. 로딩 먼저 표시
     showLoading();
-
     // ✅ 2. 딜레이 (고정 3초 유지용, 강제로)
     await new Promise((resolve) => setTimeout(resolve, 3000));
 
@@ -1358,6 +1356,7 @@ let kakaoMarkers = [];
 // 기존 선(폴리라인)을 지우기 위한 변수
 let kakaoPolyline = null;
 function setMarkersByPlaceNames(placeNames, useDefaultMarker = false, drawPolyline = true) {
+
   const geocoder = new kakao.maps.services.Places();
 
   // 기존 마커 지우기
@@ -1440,7 +1439,9 @@ function setMarkersByPlaceNames(placeNames, useDefaultMarker = false, drawPolyli
           if (!bounds.isEmpty()) {
             map.setBounds(bounds);
           }
+
           // 모든 마커 좌표가 준비되면 선(폴리라인) 그리기
+
           const validCoords = markerCoords.filter(Boolean);
           if (drawPolyline && validCoords.length > 1) {
             // 폴리라인 생성 직전에 한 번 더 지우기
@@ -1448,11 +1449,16 @@ function setMarkersByPlaceNames(placeNames, useDefaultMarker = false, drawPolyli
               kakaoPolyline.setMap(null);
               kakaoPolyline = null;
             }
+
             kakaoPolyline = new kakao.maps.Polyline({
               map: map,
+
               path: validCoords,
+
               strokeWeight: 4,
+
               strokeColor: "#007bff",
+
               strokeOpacity: 0.8,
               strokeStyle: "dashed", // 점선으로 변경
             });
@@ -2150,7 +2156,6 @@ async function initializeEditMode() {
   // 컨트롤 패널 생성
   createControlPanel();
 
-  // step4 진입 시 filteredItems의 모든 장소를 지도에 마커로 표시
   try {
     const filtered = JSON.parse(localStorage.getItem("filteredItems") || "[]");
     if (filtered.length > 0) {
@@ -2208,7 +2213,9 @@ async function initializeEditMode() {
     console.error("편집 모드 초기화 중 오류:", e);
     showErrorState("일정을 불러오는 데 문제가 발생했습니다.");
   }
+
   renderStep4UI();  // ← 반드시 여기에 추가!
+
 }
 
 // 편집 모드 UI 렌더링
@@ -2517,6 +2524,7 @@ function resetChanges() {
     if (raw) {
       localStorage.setItem("travelSchedule", raw);
     }
+
     initializeEditMode();
     showToast("편집 내용이 초기화되었습니다.");
   }
