@@ -826,11 +826,11 @@
     ],
     "likes": 2200,
     "images": [
-      "https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3301.jpeg",
 	"https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3302.jpeg",
 	"https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3303.jpeg",
 	"https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3304.jpeg",
-	"https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3305.jpeg"
+	"https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3305.jpeg",
+  "https://storage.googleapis.com/team2project_dummy_img/20250429_1528_3301.jpeg"
     ],
     "tags": ["섬여행", "자전거", "스쿠터", "조용한", "바다뷰", "풍경좋은", "애견동반"]
   },
