@@ -364,49 +364,21 @@ document.addEventListener("DOMContentLoaded", () => {
   // -----------------------------탭 4의 지도 ----------------------
   // 항상 최신 travelSchedule을 읽음
   const savedSchedule = localStorage.getItem("travelSchedule");
-  if (savedSchedule) {
-    // 코드블록 제거 및 파싱
-    let cleanText = savedSchedule
-      .replace(/```json/g, "")
-      .replace(/```/g, "")
-      .trim();
-    let scheduleArr;
-    try {
-      scheduleArr = JSON.parse(cleanText);
-    } catch (e) {
-      console.error("travelSchedule 파싱 오류:", e);
-      return;
-    }
-    // 날짜 포맷 통일
-    function normalizeDate(dateStr) {
-      return dateStr.replace(/^0+/, "").replace(/-0+/g, "-");
-    }
-    // testSelectedDate는 상단에서 선언한 값을 사용
-    const dayPlan = scheduleArr.find(
-      (item) => normalizeDate(item.Date) === normalizeDate(testSelectedDate)
-    );
-    const places = dayPlan
-      ? dayPlan.Places.map((p) => p.replace(/\(.*\)/, "").trim())
-      : [];
-    setMarkersByPlaceNames(places);
-  } else {
-    // travelSchedule이 없으면 지도 중심을 홍대입구역으로 이동하고 마커 모두 지우기
-    if (window.kakaoMarkers)
-      window.kakaoMarkers.forEach((marker) => marker.setMap(null));
-    window.kakaoMarkers = [];
-    if (typeof map !== "undefined") {
-      // 대한민국 전체가 보이도록
-      const koreaBounds = new kakao.maps.LatLngBounds(
-        new kakao.maps.LatLng(33.0, 124.0),
-        new kakao.maps.LatLng(39.5, 132.0)
-      );
-      map.setBounds(koreaBounds);
-    }
+  const scheduleArr = parseScheduleJson(savedSchedule);
+  // 날짜 포맷 통일
+  function normalizeDate(dateStr) {
+    return dateStr.replace(/^0+/, "").replace(/-0+/g, "-");
   }
-
-  // originalTravelSchedule 초기화 (최초 진입 시 비움)
-  localStorage.removeItem("originalTravelSchedule");
+  const dayPlan = scheduleArr.find(
+    (item) => normalizeDate(item.Date) === normalizeDate(testSelectedDate)
+  );
+  const places = dayPlan
+    ? dayPlan.Places.map((p) => p.replace(/\(.*\)/, "").trim())
+    : [];
+  setMarkersByPlaceNames(places);
+  // ... 이하 생략 ...
 });
+
 // 탭3의 장소 선택 부분
 function loadFestivalData(page = 1) {
   // 검색어 가져오기
@@ -678,6 +650,12 @@ function loadFestivalData(page = 1) {
 조건:
 - 운영시간과 위치를 반드시 고려해서, 하루에 이동 동선이 최소가 되도록, 가까운 장소끼리 **우선순위 10KM 이내** 묶어서 배치해줘.
 - (장소: 1, 식당:2, 카페:3, 숙소:4) 카테고리를 조화롭게 배치해줘.
+- 각 장소의 주소를 바탕으로, 모든 장소 쌍(예: A-B, A-C, B-C 등) 사이의 실제 거리를 직접 계산하세요.  
+   (지도에서 위치를 추정하거나, 실제 도보/차량 이동 거리를 최대한 현실적으로 추정해 주세요.)
+- 계산한 거리 정보를 바탕으로, 하루에 이동 동선이 최소가 되도록, 반드시 서로 가까운 장소끼리만 한 날짜에 묶어서 일정을 짜세요.
+- 하루에 먼 거리를 이동하는 일이 없도록, 각 날짜별로 들쭉날쭉한 동선이 절대 나오지 않게 하세요.
+- 반드시 거리 계산 결과를 근거로 최적의 순서를 결정하세요.
+- 계산 없이 임의로 순서를 정하지 마세요.
 - 하루에 최소 1개 이상의 장소를 포함해줘.
 - 장소는 딱 한 번만 이용할 수 있어.
 - 모든 장소를 한번씩은 다 이용해야해.
@@ -701,20 +679,17 @@ function loadFestivalData(page = 1) {
     );
 
     if (result && result.schedule && Array.isArray(result.schedule)) {
-      // 최초 한 번만 저장
-      if (!localStorage.getItem("originalTravelSchedule")) {
-        localStorage.setItem("originalTravelSchedule", JSON.stringify(result.schedule));
-      }
-      // 기존대로 travelSchedule도 저장
-      localStorage.setItem("travelSchedule", JSON.stringify(result.schedule));
+      const scheduleStr = JSON.stringify(result.schedule);
+      localStorage.setItem("travelSchedule", scheduleStr);
+      localStorage.setItem("originalTravelSchedule", scheduleStr);
+      sessionStorage.setItem("gptSchedule", scheduleStr);
     } else if (result && Array.isArray(result) && result.length > 0) {
-      // 혹시 배열로 올 때도 대비
+      const scheduleStr = JSON.stringify(result);
       if (!localStorage.getItem("originalTravelSchedule")) {
-        localStorage.setItem("originalTravelSchedule", JSON.stringify(result));
+        localStorage.setItem("originalTravelSchedule", scheduleStr);
       }
-      localStorage.setItem("travelSchedule", JSON.stringify(result));
+      localStorage.setItem("travelSchedule", scheduleStr);
     } else {
-      // 오류 처리
       showToast("GPT 응답이 올바르지 않습니다.", "error");
       return;
     }
@@ -722,6 +697,7 @@ function loadFestivalData(page = 1) {
     // ✅ 4. 마커 처리
     // 새로고침 대신 travelSchedule에서 마커만 불러오기
     const savedSchedule = localStorage.getItem("travelSchedule");
+    const scheduleArr = parseScheduleJson(savedSchedule);
     if (savedSchedule) {
       let cleanText = savedSchedule
         .replace(/```json/g, "")
@@ -729,10 +705,18 @@ function loadFestivalData(page = 1) {
         .trim();
       let scheduleArr;
       try {
-        scheduleArr = JSON.parse(cleanText);
+        const parsed = JSON.parse(savedSchedule);
+        // 객체에 schedule 속성이 있으면 그걸 사용
+        if (parsed && parsed.schedule && Array.isArray(parsed.schedule)) {
+          scheduleArr = parsed.schedule;
+        } else if (Array.isArray(parsed)) {
+          scheduleArr = parsed;
+        } else {
+          scheduleArr = [];
+        }
       } catch (e) {
         console.error("travelSchedule 파싱 오류:", e);
-        return;
+        scheduleArr = [];
       }
       // 원하는 날짜에 맞는 장소만 추출
       function normalizeDate(dateStr) {
@@ -756,6 +740,12 @@ function loadFestivalData(page = 1) {
 
     // ✅ 6. 로딩 숨기기
     hideLoading();
+
+    // 일정 생성/확정 직후(예: 일정 생성 성공 후)
+    const latestSchedule = localStorage.getItem("travelSchedule");
+    if (latestSchedule) {
+      sessionStorage.setItem("gptSchedule", latestSchedule);
+    }
   });
 }
 // 로딩 화면 표시
@@ -1692,6 +1682,7 @@ function tab4Handler() {
 
         // 마커 새로 표시 (해당 날짜의 장소로)
         const savedSchedule = localStorage.getItem("travelSchedule");
+        const scheduleArr = parseScheduleJson(savedSchedule);
         if (savedSchedule) {
           let cleanText = savedSchedule
             .replace(/```json/g, "")
@@ -1699,12 +1690,19 @@ function tab4Handler() {
             .trim();
           let scheduleArr;
           try {
-            scheduleArr = JSON.parse(cleanText);
+            const parsed = JSON.parse(savedSchedule);
+            // 객체에 schedule 속성이 있으면 그걸 사용
+            if (parsed && parsed.schedule && Array.isArray(parsed.schedule)) {
+              scheduleArr = parsed.schedule;
+            } else if (Array.isArray(parsed)) {
+              scheduleArr = parsed;
+            } else {
+              scheduleArr = [];
+            }
           } catch (e) {
             console.error("travelSchedule 파싱 오류:", e);
-            return;
+            scheduleArr = [];
           }
-
           // 원하는 날짜에 맞는 장소만 추출
           function normalizeDate(dateStr) {
             return dateStr.replace(/^0+/, "").replace(/-0+/g, "-");
@@ -2498,14 +2496,12 @@ function createControlPanel() {
 // 변경사항 저장
 function saveChanges() {
   try {
-    // 저장을 위해 원래 형식으로 변환
     const formattedSchedule = savedForEditTab5.flatMap((day) => {
       return day.places.map((place) => ({
         Date: day.date,
         Places: [place.name],
       }));
     });
-
     // 날짜별로 장소 합치기
     const combinedSchedule = [];
     formattedSchedule.forEach((item) => {
@@ -2519,8 +2515,9 @@ function saveChanges() {
         });
       }
     });
-
-    localStorage.setItem("travelSchedule", JSON.stringify(combinedSchedule));
+    const scheduleStr = JSON.stringify(combinedSchedule);
+    localStorage.setItem("travelSchedule", scheduleStr);
+    sessionStorage.setItem("gptSchedule", scheduleStr);
     showToast("일정이 저장되었습니다.", "success");
   } catch (e) {
     console.error("저장 중 오류 발생:", e);
@@ -2530,12 +2527,7 @@ function saveChanges() {
 
 // 변경사항 초기화
 function resetChanges() {
-  if (
-    confirm(
-      "편집 내용을 초기화하시겠습니까? 저장되지 않은 변경사항은 사라집니다."
-    )
-  ) {
-    // originalTravelSchedule이 있으면 travelSchedule을 복원
+  if (confirm("편집 내용을 초기화하시겠습니까? 저장되지 않은 변경사항은 사라집니다.")) {
     const raw = localStorage.getItem("originalTravelSchedule");
     if (raw) {
       localStorage.setItem("travelSchedule", raw);
@@ -2710,9 +2702,15 @@ document.getElementById("cancelButton").addEventListener("click", function () {
 
 // 적용 버튼 클릭 시 (변경 적용)
 document.getElementById("applyButton").addEventListener("click", function () {
-  saveChanges();
+  const formattedSchedule = savedForEditTab5.map(day => ({
+    Date: day.date,
+    Places: day.places.map(p => p.name)
+  }));
+  const scheduleStr = JSON.stringify(formattedSchedule);
+  localStorage.setItem("travelSchedule", scheduleStr);
+  sessionStorage.setItem("gptSchedule", scheduleStr);
+  alert("최종 일정이 저장되었습니다.");
   const tab5Btn = document.getElementById("tab5Btn");
-  tab5Btn.click();
   if (tab5Btn) {
     tab5Btn.style.display = "block";
     tab5Btn.click();
@@ -3084,4 +3082,23 @@ function showGptReasonModal(result) {
   modal.querySelector(".close-button").onclick = () => {
     modal.classList.add("hidden");
   };
+}
+
+// JSON 파싱 유틸 함수 추가
+function parseScheduleJson(raw) {
+  if (!raw) return [];
+  let cleanText = raw.replace(/```json/g, "").replace(/```/g, "").trim();
+  try {
+    const parsed = JSON.parse(cleanText);
+    if (parsed && parsed.schedule && Array.isArray(parsed.schedule)) {
+      return parsed.schedule;
+    } else if (Array.isArray(parsed)) {
+      return parsed;
+    } else {
+      return [];
+    }
+  } catch (e) {
+    console.error("travelSchedule 파싱 오류:", e);
+    return [];
+  }
 }
