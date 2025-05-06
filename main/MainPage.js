@@ -135,7 +135,7 @@ function activateTab(tabId) {
     switch (tabId) {
       case "tab1":
         // 날짜 선택 탭 - 왼쪽 영역을 좁게
-        tabContainer.style.width = "25%";
+        tabContainer.style.width = "30%";
         target.style.display = "block";
         editButtons.style.display = "none";
         makeScheduleButton.style.display = "none";
