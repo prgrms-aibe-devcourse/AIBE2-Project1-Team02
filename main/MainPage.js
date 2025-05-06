@@ -2803,12 +2803,6 @@ function renderStep4UI() {
     input.id = "gptPromptInput";
     input.placeholder = "예: 2일차 마지막에 제주공항을 넣어줘";
     input.style.flex = "1";
-    input.style.cursor = "text"; // 텍스트 커서로 변경
-    input.focus(); // 포커스를 주어 커서가 깜빡이게 함
-
-    console.log("disabled?", input.disabled);
-    console.log("readonly?", input.readOnly);
-    console.log("offsetWidth / height:", input.offsetWidth, input.offsetHeight);
 
     const btn = document.createElement("button");
     btn.id = "gptPromptBtn";

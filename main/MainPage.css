@@ -1647,10 +1647,7 @@ li {
   font-size: 16px;
   outline: none;
   cursor: text;
-}
-
-#gptPromptInput::placeholder {
-  color: #94a3b8;
+  background-color: #ffffff; /* 흰색 배경 설정 */
 }
 
 #gptPromptBtn {
