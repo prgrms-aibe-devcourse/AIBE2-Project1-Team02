@@ -3,9 +3,11 @@ import { OPENAI_API_KEY } from './config.js';
 
 // filteredItems 배열, 시작일, 종료일, customPrompt(선택)를 받아 OpenAI GPT-4o mini API로 일정 생성
 export async function generatePlanFromOpenAI(filteredItems, startDate, endDate, customPrompt) {
-    if (!filteredItems || filteredItems.length === 0) {
-        document.getElementById('result').textContent = "선택된 장소가 없습니다.";
-        return;
+    console.log("[GPT] 함수 진입, filteredItems:", filteredItems, Array.isArray(filteredItems), filteredItems.length);
+    if (!customPrompt && (!filteredItems || filteredItems.length === 0)) {
+        console.log("[GPT] filteredItems가 비어있음, 함수 종료");
+        // document.getElementById('result').textContent = "선택된 장소가 없습니다.";
+        return null;
     }
 
     let promptText = customPrompt;
@@ -23,6 +25,7 @@ export async function generatePlanFromOpenAI(filteredItems, startDate, endDate, 
     };
 
     try {
+        console.log("[GPT] fetch 시작", apiUrl, payload);
         const response = await fetch(apiUrl, {
             method: "POST",
             headers: {
@@ -32,52 +35,40 @@ export async function generatePlanFromOpenAI(filteredItems, startDate, endDate, 
             body: JSON.stringify(payload)
         });
 
+        console.log("[GPT] fetch 완료, status:", response.status);
+
         if (!response.ok) {
-            throw new Error(`서버 응답 오류: ${response.status}`);
+            const errorText = await response.text();
+            console.error("[GPT] 서버 응답 오류:", response.status, errorText);
+            throw new Error(`서버 응답 오류: ${response.status} - ${errorText}`);
         }
 
         const data = await response.json();
+        console.log("[GPT] 응답 데이터:", data);
+
         const scheduleText = data.choices[0].message.content;
-        // =====================[중요: GPT 여행 일정 결과 저장 위치]====================
-        // 아래 코드에서 GPT가 생성한 여행 일정 결과(scheduleText)는
-        // 반드시 localStorage의 'travelSchedule' 키에 저장됩니다.
-        // 다른 기능(예: 지도, 일정 복원, 분석 등)에서 이 값을 꺼내서 사용하세요!
-        // ============================================================================
-        console.log('여행 일정 결과:', scheduleText);
+        console.log('[GPT] 여행 일정 결과:', scheduleText);
         localStorage.setItem('travelSchedule', scheduleText);
 
-        // =====================[날짜별 장소 추출 및 테스트용 날짜 조작 코드]====================
-        // 아래 한 줄로 원하는 날짜를 바꿔가며 테스트할 수 있습니다.
-        let selectedDate = '2025-05-04'; // 예: '2025-05-01'로 지정해서 테스트
+        let cleanText = scheduleText
+            .replace(/```json/g, '')
+            .replace(/```/g, '')
+            .trim();
 
-        // travelSchedule에서 해당 날짜의 장소 배열만 추출하는 함수
-        function getPlacesByDateFromSchedule(scheduleText, dateStr) {
-            let cleanText = scheduleText
-                .replace(/```json/g, '')
-                .replace(/```/g, '')
-                .trim();
-            let scheduleArr;
-            try {
-                scheduleArr = JSON.parse(cleanText);
-            } catch (e) {
-                console.error('travelSchedule 파싱 오류:', e);
-                return [];
-            }
-            if (!Array.isArray(scheduleArr)) return [];
-            const dayPlan = scheduleArr.find(item => normalizeDate(item.Date) === normalizeDate(dateStr));
-            return dayPlan ? dayPlan.Places : [];
+        let scheduleArr;
+        try {
+            scheduleArr = JSON.parse(cleanText);
+            console.log('[GPT] 파싱된 scheduleArr:', scheduleArr);
+        } catch (e) {
+            console.error('[GPT] travelSchedule 파싱 오류:', e, cleanText);
+            return null;
         }
-
-        // 실제 사용 예시 (콘솔 출력)
-        const savedSchedule = localStorage.getItem('travelSchedule');
-        if (savedSchedule) {
-            const places = getPlacesByDateFromSchedule(savedSchedule, selectedDate);
-            console.log(`[${selectedDate}]의 장소 배열:`, places);
-        }
-        // ============================================================================
+        return scheduleArr;
     } catch (error) {
-        console.error("에러 발생:", error);
-        document.getElementById('result').textContent = `에러: ${error.message}`;
+        console.error("[GPT] 에러 발생:", error);
+        // const el = document.getElementById('result');
+        // if (el) el.textContent = `에러: ${error.message}`;
+        return null;
     }
 }
 
@@ -139,12 +130,14 @@ async function generateSchedule(selectedIds) {
             scheduleText += `  ${plan.순서}. ${place.placeName}\n`;
         });
     }
-    document.getElementById('result').textContent = scheduleText;
+    // document.getElementById('result').textContent = scheduleText;
 }
 
 function normalizeDate(dateStr) {
   // '2025-05-04' -> '2025-5-4'
   return dateStr.replace(/^0+/, '').replace(/-0+/g, '-');
 }
+
+console.log(filteredItems);
 
 

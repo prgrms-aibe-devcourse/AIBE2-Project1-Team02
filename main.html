@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To us</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+  <div class="main-container">
+
+    <div id="sidebar-container"></div>
+
+    <div class="background">
+      <div class="white-overlay"></div>
+      <div class="content">
+        <div class="text-line">투어스와 함께</div>
+        <div class="text-line">To us 여행을 떠나보세요</div>
+        <div class="button-group">
+          <button class="startBtn" onclick="location.href='../main/MainPage.html'">시작하기</button>
+          <button class="loginBtn" onclick="location.href='../login/login.html'">로그인</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script>
+    fetch('../sidebar/sidebar.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('sidebar-container').innerHTML = data;
+      });
+  </script>
+
+  <script>
+    // 로그인 상태에 따라 로그인 버튼 숨기기
+    document.addEventListener('DOMContentLoaded', function () {
+      const loginBtn = document.querySelector('.loginBtn');
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+      if (isLoggedIn === 'true') {
+        // 로그인 상태이면 로그인 버튼 숨김
+        if (loginBtn) loginBtn.style.display = 'none';
+      }
+    });
+  </script>
+
+<script src="../sidebar/sidebar.js"></script>
+</body>
+
+</html>
