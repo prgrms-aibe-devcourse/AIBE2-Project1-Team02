@@ -2830,7 +2830,7 @@ function renderStep4UI() {
     const input = document.createElement("input");
     input.type = "text";
     input.id = "gptPromptInput";
-    input.placeholder = "예: 2일차 마지막에 제주공항을 넣어줘";
+    input.placeholder = "예: 2일차 마지막에 제주국제제공항을 넣어줘";
     input.style.flex = "1";
 
     const btn = document.createElement("button");
