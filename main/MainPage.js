@@ -243,6 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
   localStorage.removeItem("filteredItems");
   localStorage.removeItem("startDate");
   localStorage.removeItem("endDate");
+  localStorage.removeItem("originalTravelSchedule");
 
   // 최초 진입 여부를 체크하는 플래그
   if (!localStorage.getItem("isInitialized")) {
@@ -260,6 +261,15 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       map.setBounds(koreaBounds);
     }
+  }
+
+  // ★ 항상 지도 중심을 대한민국 전체로 맞추기
+  if (typeof map !== "undefined") {
+    const koreaBounds = new kakao.maps.LatLngBounds(
+      new kakao.maps.LatLng(33.0, 124.0),
+      new kakao.maps.LatLng(39.5, 132.0)
+    );
+    map.setBounds(koreaBounds);
   }
 
   // 1. travelSchedule이 없을 때만 달력 모달 자동 표시
@@ -767,6 +777,9 @@ function handleLocationDetail(data) {
   const operationHoursEl = document.getElementById("modal-operationHours");
   const descriptionEl = document.getElementById("modal-description");
   const reviews = document.getElementById("reviews");
+
+  // ★★★ 이 부분 추가! ★★★
+  slider.innerHTML = "";
 
   placeNameEl.textContent = data.placeName || "정보 없음";
   data.image.forEach((image) => {
