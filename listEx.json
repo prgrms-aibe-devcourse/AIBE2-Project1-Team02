@@ -28,7 +28,7 @@
   },
   {
     "id": 2,
-    "placeName": "서울성수천상가옥",
+    "placeName": "천상가옥",
     "category": 3,
     "address": "서울특별시 성동구 성수이로14길 14 3층",
     "description": "누구에게나 따듯함을 내려드리는 카페로서 단순한 카페 그 이상으로 손님 모두의 시간이 가치롭게 저희 매장에서 쓰였으면 하는 바램입니다.",
@@ -101,7 +101,7 @@
   },
   {
     "id": 5,
-    "placeName": "그랜드하얏트호텔",
+    "placeName": "그랜드 하얏트 서울",
     "category": 4,
     "address": "서울특별시 용산구 소월로 322",
     "description": "서울의 중심부, 남산에 위치한 그랜드 하얏트 서울은 도심 속의 리조트 호텔로, 세심한 서비스와 더불어 편안한 경험을 제공합니다.",
@@ -203,7 +203,7 @@
   },
   {
     "id": 9,
-    "placeName": "속초해변",
+    "placeName": "속초해수욕장",
     "category": 1,
     "address": "강원특별자치도 속초시 해오름로 190",
     "description": "맑고 깨끗한 동해바다를 즐길 수 있는 해수욕장입니다.",
@@ -299,7 +299,7 @@
   },
   {
     "id": 13,
-    "placeName": "경주 월정교",
+    "placeName": "월정교",
     "category": 1,
     "address": "경상북도 경주시 교동 274",
     "description": "고풍스러운 조명이 아름다운 다리, 야경이 특히 유명합니다.",
@@ -322,7 +322,7 @@
   },
   {
     "id": 14,
-    "placeName": "여수 오동도",
+    "placeName": "오동도",
     "category": 1,
     "address": "전라남도 여수시 수정동 산1-11",
     "description": "동백꽃으로 유명한 섬, 겨울에 동백꽃이 만개하는 명소입니다.",
@@ -345,7 +345,7 @@
   },
   {
     "id": 15,
-    "placeName": "여수 해상케이블카",
+    "placeName": "여수해상케이블카",
     "category": 1,
     "address": "전라남도 여수시 돌산읍 돌산로 3600-1",
     "description": "여수 밤바다를 한눈에 감상할 수 있는 케이블카입니다.",
@@ -367,7 +367,7 @@
   },
   {
     "id": 16,
-    "placeName": "여수 낭만포차거리",
+    "placeName": "여수낭만포차거리",
     "category": 2,
     "address": "전라남도 여수시 종화동",
     "description": "야경을 보면서 여수 명물 먹거리(꼬막비빔밥, 해산물)를 즐길 수 있는 거리입니다.",
@@ -390,7 +390,7 @@
   },
   {
     "id": 17,
-    "placeName": "여수 아쿠아플라넷",
+    "placeName": "아쿠아플라넷 여수",
     "category": 1,
     "address": "전라남도 여수시 오동도로 61-11",
     "description": "다양한 해양 생물을 만날 수 있는 대형 아쿠아리움.",
@@ -414,7 +414,7 @@
   },
   {
     "id": 18,
-    "placeName": "여수 이순신광장",
+    "placeName": "이순신광장",
     "category": 1,
     "address": "전라남도 여수시 중앙동",
     "description": "충무공 이순신 장군 동상이 서 있는 역사적 명소.",
@@ -437,7 +437,7 @@
   },
   {
     "id": 19,
-    "placeName": "라테라스리조트",
+    "placeName": "라테라스리조트앤스파",
     "category": 4,
     "address": "전라남도 여수시 돌산읍 진모1길 29-12",
     "description": "라테라스 워터파크&실내수영장, 지금 가장 HOT하다! 쾌적하고 깔끔한 수영장과 리조트를 한번에 GET!",
@@ -467,7 +467,7 @@
   },
   {
     "id": 20,
-    "placeName": "여수 진남관",
+    "placeName": "진남관",
     "category": 1,
     "address": "전라남도 여수시 군자동 472",
     "description": "조선시대 수군을 지휘하던 유서 깊은 건물.",
@@ -490,7 +490,7 @@
   },
   {
     "id": 21,
-    "placeName": "해운대 해수욕장",
+    "placeName": "해운대해수욕장",
     "category": 1,
     "address": "부산광역시 해운대구 우동",
     "description": "부산을 대표하는 해변, 맑은 바다와 하얀 모래사장이 아름답습니다.",
@@ -514,7 +514,7 @@
   },
   {
     "id": 22,
-    "placeName": "광안리 해수욕장",
+    "placeName": "광안리해수욕장",
     "category": 1,
     "address": "부산광역시 수영구 광안해변로 219",
     "description": "광안대교 야경을 배경으로 아름다운 바다를 즐길 수 있는 명소.",
@@ -560,7 +560,7 @@
   },
   {
     "id": 24,
-    "placeName": "그랜드조선부산",
+    "placeName": "그랜드조선 부산",
     "category": 4,
     "address": "부산광역시 해운대구 해운대해변로 292",
     "description": "그랜드 조선의 모든 순간은 즐거움으로 가득 찬 하나의 여정이 됩니다.",
@@ -693,7 +693,7 @@
   },
   {
     "id": 29,
-    "placeName": "수백당이천직영점",
+    "placeName": "수백당 이천직영점",
     "category": 2,
     "address": "경기도 이천시 증신로 296 수백당빌딩 1층",
     "description": "대한민국에서 가장 럭셔리한 순대국집, 영혼을 갈아 넣어서 만든 이천의 명소입니다.",
@@ -723,7 +723,7 @@
   },
   {
     "id": 30,
-    "placeName": "헤이리 예술마을",
+    "placeName": "헤이리예술마을",
     "category": 1,
     "address": "경기도 파주시 탄현면 헤이리마을길 70-21",
     "description": "예술과 문화가 살아 숨쉬는 복합문화예술촌.",
@@ -773,7 +773,7 @@
   },
   {
     "id": 32,
-    "placeName": "롯데호텔제주",
+    "placeName": "롯데호텔 제주",
     "category": 4,
     "address": "제주특별자치도 서귀포시 중문관광로72번길 35",
     "description": "제주도 최초로 인증 받은 5성 호텔 푸른 제주 바다와 하늘이 맞닿은 곳에 위치한 롯데호텔 제주는 천국같은 휴식과 여행의 즐거움을 동시에 누릴 수 있는 대한민국 대표 호텔이다.",
@@ -861,7 +861,7 @@
   },
   {
     "id": 35,
-    "placeName": "쉼표",
+    "placeName": "쉼표 제주",
     "category": 3,
     "address": "제주특별자치도 제주시 한림읍 한림로 359",
     "description": "탁 트인 제주 바다를 바라보며 여유롭게 커피를 즐길 수 있는 감성 카페입니다.",
@@ -892,7 +892,7 @@
   },
   {
     "id": 36,
-    "placeName": "한라산 국립공원",
+    "placeName": "한라산국립공원",
     "category": 1,
     "address": "제주특별자치도 제주시 1100로",
     "description": "대한민국 최고봉, 사계절 트래킹 명소.",
@@ -916,7 +916,7 @@
   },
   {
     "id": 37,
-    "placeName": "이호테우해변",
+    "placeName": "이호테우해수욕장",
     "category": 1,
     "address": "제주특별자치도 제주시 이호일동",
     "description": "빨간색, 흰색 말등대가 상징인 아름다운 해변.",
@@ -997,7 +997,7 @@
   },
   {
     "id": 40,
-    "placeName": "파르나스호텔제주",
+    "placeName": "파르나스호텔 제주",
     "category": 4,
     "address": "제주특별자치도 서귀포시 중문관광로72번길 100",
     "description": "제주도 중문 색달 해변 옆에 위치한 파르나스 호텔, 제주 호텔 중 바닷가가 가장 가까운 호텔입니다.",
@@ -1085,7 +1085,7 @@
   },
   {
     "id": 43,
-    "placeName": "고이정 애월 흑돼지보리짚불구이",
+    "placeName": "고이정 본점",
     "category": 2,
     "address": "제주특별자치도 제주시 애월읍 애월로 6 고이정",
     "description": "제주 애월 3대흑돼지 보리짚불구이 고이정은 애월 흑돼지 맛집으로 한담해변 바로 앞에 있습니다.",
@@ -1115,7 +1115,7 @@
   },
   {
     "id": 44,
-    "placeName": "제주한라국수",
+    "placeName": "제주 한라국수",
     "category": 2,
     "address": "제주특별자치도 서귀포시 천제연로188번길 17",
     "description": "제주의 매력을 한입 가득! 오늘의 여정 속 특별한 맛과 경험을 선물하는 곳, 한라국수입니다.",
@@ -1282,7 +1282,7 @@
   },
   {
     "id": 50,
-    "placeName": "제주 오설록 티뮤지엄",
+    "placeName": "오설록 티뮤지엄",
     "category": 1,
     "address": "제주특별자치도 서귀포시 안덕면 신화역사로 15",
     "description": "녹차를 테마로 한 전시관과 카페.",
@@ -1342,14 +1342,16 @@
     ],
     "likes": 2100,
     "images": [
-      ""
+      "https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5101.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5102.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5103.jpeg"
     ],
     "tags": ["가든", "테마파크", "자연속", "포토존", "피너츠", "힐링", "가족", "애견동반"]
     
   },
   {
     "id": 52,
-    "placeName": "콜로세움",
+    "placeName": "콜로세움 제주",
     "category": 3,
     "address": "제주특별자치도 제주시 민오름길 14",
     "description": "콜로세움 제주는 대형 브런치 카페 & 탭하우스로, 브런치 메뉴부터 베이커리, 수제 화덕피자, 그리고 국내외 프리미엄 생맥주 11종까지 다양하게 즐길 수 있는 공간입니다.",
@@ -1376,14 +1378,17 @@
       }
     ],
     "likes": 863,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5201.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5202.jpeg"
+],
     "tags": ["카페", "연인", "애견동반", "감성카페", "포토존"]
   },
   {
     "id": 53,
-    "placeName": "흑돼지명가 돈사촌",
+    "placeName": "돈사촌 본점",
     "category": 2,
-    "address": "제주특별자치도 서귀포시 중문관광로 110",
+    "address": "제주특별자치도 제주시 서사로 7",
     "description": "제주 흑돼지를 맛볼 수 있는 정통 맛집",
     "openHours": "매일 11:00 - 22:00",
     "contact": "064-738-8878",
@@ -1402,12 +1407,15 @@
       }
     ],
     "likes": 1548,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5301.png",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5302.png"
+],
     "tags": ["식당", "흑돼지", "중문", "고기맛집", "현지인추천"]
   },
   {
     "id": 54,
-    "placeName": "바다풍경 펜션",
+    "placeName": "바다풍경펜션",
     "category": 4,
     "address": "제주특별자치도 구좌읍 해맞이해안로 1012",
     "description": "전 객실 오션뷰를 자랑하는 해안 펜션",
@@ -1428,12 +1436,15 @@
       }
     ],
     "likes": 942,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5401.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5402.jpeg"
+],
     "tags": ["숙소", "오션뷰", "조용한", "연인추천", "가성비", "애견동반"]
   },
   {
     "id": 55,
-    "placeName": "하도슈퍼카페",
+    "placeName": "하도1940",
     "category": 3,
     "address": "제주특별자치도 구좌읍 해맞이해안로 1206",
     "description": "슈퍼와 카페가 함께 있는 복고풍 감성 카페",
@@ -1448,13 +1459,16 @@
       }
     ],
     "likes": 1210,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5501.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5502.jpeg"
+],
     "tags": ["카페", "레트로", "구좌", "복고", "인스타감성"]
   },
   {
     "id": 56,
-    "placeName": "우유부단",
-    "category": 2,
+    "placeName": "우유부단 제주",
+    "category": 3,
     "address": "제주특별자치도 삼도2동 831-2",
     "description": "우유를 주제로 한 디저트 전문 카페 겸 식당",
     "openHours": "매일 10:00 - 21:00",
@@ -1468,16 +1482,20 @@
       }
     ],
     "likes": 720,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5601.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5601.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5603.jpeg"
+],
     "tags": ["식당", "디저트", "우유", "귀여운", "가족추천"]
   },
   {
     "id": 57,
-    "placeName": "그림카페",
+    "placeName": "날쌘카페 제주그림카페점",
     "category": 3,
     "address": "제주특별자치도 서귀포시 대정읍 하모중앙로 52",
     "description": "그림을 그리고 전시도 가능한 예술 카페",
-    "openHours": "매일 11:00 - 19:00",
+    "openHours": "매일 09:00 - 18:00",
     "contact": "010-1234-5678",
     "reviews": [
       {
@@ -1488,12 +1506,15 @@
       }
     ],
     "likes": 410,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5701.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5702.jpeg"
+],
     "tags": ["카페", "예술", "전시", "체험", "힐링"]
   },
   {
     "id": 58,
-    "placeName": "휘닉스 제주 섭지코지",
+    "placeName": "휘닉스 아일랜드",
     "category": 4,
     "address": "제주특별자치도 서귀포시 성산읍 섭지코지로 107",
     "description": "제주의 바다와 절경이 어우러진 프리미엄 리조트",
@@ -1508,16 +1529,19 @@
       }
     ],
     "likes": 1730,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5801.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5802.jpeg"
+],
     "tags": ["숙소", "리조트", "섭지코지", "럭셔리", "가족"]
   },
   {
     "id": 59,
-    "placeName": "앤트러사이트",
+    "placeName": "베릴",
     "category": 3,
-    "address": "제주특별자치도 서귀포시 안덕면 창천리 843-3",
-    "description": "공장 개조 감성 카페, 독특한 분위기",
-    "openHours": "매일 10:00 - 19:00",
+    "address": "제주 제주시 한림읍 협재1길 19-8 1층",
+    "description": "협재 바다와 비양도를 한눈에 바라보며 여행의 한 페이지를 기록할 수 있는 카페입니다.",
+    "openHours": "매일 11:00 - 18:30",
     "contact": "064-794-4560",
     "reviews": [
       {
@@ -1528,12 +1552,15 @@
       }
     ],
     "likes": 1044,
-    "images": [""],
-    "tags": ["카페", "감성", "창고", "로스팅", "핫플"]
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5901.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2146_5902.jpeg"
+],
+    "tags": ["카페", "감성", "오션뷰", "로스팅", "핫플"]
   },
   {
     "id": 60,
-    "placeName": "카페 봄날",
+    "placeName": "봄날제주",
     "category": 3,
     "address": "제주특별자치도 서귀포시 안덕면 사계남로 216",
     "description": "바다 전망과 복층 구조의 인기 카페",
@@ -1548,14 +1575,17 @@
       }
     ],
     "likes": 1321,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2141_6001.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2141_6002.jpeg"
+],
     "tags": ["카페", "뷰맛집", "사계리", "복층카페", "인스타"]
   },
   {
     "id": 61,
-    "placeName": "카페 서귀피안",
+    "placeName": "서귀피안베이커리",
     "category": 3,
-    "address": "제주특별자치도 서귀포시 칠십리로 75",
+    "address": "제주 서귀포시 보목로64번길 178 1층 보래드 베이커스",
     "description": "서귀포 바다를 내려다볼 수 있는 루프탑 카페",
     "openHours": "매일 09:00 - 20:00",
     "contact": "064-763-1234",
@@ -1568,17 +1598,20 @@
       }
     ],
     "likes": 880,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2141_6101.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2141_6102.jpeg"
+],
     "tags": ["카페", "루프탑", "서귀포", "전망좋은", "차분한"]
   },
   {
     "id": 62,
-    "placeName": "이너피스",
+    "placeName": "시도 제주",
     "category": 3,
-    "address": "제주특별자치도 조천읍 북촌리 1330-3",
+    "address": "제주 제주시 논세길 56 1층",
     "description": "조용한 숲속에서 즐기는 차 한잔",
-    "openHours": "매일 10:30 - 18:00",
-    "contact": "064-789-1122",
+    "openHours": "매일 10:00 - 18:00",
+    "contact": "0507-1459-1665",
     "reviews": [
       {
         "rating": 5,
@@ -1588,12 +1621,15 @@
       }
     ],
     "likes": 723,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2139_6201.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2139_6202.jpeg"
+],
     "tags": ["카페", "조용한", "숲속", "조천", "휴식"]
   },
   {
     "id": 63,
-    "placeName": "카페 하이엔드제주",
+    "placeName": "하이엔드제주",
     "category": 3,
     "address": "제주특별자치도 애월읍 애월리 2555-5",
     "description": "하이엔드 인테리어와 커피로 유명한 카페",
@@ -1608,12 +1644,15 @@
       }
     ],
     "likes": 1123,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2132_6301.png",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2132_6302.jpeg"
+],
     "tags": ["카페", "애월", "하이엔드", "인테리어", "디저트"]
   },
   {
     "id": 64,
-    "placeName": "그랜드조선제주",
+    "placeName": "그랜드조선 제주",
     "category": 4,
     "address": "제주특별자치도 서귀포시 중문관광로72번길 60",
     "description": "중문에 위치한 프리미엄 호텔",
@@ -1628,12 +1667,15 @@
       }
     ],
     "likes": 1980,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2132_6401.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2132_6402.jpeg"
+],
     "tags": ["숙소", "호텔", "중문", "럭셔리", "수영장"]
   },
   {
     "id": 65,
-    "placeName": "호텔 더본 제주",
+    "placeName": "호텔더본 제주",
     "category": 4,
     "address": "제주특별자치도 서귀포시 색달로 18",
     "description": "가성비 좋은 깔끔한 비즈니스 호텔",
@@ -1648,17 +1690,20 @@
       }
     ],
     "likes": 1100,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2130_6501.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2130_6502.jpeg"
+],
     "tags": ["숙소", "비즈니스", "깔끔한", "조식", "합리적"]
   },
   {
     "id": 66,
-    "placeName": "메이플라워 제주",
+    "placeName": "한화리조트 제주",
     "category": 4,
-    "address": "제주특별자치도 제주시 연동 262-1",
+    "address": "제주 제주시 명림로 575-107",
     "description": "시내 중심에 위치한 가족형 호텔",
     "openHours": "체크인 14:00 / 체크아웃 11:00",
-    "contact": "064-711-2222",
+    "contact": "064-725-9000",
     "reviews": [
       {
         "rating": 4,
@@ -1668,7 +1713,11 @@
       }
     ],
     "likes": 935,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2130_6601.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2130_6602.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2130_6603.jpeg"
+],
     "tags": ["숙소", "가족", "연동", "교통편리", "조용한"]
   },
   {
@@ -1688,7 +1737,10 @@
       }
     ],
     "likes": 1178,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2123_6701.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2123_6702.jpeg"
+],
     "tags": ["숙소", "시내", "공항근처", "비즈니스", "편리함"]
   },
   {
@@ -1708,12 +1760,15 @@
       }
     ],
     "likes": 1450,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2123_6801.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2123_6802.jpeg"
+],
     "tags": ["숙소", "신라", "쾌적함", "연동", "모던"]
   },
   {
     "id": 69,
-    "placeName": "카페몽몽",
+    "placeName": "카페몽몽 제주",
     "category": 3,
     "address": "제주특별자치도 제주시 월광로 145-8 1층 카페몽몽",
     "description": "제주에 위치한 최대규모의 애견카페입니다. 댕댕이들을 위한 몽몽네컷도 준비되어있습니다. 다양한 소품을 이용하여 사랑스러운 댕댕이의 모습을 기록하실 수 있어요!",
@@ -1734,12 +1789,15 @@
       }
     ],
     "likes": 1390,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2123_6901.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2123_6902.jpeg"
+],
     "tags": ["카페", "애견동반", "식당", "애견카페", "커피"]
   },
   {
     "id": 70,
-    "placeName": "성산스쿠버",
+    "placeName": "성산스쿠버리조트 제주",
     "category": 1,
     "address": "제주특별자치도 서귀포시 성산읍 일출로 258-5 성산스쿠버리조트",
     "description": "다이빙 포인트가 가까운 거리에 있어 편리하고 입수 지점의 수심이 5~7m에 불과해 경험이 적은 다이버도 부담없이 다이빙을 즐길 수 있습니다.",
@@ -1760,7 +1818,11 @@
       }
     ],
     "likes": 796,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2123_7001.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2123_7002.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2123_7003.jpeg"
+],
     "tags": ["스쿠버다이빙", "바다뷰", "액티비티", "물놀이", "인생샷"]
   },
   {
@@ -1780,7 +1842,10 @@
       }
     ],
     "likes": 1306,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2123_7101.png",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2123_7101.png"
+],
     "tags": ["미로", "체험", "가족", "아이추천", "자연"]
   },
   {
@@ -1806,7 +1871,10 @@
       }
     ],
     "likes": 464,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2123_7201.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2123_7202.jpeg"
+],
     "tags": ["숲길", "산책", "자연", "힐링", "포레스트"]
   },
   {
@@ -1826,12 +1894,15 @@
       }
     ],
     "likes": 999,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2113_7301.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2113_7302.jpeg"
+],
     "tags": ["동백꽃", "정원", "꽃구경", "사진스팟", "데이트"]
   },
   {
     "id": 74,
-    "placeName": "삼대국수회관",
+    "placeName": "삼대국수회관 본점",
     "category": 2,
     "address": "제주특별자치도 연동 261-16",
     "description": "고기국수로 유명한 국수 맛집",
@@ -1846,12 +1917,16 @@
       }
     ],
     "likes": 1222,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2113_7401.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2113_7402.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2113_7403.jpeg"
+],
     "tags": ["식당", "국수", "연동", "고기국수", "가성비"]
   },
   {
     "id": 75,
-    "placeName": "올래국수",
+    "placeName": "올래국수 본점",
     "category": 2,
     "address": "제주특별자치도 삼도2동 1056-1",
     "description": "제주식 멸치국수가 인기인 맛집",
@@ -1866,12 +1941,15 @@
       }
     ],
     "likes": 842,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2113_7501",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2113_7502.jpeg"
+],
     "tags": ["식당", "멸치국수", "제주식", "현지인추천", "전통맛"]
   },
   {
     "id": 76,
-    "placeName": "해오름식당",
+    "placeName": "해오름식당 제주",
     "category": 2,
     "address": "제주특별자치도 서귀포시 표선면 표선해안로 533",
     "description": "갈치조림과 고등어구이가 맛있는 식당",
@@ -1886,7 +1964,11 @@
       }
     ],
     "likes": 1530,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2113_7601.png",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2113_7602.png",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2113_7603.png"
+],
     "tags": ["식당", "해산물", "갈치조림", "표선", "밥집"]
   },
   {
@@ -1906,7 +1988,10 @@
       }
     ],
     "likes": 690,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2113_7701.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2113_7702.jpeg"
+],
     "tags": ["국수", "멸치", "도남동", "로컬맛집", "단골"]
   },
   {
@@ -1926,7 +2011,10 @@
       }
     ],
     "likes": 1980,
-    "images": [""],
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2113_7801.jpeg",
+"https://storage.googleapis.com/team2project_dummy_img/20250506_2113_7802.jpeg"
+],
     "tags": ["시장", "먹거리", "관광", "기념품", "현지체험"]
   }
 
