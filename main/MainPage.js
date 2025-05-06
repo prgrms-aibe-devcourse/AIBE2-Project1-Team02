@@ -393,6 +393,7 @@ document.addEventListener("DOMContentLoaded", () => {
       map.setCenter(new kakao.maps.LatLng(37.557192, 126.924863)); // 홍대입구역
     }
   }
+
   // originalTravelSchedule 초기화 (최초 진입 시 비움)
   localStorage.removeItem("originalTravelSchedule");
 });
@@ -648,6 +649,7 @@ function loadFestivalData(page = 1) {
 
     // ✅ 1. 로딩 먼저 표시
     showLoading();
+
     // ✅ 2. 딜레이 (고정 3초 유지용, 강제로)
     await new Promise((resolve) => setTimeout(resolve, 3000));
 
@@ -1355,11 +1357,7 @@ function getPlacesByDate(scheduleJson, dateStr) {
 let kakaoMarkers = [];
 // 기존 선(폴리라인)을 지우기 위한 변수
 let kakaoPolyline = null;
-function setMarkersByPlaceNames(
-  placeNames,
-  useDefaultMarker = false,
-  drawPolyline = true
-) {
+function setMarkersByPlaceNames(placeNames, useDefaultMarker = false, drawPolyline = true) {
   const geocoder = new kakao.maps.services.Places();
 
   // 기존 마커 지우기
@@ -1454,16 +1452,11 @@ function setMarkersByPlaceNames(
               kakaoPolyline.setMap(null);
               kakaoPolyline = null;
             }
-
             kakaoPolyline = new kakao.maps.Polyline({
               map: map,
-
               path: validCoords,
-
               strokeWeight: 4,
-
               strokeColor: "#007bff",
-
               strokeOpacity: 0.8,
               strokeStyle: "dashed", // 점선으로 변경
             });
@@ -2218,8 +2211,7 @@ async function initializeEditMode() {
     console.error("편집 모드 초기화 중 오류:", e);
     showErrorState("일정을 불러오는 데 문제가 발생했습니다.");
   }
-
-  renderStep4UI(); // ← 반드시 여기에 추가!
+  renderStep4UI();  // ← 반드시 여기에 추가!
 }
 
 // 편집 모드 UI 렌더링
@@ -2528,7 +2520,6 @@ function resetChanges() {
     if (raw) {
       localStorage.setItem("travelSchedule", raw);
     }
-
     initializeEditMode();
     showToast("편집 내용이 초기화되었습니다.");
   }
@@ -2823,9 +2814,9 @@ function renderStep4UI() {
       }
 
       // 현재 편집 중인 일정 데이터 준비 (날짜별 장소 배열)
-      const currentSchedule = savedForEditTab5.map((day) => ({
+      const currentSchedule = savedForEditTab5.map(day => ({
         Date: day.date,
-        Places: day.places.map((p) => p.name),
+        Places: day.places.map(p => p.name)
       }));
 
       // 사용자 입력 + 기존 프롬프트 합치기
@@ -2839,11 +2830,21 @@ function renderStep4UI() {
         - 모든 장소를 한번씩은 다 이용해야해.
         - 만약 '숙소(4)' 카테고리가 있다면, 마지막날을 제외한 모든 일차의 마지막 순서는 숙소로 배치해줘.
         - 만약 '숙소(4)' 카테고리가 있다면, 첫째날을 제외한 모든 일차의 첫번째 순서는 숙소로 배치해줘.
-        반드시 아래와 같은 JSON 배열 포맷으로만, 코드블록 없이, 설명 없이, 결과만 반환해줘.
-        [
-          { "Date": "YYYY-MM-DD", "Places": [장소1, 장소2, ...] },
-          ...
-        ]
+        반드시 아래와 같은 JSON 객체로, 코드블록 없이, 결과만 반환해줘.
+        {
+          "schedule": [
+            { "Date": "YYYY-MM-DD", "Places": [장소1, 장소2, ...] },
+            ...
+          ],
+          "reason": "왜 이렇게 배치했는지 구체적으로 300자 이내로 한국어로 설명",
+          "tips": "각 장소의 장점과 주변에 갈만한 곳을 간략하게 추천 (각 장소별로 2~3줄)",
+          "visitTips": "각 장소별 방문 시 유의사항이나 최적 방문 시간 등 실질적인 팁",
+          "foodRecommendations": "각 날짜별로 꼭 먹어봐야 할 음식이나 추천 식당",
+          "duration": "각 장소별 권장 체류 시간",
+          "transport": "각 이동 구간별 추천 이동수단",
+          "seasonalTips": "여행 날짜/계절에 맞는 주의사항이나 추천 활동",
+          "familyTips": "아이, 어르신, 반려동물 동반 시 참고사항"
+        }
       `;
 
       showLoading();
@@ -2860,15 +2861,19 @@ function renderStep4UI() {
           gptPrompt
         );
 
-        if (result && Array.isArray(result) && result.length > 0) {
-          let cleanResult = JSON.stringify(result)
+        // result가 객체 형태로 올 때
+        if (result && result.schedule && result.reason) {
+          // 일정 저장
+          let cleanResult = JSON.stringify(result.schedule)
             .replace(/```json/g, "")
             .replace(/```/g, "")
             .trim();
-          console.log("세션스토리지에 저장:", cleanResult); // ← 이 라인 추가
           sessionStorage.setItem("gptSchedule", cleanResult);
           renderScheduleFromSession();
           showToast("GPT가 일정을 생성/재정렬했습니다.", "success");
+
+          // 설명 모달 자동 표시
+          showGptReasonModal(result);
         } else {
           showToast("GPT 응답이 비어있거나 올바르지 않습니다.", "error");
         }
@@ -2888,6 +2893,10 @@ document.getElementById("applyButton").addEventListener("click", function () {
   const gptSchedule = sessionStorage.getItem("gptSchedule");
   if (gptSchedule) {
     localStorage.setItem("travelSchedule", gptSchedule);
+    alert("최종 일정이 저장되었습니다.");
+    // 필요시 UI 갱신
+  } else {
+    alert("생성된 일정이 없습니다.");
   }
 });
 
@@ -2897,9 +2906,9 @@ function renderScheduleFromSession() {
     try {
       const arr = JSON.parse(gptSchedule);
       // 날짜별로 장소 정리
-      savedForEditTab5 = arr.map((day) => ({
+      savedForEditTab5 = arr.map(day => ({
         date: day.Date,
-        places: day.Places.map((name) => ({ name })),
+        places: day.Places.map(name => ({ name }))
       }));
       renderEditMode();
     } catch (e) {
@@ -2940,12 +2949,102 @@ setMarkersByPlaceNames(places);
 
 function normalizeDate(dateStr) {
   // '2025-05-04' → '2025-5-4'
-  return dateStr.replace(/^0+/, "").replace(/-0+/g, "-");
+  return dateStr.replace(/^0+/, '').replace(/-0+/g, '-');
 }
+
 
 // originalTravelSchedule이 있으면 그걸로 복원
 const raw = localStorage.getItem("originalTravelSchedule");
 if (raw) {
   localStorage.setItem("travelSchedule", raw);
   // 이후 initializeEditMode() 등으로 UI 갱신
+}
+
+function showGptReasonModal(result) {
+  const modal = document.getElementById("gpt-reason-modal");
+  const text = document.getElementById("gpt-reason-text");
+
+  let html = "";
+
+  // 일정 재정렬 이유
+  if (result.reason) {
+    html += `<div style=\"margin-bottom:18px;\"><b>일정 재정렬 이유</b><br>${result.reason}</div>`;
+  }
+
+  // 장소별 추천/장점
+  if (result.tips) {
+    html += `<div style=\"margin-bottom:18px;\"><b>장소별 추천/장점</b><ul style=\"padding-left:18px;\">`;
+    for (const [place, tip] of Object.entries(result.tips)) {
+      html += `<li><b>${place}</b>: ${tip}</li>`;
+    }
+    html += `</ul></div>`;
+  }
+
+  // 방문 팁
+  if (result.visitTips) {
+    html += `<div style=\"margin-bottom:18px;\"><b>방문 팁</b><ul style=\"padding-left:18px;\">`;
+    if (typeof result.visitTips === 'object') {
+      for (const [place, tip] of Object.entries(result.visitTips)) {
+        html += `<li><b>${place}</b>: ${tip}</li>`;
+      }
+    } else {
+      html += `<li>${result.visitTips}</li>`;
+    }
+    html += `</ul></div>`;
+  }
+
+  // 음식 추천
+  if (result.foodRecommendations) {
+    html += `<div style=\"margin-bottom:18px;\"><b>음식/식당 추천</b><ul style=\"padding-left:18px;\">`;
+    if (typeof result.foodRecommendations === 'object') {
+      for (const [date, food] of Object.entries(result.foodRecommendations)) {
+        html += `<li><b>${date}</b>: ${food}</li>`;
+      }
+    } else {
+      html += `<li>${result.foodRecommendations}</li>`;
+    }
+    html += `</ul></div>`;
+  }
+
+  // 권장 체류 시간
+  if (result.duration) {
+    html += `<div style=\"margin-bottom:18px;\"><b>장소별 권장 체류 시간</b><ul style=\"padding-left:18px;\">`;
+    if (typeof result.duration === 'object') {
+      for (const [place, time] of Object.entries(result.duration)) {
+        html += `<li><b>${place}</b>: ${time}</li>`;
+      }
+    } else {
+      html += `<li>${result.duration}</li>`;
+    }
+    html += `</ul></div>`;
+  }
+
+  // 이동수단
+  if (result.transport) {
+    html += `<div style=\"margin-bottom:18px;\"><b>이동 방법/교통</b><ul style=\"padding-left:18px;\">`;
+    if (typeof result.transport === 'object') {
+      for (const [section, method] of Object.entries(result.transport)) {
+        html += `<li><b>${section}</b>: ${method}</li>`;
+      }
+    } else {
+      html += `<li>${result.transport}</li>`;
+    }
+    html += `</ul></div>`;
+  }
+
+  // 계절별 팁
+  if (result.seasonalTips) {
+    html += `<div style=\"margin-bottom:18px;\"><b>계절/날씨 관련 팁</b><br>${result.seasonalTips}</div>`;
+  }
+
+  // 가족/반려동물 동반 팁
+  if (result.familyTips) {
+    html += `<div style=\"margin-bottom:18px;\"><b>가족/어르신/반려동물 동반 팁</b><br>${result.familyTips}</div>`;
+  }
+
+  text.innerHTML = html.replace(/\\n/g, '<br>');
+  modal.classList.remove("hidden");
+  modal.querySelector(".close-button").onclick = () => {
+    modal.classList.add("hidden");
+  };
 }
