@@ -1380,7 +1380,11 @@ function getPlacesByDate(scheduleJson, dateStr) {
 let kakaoMarkers = [];
 // 기존 선(폴리라인)을 지우기 위한 변수
 let kakaoPolyline = null;
-function setMarkersByPlaceNames(placeNames, useDefaultMarker = false, drawPolyline = true) {
+function setMarkersByPlaceNames(
+  placeNames,
+  useDefaultMarker = false,
+  drawPolyline = true
+) {
   const geocoder = new kakao.maps.services.Places();
 
   // 기존 마커 지우기
@@ -2242,7 +2246,7 @@ async function initializeEditMode() {
     console.error("편집 모드 초기화 중 오류:", e);
     showErrorState("일정을 불러오는 데 문제가 발생했습니다.");
   }
-  renderStep4UI();  // ← 반드시 여기에 추가!
+  renderStep4UI(); // ← 반드시 여기에 추가!
 }
 
 // 편집 모드 UI 렌더링
@@ -2540,7 +2544,11 @@ function saveChanges() {
 
 // 변경사항 초기화
 function resetChanges() {
-  if (confirm("편집 내용을 초기화하시겠습니까? 저장되지 않은 변경사항은 사라집니다.")) {
+  if (
+    confirm(
+      "편집 내용을 초기화하시겠습니까? 저장되지 않은 변경사항은 사라집니다."
+    )
+  ) {
     const raw = localStorage.getItem("originalTravelSchedule");
     if (raw) {
       localStorage.setItem("travelSchedule", raw);
@@ -2715,14 +2723,13 @@ document.getElementById("cancelButton").addEventListener("click", function () {
 
 // 적용 버튼 클릭 시 (변경 적용)
 document.getElementById("applyButton").addEventListener("click", function () {
-  const formattedSchedule = savedForEditTab5.map(day => ({
+  const formattedSchedule = savedForEditTab5.map((day) => ({
     Date: day.date,
-    Places: day.places.map(p => p.name)
+    Places: day.places.map((p) => p.name),
   }));
   const scheduleStr = JSON.stringify(formattedSchedule);
   localStorage.setItem("travelSchedule", scheduleStr);
   sessionStorage.setItem("gptSchedule", scheduleStr);
-  alert("최종 일정이 저장되었습니다.");
   const tab5Btn = document.getElementById("tab5Btn");
   if (tab5Btn) {
     tab5Btn.style.display = "block";
@@ -2845,9 +2852,9 @@ function renderStep4UI() {
       }
 
       // 현재 편집 중인 일정 데이터 준비 (날짜별 장소 배열)
-      const currentSchedule = savedForEditTab5.map(day => ({
+      const currentSchedule = savedForEditTab5.map((day) => ({
         Date: day.date,
-        Places: day.places.map(p => p.name)
+        Places: day.places.map((p) => p.name),
       }));
 
       // 사용자 입력 + 기존 프롬프트 합치기
@@ -2924,10 +2931,6 @@ document.getElementById("applyButton").addEventListener("click", function () {
   const gptSchedule = sessionStorage.getItem("gptSchedule");
   if (gptSchedule) {
     localStorage.setItem("travelSchedule", gptSchedule);
-    alert("최종 일정이 저장되었습니다.");
-    // 필요시 UI 갱신
-  } else {
-    alert("생성된 일정이 없습니다.");
   }
 });
 
@@ -2937,9 +2940,9 @@ function renderScheduleFromSession() {
     try {
       const arr = JSON.parse(gptSchedule);
       // 날짜별로 장소 정리
-      savedForEditTab5 = arr.map(day => ({
+      savedForEditTab5 = arr.map((day) => ({
         date: day.Date,
-        places: day.Places.map(name => ({ name }))
+        places: day.Places.map((name) => ({ name })),
       }));
       renderEditMode();
     } catch (e) {
@@ -2980,9 +2983,8 @@ setMarkersByPlaceNames(places);
 
 function normalizeDate(dateStr) {
   // '2025-05-04' → '2025-5-4'
-  return dateStr.replace(/^0+/, '').replace(/-0+/g, '-');
+  return dateStr.replace(/^0+/, "").replace(/-0+/g, "-");
 }
-
 
 // originalTravelSchedule이 있으면 그걸로 복원
 const raw = localStorage.getItem("originalTravelSchedule");
@@ -3015,8 +3017,8 @@ function showGptReasonModal(result) {
     html += `<div style="margin-bottom:18px;"><b>장소별 추천/장점 </b>`;
     if (Array.isArray(result.tips)) {
       // 한글자씩 배열로 온 경우
-      html += result.tips.join('') + '</div>';
-    } else if (typeof result.tips === 'object') {
+      html += result.tips.join("") + "</div>";
+    } else if (typeof result.tips === "object") {
       html += `<ul style="padding-left:18px;">`;
       for (const [place, tip] of Object.entries(result.tips)) {
         html += `<li><b>${place}</b>: ${tip}</li>`;
@@ -3024,14 +3026,14 @@ function showGptReasonModal(result) {
       html += `</ul></div>`;
     } else {
       // 그냥 문자열
-      html += result.tips + '</div>';
+      html += result.tips + "</div>";
     }
   }
 
   // 방문 팁
   if (result.visitTips) {
     html += `<div style="margin-bottom:18px;"><b>방문 팁</b><ul style="padding-left:18px;">`;
-    if (typeof result.visitTips === 'object') {
+    if (typeof result.visitTips === "object") {
       for (const [place, tip] of Object.entries(result.visitTips)) {
         html += `<li><b>${place}</b>: ${tip}</li>`;
       }
@@ -3044,7 +3046,7 @@ function showGptReasonModal(result) {
   // 음식 추천
   if (result.foodRecommendations) {
     html += `<div style="margin-bottom:18px;"><b>음식/식당 추천</b><ul style="padding-left:18px;">`;
-    if (typeof result.foodRecommendations === 'object') {
+    if (typeof result.foodRecommendations === "object") {
       for (const [date, food] of Object.entries(result.foodRecommendations)) {
         html += `<li><b>${date}</b>: ${food}</li>`;
       }
@@ -3057,7 +3059,7 @@ function showGptReasonModal(result) {
   // 권장 체류 시간
   if (result.duration) {
     html += `<div style="margin-bottom:18px;"><b>장소별 권장 체류 시간</b><ul style="padding-left:18px;">`;
-    if (typeof result.duration === 'object') {
+    if (typeof result.duration === "object") {
       for (const [place, time] of Object.entries(result.duration)) {
         html += `<li><b>${place}</b>: ${time}</li>`;
       }
@@ -3070,7 +3072,7 @@ function showGptReasonModal(result) {
   // 이동수단
   if (result.transport) {
     html += `<div style="margin-bottom:18px;"><b>이동 방법/교통</b><ul style="padding-left:18px;">`;
-    if (typeof result.transport === 'object') {
+    if (typeof result.transport === "object") {
       for (const [section, method] of Object.entries(result.transport)) {
         html += `<li><b>${section}</b>: ${method}</li>`;
       }
@@ -3100,7 +3102,10 @@ function showGptReasonModal(result) {
 // JSON 파싱 유틸 함수 추가
 function parseScheduleJson(raw) {
   if (!raw) return [];
-  let cleanText = raw.replace(/```json/g, "").replace(/```/g, "").trim();
+  let cleanText = raw
+    .replace(/```json/g, "")
+    .replace(/```/g, "")
+    .trim();
   try {
     const parsed = JSON.parse(cleanText);
     if (parsed && parsed.schedule && Array.isArray(parsed.schedule)) {
