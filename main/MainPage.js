@@ -2978,21 +2978,38 @@ function showGptReasonModal(result) {
 
   // 일정 재정렬 이유
   if (result.reason) {
-    html += `<div style=\"margin-bottom:18px;\"><b>일정 재정렬 이유</b><br>${result.reason}</div>`;
+    let reasonText = "";
+    if (Array.isArray(result.reason)) {
+      reasonText = result.reason.join(""); // 또는 join('<br>')로 줄바꿈
+    } else if (typeof result.reason === "object") {
+      reasonText = Object.values(result.reason).join(""); // 객체라면 값만 합침
+    } else {
+      reasonText = result.reason; // 문자열
+    }
+    html += `<div style="margin-bottom:18px;"><b>일정 재정렬 이유</b><br>${reasonText}</div>`;
   }
 
   // 장소별 추천/장점
   if (result.tips) {
-    html += `<div style=\"margin-bottom:18px;\"><b>장소별 추천/장점</b><ul style=\"padding-left:18px;\">`;
-    for (const [place, tip] of Object.entries(result.tips)) {
-      html += `<li><b>${place}</b>: ${tip}</li>`;
+    html += `<div style="margin-bottom:18px;"><b>장소별 추천/장점</b>`;
+    if (Array.isArray(result.tips)) {
+      // 한글자씩 배열로 온 경우
+      html += result.tips.join('') + '</div>';
+    } else if (typeof result.tips === 'object') {
+      html += `<ul style="padding-left:18px;">`;
+      for (const [place, tip] of Object.entries(result.tips)) {
+        html += `<li><b>${place}</b>: ${tip}</li>`;
+      }
+      html += `</ul></div>`;
+    } else {
+      // 그냥 문자열
+      html += result.tips + '</div>';
     }
-    html += `</ul></div>`;
   }
 
   // 방문 팁
   if (result.visitTips) {
-    html += `<div style=\"margin-bottom:18px;\"><b>방문 팁</b><ul style=\"padding-left:18px;\">`;
+    html += `<div style="margin-bottom:18px;"><b>방문 팁</b><ul style="padding-left:18px;">`;
     if (typeof result.visitTips === 'object') {
       for (const [place, tip] of Object.entries(result.visitTips)) {
         html += `<li><b>${place}</b>: ${tip}</li>`;
@@ -3005,7 +3022,7 @@ function showGptReasonModal(result) {
 
   // 음식 추천
   if (result.foodRecommendations) {
-    html += `<div style=\"margin-bottom:18px;\"><b>음식/식당 추천</b><ul style=\"padding-left:18px;\">`;
+    html += `<div style="margin-bottom:18px;"><b>음식/식당 추천</b><ul style="padding-left:18px;">`;
     if (typeof result.foodRecommendations === 'object') {
       for (const [date, food] of Object.entries(result.foodRecommendations)) {
         html += `<li><b>${date}</b>: ${food}</li>`;
@@ -3018,7 +3035,7 @@ function showGptReasonModal(result) {
 
   // 권장 체류 시간
   if (result.duration) {
-    html += `<div style=\"margin-bottom:18px;\"><b>장소별 권장 체류 시간</b><ul style=\"padding-left:18px;\">`;
+    html += `<div style="margin-bottom:18px;"><b>장소별 권장 체류 시간</b><ul style="padding-left:18px;">`;
     if (typeof result.duration === 'object') {
       for (const [place, time] of Object.entries(result.duration)) {
         html += `<li><b>${place}</b>: ${time}</li>`;
@@ -3031,7 +3048,7 @@ function showGptReasonModal(result) {
 
   // 이동수단
   if (result.transport) {
-    html += `<div style=\"margin-bottom:18px;\"><b>이동 방법/교통</b><ul style=\"padding-left:18px;\">`;
+    html += `<div style="margin-bottom:18px;"><b>이동 방법/교통</b><ul style="padding-left:18px;">`;
     if (typeof result.transport === 'object') {
       for (const [section, method] of Object.entries(result.transport)) {
         html += `<li><b>${section}</b>: ${method}</li>`;
@@ -3044,12 +3061,12 @@ function showGptReasonModal(result) {
 
   // 계절별 팁
   if (result.seasonalTips) {
-    html += `<div style=\"margin-bottom:18px;\"><b>계절/날씨 관련 팁</b><br>${result.seasonalTips}</div>`;
+    html += `<div style="margin-bottom:18px;"><b>계절/날씨 관련 팁</b><br>${result.seasonalTips}</div>`;
   }
 
   // 가족/반려동물 동반 팁
   if (result.familyTips) {
-    html += `<div style=\"margin-bottom:18px;\"><b>가족/어르신/반려동물 동반 팁</b><br>${result.familyTips}</div>`;
+    html += `<div style="margin-bottom:18px;"><b>가족/어르신/반려동물 동반 팁</b><br>${result.familyTips}</div>`;
   }
 
   text.innerHTML = html; // 중복 선언 없이 사용
