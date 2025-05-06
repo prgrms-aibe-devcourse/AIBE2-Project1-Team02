@@ -2016,7 +2016,21 @@
 "https://storage.googleapis.com/team2project_dummy_img/20250506_2113_7802.jpeg"
 ],
     "tags": ["시장", "먹거리", "관광", "기념품", "현지체험"]
+  },
+  {
+    "id": 79,
+    "placeName": "제주국제공항",
+    "category": 1,
+    "address": "제주특별자치도 제주시 공항로 2",
+    "description": "제주국제공항은 제주도의 관문이자 국내외 여행객들이 가장 많이 이용하는 공항입니다.",
+    "openHours": "연중무휴",
+    "contact": "064-752-3001",
+    "likes": 184925,
+    "images": [
+"https://storage.googleapis.com/team2project_dummy_img/20250506_1202_7901.jpeg"
+]
   }
+
 
 ]
 }
