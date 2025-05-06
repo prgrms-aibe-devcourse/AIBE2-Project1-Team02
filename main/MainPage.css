@@ -1664,14 +1664,14 @@ li {
   -ms-overflow-style: none;
 }
 #gpt-reason-modal #gpt-reason-text {
-  word-break: normal !important;
+  word-break: keep-all !important;
   white-space: pre-line !important;
-  line-height: 1.7 !important;
-  font-size: 1.08rem !important;
-  text-align: left !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  display: block !important;
+  line-height: 1.7;
+  font-size: 1.08rem;
+  text-align: left;
+  width: 100%;
+  max-width: 800px;
+  box-sizing: border-box;
 }
 #gpt-reason-modal .close-button {
   position: absolute;

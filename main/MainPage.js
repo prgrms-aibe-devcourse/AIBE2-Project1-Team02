@@ -253,7 +253,12 @@ document.addEventListener("DOMContentLoaded", () => {
       window.kakaoMarkers.forEach((marker) => marker.setMap(null));
     window.kakaoMarkers = [];
     if (typeof map !== "undefined") {
-      map.setCenter(new kakao.maps.LatLng(37.557192, 126.924863));
+      // 대한민국 전체가 보이도록
+      const koreaBounds = new kakao.maps.LatLngBounds(
+        new kakao.maps.LatLng(33.0, 124.0),
+        new kakao.maps.LatLng(39.5, 132.0)
+      );
+      map.setBounds(koreaBounds);
     }
   }
 
@@ -390,7 +395,12 @@ document.addEventListener("DOMContentLoaded", () => {
       window.kakaoMarkers.forEach((marker) => marker.setMap(null));
     window.kakaoMarkers = [];
     if (typeof map !== "undefined") {
-      map.setCenter(new kakao.maps.LatLng(37.557192, 126.924863)); // 홍대입구역
+      // 대한민국 전체가 보이도록
+      const koreaBounds = new kakao.maps.LatLngBounds(
+        new kakao.maps.LatLng(33.0, 124.0),
+        new kakao.maps.LatLng(39.5, 132.0)
+      );
+      map.setBounds(koreaBounds);
     }
   }
 
@@ -714,7 +724,7 @@ function loadFestivalData(page = 1) {
         console.error("travelSchedule 파싱 오류:", e);
         return;
       }
-      // 원하는 날짜(예: testSelectedDate)의 장소만 추출
+      // 원하는 날짜에 맞는 장소만 추출
       function normalizeDate(dateStr) {
         return dateStr.replace(/^0+/, "").replace(/-0+/g, "-");
       }
@@ -3042,7 +3052,7 @@ function showGptReasonModal(result) {
     html += `<div style=\"margin-bottom:18px;\"><b>가족/어르신/반려동물 동반 팁</b><br>${result.familyTips}</div>`;
   }
 
-  text.innerHTML = html.replace(/\\n/g, '<br>');
+  text.innerHTML = html; // 중복 선언 없이 사용
   modal.classList.remove("hidden");
   modal.querySelector(".close-button").onclick = () => {
     modal.classList.add("hidden");
